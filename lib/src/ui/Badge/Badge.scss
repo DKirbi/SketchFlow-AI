@@ -1,0 +1,57 @@
+@use '../../styles/tokens' as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1 $space-3;
+  border: $border-width solid $color-border;
+  background: $color-paper;
+  font-family: $text-font-family;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-caps;
+  color: $color-ink-subtle;
+  border-radius: $radius-pill;
+  white-space: nowrap;
+  line-height: 1.4;
+
+  // status: solid border = active, dashed = inactive
+  &--status {
+    color: $color-ink;
+    border-color: $color-ink;
+
+    &.badge--inactive {
+      border-style: dashed;
+      border-color: $color-border;
+      color: $color-ink-subtle;
+    }
+  }
+
+  // id: monospace record reference
+  &--id {
+    font-size: $font-size-sm;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    font-weight: $font-weight-normal;
+    color: $color-ink-muted;
+    border-color: $color-border-subtle;
+    border-radius: $radius-none;
+  }
+
+  // tag: category label
+  &--tag {
+    color: $color-ink-subtle;
+    border-color: $color-border-subtle;
+  }
+
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      background: $color-surface-hover;
+      color: $color-ink;
+      border-color: $color-border;
+    }
+  }
+}

@@ -1,0 +1,2069 @@
+/* ─── Reset & Base ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  background: #f5f5f5;
+  color: #111;
+  min-height: 100vh;
+}
+
+body:has(.structure-setup) {
+  overflow: auto;
+  height: auto;
+}
+
+body:has(.canvas-wrapper) {
+  height: 100vh;
+  overflow: hidden;
+}
+
+button { cursor: pointer; font-family: inherit; font-size: inherit; }
+input, select, textarea { font-family: inherit; font-size: inherit; }
+fieldset { border: 1px solid #bbb; padding: 10px 12px; margin-bottom: 12px; }
+legend { padding: 0 4px; font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ─── Canvas Layout ─────────────────────────────────────────────── */
+.canvas-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #fff;
+}
+
+/* ─── Canvas header (two-row: identity+actions / tabs) ──────────── */
+.canvas-header {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid #111;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.canvas-nav-tabs {
+  padding: 0 16px;
+  background: #fff;
+}
+
+/* LOFIToolbar inside canvas-header — remove standalone bottom border */
+.canvas-header .canvas-toolbar {
+  border-bottom: 1px solid #eee;
+}
+
+.canvas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex: 1 1 220px;
+}
+
+.tournament-sport {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666;
+  border: 1px solid #bbb;
+  padding: 2px 6px;
+}
+
+.tournament-name {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+}
+
+.tournament-season {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.04em;
+}
+
+.toolbar-steps {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.toolbar-step {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  color: #888;
+}
+
+.toolbar-step--active {
+  border-color: #111;
+  background: #111;
+  color: #fff;
+  font-weight: bold;
+}
+
+.toolbar-step--muted {
+  opacity: 0.7;
+}
+
+button.toolbar-step--link {
+  cursor: pointer;
+  border-color: #bbb;
+  background: #fff;
+  color: #333;
+}
+
+button.toolbar-step--link:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.btn-add-progression {
+  padding: 6px 14px;
+  border: 2px solid #111;
+  background: #fff;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  transition: background 0.1s, color 0.1s;
+}
+
+.btn-add-progression:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* ─── Scenario A/B Toggle ────────────────────────────────────────── */
+.scenario-toggle {
+  display: flex;
+  border: 2px solid #111;
+}
+
+.scenario-toggle__btn {
+  padding: 4px 12px;
+  border: none;
+  background: #fff;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  font-size: 11px;
+  text-transform: uppercase;
+  transition: background 0.1s, color 0.1s;
+}
+
+.scenario-toggle__btn + .scenario-toggle__btn {
+  border-left: 2px solid #111;
+}
+
+.scenario-toggle__btn--active {
+  background: #111;
+  color: #fff;
+}
+
+.scenario-toggle__btn:not(.scenario-toggle__btn--active):hover {
+  background: #f0f0f0;
+}
+
+/* .canvas-help removed — round names now appear in the sticky RoundHeaderBelt */
+
+.canvas-area {
+  flex: 1;
+  position: relative;
+}
+
+/* ─── React Flow overrides (lo-fi) ──────────────────────────────── */
+.react-flow__node { border: none !important; background: transparent !important; }
+.react-flow__node.dragging .bracket-node {
+  box-shadow: 0 0 0 2px #1a6bcb;
+}
+.react-flow__handle { opacity: 0; pointer-events: none; }
+.react-flow__controls { border: 1px solid #bbb; background: #fff; }
+.react-flow__controls button { border-bottom: 1px solid #ccc; color: #333; background: #fff; }
+.react-flow__minimap { border: 1px solid #bbb; }
+.react-flow__background { background: #f8f8f8; }
+
+.progression-edge-path-group .react-flow__edge-path {
+  transition: stroke-dasharray 0.12s ease;
+}
+
+/* ─── Round Column Guides ────────────────────────────────────────── */
+
+/* Sticky viewport-pinned round-name belt (Panel, position="top-left") */
+.round-header-belt {
+  /* Override react-flow Panel margin so the belt touches the edges */
+  margin: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  height: 40px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.round-belt-label {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #666;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+  border-right: 1px solid #e8e8e8;
+}
+
+.round-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 2px dashed #ddd;
+  pointer-events: none;
+}
+
+/* ─── Bracket Node ──────────────────────────────────────────────── */
+.bracket-node {
+  background: #fff;
+  min-width: 310px;
+  max-width: 350px;
+  position: relative;
+  border: 2px dashed #aaa;
+}
+
+.bracket-node--complete {
+  border-style: solid;
+  border-color: #111;
+}
+
+.bracket-node--incomplete {
+  border-style: dashed;
+  border-color: #aaa;
+}
+
+.bracket-drag-belt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+  cursor: grab;
+  user-select: none;
+}
+
+.bracket-node--incomplete .bracket-drag-belt {
+  background: #f7f7f7;
+  border-bottom-color: #e0e0e0;
+}
+
+.bracket-drag-belt:active {
+  cursor: grabbing;
+  background: #e8e8e8;
+}
+
+.bracket-drag-belt__icon {
+  font-size: 14px;
+  color: #aaa;
+  line-height: 1;
+}
+
+.bracket-drag-belt__label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #bbb;
+}
+
+.bracket-header {
+  padding: 8px 12px;
+  border-bottom: 2px solid #111;
+  background: #fff;
+  position: relative;
+}
+
+.bracket-node--incomplete .bracket-header {
+  border-bottom-color: #aaa;
+  border-bottom-style: dashed;
+}
+
+.bracket-round {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.bracket-title {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.bracket-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-right: 52px;
+}
+
+/* ─── Bracket Edit Button ───────────────────────────────────────── */
+.bracket-edit-btn {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 7px;
+  border: 1px solid #bbb;
+  background: #fff;
+  color: #888;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  line-height: 1.4;
+}
+
+.bracket-edit-btn:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.bracket-status-badge {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid #111;
+  padding: 2px 6px;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.bracket-matches-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #aaa;
+  padding: 0 8px 6px;
+}
+
+.match-divider-b {
+  height: 6px;
+}
+
+/* ─── Participants List ──────────────────────────────────────────── */
+.bracket-participants {
+  border-bottom: 1px solid #eee;
+  padding: 8px 12px;
+}
+
+.participants-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #aaa;
+  margin-bottom: 6px;
+}
+
+.participants-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.participant-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #333;
+  padding: 1px 0;
+}
+
+.participant-seed {
+  color: #bbb;
+  font-size: 10px;
+  width: 14px;
+  flex-shrink: 0;
+}
+
+.participant-name {
+  flex: 1;
+}
+
+.participant-bye {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+  border: 1px solid #ccc;
+  padding: 1px 4px;
+}
+
+/* ─── Match Card ────────────────────────────────────────────────── */
+.bracket-matches {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.match-divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 4px 0;
+}
+
+.bracket-empty {
+  padding: 8px;
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+  font-size: 11px;
+}
+
+.bracket-waiting {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #bbb;
+  text-align: center;
+  padding: 6px 12px 10px;
+  border-top: 1px dashed #e0e0e0;
+}
+
+.bracket-handle {
+  opacity: 0;
+}
+
+
+/* ─── Match Card ────────────────────────────────────────────────── */
+.match-card {
+  border: 1px solid #bbb;
+  padding: 8px 10px;
+  background: #fff;
+}
+
+.match-card--bye {
+  background: #fafafa;
+  border-style: dashed;
+  border-color: #ddd;
+}
+
+.bye-badge {
+  display: block;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.match-teams {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.team-name {
+  flex: 1;
+  font-weight: bold;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+
+.team-name.tbd {
+  font-weight: normal;
+  color: #888;
+  font-style: italic;
+  font-size: 11px;
+}
+
+.team-name.winner {
+  text-decoration: underline;
+}
+
+.match-vs {
+  font-size: 10px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.match-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Status badge — clickable */
+.status-badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border: 1px solid #bbb;
+  background: #fff;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.status-badge:hover { background: #f0f0f0; }
+
+.status-badge.status-live {
+  border-color: #333;
+  color: #000;
+  font-weight: bold;
+}
+
+.status-badge.status-finished {
+  border-style: dashed;
+  color: #888;
+}
+
+.set-winner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.set-winner-label {
+  font-size: 10px;
+  color: #888;
+}
+
+.winner-btn {
+  font-size: 10px;
+  padding: 2px 6px;
+  border: 1px solid #555;
+  background: #fff;
+  text-decoration: none;
+}
+
+.winner-btn:hover { background: #111; color: #fff; }
+
+.winner-label {
+  font-size: 10px;
+  color: #444;
+  font-style: italic;
+}
+
+/* ─── Progression Edge Label ────────────────────────────────────── */
+.progression-edge-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  border: 1px solid #555;
+  background-color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.1s;
+  /* Opaque chip; isolation keeps stacking predictable above SVG edges */
+  isolation: isolate;
+}
+
+.progression-edge-label:hover {
+  background: #f0f0f0;
+}
+
+.edge-condition {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #111;
+}
+
+.edge-trigger {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+}
+
+/* ─── Edge Action Bar ───────────────────────────────────────────── */
+.edge-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border: 1.5px solid #111;
+  background: #fff;
+  white-space: nowrap;
+  box-shadow: 2px 2px 0 #ccc;
+}
+
+.edge-action-summary {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #444;
+  padding-right: 6px;
+  border-right: 1px solid #ddd;
+  margin-right: 2px;
+}
+
+.edge-action-btn {
+  font-size: 11px;
+  padding: 3px 8px;
+  border: 1px solid #bbb;
+  background: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.1s, color 0.1s;
+}
+
+.edge-action-btn:hover { background: #f0f0f0; }
+
+.edge-action-btn--danger {
+  border-color: #888;
+  color: #333;
+}
+
+.edge-action-btn--danger:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.edge-action-btn--muted {
+  color: #aaa;
+  border-color: #ddd;
+  font-size: 10px;
+  padding: 3px 6px;
+}
+
+.edge-action-btn--muted:hover { color: #000; border-color: #bbb; }
+
+/* ─── Edge Delete Confirm ───────────────────────────────────────── */
+.edge-confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1.5px dashed #555;
+  background: #fff;
+  white-space: nowrap;
+  box-shadow: 2px 2px 0 #ccc;
+}
+
+.edge-confirm-text {
+  font-size: 11px;
+  color: #333;
+  margin-right: 4px;
+}
+
+.edge-confirm-yes {
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1.5px solid #111;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.edge-confirm-yes:hover { background: #333; }
+
+.edge-confirm-no {
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1px solid #bbb;
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.edge-confirm-no:hover { background: #f0f0f0; }
+
+/* ─── Edge Context Menu ─────────────────────────────────────────── */
+/* Progression edit modal — size override on the shared .modal shell */
+.progression-edit-modal {
+  width: 600px;
+  max-width: min(600px, 95vw);
+}
+
+.progression-edit-body {
+  margin-top: 12px;
+}
+
+.progression-add-rule-btn {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: 1px dashed #bbb;
+  background: #fff;
+  color: #777;
+  text-align: left;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.progression-add-rule-btn:hover {
+  border-color: #111;
+  border-style: solid;
+  color: #111;
+}
+
+.context-menu-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.context-menu-crumb--link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #000;
+  text-decoration: underline;
+  cursor: pointer;
+  text-underline-offset: 2px;
+}
+
+.context-menu-crumb-sep {
+  color: #bbb;
+  user-select: none;
+}
+
+.context-menu-crumb--current {
+  color: #111;
+  font-weight: 600;
+}
+
+.rule-block {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #ccc;
+}
+
+.rule-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.rule-number {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  margin-bottom: 0;
+}
+
+.rule-remove-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.2;
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rule-remove-btn:disabled {
+  color: #bbb;
+  text-decoration: none;
+  cursor: default;
+}
+
+.rule-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 7px;
+}
+
+.rule-field span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #666;
+}
+
+.rule-field select,
+.rule-field input[type="text"] {
+  padding: 4px 6px;
+  border: 1px solid #bbb;
+  background: #fff;
+  width: 100%;
+}
+
+/* .context-menu-actions removed — progression edit modal now uses .modal-actions */
+
+/* ─── Modal ─────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal {
+  background: #fff;
+  border: 2px solid #111;
+  width: 440px;
+  max-width: 95vw;
+  max-height: min(90vh, 720px);
+  overflow-y: auto;
+  padding: 20px;
+  box-shadow: 6px 6px 0 #aaa;
+}
+
+.modal--progression {
+  max-height: min(85vh, 640px);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #111;
+}
+
+.modal-header h2 { font-size: 16px; }
+
+.modal-description {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.modal-form { display: flex; flex-direction: column; gap: 0; }
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.modal-preview {
+  margin: 8px 0 12px;
+  padding: 8px 10px;
+  border: 1px dashed #bbb;
+  font-size: 11px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.modal-preview strong {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+  margin-bottom: 3px;
+}
+
+.preview-text { font-style: italic; }
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* ─── Shared Buttons ────────────────────────────────────────────── */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #666;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.close-btn:hover { color: #000; }
+
+.btn-primary {
+  padding: 7px 16px;
+  border: 2px solid #111;
+  background: #111;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+}
+
+.btn-primary:hover { background: #333; border-color: #333; }
+
+.btn-save {
+  padding: 6px 12px;
+  border: 1px solid #333;
+  background: #fff;
+  font-weight: bold;
+}
+
+.btn-save:hover { background: #111; color: #fff; }
+
+.btn-delete {
+  padding: 6px 12px;
+  border: 1px solid #999;
+  background: #fff;
+  color: #666;
+}
+
+.btn-delete:hover { background: #f0f0f0; color: #000; }
+
+.btn-cancel {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #888;
+}
+
+.btn-cancel:hover { color: #000; border-color: #999; }
+
+.btn-danger {
+  padding: 6px 12px;
+  border: 1px solid #999;
+  background: #fff;
+  color: #333;
+  font-weight: 600;
+}
+
+.btn-danger:hover { background: #111; color: #fff; border-color: #111; }
+
+.modal-actions-delete {
+  margin-left: auto;
+}
+
+.modal-actions-confirm-text {
+  font-size: 13px;
+  color: #333;
+  margin-right: 4px;
+}
+
+.btn-secondary {
+  padding: 6px 12px;
+  border: 1px solid #333;
+  background: #fff;
+  color: #111;
+  font-weight: 600;
+}
+
+/* ─── Bracket Edit Modal ────────────────────────────────────────── */
+.bracket-edit-modal {
+  width: 500px;
+}
+
+.edit-section {
+  margin-bottom: 18px;
+}
+
+.edit-section-title {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #aaa;
+  margin-bottom: 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.edit-section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 8px;
+}
+
+.edit-section-title-row .edit-section-title {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.edit-prog-add-btn {
+  font-size: 10px;
+  padding: 3px 8px;
+  border: 1px solid #bbb;
+  background: #fff;
+  letter-spacing: 0.04em;
+  color: #555;
+}
+
+.edit-prog-add-btn:hover {
+  border-color: #111;
+  color: #111;
+}
+
+/* ─── Progression rows in edit modal ─────────────────────────────── */
+.prog-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  margin-bottom: 4px;
+  border: 1px solid #eee;
+  font-size: 11px;
+}
+
+.prog-row--outgoing { background: #f9fafb; }
+.prog-row--incoming { background: #fafaf9; }
+
+.prog-row-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.prog-row-dir {
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  color: #888;
+  flex-shrink: 0;
+}
+
+.prog-row-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333;
+}
+
+.prog-row-confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.prog-row-btn {
+  font-size: 10px;
+  padding: 3px 7px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.prog-row-btn:hover { border-color: #999; color: #111; }
+
+.prog-row-btn--remove {
+  color: #888;
+}
+
+.prog-row-btn--danger {
+  border-color: #c55;
+  color: #c55;
+}
+
+.prog-row-btn--danger:hover {
+  background: #c55;
+  color: #fff;
+}
+
+/* ─── Inline add-progression form ───────────────────────────────── */
+.prog-add-form {
+  border: 1px dashed #ccc;
+  padding: 12px;
+  margin-top: 6px;
+  background: #fafafa;
+}
+
+.prog-add-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.prog-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.prog-field span {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+}
+
+.prog-field select,
+.prog-field input[type="text"] {
+  padding: 5px 7px;
+  border: 1px solid #bbb;
+  background: #fff;
+  font-size: 12px;
+  width: 100%;
+}
+
+.prog-field select:focus,
+.prog-field input:focus {
+  outline: none;
+  border-color: #111;
+}
+
+.prog-add-preview {
+  font-size: 11px;
+  color: #666;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.prog-add-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-list {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.edit-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.edit-row:last-child { border-bottom: none; }
+
+.edit-row-num {
+  color: #bbb;
+  font-size: 10px;
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.edit-row-name {
+  flex: 1;
+  font-size: 12px;
+}
+
+.edit-remove-btn {
+  font-size: 10px;
+  padding: 2px 5px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #bbb;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.edit-remove-btn:hover {
+  border-color: #999;
+  color: #111;
+  background: #f5f5f5;
+}
+
+.edit-add-row {
+  display: flex;
+  gap: 6px;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 5px 8px;
+  border: 1px solid #bbb;
+  background: #fff;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #111;
+}
+
+.edit-empty {
+  font-size: 11px;
+  color: #aaa;
+  font-style: italic;
+  padding: 6px 0;
+  margin-bottom: 8px;
+}
+
+.edit-matches {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.edit-match-card {
+  border: 1px solid #e0e0e0;
+  padding: 8px 10px;
+  background: #fafafa;
+}
+
+.edit-match-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.edit-match-num {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+}
+
+.edit-match-body {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.edit-match-footer {
+  margin-top: 2px;
+}
+
+.edit-select {
+  flex: 1;
+  min-width: 120px;
+  padding: 4px 6px;
+  border: 1px solid #bbb;
+  background: #fff;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.edit-select:focus {
+  outline: none;
+  border-color: #111;
+}
+
+.edit-vs {
+  font-size: 10px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.edit-bye-chip {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+  border: 1px dashed #ccc;
+  padding: 3px 8px;
+  background: #fff;
+}
+
+.edit-bye-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #888;
+  cursor: pointer;
+}
+
+.edit-bye-toggle input { cursor: pointer; }
+
+.edit-add-match-btn {
+  display: block;
+  width: 100%;
+  font-size: 11px;
+  padding: 6px 10px;
+  border: 1px dashed #bbb;
+  background: #fff;
+  color: #777;
+  text-align: left;
+  letter-spacing: 0.02em;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+}
+
+.edit-add-match-btn:hover {
+  border-color: #111;
+  border-style: solid;
+  color: #111;
+  background: #f8f8f8;
+}
+
+/* ─── Structure setup (step 1) ─────────────────────────────────── */
+.structure-setup {
+  min-height: 100vh;
+  background: #fff;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+}
+
+.structure-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 14px 20px 0;
+  border-bottom: 2px solid #111;
+  background: #fff;
+}
+
+.structure-header__identity {
+  margin-bottom: 10px;
+}
+
+.structure-header-left { min-width: 200px; } /* kept for any legacy reference */
+
+.structure-app-title {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+
+.structure-tournament-line {
+  font-size: 13px;
+  color: #333;
+}
+
+.structure-name { font-weight: bold; }
+
+.structure-season { color: #888; }
+
+.structure-steps {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.structure-step {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  color: #888;
+}
+
+.structure-step--active {
+  border-color: #111;
+  background: #111;
+  color: #fff;
+  font-weight: bold;
+}
+
+.structure-step--muted {
+  background: #fafafa;
+}
+
+.structure-main {
+  flex: 1;
+  padding: 20px 20px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.structure-page-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.structure-intro {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+.structure-fieldset {
+  margin-bottom: 16px;
+}
+
+.structure-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.structure-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.structure-field span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #666;
+}
+
+.structure-field--inline {
+  flex: 1;
+  min-width: 180px;
+}
+
+.structure-input,
+.structure-select {
+  padding: 6px 8px;
+  border: 1px solid #bbb;
+  background: #fff;
+}
+
+.structure-config-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.structure-table-wrap {
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  background: #fafafa;
+}
+
+.structure-table-hint {
+  font-size: 11px;
+  color: #777;
+  padding: 8px 12px;
+  background: #fff;
+}
+
+.structure-table-scroll {
+  overflow-x: auto;
+  background: #fff;
+}
+
+.structure-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.structure-table th,
+.structure-table td {
+  border: 1px solid #e5e5e5;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.structure-table th {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+  background: #f8f8f8;
+}
+
+.structure-select--table {
+  width: 100%;
+  min-width: 120px;
+}
+
+.structure-input--table {
+  width: 100%;
+  min-width: 100px;
+}
+
+.structure-row-remove {
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #888;
+  width: 28px;
+  height: 28px;
+  line-height: 1;
+}
+
+.structure-row-remove:hover {
+  border-color: #111;
+  color: #111;
+}
+
+.structure-table-footer {
+  padding: 10px 12px;
+  border-top: 1px solid #e0e0e0;
+  background: #fff;
+}
+
+.structure-add-round {
+  font-size: 11px;
+  padding: 6px 12px;
+  border: 1px dashed #999;
+  background: #fff;
+  color: #555;
+}
+
+.structure-add-round:hover {
+  border-style: solid;
+  border-color: #111;
+  color: #111;
+}
+
+/* ─── Rounds section header ─────────────────────────────────────── */
+.structure-rounds-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fff;
+  padding-right: 12px;
+}
+
+.structure-regenerate-btn {
+  flex-shrink: 0;
+  font-size: 11px;
+  padding: 5px 11px;
+  border: 1px solid #bbb;
+  background: #fff;
+  color: #555;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: border-color 0.1s, color 0.1s;
+}
+
+.structure-regenerate-btn:hover:not(:disabled) {
+  border-color: #111;
+  color: #111;
+}
+
+.structure-regenerate-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Participants section ──────────────────────────────────────── */
+.structure-participants-wrap {
+  margin-top: 32px;
+  border: 1px solid #e0e0e0;
+  padding: 20px 24px;
+}
+
+.structure-participants-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.structure-participants-title {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+
+.structure-participants-hint {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+
+.structure-participants-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.structure-participant-btn {
+  padding: 7px 14px;
+  border: 1.5px solid #bbb;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #aaa;
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.structure-participants-empty {
+  font-size: 12px;
+  color: #aaa;
+  margin: 0;
+  padding: 12px 0;
+}
+
+.structure-participants-table-scroll {
+  max-height: 300px;
+  overflow-x: auto;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+}
+
+.structure-participants-table-scroll .structure-participants-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f8f8f8;
+  box-shadow: inset 0 -1px 0 #e5e5e5;
+}
+
+.structure-id-cell {
+  font-family: monospace;
+  font-size: 11px;
+  color: #777;
+}
+
+/* ─── Participant drag-and-drop ─────────────────────────────────── */
+.entrant-drag-th {
+  width: 28px;
+  padding: 0;
+}
+
+.entrant-drag-cell {
+  width: 28px;
+  padding: 0 4px;
+  text-align: center;
+}
+
+.entrant-drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: grab;
+  color: #bbb;
+  touch-action: none;
+  border-radius: 3px;
+  transition: color 0.1s, background 0.1s;
+}
+
+.entrant-drag-handle:hover {
+  color: #555;
+  background: #f0f0f0;
+}
+
+.entrant-drag-handle:active {
+  cursor: grabbing;
+}
+
+.entrant-drag-icon {
+  font-size: 13px;
+  line-height: 1;
+  user-select: none;
+}
+
+.entrant-row--dragging {
+  background: #f7f7f7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.structure-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.structure-generate-btn {
+  padding: 10px 20px;
+  border: 2px solid #111;
+  background: #111;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.structure-generate-btn:hover {
+  background: #333;
+  border-color: #333;
+}
+
+.structure-generate-btn--finished {
+  background: #fff;
+  color: #111;
+  border: 2px solid #111;
+}
+
+.structure-generate-btn--finished:hover {
+  background: #f0f0f0;
+}
+
+.structure-generate-btn--secondary {
+  background: #fff;
+  color: #111;
+  border: 2px dashed #999;
+  margin-right: auto;
+}
+
+.structure-generate-btn--secondary:hover {
+  border-color: #111;
+  background: #f0f0f0;
+}
+
+/* ─── Match card variant B ─────────────────────────────────────── */
+.match-card-b {
+  border: 1px dashed #aaa;
+  border-radius: 4px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.match-card-b--finished {
+  border-style: solid;
+  border-color: #555;
+}
+
+.match-card-b--pending {
+  border-style: dashed;
+  border-color: #aaa;
+}
+
+.match-card-b--bye {
+  border-style: dashed;
+  border-color: #bbb;
+  background: #fafafa;
+}
+
+.match-card-b__when {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 12px;
+}
+
+.match-card-b__when-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+}
+
+.match-card-b__when-dt {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.match-card-b__when-value {
+  font-weight: bold;
+  color: #111;
+}
+
+.match-card-b__when-venue {
+  margin-left: auto;
+  min-width: 0;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: #333;
+  text-align: right;
+}
+
+.match-card-b__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-bottom: 1px solid #e0e0e0;
+  container-type: inline-size;
+  container-name: match-header;
+}
+
+.match-card-b__code {
+  font-weight: bold;
+  font-size: 12px;
+  min-width: 0;
+}
+
+/* Full label visible by default; compact code hidden */
+.match-card-b__code-short {
+  display: none;
+}
+
+.match-card-b__code-full {
+  display: inline;
+}
+
+/* When the header shrinks below ~220px, swap to the compact code */
+@container match-header (max-width: 220px) {
+  .match-card-b__code-full {
+    display: none;
+  }
+
+  .match-card-b__code-short {
+    display: inline;
+  }
+}
+
+.match-card-b__badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border: 1px solid #999;
+  background: #fff;
+  color: #444;
+}
+
+.match-card-b__badge--neutral {
+  cursor: default;
+  color: #888;
+}
+
+.match-card-b__badge--click {
+  cursor: pointer;
+}
+
+.status-b-live {
+  border-color: #111;
+  font-weight: bold;
+  color: #000;
+}
+
+.status-b-finished {
+  border-style: dashed;
+  color: #666;
+}
+
+/* ─── Match Card: Venue / Court block ───────────────────────────── */
+.match-card-b__venue {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 10px;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fafafa;
+  flex-wrap: wrap;
+}
+
+.match-card-b__venue-name {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+.match-card-b__venue-court {
+  font-size: 11px;
+  font-weight: 600;
+  color: #444;
+  letter-spacing: 0.02em;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Match Card: Score icon + tooltip (shown on winner's row in Finished scenario) ── */
+.match-card-b__score-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #111;
+  border-radius: 50%;
+  cursor: default;
+}
+
+.match-card-b__score-icon::before {
+  content: '✓';
+  font-size: 8px;
+  line-height: 1;
+  color: #111;
+}
+
+.match-card-b__score-icon::after {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111;
+  color: #fff;
+  font-size: 10px;
+  white-space: nowrap;
+  padding: 3px 7px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+
+.match-card-b__score-icon:hover::after {
+  opacity: 1;
+}
+
+.match-card-b__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-bottom: 1px solid #eee;
+  gap: 12px;
+}
+
+.match-card-b__side {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+.match-card-b__team {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: right;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.match-card-b__team--winner {
+  text-decoration: underline;
+}
+
+.match-card-b__winners {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.match-card-b__win-label {
+  font-size: 10px;
+  color: #888;
+}
+
+.match-card-b__win-btn {
+  font-size: 10px;
+  padding: 2px 6px;
+  border: 1px solid #555;
+  background: #fff;
+}
+
+.match-card-b__win-btn:hover {
+  background: #111;
+  color: #fff;
+}
+
+.match-card-b__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-top: 1px dashed #ccc;
+  margin-top: 0;
+  background: #f9f9f9;
+}
+
+.match-card-b__id {
+  font-size: 10px;
+  color: #999;
+  letter-spacing: 0.02em;
+}
+
+.match-card-b__meta {
+  font-size: 10px;
+  color: #999;
+}

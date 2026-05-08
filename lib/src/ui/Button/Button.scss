@@ -1,0 +1,72 @@
+@use '../../styles/tokens' as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-6;
+  border: $border-width-strong solid $color-ink;
+  background: $color-paper;
+  color: $color-ink;
+  font-family: $text-font-family;
+  font-size: $font-size-button-chrome;
+  font-weight: $font-weight-bold;
+  letter-spacing: $letter-spacing-caps;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: $radius-none;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+  white-space: nowrap;
+  line-height: 1.4;
+
+  &--primary {
+    background: $color-ink;
+    color: $color-paper;
+    border-color: $color-ink;
+
+    &:hover:not(:disabled) {
+      background: $color-ink-secondary;
+      border-color: $color-ink-secondary;
+    }
+  }
+
+  &--default {
+    background: $color-paper;
+    color: $color-ink;
+    border-color: $color-ink;
+
+    &:hover:not(:disabled) {
+      background: $color-ink;
+      color: $color-paper;
+    }
+  }
+
+  &--dismiss {
+    background: $color-paper;
+    color: $color-ink-subtle;
+    border: $border-width solid $color-border-subtle;
+
+    &:hover:not(:disabled) {
+      color: $color-ink;
+      border-color: $color-border;
+    }
+  }
+
+  &--small {
+    padding: $space-2 $space-5;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    border-width: $border-width;
+  }
+
+  &--compact {
+    padding: $space-1 $space-3;
+    font-size: $font-size-button-compact;
+    border-width: $border-width;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

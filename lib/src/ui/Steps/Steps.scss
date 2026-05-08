@@ -1,0 +1,42 @@
+@use '../../styles/tokens' as *;
+
+.steps {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-wrap: wrap;
+
+  &__item {
+    font-size: $font-size-tab;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-caps;
+    padding: $space-2 $space-4;
+    border: $border-width solid $color-border-subtle;
+    background: $color-surface;
+    color: $color-ink-subtle;
+    border-radius: $radius-none;
+    white-space: nowrap;
+    line-height: 1.4;
+
+    &--active {
+      border-color: $color-ink;
+      background: $color-ink;
+      color: $color-paper;
+      font-weight: $font-weight-bold;
+    }
+
+    &--muted {
+      opacity: 0.5;
+    }
+
+    &--clickable {
+      cursor: pointer;
+
+      &:hover:not(.steps__item--active):not(.steps__item--muted) {
+        background: $color-ink;
+        color: $color-paper;
+        border-color: $color-ink;
+      }
+    }
+  }
+}

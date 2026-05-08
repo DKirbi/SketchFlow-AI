@@ -1,0 +1,94 @@
+@use '../../styles/tokens' as *;
+
+$switch-track-w:     32px;
+$switch-track-h:     16px;
+$switch-indicator-s: 10px;
+
+$switch-track-w-compact:     24px;
+$switch-track-h-compact:     12px;
+$switch-indicator-s-compact: 8px;
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-4;
+  cursor: pointer;
+  font-family: $text-font-family;
+  font-size: $font-size-base;
+  user-select: none;
+
+  // visually-hidden native checkbox — accessible but not rendered
+  &__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  &__track {
+    position: relative;
+    display: inline-block;
+    width: $switch-track-w;
+    height: $switch-track-h;
+    border: $border-width solid $color-border;
+    background: $color-paper;
+    flex-shrink: 0;
+    transition: background 0.1s, border-color 0.1s;
+  }
+
+  &__indicator {
+    position: absolute;
+    top: 50%;
+    left: $space-1;
+    transform: translateY(-50%);
+    width: $switch-indicator-s;
+    height: $switch-indicator-s;
+    border: $border-width solid $color-border;
+    background: $color-paper;
+    transition: left 0.1s, right 0.1s, background 0.1s, border-color 0.1s;
+  }
+
+  // on: filled track, indicator slides to the right
+  &--on {
+    .switch__track {
+      background: $color-ink;
+      border-color: $color-ink;
+    }
+
+    .switch__indicator {
+      left: auto;
+      right: $space-1;
+      background: $color-paper;
+      border-color: $color-paper;
+    }
+  }
+
+  // compact size
+  &--compact {
+    gap: $space-3;
+    font-size: $font-size-sm;
+
+    .switch__track {
+      width: $switch-track-w-compact;
+      height: $switch-track-h-compact;
+    }
+
+    .switch__indicator {
+      width: $switch-indicator-s-compact;
+      height: $switch-indicator-s-compact;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  // keyboard focus ring via hidden input focus-visible
+  &__input:focus-visible ~ .switch__track {
+    outline: 2px solid $color-ink;
+    outline-offset: 2px;
+  }
+}

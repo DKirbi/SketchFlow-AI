@@ -1,0 +1,74 @@
+@use '../../src/styles/tokens' as *;
+
+.pattern-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  font-family: $text-font-family;
+  max-width: 960px;
+
+  // Stage first, title/description after (matches Storybook embed order in UX_PATTERNS.md)
+
+  & + & {
+    padding-top: $space-8;
+    border-top: 1px solid $color-border-subtle;
+    margin-top: $space-4;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  &__title {
+    font-family: $text-font-family;
+    font-size: $font-size-md;
+    font-weight: 600;
+    color: $color-ink;
+  }
+
+  &__description {
+    font-family: $text-font-family;
+    font-size: $font-size-base;
+    color: $color-ink-muted;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__stage-label {
+    font-family: $text-font-family;
+    font-size: $font-size-xs;
+    color: $color-ink-ghost;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: $space-2;
+  }
+
+  &__stage {
+    box-sizing: border-box;
+    border: $border-width-pattern-frame solid $color-border-subtle;
+    background: $color-paper;
+    padding: $space-12;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-4;
+    position: relative;
+
+    &--centered {
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--fullwidth {
+      padding: $space-6;
+      overflow: hidden;
+    }
+
+    &--canvas {
+      padding: $space-8;
+      background: $color-surface-inset;
+    }
+  }
+}

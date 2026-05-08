@@ -1,0 +1,18 @@
+/** Shared box for [@radix-ui/react-icons](https://www.radix-ui.com/icons). */
+.lofi-icon {
+  display: block;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: inherit;
+  vertical-align: middle;
+}
+
+/**
+ * `lofi-icon--svg` — used by component-internal icons whose size is set inline
+ * via the `size` prop. Drops the fixed 15×15 box so callers can pick any size.
+ */
+.lofi-icon--svg {
+  width: auto;
+  height: auto;
+}

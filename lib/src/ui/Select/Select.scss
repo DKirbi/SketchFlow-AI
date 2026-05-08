@@ -1,0 +1,97 @@
+@use '../../styles/tokens' as *;
+
+// The trigger is a Radix <button>; reset default button styles and apply field look.
+.select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  width: 100%;
+  padding: $space-3 $space-4;
+  border: $border-width solid $color-border;
+  background: $color-paper;
+  color: $color-ink;
+  font-family: $text-font-family;
+  font-size: $font-size-base;
+  border-radius: $radius-none;
+  // Reset native button chrome
+  -webkit-appearance: none;
+  appearance: none;
+  text-align: left;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+    border-color: $color-border-strong;
+    border-width: $border-width-strong;
+  }
+
+  &[data-disabled] {
+    background-color: $color-surface;
+    color: $color-ink-muted;
+    cursor: not-allowed;
+
+    .select__icon {
+      color: $color-ink-subtle;
+    }
+  }
+
+  &--compact {
+    padding: $space-1 $space-3;
+    font-size: $font-size-xs;
+    gap: $space-1;
+  }
+
+  &--large {
+    padding: $space-5 $space-6;
+    font-size: $font-size-md;
+    gap: $space-3;
+  }
+}
+
+// Value + placeholder text: shrink so the chevron stays at the trailing edge.
+.select__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+// Trailing chevron (Radix Select.Icon); spacing from label is via parent `.select` gap.
+.select__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-ink-muted;
+  font-size: $font-size-micro;
+  line-height: 1;
+}
+
+// Wrapper needed to absolutely-position the clear button over the trigger.
+.select-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.select-wrap__clear {
+  position: absolute;
+  right: $space-4;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: $space-1 $space-2;
+  cursor: pointer;
+  color: $color-ink-muted;
+  font-family: $text-font-family;
+  font-size: $font-size-sm;
+  line-height: 1;
+
+  &:hover {
+    color: $color-ink;
+  }
+}

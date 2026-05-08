@@ -1,0 +1,37 @@
+@use '../../styles/tokens' as *;
+
+.toggle {
+  display: inline-flex;
+  border: $border-width solid $color-border;
+  background: $color-paper;
+
+  &__btn {
+    padding: $space-2 $space-6;
+    border: none;
+    background: $color-paper;
+    font-family: $text-font-family;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-caps;
+    color: $color-ink-subtle;
+    cursor: pointer;
+    white-space: nowrap;
+    line-height: 1.4;
+
+    & + & {
+      border-left: $border-width solid $color-border;
+    }
+
+    &:hover:not(.toggle__btn--active) {
+      background: $color-surface-hover;
+      color: $color-ink;
+    }
+
+    &--active {
+      background: $color-ink;
+      color: $color-paper;
+      cursor: default;
+    }
+  }
+}

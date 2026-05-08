@@ -1,0 +1,23 @@
+@use '../../styles/tokens' as *;
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+  padding: $space-16;
+  border: $border-width dashed $color-border;
+  text-align: center;
+  font-family: $text-font-family;
+
+  &__action {
+    margin-top: $space-4;
+  }
+
+  // error variant: slightly heavier dashed border to signal broken state
+  &--error {
+    border-color: $color-border;
+    border-width: $border-width-emphasis;
+  }
+}

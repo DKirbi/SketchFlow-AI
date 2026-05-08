@@ -1,0 +1,81 @@
+@use '../../styles/tokens' as *;
+
+.text {
+  font-family: $text-font-family;
+
+  &--inherit {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    line-height: inherit;
+    font-style: inherit;
+  }
+
+  &--body {
+    font-size: $text-body-size;
+    line-height: $text-line-base;
+    color: $text-body-color;
+  }
+
+  &--sm {
+    font-size: $text-sm-size;
+    line-height: $text-line-tight;
+    color: $text-sm-color;
+  }
+
+  &--micro {
+    font-size: $text-micro-size;
+    line-height: $text-line-tight;
+    color: $text-micro-color;
+  }
+
+  &--muted {
+    font-size: $text-muted-size;
+    line-height: $text-line-base;
+    color: $text-muted-color;
+  }
+
+  &--description {
+    font-size: $text-muted-size;
+    line-height: $text-line-base;
+    color: $text-muted-color;
+    font-weight: $font-weight-bold;
+  }
+
+  &--subtle {
+    font-size: $text-subtle-size;
+    line-height: $text-line-base;
+    color: $text-subtle-color;
+  }
+
+  &--ghost {
+    font-size: $text-ghost-size;
+    line-height: $text-line-base;
+    color: $text-ghost-color;
+    font-style: italic;
+  }
+
+  &--secondary {
+    font-size: $text-secondary-size;
+    line-height: $text-line-base;
+    color: $text-secondary-color;
+  }
+
+  &--strong {
+    font-size: $text-body-size;
+    line-height: $text-line-base;
+    font-weight: $font-weight-bold;
+    color: $text-body-color;
+  }
+
+  &--caps {
+    font-size: $text-micro-size;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-caps;
+    line-height: $text-line-tight;
+    color: $text-micro-color;
+  }
+}

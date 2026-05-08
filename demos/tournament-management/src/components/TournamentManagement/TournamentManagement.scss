@@ -1,0 +1,345 @@
+@use 'tokens' as *;
+
+.tmgmt {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: $text-font-family;
+  background: $color-paper;
+  color: $color-ink;
+
+  &__upl-toolbar {
+    border-bottom: $border-width solid $color-border;
+    padding: $space-3 $space-4;
+  }
+
+  &__upl-left {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__logo-placeholder {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: $border-width solid $color-border;
+    flex-shrink: 0;
+  }
+
+  &__upl-titles {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  &__upl-right {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+  }
+
+  &__module-tabs {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-2 $space-4;
+    border-bottom: $border-width dashed $color-border;
+  }
+
+  &__module-tabs-label {
+    flex-shrink: 0;
+  }
+
+  &__filters {
+    padding: $space-3 $space-4;
+    border-bottom: $border-width solid $color-border;
+    background: $color-surface-inset;
+  }
+
+  &__filters-legend {
+    margin-bottom: $space-2;
+  }
+
+  &__filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: $space-3;
+    align-items: flex-end;
+  }
+
+  &__filters-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: $space-2;
+    justify-content: flex-end;
+  }
+
+  &__workspace {
+    display: grid;
+    grid-template-columns: minmax(12rem, 18rem) 1fr;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__workspace--sidebar-collapsed {
+    grid-template-columns: minmax(0, 2rem) 1fr;
+  }
+
+  &__sidebar {
+    border-right: $border-width solid $color-border;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: $color-surface-raised;
+
+    &--collapsed {
+      padding: $space-2;
+      align-items: center;
+    }
+  }
+
+  &__sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-2;
+    padding: $space-3 $space-2;
+    border-bottom: $border-width dashed $color-border;
+  }
+
+  &__sidebar-title {
+    letter-spacing: 0.04em;
+  }
+
+  &__sidebar-empty {
+    padding: $space-3;
+  }
+
+  &__nav-tree {
+    overflow: auto;
+    flex: 1;
+    padding: $space-2;
+  }
+
+  &__main {
+    position: relative;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: $color-paper;
+  }
+
+  &__empty-main {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    padding: $space-6;
+    max-width: 32rem;
+    margin: $space-4;
+    border: $border-width dashed $color-border;
+    background: $color-surface-raised;
+  }
+
+  &__list {
+    flex: 1;
+    padding: $space-4;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  &__list-head {
+    display: grid;
+    grid-template-columns: minmax(14rem, 1fr) auto auto;
+    gap: $space-4;
+    align-items: center;
+
+    .input-wrap,
+    .input {
+      width: 100%;
+    }
+  }
+
+  &__list-head-filters {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__list-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: $space-4;
+    align-items: center;
+    padding: $space-3 0;
+    border-bottom: $border-width dashed $color-border;
+  }
+
+  &__list-header-search {
+    min-width: 0;
+    width: 100%;
+  }
+
+  &__list-header-filters {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+  }
+
+  &__list-header-legend {
+    margin-right: $space-2;
+  }
+
+  &__list-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+    align-items: center;
+  }
+
+  &__list-hint {
+    max-width: 48rem;
+  }
+
+  &__row-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: $space-2;
+    align-items: center;
+    justify-content: flex-end;
+
+    .btn {
+      white-space: nowrap;
+    }
+  }
+
+  &__crumb-segment {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1;
+  }
+
+  &__loading-bloc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-6;
+  }
+
+  &__move-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: $space-3;
+    margin-top: $space-4;
+  }
+
+  &__modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    margin-top: $space-2;
+  }
+
+  &__callout {
+    border-left: $border-width solid $color-border;
+    padding-left: $space-2;
+    margin-bottom: $space-2;
+  }
+
+  &__form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: $space-3;
+    align-items: flex-end;
+  }
+
+  &__form-grid-mini {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: $space-3;
+    margin-top: $space-2;
+  }
+
+  &__field-error-msg {
+    color: $color-ink;
+    margin-top: $space-2;
+    border-left: 2px solid $color-border;
+    padding-left: $space-2;
+  }
+
+  &__overview {
+    padding: $space-3;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  &__overview-crumb {
+    margin-bottom: $space-1;
+  }
+
+  &__overview-card {
+    width: min(56rem, 100%);
+  }
+
+  &__overview-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+    margin-bottom: $space-3;
+  }
+
+  &__overview-toolbar {
+    margin-top: $space-4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+  }
+
+  &__changelog {
+    padding: $space-3;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  &__changelog-lead {
+    max-width: 40rem;
+  }
+
+  &__id-inline {
+    font-family: $text-font-family;
+  }
+
+  &__toast {
+    position: fixed;
+    top: $space-3;
+    bottom: auto;
+    right: $space-3;
+    z-index: 20;
+    max-width: 22rem;
+    max-height: 10rem;
+    overflow-y: auto;
+    animation: tmgmt-toast-slide-in 180ms ease-out;
+    will-change: transform, opacity;
+  }
+
+  &__p7-muted {
+    margin-top: $space-2;
+  }
+}
+
+@keyframes tmgmt-toast-slide-in {
+  from {
+    transform: translateX(1rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

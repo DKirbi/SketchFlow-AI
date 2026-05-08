@@ -1,0 +1,58 @@
+@use '../../styles/tokens' as *;
+
+.toast {
+  position: fixed;
+  bottom: $space-8;
+  right: $space-8;
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-4 $space-6;
+  border: $border-width solid $color-border;
+  background: $color-paper;
+  box-shadow: $shadow-sm;
+  font-family: $text-font-family;
+  font-size: $font-size-sm;
+  z-index: 1000;
+  max-width: 360px;
+
+  &__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    color: $color-ink;
+  }
+
+  &__message {
+    flex: 1;
+  }
+
+  /** Icon-only dismiss: strip default dismiss chrome inside the toast strip. */
+  &__dismiss.btn {
+    flex-shrink: 0;
+    padding: $space-1;
+    border: none;
+    background: transparent;
+    color: $color-ink-muted;
+    letter-spacing: normal;
+    text-transform: none;
+    font-weight: $font-weight-normal;
+    min-width: auto;
+
+    &:hover:not(:disabled) {
+      color: $color-ink;
+      background: transparent;
+      border: none;
+    }
+  }
+
+  // warning: dashed border signals non-critical
+  &--warning {
+    border-style: dashed;
+  }
+
+  // error: heavier border weight signals critical
+  &--error {
+    border-width: $border-width-strong;
+  }
+}

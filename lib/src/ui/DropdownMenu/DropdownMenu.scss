@@ -1,0 +1,59 @@
+@use '../../styles/tokens' as *;
+
+// z-index layering: above modal overlay/content so portal menus stay interactive.
+$z-dropdown: 1102;
+
+.dropdown-menu {
+  background: $color-paper;
+  border: $border-width-strong solid $color-ink;
+  box-shadow: $shadow-sm;
+  overflow-y: auto;
+  max-height: 280px;
+  min-width: var(--radix-select-trigger-width, 120px);
+  z-index: $z-dropdown;
+  font-family: $text-font-family;
+  font-size: $font-size-base;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-3 $space-4 $space-3 $space-7;
+    cursor: pointer;
+    color: $color-ink;
+    user-select: none;
+    position: relative;
+
+    &[data-highlighted] {
+      background: $color-surface-hover;
+      outline: none;
+    }
+
+    &[data-state='checked'] {
+      font-weight: $font-weight-semibold;
+    }
+
+    &[data-disabled] {
+      color: $color-ink-ghost;
+      cursor: not-allowed;
+    }
+  }
+
+  &__item-indicator {
+    position: absolute;
+    left: $space-3;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    color: $color-ink;
+  }
+
+  &--compact {
+    font-size: $font-size-xs;
+
+    .dropdown-menu__item {
+      padding: $space-1 $space-3;
+    }
+  }
+}

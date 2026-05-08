@@ -1,0 +1,35 @@
+{
+  "name": "notifications-overview-hifi",
+  "private": true,
+  "version": "0.0.0",
+  "description": "High-fidelity notifications triage dashboard source (requires restoring Podium/Mantine dependencies before running)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "d3-array": "^3.2.4",
+    "d3-force": "^3.0.0",
+    "d3-scale": "^4.0.2",
+    "d3-selection": "^3.0.0",
+    "d3-time": "^3.1.0",
+    "d3-time-format": "^4.1.0",
+    "d3-zoom": "^3.0.0",
+    "dayjs": "1.11.20",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.1",
+    "vitest": "^4.1.1"
+  },
+  "exportNote": "This package is preserved as future high-fidelity source. Re-add the target design-system dependencies before running dev/build scripts."
+}

@@ -1,0 +1,266 @@
+@use '../../styles/tokens' as *;
+
+// ─── Wrapper ─────────────────────────────────────────────────────
+.table-wrap {
+  border: $border-width solid $color-border;
+  background: $color-surface;
+  overflow: hidden;
+
+  &__hint {
+    font-size: $font-size-table-md-label;
+    font-weight: $font-weight-semibold;
+    color: $color-ink-muted;
+    padding: $space-3 $space-5;
+    border-bottom: $border-width solid $color-border-subtle;
+    background: $color-paper;
+  }
+
+  &__scroll { overflow-x: auto; }
+}
+
+// ─── MD tier: primary table ───────────────────────────────────────
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-table-md-body;
+  font-family: $text-font-family;
+  font-weight: $font-weight-semibold;
+
+  &__th {
+    font-size: $font-size-table-md-heading;
+    font-weight: $font-weight-semibold;
+    color: $color-ink-subtle;
+    background: $color-surface-inset;
+    padding: $space-3 $space-5;
+    text-align: left;
+    border-bottom: $border-width solid $color-border-subtle;
+    white-space: nowrap;
+    cursor: default;
+
+    &--sortable { cursor: pointer; user-select: none; }
+    &--sorted   { color: $color-ink; }
+
+    // Fluid: absorbs all remaining table width. One per table is recommended
+    // (primary name / entity column). min-width: 0 lets nested text truncate.
+    &--fluid    { min-width: 0; }
+
+    // Shrink: wraps tightly around cell content. Use for action clusters,
+    // badges, and checkboxes. width: 1% + nowrap is the canonical CSS trick.
+    &--shrink   { width: 1%; white-space: nowrap; }
+  }
+
+  // Sort direction indicator rendered inside every sortable header.
+  // Idle (unsorted) columns show ↑↓ in ghost ink to signal interactivity.
+  // Active (sorted) columns inherit the header's full ink color via --active.
+  &__sort-indicator {
+    display: inline-block;
+    margin-left: $space-2;
+    color: $color-ink-ghost;
+    font-size: 0.75em;
+    letter-spacing: -0.05em;
+    vertical-align: middle;
+
+    &--active { color: inherit; }
+  }
+
+  &__row {
+    border-bottom: $border-width solid $color-border-faint;
+
+    &:last-child  { border-bottom: none; }
+    &:hover       { background: $color-surface-hover; }
+
+    &--expandable { cursor: pointer; }
+
+    // P9: while expanded, parent row sticks in the scroll viewport so chevron, cells,
+    // and row actions stay reachable; collapse is via the row / chevron only (no duplicate strip).
+    &--expanded-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 $border-width 0 $color-border-subtle;
+
+      .table__td {
+        background: $color-surface;
+      }
+
+      &:hover .table__td {
+        background: $color-surface-hover;
+      }
+    }
+
+    &--detail {
+      background: $color-surface;
+
+      td { padding: 0; border-bottom: $border-width solid $color-border-subtle; }
+    }
+  }
+
+  &__td {
+    padding: $space-3 $space-5;
+    color: $color-ink;
+    vertical-align: middle;
+
+    &--fluid    { min-width: 0; }
+    &--shrink   { white-space: nowrap; }
+
+    &--control { padding: $space-2 $space-3; }
+    &--expand  {
+      width: 28px;
+      padding: $space-2 $space-3;
+      color: $color-ink-subtle;
+      font-size: $font-size-table-md-body;
+    }
+  }
+
+  &__detail-content {
+    padding: $space-4 $space-5;
+    font-size: $font-size-table-md-body;
+    color: $color-ink-muted;
+    border-left: $border-width-strong solid $color-border-subtle;
+    margin-left: $space-6;
+
+    // Scroll region carries padding; outer shell stays flush to the scroll box edge.
+    &:has(.table__detail-scroll) {
+      padding: 0;
+    }
+  }
+
+  &__detail-scroll {
+    overflow-y: auto;
+    padding: $space-4 $space-5;
+    font-size: $font-size-table-md-body;
+    color: $color-ink-muted;
+    border-left: $border-width-strong solid $color-border-subtle;
+  }
+
+  &__empty {
+    padding: $space-8 $space-5;
+    text-align: center;
+    color: $color-ink-ghost;
+    font-style: italic;
+    font-size: $font-size-table-md-body;
+
+    // When a rich emptySlot component is rendered, remove the italic/ghost
+    // text styling so LOFIEmptyState and similar components render correctly.
+    &--slot {
+      padding: 0;
+      font-style: normal;
+      color: inherit;
+    }
+  }
+}
+
+// ─── MD descendants: buttons, inputs, text, form controls ────────
+// In-table actions use the larger button tier for scannability.
+.table {
+  .btn {
+    font-size: $font-size-button-table;
+
+    &--compact {
+      font-size: $font-size-button-table;
+    }
+  }
+
+  .input,
+  .input--compact {
+    font-size: $font-size-table-md-body;
+    font-weight: $font-weight-normal;
+  }
+
+  .select,
+  .select--compact {
+    font-size: $font-size-table-md-body;
+    font-weight: $font-weight-normal;
+  }
+
+  .field__label {
+    font-size: $font-size-table-md-label;
+  }
+
+  .checkbox {
+    font-size: $font-size-table-md-body;
+  }
+
+  .radio-group__option {
+    font-size: $font-size-table-md-body;
+  }
+
+  // Lift text variants that are used inside cells to match table body.
+  // micro / caps / ghost retain their preset since they are visual accents.
+  .text--body,
+  .text--muted,
+  .text--subtle,
+  .text--secondary,
+  .text--sm {
+    font-size: $font-size-table-md-body;
+    font-weight: $font-weight-semibold;
+  }
+
+  .text--strong {
+    font-size: $font-size-table-md-body;
+    font-weight: $font-weight-bold;
+  }
+}
+
+// ─── SM tier: nested table inside an expanded detail row ──────────
+// A LOFITable rendered inside renderExpanded() produces a .table-wrap
+// inside .table__detail-content, so we scope on that container.
+.table__detail-content .table-wrap,
+.table__detail-content .table {
+  font-size: $font-size-table-sm-body;
+}
+
+.table__detail-content {
+  .table-wrap__hint {
+    font-size: $font-size-table-sm-label;
+  }
+
+  .table__th {
+    font-size: $font-size-table-sm-heading;
+    font-weight: $font-weight-semibold;
+  }
+
+  .table__td,
+  .table__td--expand,
+  .table__empty,
+  .table__detail-content {
+    font-size: $font-size-table-sm-body;
+  }
+
+  // SM descendant overrides — parallel to MD block above
+  .btn,
+  .btn--compact {
+    font-size: $font-size-table-sm-body;
+  }
+
+  .input,
+  .input--compact,
+  .select,
+  .select--compact {
+    font-size: $font-size-table-sm-body;
+    font-weight: $font-weight-normal;
+  }
+
+  .field__label {
+    font-size: $font-size-table-sm-label;
+  }
+
+  .checkbox,
+  .radio-group__option {
+    font-size: $font-size-table-sm-body;
+  }
+
+  .text--body,
+  .text--muted,
+  .text--subtle,
+  .text--secondary,
+  .text--sm {
+    font-size: $font-size-table-sm-body;
+    font-weight: $font-weight-semibold;
+  }
+
+  .text--strong {
+    font-size: $font-size-table-sm-body;
+    font-weight: $font-weight-bold;
+  }
+}

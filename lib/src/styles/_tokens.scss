@@ -1,0 +1,118 @@
+// ─── Typography ──────────────────────────────────────────────────
+// Canonical stack for <Text>, form controls, and all lo-fi UI copy
+$text-font-family:    'Courier New', Courier, monospace;
+$font-family:         $text-font-family;
+
+// Floor: no readable text below 11px
+$font-size-min:       11px;
+$font-size-micro:     11px; // raised from 9px — floor
+$font-size-xs:        11px; // raised from 10px — floor
+$font-size-sm:        11px;
+$font-size-base:      13px;
+$font-size-md:        16px;
+$font-size-lg:        18px;
+
+$font-weight-normal:   400;
+$font-weight-semibold: 600;
+$font-weight-bold:     700;
+
+// ─── Table tiers ─────────────────────────────────────────────────
+// MD = primary table; SM = nested/expanded detail table
+$font-size-table-md-heading: 14px;
+$font-size-table-md-body:    14px;
+$font-size-table-md-label:   12px;
+
+$font-size-table-sm-heading: 13px;
+$font-size-table-sm-body:    13px;
+$font-size-table-sm-label:   11px;
+
+// ─── Button tiers ────────────────────────────────────────────────
+// chrome = screen-level toolbar/save; table = in-row action; compact = dense chrome
+$font-size-button-chrome:  12px;
+$font-size-button-table:   14px;
+$font-size-button-compact: 11px;
+
+// ─── Navigation / tab strip ──────────────────────────────────────
+$font-size-tab: 15px;
+
+$letter-spacing-caps: 0.08em;
+$line-height-base:    1.5;
+
+// ─── Color ───────────────────────────────────────────────────────
+$color-ink:            #111;
+$color-paper:          #fff;
+
+$color-ink-secondary:  #333;
+$color-ink-muted:      #666;
+$color-ink-subtle:     #888;
+$color-ink-ghost:      #aaa;
+
+$color-border-strong:  #111;
+$color-border:         #bbb;
+$color-border-subtle:  #ddd;
+$color-border-faint:   #eee;
+
+$color-surface:        #fafafa;
+$color-surface-raised: #f5f5f5;
+$color-surface-hover:  #f0f0f0;
+$color-surface-inset:  #f8f8f8;
+
+$color-overlay:        rgba(0, 0, 0, 0.35);
+
+// ─── Text primitive (used by .text--*) — after Color ────────────
+$text-line-tight:       1.2;
+$text-line-base:        $line-height-base;
+
+$text-body-size:        $font-size-base;
+$text-body-color:       $color-ink;
+
+$text-sm-size:          $font-size-sm;
+$text-sm-color:         $color-ink;
+
+$text-micro-size:       $font-size-micro;
+$text-micro-color:      $color-ink-subtle;
+
+$text-muted-size:       $font-size-base;
+$text-muted-color:      $color-ink-muted;
+
+$text-subtle-size:      $font-size-base;
+$text-subtle-color:     $color-ink-subtle;
+
+$text-ghost-size:       $font-size-sm;
+$text-ghost-color:      $color-ink-ghost;
+
+$text-secondary-size:   $font-size-sm;
+$text-secondary-color:  $color-ink-secondary;
+
+// ─── Border ──────────────────────────────────────────────────────
+$border-width:          1px;
+$border-width-strong:   2px;
+$border-width-emphasis: 1.5px;
+/** Storybook pattern-example chrome (gallery nodes, PatternShowcase stage). */
+$border-width-pattern-frame: 5px;
+
+// ─── Radius ──────────────────────────────────────────────────────
+$radius-none: 0;
+$radius-sm:   4px;
+$radius-pill: 999px;
+
+// ─── Shadow ──────────────────────────────────────────────────────
+$shadow-sm: 2px 2px 0 #{$color-border};
+$shadow-md: 4px 4px 0 #{$color-border};
+$shadow-lg: 6px 6px 0 #{$color-ink-ghost};
+
+// ─── Spacing ─────────────────────────────────────────────────────
+$space-1:  2px;
+$space-2:  4px;
+$space-3:  6px;
+$space-4:  8px;
+$space-5:  10px;
+$space-6:  12px;
+$space-7:  14px;
+$space-8:  16px;
+$space-10: 20px;
+$space-12: 24px;
+$space-16: 32px;
+
+// ─── Modal ─────────────────────────────────────────────────────
+$modal-min-width: 500px;

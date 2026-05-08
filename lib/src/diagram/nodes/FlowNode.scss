@@ -1,0 +1,163 @@
+@use '../../styles/tokens' as *;
+
+/* ─── Shared flow-node base ─────────────────────────────────────── */
+.flow-node {
+  background: $color-paper;
+  border: $border-width-strong solid $color-ink;
+  font-family: $text-font-family;
+  min-width: 140px;
+  max-width: 220px;
+  position: relative;
+
+  &__label {
+    padding: $space-4 $space-5;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.02em;
+    word-break: break-word;
+  }
+
+  &__meta {
+    padding: 0 $space-5 $space-3;
+    font-size: $font-size-xs;
+    color: $color-ink-subtle;
+    border-top: $border-width solid $color-border-subtle;
+    padding-top: $space-2;
+  }
+
+  &__actions {
+    display: none;
+    position: absolute;
+    top: $space-2;
+    right: $space-2;
+    gap: $space-1;
+    align-items: center;
+
+    button {
+      font-size: $font-size-micro;
+      padding: $space-1 $space-2;
+      border: $border-width solid $color-border;
+      background: $color-paper;
+      color: $color-ink-subtle;
+      cursor: pointer;
+      line-height: 1.2;
+
+      &:hover { background: $color-ink; color: $color-paper; border-color: $color-ink; }
+    }
+  }
+
+  &:hover &__actions {
+    display: flex;
+  }
+
+  /* ─── Step: plain rectangle (default) ── */
+  &--step {
+    // inherits base styles
+  }
+
+  /* ─── Decision: diamond via CSS ── */
+  &--decision {
+    border: none;
+    background: transparent;
+    min-width: 120px;
+    max-width: 120px;
+
+    .flow-node__diamond {
+      width: 100px;
+      height: 100px;
+      border: $border-width-strong solid $color-ink;
+      background: $color-paper;
+      transform: rotate(45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .flow-node__label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $space-6;
+      text-align: center;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  /* ─── Message: dashed rectangle ── */
+  &--message {
+    border-style: dashed;
+    border-color: $color-border;
+
+    .flow-node__label {
+      color: $color-ink-secondary;
+    }
+  }
+
+  /* ─── Actor: pill shape ── */
+  &--actor {
+    border-radius: $radius-pill;
+    min-width: 120px;
+    max-width: 180px;
+    text-align: center;
+
+    .flow-node__label {
+      padding: $space-3 $space-6;
+      text-align: center;
+      font-size: $font-size-xs;
+      text-transform: uppercase;
+      letter-spacing: $letter-spacing-caps;
+    }
+  }
+
+  /* ─── Annotation: no border, italic ── */
+  &--annotation {
+    border: none;
+    background: transparent;
+    min-width: 120px;
+    max-width: 200px;
+
+    .flow-node__label {
+      font-style: italic;
+      font-weight: $font-weight-normal;
+      font-size: $font-size-xs;
+      color: $color-ink-muted;
+      padding: $space-2 $space-3;
+      border-left: $border-width-strong solid $color-border-subtle;
+    }
+  }
+}
+
+/* ─── Start / End terminals ─────────────────────────────────────── */
+.flow-terminal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  font-family: $text-font-family;
+
+  &__dot {
+    width: 28px;
+    height: 28px;
+    background: $color-ink;
+    border: $border-width-strong solid $color-ink;
+  }
+
+  &--start .flow-terminal__dot {
+    border-radius: $radius-pill;
+  }
+
+  &--end .flow-terminal__dot {
+    border-radius: $radius-none;
+  }
+
+  &__label {
+    font-size: $font-size-micro;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-caps;
+    color: $color-ink-subtle;
+  }
+}

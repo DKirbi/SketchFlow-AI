@@ -1,0 +1,56 @@
+@use '../../styles/tokens' as *;
+
+.tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-6;
+  border-bottom: $border-width solid $color-border-subtle;
+}
+
+.tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  margin: 0;
+  margin-bottom: -$border-width;
+  padding: $space-2 $space-4;
+  border: none;
+  border-bottom: $border-width-strong solid transparent;
+  border-radius: $radius-none;
+  background: transparent;
+  font-family: $text-font-family;
+  font-size: $font-size-tab;
+  font-weight: $font-weight-normal;
+  line-height: 1.4;
+  color: $color-ink-subtle;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+
+    // Keep leading glyphs aligned without imposing a global icon size token
+    max-height: 1.25em;
+  }
+
+  &:hover:not(.tabs__tab--disabled):not(.tabs__tab--active) {
+    color: $color-ink;
+  }
+
+  &--active {
+    border-bottom-color: $color-ink;
+    color: $color-ink;
+    font-weight: $font-weight-bold;
+    cursor: default;
+  }
+
+  &--disabled {
+    color: $color-ink-ghost;
+    cursor: not-allowed;
+    opacity: 0.85;
+  }
+}

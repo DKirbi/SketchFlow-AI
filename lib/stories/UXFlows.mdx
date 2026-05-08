@@ -1,0 +1,8 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import * as UXFlowsStories from './UXFlows.stories';
+import uxFlows from '../../docs/UX_PATTERNS.md?raw';
+import { UxPatternsWithStoryEmbeds } from './UxPatternsWithStoryEmbeds';
+
+<Meta of={UXFlowsStories} />
+
+<UxPatternsWithStoryEmbeds markdown={uxFlows} storiesModule={UXFlowsStories} />

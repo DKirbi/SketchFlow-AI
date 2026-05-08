@@ -1,0 +1,87 @@
+@use '../lib/src/styles/tokens' as *;
+
+// Static Pages / dev hub: layout glue only. Visuals come from lofi-kit.css (.btn, .text, …).
+
+.hub {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $space-12 $space-5;
+  background: $color-paper;
+}
+
+.hub__inner {
+  width: 100%;
+  max-width: 22rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.hub__brand {
+  margin: 0 0 $space-2;
+  text-align: center;
+}
+
+.hub__tagline {
+  margin: 0 0 $space-8;
+  text-align: center;
+  font-size: $font-size-sm;
+  line-height: $line-height-base;
+}
+
+.hub__heading {
+  margin: 0 0 $space-8;
+  text-align: center;
+}
+
+.hub__stack {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+// LOFIButton — default variant as full-width block link (see LOFI_BLOCKS.md)
+.hub__demo-link {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  min-height: auto;
+  height: auto;
+}
+
+.hub__demo-link .hub__demo-desc {
+  display: block;
+  margin-top: $space-2;
+  width: 100%;
+}
+
+// Disabled “New Project” — same block width as demo links; .btn:disabled from lofi-kit
+.hub__new-project {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+}
+
+.hub__footer {
+  margin-top: $space-12;
+  padding-top: $space-8;
+  border-top: $border-width dashed $color-border-subtle;
+  text-align: center;
+}
+
+.hub__storybook-link {
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+    outline: none;
+  }
+}

@@ -1,0 +1,64 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Transformer Patterns
+
+**Transformer Patterns** is the UX pattern library for the **Transformers team** — a living inventory of interaction behaviours, interface flows, and composition rules for the interfaces this team builds and reviews.
+
+---
+
+## Two separate things
+
+This Storybook presents **two distinct artefacts** that work together but are not the same:
+
+### 1. Transformers Patterns (core)
+
+The **patterns** — the interaction pattern inventory and the UPL composition model — are the **core artefact of the Transformers team**. They define:
+
+- How interfaces should behave (validation, confirmation, save feedback, destructive flows)
+- How screens are structured (UPL shell, sidebar, workspace, filter query row)
+- Which interaction conventions apply across all operator tools
+
+Patterns are designed and documented here. They are independent of any specific component library. In production, these patterns are implemented using **Podium** — the high-fidelity design system.
+
+### 2. LOFI Kit (tool)
+
+**LOFI Kit** is a **low-fidelity design tool** — a grayscale, monospace component library used for prototyping these patterns quickly. Lo-fi prototypes are intentionally rough: no colour, square corners, monospace type. This keeps the focus on **structure and behaviour**, not visual polish.
+
+LOFI Kit is used here in Storybook to **render live examples** of patterns. It does not have to be used alongside the patterns — it is just the fastest way to prototype and review them before production implementation in Podium.
+
+**LOFI Kit ≠ production design system.** Production UIs are built with **Podium**.
+
+---
+
+## Lo-fidelity UX testing
+
+Lo-fi renders keep pattern examples **abstract**. When an example has no colour or brand styling, reviewers focus on structure and interaction flow — not visual preferences. For the full rationale (philosophy, greyscale-first flow, accessibility notes), see **`## Lo-fidelity UX testing`** in [`docs/UX_PATTERNS.md`](../docs/UX_PATTERNS.md) — the canonical copy lives next to **Patterns** in that file.
+
+---
+
+## Storybook structure
+
+| Section | What it contains |
+|---|---|
+| **PATTERNS / UX Patterns** | Lo-fi P1–P10 demos and interaction rules (`docs/UX_PATTERNS.md`), **Story 1 / Story 2** reference flows (`docs/UX_PATTERN_STORIES.md`), and both docs embedded in Storybook. Start here. |
+| **PATTERNS / UI Patterns** | Podium semantic UI rulebook (`docs/UI_PATTERNS.md`) with live high-fidelity examples — companion to NL → Podium mapping. |
+| **PATTERNS / LOFI Kit** | LOFI Kit component reference: visual rules, tokens, component catalog, compliance. |
+| **UI / StatefulButton** | Component stories for `LOFIStatefulButton` (P3): idle / loading / success and row-action demos. |
+| **UI / ...** | Individual LOFI Kit component stories with prop controls and API docs. |
+| **Diagram / ...** | React Flow diagram node and edge type stories. |
+
+---
+
+## Docs in the repo
+
+| File | Audience | Purpose |
+|---|---|---|
+| `docs/UX_PATTERNS.md` | Humans | Interaction pattern inventory and flow rules — rationale, UX flows, UPL model |
+| `docs/UX_PATTERNS_AGENT.md` | Tooling / automation | Condensed numbered rules for each pattern — used when generating a prototype |
+| `docs/COMPOSITION_PATTERNS.md` | Both | Control selection rules + composition recipes + UPL patterns |
+| `docs/NL_COMPONENT_MAPPING_LO_FI.md` | Tooling / automation | NL → LOFI signal phrase lookup |
+| `docs/NL_COMPONENT_MAPPING_HI_FI.md` | Tooling / automation | NL → Podium / Mantine starting map (use with Podium MCP) |
+| `docs/LOFI_KIT_PATTERNS.md` | Both | LOFI Kit component catalog, tokens, decision guide, compliance |
+| `docs/LOFI_BLOCKS.md` | Both | One-line quick-reference table |

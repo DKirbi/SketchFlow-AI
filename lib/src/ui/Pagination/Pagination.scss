@@ -1,0 +1,37 @@
+@use '../../styles/tokens' as *;
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-6;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pagination__left {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.pagination__center {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+  min-width: 0;
+}
+
+.pagination__status {
+  white-space: nowrap;
+}
+
+.pagination__right {
+  flex: 0 0 auto;
+
+  .select {
+    min-width: 7.5rem;
+  }
+}

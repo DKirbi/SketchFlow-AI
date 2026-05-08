@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./lib/tsconfig.build.json" },
+    { "path": "./demos/bracket-demo/tsconfig.json" },
+    { "path": "./demos/mapping-prototype/tsconfig.json" },
+    { "path": "./demos/notifications-overview/tsconfig.json" },
+    { "path": "./demos/notifications-overview-hifi/tsconfig.json" },
+    { "path": "./demos/tournament-management/tsconfig.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

@@ -1,0 +1,41 @@
+@use '../../styles/tokens' as *;
+
+.card {
+  border: $border-width solid $color-border;
+  background: $color-paper;
+
+  &--empty {
+    border-style: dashed;
+    border-color: $color-border-subtle;
+    background: $color-surface;
+  }
+
+  &__header {
+    padding: $space-4 $space-6;
+    border-bottom: $border-width solid $color-border-subtle;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.02em;
+  }
+
+  &__body {
+    padding: $space-5 $space-6;
+
+    .card--empty & {
+      font-style: italic;
+      color: $color-ink-ghost;
+      text-align: center;
+      font-size: $font-size-sm;
+    }
+  }
+
+  &__footer {
+    padding: $space-3 $space-6;
+    border-top: $border-width solid $color-border-faint;
+    background: $color-surface;
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    flex-wrap: wrap;
+  }
+}

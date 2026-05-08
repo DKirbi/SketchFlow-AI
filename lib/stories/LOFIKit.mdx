@@ -1,0 +1,22 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import lofiKitPatterns from '../../docs/LOFI_KIT_PATTERNS.md?raw';
+
+<Meta
+  title="PATTERNS/LOFI Kit"
+  parameters={{
+    docs: {
+      toc: {
+        title: 'Table of Contents',
+        headingSelector: 'h1, h2, h3, h4',
+      },
+    },
+  }}
+/>
+
+**LOFI Kit** is a low-fidelity design tool — a grayscale, monospace component library for fast prototyping. It is used here to render live pattern examples. It is **not** the production design system; production UIs use **Podium**.
+
+Component stories with interactive prop controls live under the **UI / ...** and **Diagram / ...** sections in the sidebar.
+
+---
+
+<Markdown>{lofiKitPatterns}</Markdown>

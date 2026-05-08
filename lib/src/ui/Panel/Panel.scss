@@ -1,0 +1,54 @@
+@use '../../styles/tokens' as *;
+
+.panel {
+  background: $color-paper;
+  border: $border-width-strong solid $color-ink;
+  padding: $space-6;
+  box-shadow: $shadow-md;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  min-width: 280px;
+  max-width: 360px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: $space-4;
+    border-bottom: $border-width solid $color-border-subtle;
+  }
+
+  &__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.02em;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: $font-size-sm;
+    color: $color-ink-subtle;
+    cursor: pointer;
+    padding: 0 $space-1;
+    line-height: 1;
+
+    &:hover { color: $color-ink; }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    flex: 1;
+  }
+
+  &__footer {
+    display: flex;
+    gap: $space-3;
+    padding-top: $space-4;
+    border-top: $border-width solid $color-border-subtle;
+    flex-wrap: wrap;
+  }
+}

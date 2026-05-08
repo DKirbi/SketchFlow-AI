@@ -1,0 +1,58 @@
+@use '../../styles/tokens' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-caps;
+    color: $color-ink-subtle;
+
+    &--required::after {
+      content: ' *';
+      color: $color-ink;
+    }
+  }
+
+  &__hint {
+    font-size: $font-size-xs;
+    color: $color-ink-muted;
+    margin-top: $space-1;
+    line-height: $line-height-base;
+  }
+
+  &__error {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    color: $color-ink;
+    margin-top: $space-1;
+    line-height: $line-height-base;
+    border-bottom: $border-width dashed $color-ink;
+    display: inline-block;
+  }
+
+  &--error {
+    .field__label {
+      color: $color-ink;
+    }
+  }
+
+  &--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: $space-4;
+
+    .field__label {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    > :not(.field__label):not(.field__hint) {
+      flex: 1;
+    }
+  }
+}

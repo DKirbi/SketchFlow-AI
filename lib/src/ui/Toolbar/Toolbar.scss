@@ -1,0 +1,33 @@
+@use '../../styles/tokens' as *;
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: $space-6;
+  flex-wrap: wrap;
+  padding: $space-5 $space-8;
+  border-bottom: $border-width-strong solid $color-ink;
+  background: $color-paper;
+  flex-shrink: 0;
+
+  &__left {
+    display: flex;
+    align-items: baseline;
+    gap: $space-5;
+    flex: 1 1 220px;
+  }
+
+  &__center {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    flex-wrap: wrap;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    margin-left: auto;
+  }
+}

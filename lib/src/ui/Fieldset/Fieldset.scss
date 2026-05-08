@@ -1,0 +1,23 @@
+@use '../../styles/tokens' as *;
+
+.fieldset {
+  border: $border-width solid $color-border;
+  padding: $space-5 $space-6;
+  margin-bottom: $space-6;
+
+  &__legend {
+    padding: 0 $space-2;
+    font-size: $font-size-micro;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-caps;
+    color: $color-ink-subtle;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: $space-5;
+    margin-top: $space-4;
+  }
+}

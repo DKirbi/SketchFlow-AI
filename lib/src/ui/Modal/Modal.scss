@@ -1,0 +1,83 @@
+@use '../../styles/tokens' as *;
+
+// Radix Dialog.Overlay — full-screen backdrop
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: $color-overlay;
+  z-index: 1000;
+}
+
+// Radix Dialog.Content — centered, siblings with overlay in the portal
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $color-paper;
+  border: $border-width-strong solid $color-ink;
+  min-width: $modal-min-width;
+  width: $modal-min-width;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: $space-10;
+  box-shadow: $shadow-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  z-index: 1001;
+
+  &--wide {
+    width: 560px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: $space-5;
+    border-bottom: $border-width-strong solid $color-ink;
+  }
+
+  &__title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.02em;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: $font-size-md;
+    color: $color-ink-subtle;
+    cursor: pointer;
+    padding: 0 $space-2;
+    line-height: 1;
+    flex-shrink: 0;
+
+    &:hover { color: $color-ink; }
+  }
+
+  &__description {
+    font-size: $font-size-xs;
+    color: $color-ink-muted;
+    line-height: $line-height-base;
+    margin-top: -$space-2;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: $space-5;
+    flex: 1;
+  }
+
+  &__footer {
+    display: flex;
+    gap: $space-4;
+    padding-top: $space-4;
+    border-top: $border-width solid $color-border-subtle;
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,78 @@
+@use '../../styles/tokens' as *;
+
+.input {
+  display: block;
+  width: 100%;
+  padding: $space-3 $space-4;
+  border: $border-width solid $color-border;
+  background: $color-paper;
+  color: $color-ink;
+  font-family: $text-font-family;
+  font-size: $font-size-base;
+  border-radius: $radius-none;
+
+  &::placeholder {
+    color: $color-ink-ghost;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-border-strong;
+    border-width: $border-width-strong;
+  }
+
+  &:disabled {
+    background: $color-surface;
+    color: $color-ink-muted;
+    cursor: not-allowed;
+  }
+
+  &[readonly] {
+    background: $color-surface;
+    color: $color-ink-subtle;
+  }
+
+  &--compact {
+    padding: $space-1 $space-3;
+    font-size: $font-size-xs;
+  }
+
+  // Extra right padding reserves space for the clear button at all times,
+  // preventing layout shift when the button appears/disappears.
+  &--has-clear {
+    padding-right: $space-8 + $space-5;
+  }
+
+  &--compact#{&}--has-clear {
+    padding-right: $space-6 + $space-4;
+  }
+}
+
+.input-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.input-wrap__clear {
+  position: absolute;
+  right: $space-2;
+  top: 50%;
+  transform: translateY(-50%);
+  background: $color-surface-raised;
+  border: $border-width solid $color-border;
+  border-radius: $radius-none;
+  padding: $space-1 $space-2;
+  cursor: pointer;
+  color: $color-ink-subtle;
+  font-family: $text-font-family;
+  font-size: $font-size-sm;
+  line-height: 1;
+
+  &:hover,
+  &:focus-visible {
+    color: $color-ink;
+    border-color: $color-border-strong;
+    outline: none;
+  }
+}

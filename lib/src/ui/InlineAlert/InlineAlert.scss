@@ -1,0 +1,74 @@
+@use '../../styles/tokens' as *;
+
+.inline-alert {
+  width: 100%;
+  border: $border-width solid $color-border;
+  background: $color-paper;
+  padding: $space-4 $space-6;
+  font-family: $text-font-family;
+  font-size: $font-size-sm;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    color: $color-ink;
+  }
+
+  &__title {
+    flex: 1;
+    font-weight: $font-weight-semibold;
+  }
+
+  /** Icon-only dismiss — match toast strip treatment. */
+  &__dismiss.btn {
+    flex-shrink: 0;
+    padding: $space-1;
+    border: none;
+    background: transparent;
+    color: $color-ink-muted;
+    letter-spacing: normal;
+    text-transform: none;
+    font-weight: $font-weight-normal;
+    min-width: auto;
+
+    &:hover:not(:disabled) {
+      color: $color-ink;
+      background: transparent;
+      border: none;
+    }
+  }
+
+  &__body {
+    margin-top: $space-2;
+    // align with title text (25px icon + gap)
+    padding-left: calc(25px + #{$space-3});
+  }
+
+  // error: solid 1px outer, solid 2px left rule
+  &--error {
+    border-left: $border-width-strong solid $color-ink;
+  }
+
+  // warning: dashed 1px outer, dashed 2px left rule
+  &--warning {
+    border-style: dashed;
+    border-left: $border-width-strong dashed $color-ink;
+  }
+
+  // info: solid 1px outer, solid 1px left rule (muted)
+  &--info {
+    border-left: $border-width solid $color-ink-muted;
+  }
+
+  // success: solid 1px outer, solid 1px left rule
+  &--success {
+    border-left: $border-width solid $color-ink;
+  }
+}

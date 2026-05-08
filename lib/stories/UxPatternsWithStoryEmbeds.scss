@@ -1,0 +1,228 @@
+@use '../src/styles/tokens' as *;
+
+// ─── Accordion list wrapper ─────────────────────────────────────────────────
+
+.pattern-accordion-list {
+  margin: $space-4 0 $space-8;
+}
+
+// ─── Individual collapsible pattern section ─────────────────────────────────
+
+.pattern-accordion {
+  border-bottom: 1px solid $color-border-subtle;
+
+  &:first-child {
+    border-top: 1px solid $color-border-subtle;
+  }
+
+  // ── Trigger (acts as the h3 heading) — sticky while scrolling long sections ─
+
+  &__trigger {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: $space-6 0;
+    margin: 0;
+    background: $color-paper;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: $text-font-family;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $color-ink;
+    line-height: $line-height-base;
+    box-shadow: 0 1px 0 0 $color-border-faint;
+
+    &:hover {
+      color: $color-ink-secondary;
+    }
+
+    // Rotate chevron when the section is open
+    &[data-state='open'] .pattern-accordion__chevron {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    margin-left: $space-6;
+    font-size: 0.65rem;
+    color: $color-ink-ghost;
+    display: inline-block;
+    transition: transform 180ms ease;
+  }
+
+  // ── Expandable content ─────────────────────────────────────────────────────
+
+  &__intro {
+    margin-bottom: $space-6;
+
+    // Canonical pattern brief (blockquote immediately under ### in UX_PATTERNS.md)
+    :global(blockquote) {
+      margin: $space-4 0 0;
+      padding-left: $space-5;
+      border-left: $border-width-strong solid $color-ink-muted;
+      color: $color-ink;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      :global(p) {
+        margin: 0;
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        line-height: 1.55;
+      }
+
+      // Secondary docs note (second blockquote)
+      & + blockquote {
+        margin-top: $space-4;
+        padding-left: $space-4;
+        border-left-width: $border-width;
+        border-left-style: dashed;
+        border-left-color: $color-border;
+
+        :global(p) {
+          font-size: $font-size-base;
+          font-weight: $font-weight-normal;
+          font-style: italic;
+          color: $color-ink-secondary;
+          line-height: $line-height-base;
+        }
+      }
+    }
+  }
+
+  &__content {
+    padding-bottom: $space-12;
+
+    // Give h4 headings breathing room — they often follow immediately after
+    // an embedded Story canvas which provides no bottom margin of its own.
+    :global(h4) {
+      margin-top: $space-16;
+    }
+
+    // Animate open / close using the Radix data attribute
+    &[data-state='open'] {
+      animation: accordionOpen 150ms ease-out;
+    }
+
+    &[data-state='closed'] {
+      animation: accordionClose 100ms ease-in;
+    }
+  }
+}
+
+// ─── Nested h4 sub-patterns (inside one P# accordion) ──────────────────────
+
+.pattern-sub-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: $space-4;
+  border-left: 2px solid $color-border-faint;
+  padding-left: $space-6;
+}
+
+.pattern-sub-accordion {
+  border-bottom: 1px solid $color-border-faint;
+
+  &:first-child {
+    border-top: 1px solid $color-border-faint;
+  }
+
+  &__trigger {
+    // Sit below the parent P# sticky bar (~3.5rem) while scrolling nested content
+    position: sticky;
+    top: 3.5rem;
+    z-index: 2;
+    box-shadow: 0 1px 0 0 $color-border-faint;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: $space-4 0;
+    background: $color-paper;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: $text-font-family;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-ink-secondary;
+    line-height: $line-height-base;
+
+    &:hover {
+      color: $color-ink;
+    }
+
+    &[data-state='open'] .pattern-sub-accordion__chevron {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    margin-left: $space-4;
+    font-size: 0.6rem;
+    color: $color-ink-ghost;
+    display: inline-block;
+    transition: transform 180ms ease;
+  }
+
+  &__content {
+    padding-bottom: $space-8;
+
+    :global(h4) {
+      margin-top: $space-8;
+    }
+
+    &[data-state='open'] {
+      animation: accordionOpen 150ms ease-out;
+    }
+
+    &[data-state='closed'] {
+      animation: accordionClose 100ms ease-in;
+    }
+  }
+}
+
+@keyframes accordionOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes accordionClose {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.story--patterns-ux-flows--p-3-edit-modal {
+  padding: 0;
+}

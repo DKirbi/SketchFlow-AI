@@ -1,0 +1,62 @@
+@use '../../styles/tokens' as *;
+
+.main-workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $color-paper;
+  font-family: $text-font-family;
+
+  // ── Header zone: breadcrumb + title + badges ──────────────────────
+  &__header {
+    flex-shrink: 0;
+    padding: $space-6 $space-8;
+    border-bottom: $border-width solid $color-border;
+    background: $color-surface;
+  }
+
+  &__breadcrumb {
+    margin-bottom: $space-2;
+  }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    flex-wrap: wrap;
+  }
+
+  &__badges {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    flex-wrap: wrap;
+  }
+
+  // ── Optional tab strip ────────────────────────────────────────────
+  &__tabs {
+    flex-shrink: 0;
+    padding: 0 $space-8;
+    border-bottom: $border-width solid $color-border;
+  }
+
+  // ── Scrollable body ───────────────────────────────────────────────
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-8;
+    min-height: 0; // critical: lets flex child scroll inside a flex container
+  }
+
+  // ── Sticky footer: right-aligned actions ─────────────────────────
+  &__footer {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: $space-4;
+    padding: $space-6 $space-8;
+    border-top: $border-width solid $color-border;
+    background: $color-surface;
+  }
+}

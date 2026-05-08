@@ -1,0 +1,24 @@
+{
+  "description": "Canonical order of top-level patterns (P1–P10) under ## Patterns in UX_PATTERNS.md. Updated when new top-level patterns are added (e.g. P4 Toast notifications, 2026).",
+  "topLevelPatternOrder": [
+    { "id": "P1", "titleHint": "Workspace (Unified Production Landscape)" },
+    { "id": "P2", "titleHint": "Data Table" },
+    { "id": "P3", "titleHint": "Stateful Button" },
+    { "id": "P4", "titleHint": "Toast notification messages" },
+    { "id": "P5", "titleHint": "Modal" },
+    { "id": "P6", "titleHint": "Inline Validation" },
+    { "id": "P7", "titleHint": "Confirmation Dialog" },
+    { "id": "P8", "titleHint": "Tab Navigation" },
+    { "id": "P9", "titleHint": "Filters" },
+    { "id": "P10", "titleHint": "Sticky disclosure while scrolling" }
+  ],
+  "interactionRuleOrder": [
+    { "id": "R1", "titleHint": "Field clear" },
+    { "id": "R2", "titleHint": "Validation and save gating" },
+    { "id": "R3", "titleHint": "Confirmation dialogs" },
+    { "id": "R4", "titleHint": "Loading and feedback" },
+    { "id": "R5", "titleHint": "Destructive actions" },
+    { "id": "R6", "titleHint": "Data and mocking" },
+    { "id": "R7", "titleHint": "Changelog" }
+  ]
+}

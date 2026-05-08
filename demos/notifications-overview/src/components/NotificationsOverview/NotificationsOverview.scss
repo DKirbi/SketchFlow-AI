@@ -1,0 +1,136 @@
+@use 'tokens' as *;
+
+.notifications-overview {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: $text-font-family;
+  background: $color-paper;
+  color: $color-ink;
+
+  &__upl-toolbar {
+    border-bottom: $border-width solid $color-border;
+    padding: $space-3 $space-4;
+  }
+
+  &__upl-left {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__upl-titles {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  &__logo-placeholder {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: $border-width solid $color-border;
+    flex-shrink: 0;
+  }
+
+  &__upl-right {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+  }
+
+  &__tabs-wrap {
+    padding: $space-2 $space-4 0;
+    border-bottom: $border-width solid $color-border;
+  }
+
+  &__filters {
+    padding: $space-4;
+    border-bottom: $border-width solid $color-border;
+  }
+
+  &__filters-legend {
+    margin: 0 0 $space-3;
+  }
+
+  &__filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: $space-3 $space-4;
+    align-items: end;
+  }
+
+  &__filters-actions {
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+  }
+
+  &__dataset-scope {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-2 $space-4;
+    border-bottom: $border-width solid $color-border;
+    flex-wrap: wrap;
+  }
+
+  &__dataset-label {
+    flex-shrink: 0;
+  }
+
+  &__workspace {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__sidebar {
+    width: 22rem;
+    min-width: 17rem;
+    max-width: 28rem;
+    border-right: $border-width solid $color-border;
+    padding: $space-3 $space-4;
+    overflow: auto;
+    flex-shrink: 0;
+  }
+
+  &__sidebar-heading {
+    margin: 0 0 $space-3;
+  }
+
+  &__group-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    margin-bottom: $space-3;
+  }
+
+  &__group-toggle-label {
+    flex-shrink: 0;
+  }
+
+  &__bucket-wrap {
+    margin-bottom: $space-3;
+  }
+
+  &__bucket {
+    width: 100%;
+    justify-content: center;
+  }
+
+  &__nav-tree {
+    margin-top: 0;
+  }
+
+  &__main {
+    flex: 1;
+    min-width: 0;
+    overflow: auto;
+    padding: $space-3 $space-4;
+  }
+
+  &__toast.toast {
+    top: $space-8;
+    bottom: auto;
+  }
+}
