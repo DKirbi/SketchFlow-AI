@@ -1,32 +1,29 @@
 /**
- * Podium (high-fidelity) UI Pattern demos — embedded in `docs/UI_PATTERNS.md` via
+ * ShadCN reference demos for `docs/UI_PATTERNS.md` — embedded via
  * `<!-- storybook:embed ExportName -->`.
+ *
+ * These are visual illustrations of Podium semantic rules (rank, color, surface).
+ * Production code uses @podium-design-system/react-components; this file provides
+ * portable reference demos that run without the private Podium registry.
  */
-import {
-  PodiumProvider,
-  PdsFilterChip,
-  PdsLoader,
-  PdsMantineBadge,
-  PdsMantineButton,
-  PdsMantineText,
-  PdsModal,
-  PdsModalBody,
-  PdsModalFooter,
-  PdsModalHeader,
-  PdsTab,
-  PdsTabGroup,
-  PdsTable,
-  PdsTBody,
-  PdsTBodyCell,
-  PdsTBodyRow,
-  PdsTextField,
-  PdsTHead,
-  PdsTHeadCell,
-  PdsTHeadRow,
-} from '@podium-design-system/react-components';
-import '@podium-design-system/react-components/pds-mantine-styles.css';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { Button } from './shadcn/button';
+import { Badge } from './shadcn/badge';
+import { Input } from './shadcn/input';
+import { Label } from './shadcn/label';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from './shadcn/dialog';
+import { Tabs, TabsList, TabsTrigger } from './shadcn/tabs';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from './shadcn/table';
+import { Toggle } from './shadcn/toggle';
 
 const flexCol = (gap: number, extra?: React.CSSProperties) =>
   ({
@@ -57,245 +54,182 @@ const storyStage = (children: React.ReactNode) => (
   <div style={{ maxWidth: 960, width: '100%' }}>{children}</div>
 );
 
+const strip = (children: React.ReactNode) => (
+  <div
+    style={{
+      padding: 12,
+      borderRadius: 4,
+      border: '1px solid rgba(0,0,0,0.12)',
+      background: 'rgba(0,0,0,0.04)',
+    }}
+  >
+    <div style={flexRow(8, { alignItems: 'center', wrap: false })}>{children}</div>
+  </div>
+);
+
+const cap = (kind: 'do' | 'dont', text: string) => (
+  <p className="text-sm font-semibold">
+    {kind === 'do' ? 'Do — ' : "Don't — "}
+    {text}
+  </p>
+);
+
+/* ─── §1.7 Button hierarchy Do / Don't ─────────────────────────────────────── */
+
 function UI_ButtonHierarchyDoDontDemo() {
-  const strip = (children: React.ReactNode) => (
-    <div
-      style={{
-        padding: 12,
-        borderRadius: 4,
-        border: '1px solid rgba(0,0,0,0.12)',
-        background: 'rgba(0,0,0,0.04)',
-      }}
-    >
-      <div style={flexRow(8, { alignItems: 'center', wrap: false })}>{children}</div>
-    </div>
-  );
-
-  const cap = (kind: 'do' | 'dont', text: string) => (
-    <PdsMantineText type="interface" fontSize="500" fontWeight="strong">
-      {kind === 'do' ? 'Do — ' : "Don't — "}
-      {text}
-    </PdsMantineText>
-  );
-
   return (
     <div style={flexCol(20)}>
-      <PdsMantineText type="interface" fontSize="600" fontWeight="strong">
-        §1.7 — button hierarchy (abbreviated visuals; full pairs in doc)
-      </PdsMantineText>
+      <p className="text-base font-semibold">§1.7 — button hierarchy (abbreviated visuals; full pairs in doc)</p>
 
       {cap('do', 'Monotonic ladder: ghost → subtle → fill (same semantic colour).')}
       {strip(
         <>
-          <PdsMantineButton rank="ghost" color="action" surface="on-light">
-            Tertiary
-          </PdsMantineButton>
-          <PdsMantineButton rank="subtle" color="action" surface="on-light">
-            Secondary
-          </PdsMantineButton>
-          <PdsMantineButton rank="fill" color="action" surface="on-light">
-            Primary
-          </PdsMantineButton>
+          <Button variant="ghost">Tertiary</Button>
+          <Button variant="subtle">Secondary</Button>
+          <Button variant="action">Primary</Button>
         </>,
       )}
 
       {cap('dont', 'Outline as strongest beside subtle — subtle can read heavier than outline.')}
       {strip(
         <>
-          <PdsMantineButton rank="ghost" color="action" surface="on-light">
-            Back
-          </PdsMantineButton>
-          <PdsMantineButton rank="subtle" color="neutral" surface="on-light">
-            Secondary
-          </PdsMantineButton>
-          <PdsMantineButton rank="outline" color="action" surface="on-light">
-            “Primary” outline
-          </PdsMantineButton>
+          <Button variant="ghost">Back</Button>
+          <Button variant="subtle">Secondary</Button>
+          <Button variant="outline">"Primary" outline</Button>
         </>,
       )}
 
       {cap('do', 'One semantic family per strip (all neutral here).')}
       {strip(
         <>
-          <PdsMantineButton rank="ghost" color="neutral" surface="on-light">
-            ⚙
-          </PdsMantineButton>
-          <PdsMantineButton rank="ghost" color="neutral" surface="on-light">
-            Edit
-          </PdsMantineButton>
-          <PdsMantineButton rank="subtle" color="neutral" surface="on-light">
-            + Add
-          </PdsMantineButton>
+          <Button variant="ghost">⚙</Button>
+          <Button variant="ghost">Edit</Button>
+          <Button variant="subtle">+ Add</Button>
         </>,
       )}
 
       {cap('dont', 'Mixed neutral utilities + action fill in one cluster.')}
       {strip(
         <>
-          <PdsMantineButton rank="ghost" color="neutral" surface="on-light">
-            Edit
-          </PdsMantineButton>
-          <PdsMantineButton rank="outline" color="neutral" surface="on-light">
-            Filter
-          </PdsMantineButton>
-          <PdsMantineButton rank="fill" color="action" surface="on-light">
-            Save
-          </PdsMantineButton>
+          <Button variant="ghost">Edit</Button>
+          <Button variant="outline">Filter</Button>
+          <Button variant="action">Save</Button>
         </>,
       )}
 
       {cap('dont', 'Wavy ranks: outline → subtle → outline.')}
       {strip(
         <>
-          <PdsMantineButton rank="outline" color="action" surface="on-light">
-            A
-          </PdsMantineButton>
-          <PdsMantineButton rank="subtle" color="action" surface="on-light">
-            B
-          </PdsMantineButton>
-          <PdsMantineButton rank="outline" color="action" surface="on-light">
-            C
-          </PdsMantineButton>
+          <Button variant="outline">A</Button>
+          <Button variant="subtle">B</Button>
+          <Button variant="outline">C</Button>
         </>,
       )}
 
       {cap('dont', 'Two fills adjacent.')}
       {strip(
         <>
-          <PdsMantineButton rank="fill" color="action" surface="on-light">
-            Edit
-          </PdsMantineButton>
-          <PdsMantineButton rank="fill" color="action" surface="on-light">
-            Publish
-          </PdsMantineButton>
+          <Button variant="action">Edit</Button>
+          <Button variant="action">Publish</Button>
         </>,
       )}
 
       {cap('do', 'Equal-importance ghosts (optional leading glyph in label).')}
       {strip(
         <>
-          <PdsMantineButton rank="ghost" color="neutral" surface="on-light">
-            ⏷ Filter
-          </PdsMantineButton>
-          <PdsMantineButton rank="ghost" color="neutral" surface="on-light">
-            ⎙ Print
-          </PdsMantineButton>
-          <PdsMantineButton rank="ghost" color="neutral" surface="on-light">
-            ⬇ Download
-          </PdsMantineButton>
+          <Button variant="ghost">⏷ Filter</Button>
+          <Button variant="ghost">⎙ Print</Button>
+          <Button variant="ghost">⬇ Download</Button>
         </>,
       )}
     </div>
   );
 }
 
+/* ─── §1.1–1.3, 1.6 Button colour + rank ───────────────────────────────────── */
+
 function UI_ButtonColorRankDemo() {
   return (
     <div style={flexCol(16)}>
-      <PdsMantineText type="interface" fontSize="600" fontWeight="strong">
-        §1.1–1.3, 1.6 — one fill per cluster; ranks + sizes
-      </PdsMantineText>
+      <p className="text-base font-semibold">§1.1–1.3, 1.6 — one fill per cluster; ranks + sizes</p>
       <div style={flexRow(8)}>
-        <PdsMantineButton rank="outline" color="neutral" surface="on-light">
-          Secondary outline
-        </PdsMantineButton>
-        <PdsMantineButton rank="fill" color="action" surface="on-light">
-          Primary commit
-        </PdsMantineButton>
-        <PdsMantineButton rank="subtle" color="neutral" surface="on-light">
-          Cancel subtle
-        </PdsMantineButton>
-        <PdsMantineButton rank="ghost" color="neutral" surface="on-light">
-          Back ghost
-        </PdsMantineButton>
+        <Button variant="outline">Secondary outline</Button>
+        <Button variant="action">Primary commit</Button>
+        <Button variant="subtle">Cancel subtle</Button>
+        <Button variant="ghost">Back ghost</Button>
       </div>
       <div style={flexRow(8)}>
-        <PdsMantineButton rank="outline" color="neutral" surface="on-light">
-          Hide reversible
-        </PdsMantineButton>
-        <PdsMantineButton rank="outline" color="warning" surface="on-light">
-          Remove outline
-        </PdsMantineButton>
-        <PdsMantineButton rank="ghost" color="warning" surface="on-light">
-          Delete ghost
-        </PdsMantineButton>
+        <Button variant="outline">Hide reversible</Button>
+        <Button variant="outline-warning">Remove outline</Button>
+        <Button variant="ghost-warning">Delete ghost</Button>
       </div>
     </div>
   );
 }
+
+/* ─── §1.4–1.5 Brand + feedback badges ─────────────────────────────────────── */
 
 function UI_BrandAndFeedbackBadgesDemo() {
   return (
     <div style={flexCol(16)}>
-      <PdsMantineText type="body" fontSize="700">
-        §1.4–1.5 — semantic badge / counter treatment (colour + label, not decoration).
-      </PdsMantineText>
+      <p className="text-sm">§1.4–1.5 — semantic badge / counter treatment (colour + label, not decoration).</p>
       <div style={flexRow(8, { alignItems: 'center' })}>
-        <PdsMantineBadge color="success" surface="on-light">
-          Saved
-        </PdsMantineBadge>
-        <PdsMantineBadge color="neutral" surface="on-light">
-          Draft
-        </PdsMantineBadge>
-        <PdsMantineBadge color="neutral" surface="on-light" value={12}>
-          Count neutral
-        </PdsMantineBadge>
-        <PdsMantineBadge color="attention" surface="on-light">
-          Soft follow-up
-        </PdsMantineBadge>
-        <PdsMantineBadge color="warning" surface="on-light">
-          Hard block
-        </PdsMantineBadge>
+        <Badge variant="success">Saved</Badge>
+        <Badge variant="neutral">Draft</Badge>
+        <Badge variant="neutral">Count neutral · 12</Badge>
+        <Badge variant="attention">Soft follow-up</Badge>
+        <Badge variant="warning">Hard block</Badge>
       </div>
     </div>
   );
 }
 
+/* ─── §2 Typography roles + scale ──────────────────────────────────────────── */
+
 function UI_TypographyRolesDemo() {
   return (
     <div style={flexCol(16)}>
-      <PdsMantineText type="body" fontSize="700">
-        Default body 700 — internal-tool baseline (§2.1–2.3).
-      </PdsMantineText>
-      <PdsMantineText type="interface" fontSize="600">
-        Interface 600 — labels and metadata beside controls.
-      </PdsMantineText>
-      <PdsMantineText type="table" fontSize="600">
-        Table role 600 — dense cell line.
-      </PdsMantineText>
-      <PdsMantineText type="monospace" fontSize="500">
-        j.smith · ID 180564 — monospace IDs only
-      </PdsMantineText>
-      <PdsMantineText type="body" fontSize="900" fontWeight="strong">
-        Strong on a phrase — not whole paragraphs (§2.5).
-      </PdsMantineText>
+      <p className="text-base">Default body — internal-tool baseline (§2.1–2.3).</p>
+      <p className="text-sm text-neutral-600">Interface — labels and metadata beside controls.</p>
+      <p className="text-sm font-mono text-neutral-700">j.smith · ID 180564 — monospace IDs only</p>
+      <p className="text-xl font-semibold">Strong on a phrase — not whole paragraphs (§2.5).</p>
     </div>
   );
 }
+
+/* ─── §3 Form fields + validation tone ─────────────────────────────────────── */
 
 function UI_FormFieldValidationDemo() {
   const [soft, setSoft] = useState('2025-06-31');
   return (
     <div style={flexCol(24, { maxWidth: 420 })}>
-      <PdsTextField
-        label="Team name"
-        placeholder="Knockout Bracket CL 24/25"
-        required
-        helperTextMessage="Cannot be blank"
-        helperTextType="error"
-        color="neutral"
-      />
-      <PdsTextField label="Venue code" placeholder="VEN-9931" readOnly />
-      <PdsTextField
-        label="Start date"
-        value={soft}
-        onChange={(e) => setSoft(e.currentTarget.value)}
-        helperTextMessage="Starts before season — confirm with ops"
-        helperTextType="attention"
-      />
+      <div style={flexCol(4)}>
+        <Label htmlFor="team-name">
+          Team name <span className="text-red-500">*</span>
+        </Label>
+        <Input id="team-name" placeholder="Knockout Bracket CL 24/25" aria-invalid />
+        <p className="text-xs text-red-600">Cannot be blank</p>
+      </div>
+
+      <div style={flexCol(4)}>
+        <Label htmlFor="venue-code">Venue code</Label>
+        <Input id="venue-code" placeholder="VEN-9931" readOnly className="bg-neutral-50 cursor-default" />
+      </div>
+
+      <div style={flexCol(4)}>
+        <Label htmlFor="start-date">Start date</Label>
+        <Input
+          id="start-date"
+          value={soft}
+          onChange={(e) => setSoft(e.currentTarget.value)}
+        />
+        <p className="text-xs text-amber-600">Starts before season — confirm with ops</p>
+      </div>
     </div>
   );
 }
+
+/* ─── §4 Modal commit + P7 chrome ──────────────────────────────────────────── */
 
 function UI_ModalCommitAndP7Demo() {
   const [openEdit, setOpenEdit] = useState(false);
@@ -304,140 +238,126 @@ function UI_ModalCommitAndP7Demo() {
   return (
     <div style={flexCol(16)}>
       <div style={flexRow(8)}>
-        <PdsMantineButton rank="outline" color="neutral" surface="on-light" onClick={() => setOpenEdit(true)}>
+        <Button variant="outline" onClick={() => setOpenEdit(true)}>
           Modal commit cluster (§4.2)
-        </PdsMantineButton>
-        <PdsMantineButton rank="outline" color="neutral" surface="on-light" onClick={() => setOpenDelete(true)}>
+        </Button>
+        <Button variant="outline" onClick={() => setOpenDelete(true)}>
           P7 destructive confirm (§4.5)
-        </PdsMantineButton>
+        </Button>
       </div>
 
-      <PdsModal
-        show={openEdit}
-        onDismiss={() => setOpenEdit(false)}
-        surface="on-light"
-        dismissible
-        closeOnClickout={false}
-      >
-        <PdsModalHeader headline="Edit tournament" surface="on-light" />
-        <PdsModalBody surface="on-light">
-          Primary commit is rightmost; Cancel is subtle neutral immediately left (same cluster).
-        </PdsModalBody>
-        <PdsModalFooter justifyContent="end" surface="on-light" divider>
-          <>
-            <PdsMantineButton rank="subtle" color="neutral" surface="on-light" onClick={() => setOpenEdit(false)}>
+      <Dialog open={openEdit} onOpenChange={setOpenEdit}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit tournament</DialogTitle>
+            <DialogDescription>
+              Primary commit is rightmost; Cancel is subtle neutral immediately left (same cluster).
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="subtle" onClick={() => setOpenEdit(false)}>
               Cancel
-            </PdsMantineButton>
-            <PdsMantineButton rank="fill" color="action" surface="on-light" onClick={() => setOpenEdit(false)}>
+            </Button>
+            <Button variant="action" onClick={() => setOpenEdit(false)}>
               Save changes
-            </PdsMantineButton>
-          </>
-        </PdsModalFooter>
-      </PdsModal>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
-      <PdsModal
-        show={openDelete}
-        onDismiss={() => setOpenDelete(false)}
-        surface="on-light"
-        dismissible
-        closeOnClickout={false}
-      >
-        <PdsModalHeader headline="Remove team from bracket?" surface="on-light" />
-        <PdsModalBody surface="on-light">
-          This cannot be undone. Confirm uses warning fill — only here after explicit opt-in (§4.2).
-        </PdsModalBody>
-        <PdsModalFooter justifyContent="end" surface="on-light" divider>
-          <>
-            <PdsMantineButton rank="subtle" color="neutral" surface="on-light" onClick={() => setOpenDelete(false)}>
+      <Dialog open={openDelete} onOpenChange={setOpenDelete}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Remove team from bracket?</DialogTitle>
+            <DialogDescription>
+              This cannot be undone. Confirm uses warning fill — only here after explicit opt-in (§4.2).
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="subtle" onClick={() => setOpenDelete(false)}>
               Cancel
-            </PdsMantineButton>
-            <PdsMantineButton rank="fill" color="warning" surface="on-light" onClick={() => setOpenDelete(false)}>
+            </Button>
+            <Button variant="destructive" onClick={() => setOpenDelete(false)}>
               Remove
-            </PdsMantineButton>
-          </>
-        </PdsModalFooter>
-      </PdsModal>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+
+/* ─── §4.4 Tabs + neutral labels ───────────────────────────────────────────── */
 
 function UI_TabsAndMenusDemo() {
   return (
     <div style={flexCol(8)}>
-      <PdsMantineText type="interface" fontSize="600">
+      <p className="text-sm text-neutral-600">
         §4.4 — tab labels stay neutral; attention only for status chips in labels.
-      </PdsMantineText>
-      <PdsTabGroup preSelectedTabValue="teams" surface="on-light" color="neutral" onSelect={() => {}}>
-        <PdsTab value="teams">Teams</PdsTab>
-        <PdsTab value="venues">Venues</PdsTab>
-        <PdsTab value="review">Review</PdsTab>
-      </PdsTabGroup>
+      </p>
+      <Tabs defaultValue="teams">
+        <TabsList>
+          <TabsTrigger value="teams">Teams</TabsTrigger>
+          <TabsTrigger value="venues">Venues</TabsTrigger>
+          <TabsTrigger value="review">Review</TabsTrigger>
+        </TabsList>
+      </Tabs>
     </div>
   );
 }
 
+/* ─── §5 Table, filters, bulk ──────────────────────────────────────────────── */
+
 function UI_TableFiltersBulkDemo() {
   const [mine, setMine] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   return (
     <div style={flexCol(16)}>
       <div style={flexRow(8, { alignItems: 'center' })}>
-        <PdsFilterChip
-          selected={mine}
-          onSelectionChange={setMine}
-          color="neutral"
-          surface="on-light"
-        >
+        <Toggle pressed={mine} onPressedChange={setMine} aria-label="Show only mine">
           Show only mine
-        </PdsFilterChip>
-        <PdsFilterChip selected={false} color="neutral" surface="on-light">
+        </Toggle>
+        <Toggle pressed={false} aria-label="Competition">
           Competition
-        </PdsFilterChip>
-        <PdsMantineButton rank="ghost" color="neutral" surface="on-light">
+        </Toggle>
+        <Button variant="ghost" size="sm">
           Clear all
-        </PdsMantineButton>
+        </Button>
       </div>
 
-      <PdsTable size="sm" stretch hasBorder>
-        <PdsTHead>
-          <PdsTHeadRow>
-            <PdsTHeadCell>Team</PdsTHeadCell>
-            <PdsTHeadCell>Status</PdsTHeadCell>
-            <PdsTHeadCell align="right">Actions</PdsTHeadCell>
-          </PdsTHeadRow>
-        </PdsTHead>
-        <PdsTBody>
-          <PdsTBodyRow>
-            <PdsTBodyCell>
-              <PdsMantineText type="table" fontSize="600">
-                FC Barcelona
-              </PdsMantineText>
-            </PdsTBodyCell>
-            <PdsTBodyCell>
-              <PdsMantineBadge color="success" surface="on-light">
-                Active
-              </PdsMantineBadge>
-            </PdsTBodyCell>
-            <PdsTBodyCell align="right">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Team</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell className="text-sm">FC Barcelona</TableCell>
+            <TableCell>
+              <Badge variant="success">Active</Badge>
+            </TableCell>
+            <TableCell>
               <div style={flexRow(4, { wrap: false, justifyContent: 'flex-end', alignItems: 'center' })}>
-                <PdsMantineButton rank="outline" color="neutral" surface="on-light">
+                <Button variant="outline" size="sm">
                   Edit
-                </PdsMantineButton>
-                <PdsMantineButton rank="ghost" color="warning" surface="on-light">
+                </Button>
+                <Button variant="ghost-warning" size="sm">
                   Remove
-                </PdsMantineButton>
+                </Button>
               </div>
-            </PdsTBodyCell>
-          </PdsTBodyRow>
-        </PdsTBody>
-      </PdsTable>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
       <div style={flexCol(8, { alignItems: 'flex-start' })}>
-        <PdsMantineText type="interface" fontSize="600">
-          §5.5–5.6 — bulk overlay + expand affordance (ghost neutral).
-        </PdsMantineText>
-        <div style={{ position: 'relative', minHeight: 72, border: '1px solid #ccc', padding: 8 }}>
-          {open ? (
+        <p className="text-sm text-neutral-600">§5.5–5.6 — bulk overlay + expand affordance (ghost neutral).</p>
+        <div style={{ position: 'relative', minHeight: 72, border: '1px solid #ccc', padding: 8, width: '100%' }}>
+          {loading ? (
             <div
               style={{
                 position: 'absolute',
@@ -449,22 +369,16 @@ function UI_TableFiltersBulkDemo() {
                 gap: 8,
               }}
             >
-              <PdsLoader />
-              <PdsMantineText type="interface" fontSize="600">
-                Importing…
-              </PdsMantineText>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span className="text-sm text-neutral-600">Importing…</span>
             </div>
           ) : null}
           <div style={flexRow(8)}>
-            <PdsMantineButton rank="outline" color="warning" surface="on-light">
-              Bulk remove selected
-            </PdsMantineButton>
-            <PdsMantineButton rank="outline" color="action" surface="on-light">
-              Bulk import
-            </PdsMantineButton>
-            <PdsMantineButton rank="ghost" color="neutral" surface="on-light" onClick={() => setOpen((v) => !v)}>
+            <Button variant="outline-warning">Bulk remove selected</Button>
+            <Button variant="outline-action">Bulk import</Button>
+            <Button variant="ghost" onClick={() => setLoading((v) => !v)}>
               Toggle bulk overlay demo
-            </PdsMantineButton>
+            </Button>
           </div>
         </div>
       </div>
@@ -472,17 +386,18 @@ function UI_TableFiltersBulkDemo() {
   );
 }
 
-const withPodium = (Story: () => React.ReactNode) => (
-  <PodiumProvider>{storyStage(<Story />)}</PodiumProvider>
-);
+/* ─── Storybook meta ────────────────────────────────────────────────────────── */
 
 const meta: Meta = {
   title: 'PATTERNS/UI Patterns',
-  decorators: [withPodium],
   parameters: {
     layout: 'padded',
     controls: { disable: true },
     docs: {
+      description: {
+        component:
+          'Reference visuals use ShadCN components as portable illustrations. Production semantics (rank, color, surface) follow Podium props documented in the sections below.',
+      },
       toc: {
         title: 'Table of Contents',
         headingSelector: 'h1, h2, h3, h4',
@@ -495,41 +410,41 @@ export default meta;
 type Story = StoryObj;
 
 export const UI_ButtonHierarchyDoDont: Story = {
-  name: '§1.7 Button hierarchy Do / Don’t',
-  render: () => <UI_ButtonHierarchyDoDontDemo />,
+  name: "§1.7 Button hierarchy Do / Don't",
+  render: () => storyStage(<UI_ButtonHierarchyDoDontDemo />),
 };
 
 export const UI_ButtonColorRank: Story = {
   name: '§1.1–1.3 Button colour + rank',
-  render: () => <UI_ButtonColorRankDemo />,
+  render: () => storyStage(<UI_ButtonColorRankDemo />),
 };
 
 export const UI_BrandAndFeedbackBadges: Story = {
   name: '§1.4–1.5 Brand + feedback badges',
-  render: () => <UI_BrandAndFeedbackBadgesDemo />,
+  render: () => storyStage(<UI_BrandAndFeedbackBadgesDemo />),
 };
 
 export const UI_TypographyRoles: Story = {
   name: '§2 Typography roles + scale',
-  render: () => <UI_TypographyRolesDemo />,
+  render: () => storyStage(<UI_TypographyRolesDemo />),
 };
 
 export const UI_FormFieldValidation: Story = {
   name: '§3 Form fields + validation tone',
-  render: () => <UI_FormFieldValidationDemo />,
+  render: () => storyStage(<UI_FormFieldValidationDemo />),
 };
 
 export const UI_ModalCommitAndP7: Story = {
   name: '§4 Modal commit + P7 chrome',
-  render: () => <UI_ModalCommitAndP7Demo />,
+  render: () => storyStage(<UI_ModalCommitAndP7Demo />),
 };
 
 export const UI_TabsAndMenus: Story = {
   name: '§4 Tabs + neutral labels',
-  render: () => <UI_TabsAndMenusDemo />,
+  render: () => storyStage(<UI_TabsAndMenusDemo />),
 };
 
 export const UI_TableFiltersBulk: Story = {
   name: '§5 Table, filters, bulk',
-  render: () => <UI_TableFiltersBulkDemo />,
+  render: () => storyStage(<UI_TableFiltersBulkDemo />),
 };

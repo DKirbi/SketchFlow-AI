@@ -4,7 +4,7 @@
 
 **Authority for literals and drift:** this page mirrors **`@podium-design-system/react-components`** (`dist/lib/types/*.d.ts`). When props change in a newer PDS release, update this file. **future high-fidelity API documentation** (`future design-system API source`) remains the source for examples, accessibility notes, and Mantine cross-references.
 
-**Install note:** root `npm install` may require **`--legacy-peer-deps`** because Podium declares a narrow `@types/react` peer while the workspace uses a newer `@types/react`. This export omits Podium/Mantine runtime dependencies and MCP configuration; restore them in a future setup before implementation.
+**Storybook embeds:** the interactive demos embedded in this page use **ShadCN** as portable reference components — no private registry required. The rule text below remains Podium-oriented for production hi-fi work; restore `@podium-design-system/react-components` when implementing against the real design system.
 
 ---
 
