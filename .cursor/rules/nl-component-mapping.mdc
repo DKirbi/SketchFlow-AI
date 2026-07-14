@@ -1,0 +1,93 @@
+---
+description: Natural language → LOFI component mapping — load when translating a brief, requirement, or description into a lo-fi interface
+alwaysApply: false
+---
+
+# Natural language → component mapping
+
+> Load this rule whenever you are translating a plain-language brief,
+> a feature description, or a stakeholder requirement into a lo-fi interface.
+> Parse the description phrase by phrase against the mapping below **before**
+> writing any component code.
+
+The authoritative full reference for **lo-fi** work is **[`docs/NL_COMPONENT_MAPPING_LO_FI.md`](docs/NL_COMPONENT_MAPPING_LO_FI.md)**.
+For **high-fidelity (Podium)** briefs (message starts with **`/high-fidelity`**), use **[`docs/NL_COMPONENT_MAPPING_HI_FI.md`](docs/NL_COMPONENT_MAPPING_HI_FI.md)**, **[`docs/UI_PATTERNS.md`](docs/UI_PATTERNS.md)** and **[`docs/UI_PATTERNS_AGENT.md`](docs/UI_PATTERNS_AGENT.md)** (PDS prop unions, UI rules, and `Pds*` inventory when MCP is offline), and **Podium MCP** (`pds-mcp`) for authoritative APIs — see `.cursor/skills/high-fidelity-prototype/SKILL.md`.
+The tables below are the high-priority fast lookup for **lo-fi**.
+
+---
+
+## Step 0 — parse the description phrase by phrase
+
+For every sentence or phrase in the brief:
+
+1. Match it to a signal phrase in the **Signal grammar** table below.
+2. Add the mapped component to a checklist.
+3. Resolve any **disambiguation phrases** before proceeding.
+4. Then open `docs/COMPOSITION_PATTERNS.md` → "Control selection rules" to verify you have chosen the right control variant.
+
+---
+
+## Signal grammar (fast lookup)
+
+| Signal phrase | Components |
+|---|---|
+| "a list of X" / "a table of X" / "manage X" | `LOFITable` |
+| "add / create a new X" | `LOFIButton` (primary) + `LOFIModal` (form) |
+| "edit / update an existing X" | `LOFIButton` (compact) + `LOFIModal` (form) |
+| "delete / remove X" | `LOFIButton` (dismiss, compact) + confirmation pattern |
+| "opens in a modal" / "opens up" / "view details" | `LOFIModal` |
+| "side panel" / "contextual detail" / "next to the row" | `LOFIPanel` |
+| "basic information" / "name, type, status" / "fill in" | `LOFIFieldset` + `LOFIField` × N |
+| free text attribute | `LOFIInput` (inside `LOFIField`) |
+| on/off / enabled/disabled / yes/no attribute | `LOFISwitch` |
+| attribute with 2–3 exclusive options | `LOFIRadio` |
+| attribute with 4+ exclusive options | `LOFISelect` |
+| "multiple options can be selected" / "choose all that apply" | `LOFICheckbox` per option |
+| "save" / "confirm" / "submit" | `LOFIButton` (primary) |
+| "cancel" / "discard" / "close" | `LOFIButton` (dismiss) |
+| "X belongs to Y" / "nested Y inside X" | nested `LOFITable` inside `LOFIModal` or `LOFIPanel` |
+| "steps" / "first… then…" / "wizard" | `LOFISteps` |
+| "switch between views" / "grid or list" / "scenario A or B" | `LOFIToggle` |
+| "status" / "type label" / "tag" / "category chip" | `LOFIBadge` |
+| "saving…" / "loading…" / "processing" | `LOFILoader` |
+| "after it saves" / "success message" | `LOFIToast` |
+| "if there are no X yet" / "no results" / "empty list" | `LOFIEmptyState` |
+| "filter by" / "search within" / "showing N results" | `LOFIInput` (search) + `LOFISelect`/`LOFIToggle` (filters) |
+| "page 3 of 47" / "next page" / "paginate" | `LOFIPagination` |
+| "a long description" / "notes field" / "multi-line text" | `LOFITextarea` |
+| "error in form" / "validation failed" / "alert below field" | `LOFIInlineAlert` |
+| "filter criteria" / "Search + Reset" / "Sport dropdown" | `LOFIField` + `LOFISelect`/`LOFIInput` + `LOFIButton` (NOT `LOFIFilterBar`) |
+| "hierarchy" / "tree nav" / "collapsible sidebar nav" | `LOFINavTree` |
+| "the main pane" / "production pane" / "UPL main view" | `LOFIMainWorkspace` |
+| "breadcrumb" / "path trail" | `LOFIText` segments + `›` separators |
+
+---
+
+## Disambiguation (always ask before mapping)
+
+| Phrase heard | Question | Resolution |
+|---|---|---|
+| "a toggle" / "a switch" | Switching view/mode, or turning a single setting on/off? | view/mode → `LOFIToggle`; single setting → `LOFISwitch` |
+| "a section" | Group of form fields, or free-form content block? | fields → `LOFIFieldset`; content → `LOFICard` |
+| "a checkbox" | One flag, or several independent options? | single flag → `LOFISwitch`; multiple independent → `LOFICheckbox` |
+| "a dropdown" | 2–3 options, or 4+? | 2–3 → `LOFIRadio`; 4+ → `LOFISelect` |
+| "steps" / "tabs" / "sections" | Ordered wizard, or parallel sections? | ordered → `LOFISteps`; tab strip → `LOFITabs` (including inside a modal); compact non-modal panel toggle → `LOFIToggle` |
+
+---
+
+## Hard rules — never violate
+
+- **No `<button>`, `<input>`, `<select>`, `<table>`** — always use the `lofi-kit` equivalent.
+- **No colour.** `#111` ink, `#fff` paper, token grays only.
+- **No external UI frameworks** inside demos. Every primitive comes from `lofi-kit`.
+- **`LOFIText`** for all rendered copy — never raw `<span>` or `<p>` for display text.
+- **`LOFISwitch`** for a single boolean setting — never `LOFICheckbox` for a single flag.
+- **`LOFISelect`** for 4+ mutually exclusive options — never `LOFIRadio` when options exceed 3.
+
+---
+
+## After the mapping — next steps
+
+1. Open `docs/COMPOSITION_PATTERNS.md` for the correct composition recipe (modal form, table layout, UPL shell, etc.).
+2. Open `docs/UX_PATTERNS.md` for the interaction rules that govern each pattern (validation, confirmation, save feedback, destructive flows).
+3. Build the prototype using only `lofi-kit` imports.

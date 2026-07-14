@@ -1,0 +1,230 @@
+---
+description: How to add a new demo project to demos/ — load when creating or scaffolding demos
+globs: demos/**
+---
+
+# Adding a demo project
+
+Every folder inside `demos/` that has a `package.json` is automatically
+discovered by CI, built, and deployed to GitLab Pages under its own URL path.
+No pipeline changes are needed — just follow the structure below.
+
+---
+
+## Required directory layout
+
+```
+demos/<slug>/
+├── package.json        # npm workspace package (see fields below)
+├── vite.config.ts      # Vite + vitest config
+├── tsconfig.json       # Project-scoped TypeScript config
+├── index.html          # Vite entry HTML
+└── src/
+    ├── main.tsx        # React entry
+    ├── App.tsx         # Root component
+    └── ...
+```
+
+The **directory name** (`<slug>`) becomes the URL path on GitLab Pages
+(`https://<pages-host>/<slug>/`) and the workspace path used by npm
+(`npm run dev -w demos/<slug>`).
+
+Pick a kebab-case slug: `bracket-demo`, `team-planner`, `schedule-view`, etc.
+
+---
+
+## package.json — required fields
+
+```jsonc
+{
+  "name": "<slug>",              // must match the directory name
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Short tagline shown on the Pages hub",   // optional but recommended
+  "displayName": "Human-Readable Title",                   // optional; falls back to slug → Title Case
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",       // CI calls this — output MUST go to dist/
+    "preview": "vite preview",
+    "test": "vitest run",        // CI calls npm run test:all across workspaces
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "lofi-kit": "workspace:*",   // required — link the local lofi-kit
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}
+```
+
+Key rules:
+- **`"name"` must equal the directory name** so `npm run build -w demos/<slug>`
+  resolves correctly.
+- **`"build"` must output to `dist/`** (Vite default). CI copies `dist/*` into
+  the Pages folder.
+- **`"lofi-kit": "workspace:*"`** links the local lib. All UI must come from
+  lofi-kit (see `project.mdc` hard rules).
+
+---
+
+## vite.config.ts — required settings
+
+```ts
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+
+const dir = path.dirname(fileURLToPath(import.meta.url));
+
+export default defineConfig({
+  plugins: [react()],
+  base: './',                     // ← REQUIRED for nested Pages paths
+  css: {
+    preprocessorOptions: {
+      scss: {
+        loadPaths: [path.resolve(dir, '../../lib/src/styles')],
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      'lofi-kit': path.resolve(dir, '../../lib/src/index.ts'),
+    },
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+  },
+});
+```
+
+**`base: './'`** is critical. Without it, assets use absolute paths and break
+when served from a sub-directory on Pages.
+
+---
+
+## tsconfig.json
+
+```jsonc
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "../../node_modules/.tmp/<slug>.tsbuildinfo",
+    "target": "ES2023",
+    "useDefineForClassFields": true,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "types": ["vite/client", "vitest/globals"],
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "lofi-kit": ["../../lib/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}
+```
+
+Register it in the root `tsconfig.json` references array:
+
+```jsonc
+{ "path": "./demos/<slug>/tsconfig.json" }
+```
+
+And add the vite config to `tsconfig.node.json` include:
+
+```jsonc
+"include": ["lib/vite.config.ts", "demos/bracket-demo/vite.config.ts", "demos/<slug>/vite.config.ts"]
+```
+
+---
+
+## Step-by-step checklist
+
+1. **Create the directory:** `demos/<slug>/`
+2. **Add `package.json`** with the fields above.
+3. **Add `vite.config.ts`** with `base: './'` and the lofi-kit alias.
+4. **Add `tsconfig.json`** and register it in root `tsconfig.json` references
+   and `tsconfig.node.json` include.
+5. **Add `index.html`** (standard Vite entry pointing at `src/main.tsx`).
+6. **Add `src/main.tsx`** and `src/App.tsx` — import from `lofi-kit`.
+7. **Run `npm install`** from the repo root to link the workspace.
+8. **Verify locally:**
+   ```bash
+   npm run dev -w demos/<slug>    # should start on a free port
+   npm run build -w demos/<slug>  # dist/ must be produced
+   ```
+9. **Optionally add a root shortcut** in root `package.json` scripts:
+   ```jsonc
+   "dev:<slug>": "npm run dev -w demos/<slug>"
+   ```
+
+No CI changes are needed. The `pages` job loops over `demos/*/` and the hub
+generator (`scripts/generate-hub.mjs`) picks up the new demo automatically.
+
+---
+
+## Local development (`npm run dev`)
+
+From the repo root, `npm run dev` starts:
+
+1. **Hub** — static launcher at `http://127.0.0.1:5172/` (generated into
+   `.hub-dev/index.html` with `--dev-gateway` links).
+2. **One Vite dev server per demo** — ports `5173`, `5174`, … in sorted slug
+   order (`npm run dev -w <slug> -- --port …`).
+3. **Storybook** — `http://127.0.0.1:6006/` (skip with `SKIP_STORYBOOK=1`).
+
+The hub proxies `/<slug>/…` to the matching Vite port (HTTP and WebSocket for
+HMR). Demo buttons use root-relative `/slug/`; Storybook uses a direct URL.
+
+To run a **single** demo without the hub: `npm run dev:demo` (bracket-demo).
+
+---
+
+## How CI works
+
+The `pages` job in `.gitlab-ci.yml`:
+
+1. Builds Storybook → `public/storybook/`
+2. Loops every `demos/*/` directory with a `package.json`:
+   - Runs `npm run build -w demos/<name>`
+   - Copies `demos/<name>/dist/*` → `public/<name>/`
+3. Runs `npm run build:lofi`, then `node scripts/generate-hub.mjs --out public/index.html`,
+   which writes `public/index.html`, `public/lofi-kit.css`, and `public/hub-layout.css`
+   (LOFI BEM + tokens; see `LOFI_BLOCKS.md` → Static GitLab Pages hub).
+
+The resulting Pages site:
+
+```
+https://<pages-host>/              ← hub index (auto-generated)
+https://<pages-host>/storybook/    ← lofi-kit Storybook
+https://<pages-host>/bracket-demo/ ← bracket demo
+https://<pages-host>/<new-slug>/   ← any new demo
+```
+
+---
+
+## Design rules still apply
+
+Every demo must follow the hard rules in `project.mdc`:
+
+- All UI from `lofi-kit` — no external UI libs in demos (`lofi-kit` may internally
+  use Radix Primitives as a bundled implementation detail, but demos must not
+  import `@radix-ui/*` or any other UI library directly).
+- Grayscale only, monospace everywhere, BEM + SCSS with tokens.
+- Use `LOFIText` for all copy, `LOFIButton` for all actions, etc.

@@ -1,0 +1,139 @@
+---
+description: LoFidelity prototype generation workflow — load when building or iterating on lo-fi prototypes
+alwaysApply: false
+---
+
+# Transformer Patterns — LoFi prototyping workflow
+
+*UX flow patterns and lo-fi prototyping for transformation teams.*
+
+> Load this file when the task involves building a new prototype, iterating on
+> an existing one, or generating components from a UX brief. For project-wide
+> conventions, see `project.mdc` (always active).
+
+---
+
+## Starting a new prototype
+
+**Always follow this sequence. Do not skip steps.**
+
+### Step 1 — Read the docs
+
+Load these files before writing any code:
+
+1. `docs/NL_COMPONENT_MAPPING_LO_FI.md` — parse the brief phrase by
+   phrase into a component checklist first (see `nl-component-mapping.mdc` rule)
+2. `docs/LOFI_KIT_PATTERNS.md` — component catalog, visual rules, decision guide
+3. `docs/COMPOSITION_PATTERNS.md` — control selection rules, composition recipes,
+   UPL shell patterns
+4. `docs/UX_PATTERNS.md` — behaviour rules, P1–P10 pattern inventory,
+   interaction rules, confirmation / validation / save logic
+
+If a feature-specific brief exists (`docs/briefs/feature-name.md`), load that
+too. It takes precedence over the general docs.
+
+### Step 1.5 — Compliance check
+
+Before planning, scan any existing files you will touch or extend:
+
+1. **Check imports.** Every `.tsx` file in `demos/bracket-demo/src/components/` that renders UI
+   must import from `lofi-kit`. If a file has zero lofi-kit imports,
+   it is non-compliant.
+2. **Check for raw HTML controls.** Search for `<button`, `<input`, `<select`,
+   `<table`, and raw text elements. Cross-reference with the substitution
+   table in `LOFI_BLOCKS.md` → "Forbidden raw HTML".
+3. **Flag or migrate.** If the task touches a non-compliant file:
+   - **Small scope (< 20 raw elements):** migrate to lofi-kit in the same
+     PR.
+   - **Large scope:** flag it in the plan as compliance debt with a separate
+     migration todo.
+
+Do not copy patterns from non-compliant files into new code. Always follow
+`LOFI_BLOCKS.md` and `docs/PATTERNS.md` as the source of truth.
+
+### Step 2 — Plan
+
+Output a plan in the chat before writing any code. The plan must include:
+
+- **Patterns involved** — which flow patterns (P1–P10) this feature uses
+- **Component map** — which `lofi-kit` components are needed and where
+- **Files to create** — proposed paths in `demos/bracket-demo/src/components/`
+- **Mocked data** — entities, format, edge cases to cover
+- **States to implement** — every UI state: empty, loading, disabled, error,
+  confirmation, success. Do not omit any.
+- **Open questions** — anything in the brief that is ambiguous
+
+Wait for the user to confirm the plan or answer open questions.
+Do not generate code during the plan step.
+
+### Step 3 — Execute
+
+- One `.tsx` file per component unless the feature clearly requires more
+- All data mocked inline — no API calls, no backend, no fetch
+- Every state listed in the plan must be reachable by clicking through the
+  prototype
+- Follow visual rules from `docs/LOFI_KIT_PATTERNS.md`
+- Follow composition rules from `docs/COMPOSITION_PATTERNS.md`
+- Follow flow rules from `docs/UX_PATTERNS.md`
+- Simulate async delays (500ms–1.5s) so loading states are visible during
+  testing
+- **Self-check before finishing:** every `.tsx` file you created or modified
+  must:
+  1. Import at least one component from `lofi-kit`
+  2. Contain zero raw `<button>`, `<input>`, `<select>`, or `<table>` elements
+  3. Use `LOFIText` for all rendered copy (no raw `<span>` or `<p>` for display
+     text)
+  4. Use no inline `style={{}}` attributes — use BEM classes with SCSS tokens
+
+---
+
+## Iterating on an existing prototype
+
+Load only what the change requires:
+
+- Visual / component change → `docs/LOFI_KIT_PATTERNS.md` + `docs/COMPOSITION_PATTERNS.md`
+- Flow / behaviour change → `docs/UX_PATTERNS.md`
+- Brief translation → `docs/NL_COMPONENT_MAPPING_LO_FI.md` first, then both
+
+Do not reload `docs/INSTRUCTIONS.md` unless the scope of the change is large
+enough to require re-reading the full brief.
+
+- When editing an existing file, check whether it imports from `lofi-kit`.
+  If it does not, migrate the elements you touch to lofi-kit components.
+  Do not leave a file half-migrated — if you open it, bring the touched areas
+  into compliance.
+
+---
+
+## Flow rules (summary — full rules in `docs/UX_PATTERNS.md`)
+
+These are the most commonly violated rules. They are enforced here as a
+reminder, not a replacement for reading the full file.
+
+- **Confirmation on every meaningful action.** Save, Create, Remove, Add to
+  roster, Mark as Redundant, Discard Changes. If unsure, add a confirmation.
+- **Save/Create buttons start disabled.** Enable only when all required
+  validations pass and at least one change has been made.
+- **Validation is inline.** Each field/row shows its own adjacent error message.
+  No summary banners. Validate on blur; re-validate on change if already in
+  error.
+- **Mocked data is real-world.** Real team names, real competitions, real player
+  archetypes. Never `Team 1`, `Player A`, `Test Record`.
+- **Timestamps:** `DD MMM YYYY, HH:mm` (e.g. `07 Apr 2026, 14:32`).
+- **User handles:** `j.smith` format.
+- **Every data-modifying action appends a changelog entry** in real time.
+
+---
+
+## Adding a new lo-fi component to the library
+
+If the prototype requires a primitive that does not exist in `lofi-kit`:
+
+1. Flag it in the plan step — do not improvise with inline styles or third-party
+   components
+2. Read `docs/LOFI_KIT_PATTERNS.md` → "Adding a new component" section
+3. Create `lib/src/ui/ComponentName/ComponentName.tsx` + `.scss`
+4. Export from `lib/src/ui/index.ts`
+5. Update the component table in `docs/LOFI_KIT_PATTERNS.md` and `docs/LOFI_BLOCKS.md`
+6. Run `npm run build:lofi` to verify
+7. Then proceed with the prototype

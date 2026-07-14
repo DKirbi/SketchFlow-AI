@@ -1,0 +1,27 @@
+---
+description: Keep GitHub Copilot instructions in sync when UX pattern or Cursor agent docs change
+globs: docs/UX_PATTERNS.md,docs/UX_PATTERN_STORIES.md,docs/UX_PATTERNS_AGENT.md,docs/UI_PATTERNS.md,docs/UI_PATTERNS_AGENT.md,docs/UI-Patterns-Confluence.md,docs/COMPOSITION_PATTERNS.md,docs/NL_COMPONENT_MAPPING_LO_FI.md,docs/NL_COMPONENT_MAPPING_HI_FI.md,docs/LOFI_BLOCKS.md,docs/LOFI_KIT_PATTERNS.md,docs/PET-Patterns-Confluence.md,.github/copilot-instructions.md,.cursor/rules/project.mdc,.cursor/rules/lofi-prototyping.mdc,.cursor/rules/nl-component-mapping.mdc,.cursor/skills/**/*
+alwaysApply: false
+---
+
+# UX patterns ↔ Copilot instructions parity
+
+This repo ships **two agent surfaces**: **Cursor** (`.cursor/rules/*.mdc`, `.cursor/skills/**/SKILL.md`, and optional `AGENTS.md` / hub docs) and **GitHub Copilot** (`.github/copilot-instructions.md`). They must stay aligned on **pattern semantics** (P1–P10, UPL shell, composition, NL → component mapping, lo-fi constraints).
+
+## When to update `.github/copilot-instructions.md`
+
+In the **same change-set** as edits that alter how agents should behave or quote rules, update Copilot instructions when you touch any of:
+
+- `docs/UX_PATTERNS.md`, `docs/UX_PATTERN_STORIES.md`, `docs/UX_PATTERNS_AGENT.md`, `docs/UI_PATTERNS.md`, `docs/UI_PATTERNS_AGENT.md`, `docs/UI-Patterns-Confluence.md`, `docs/COMPOSITION_PATTERNS.md`, `docs/NL_COMPONENT_MAPPING_LO_FI.md`, `docs/NL_COMPONENT_MAPPING_HI_FI.md`, `docs/LOFI_BLOCKS.md`, `docs/LOFI_KIT_PATTERNS.md`, `docs/PET-Patterns-Confluence.md` (when pattern semantics, Podium UI rules, or NL/LOFI mirror content changes)
+- Cursor rules that **encode or duplicate** those docs: especially `project.mdc`, `lofi-prototyping.mdc`, `nl-component-mapping.mdc`
+- **Cursor project skills** in `.cursor/skills/**/SKILL.md` when you change **prototype brief vs pattern authoring** behaviour, triggers (`/new-pattern`, `/high-fidelity`), or parity obligations — mirror the equivalent guidance in the **Agent modes** section of `.github/copilot-instructions.md` (or leave an explicit `TODO` there).
+
+**Mirror** additions, removals, renames, or precedence changes (what loads first, what overrides what). If Copilot should not duplicate a long section, add a pointer line (“see `docs/…`”) **and** ensure the Copilot file still states any **hard constraints** agents rely on without opening the repo.
+
+## When editing `copilot-instructions.md` alone
+
+If you change behaviour guidance there, check whether **canonical docs** or **Cursor rules** need the same wording or a cross-link so both products stay consistent.
+
+## If parity is intentionally deferred
+
+Say so in the PR / commit message (e.g. “Copilot follow-up”) and add a short `TODO` in `.github/copilot-instructions.md` or the relevant doc — do not silently drift.

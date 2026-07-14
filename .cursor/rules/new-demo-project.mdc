@@ -1,0 +1,160 @@
+---
+description: >
+  Chat-driven procedure for scaffolding a new demo project. Load this rule when
+  the user says "/new-project", "new demo project", "scaffold a demo", "create a
+  new prototype", "start a new project", or any similar intent. Do NOT apply
+  automatically on every message.
+alwaysApply: false
+---
+
+# New demo project — agent scaffolding procedure
+
+Use this rule when the user asks to create a new prototype or demo project.
+Follow the steps below **in order**. Do not skip ahead to code generation
+until the questions are answered.
+
+---
+
+## Step 1 — Ask for the project name
+
+Ask the user for a **kebab-case slug** for the new demo. Explain the rules:
+
+- Lowercase letters and hyphens only (e.g. `team-planner`, `schedule-view`).
+- This becomes the folder name (`demos/<slug>/`), the URL path (`/<slug>/`), and
+  the button label on the Projects hub.
+- Keep it short and descriptive.
+
+If the user gives you a name that doesn't match the rules (e.g. spaces, capitals),
+suggest a corrected version and confirm before proceeding.
+
+If a folder `demos/<slug>/` already exists, tell the user and ask whether to
+proceed (which will overwrite scaffold files) or choose a different name.
+
+---
+
+## Step 2 — Scaffold the workspace
+
+Once the name is confirmed, create the full demo workspace following the exact
+layout and config described in `.cursor/rules/demo-projects.mdc`.
+
+Key files to generate:
+
+- `demos/<slug>/package.json` — `name` must match the folder slug exactly; include
+  `"lofi-kit": "*"`, `react`, `react-dom`, and the standard Vite scripts
+  (`dev`, `build`, `preview`, `test`, `test:watch`).
+  **IMPORTANT:** use `"lofi-kit": "*"` — NOT `"workspace:*"`. The `workspace:`
+  protocol is pnpm/yarn syntax and is NOT supported by npm. Using `"*"` is the
+  correct npm-workspaces-native way to reference a sibling workspace package.
+  Resolution at build time happens via vite's `resolve.alias` and tsconfig `paths`
+  anyway — the npm dependency entry is declarative only.
+- `demos/<slug>/vite.config.ts` — Mirror `demos/bracket-demo/vite.config.ts` exactly,
+  including `LOFI_VIA_HUB` / `LOFI_HUB_PORT` env handling, `base` switching,
+  `server.hmr.clientPort`, SCSS `loadPaths`, and the `lofi-kit` resolve alias.
+- `demos/<slug>/tsconfig.json` — Match the bracket-demo tsconfig; set
+  `tsBuildInfoFile` to `../../node_modules/.tmp/<slug>.tsbuildinfo`.
+- `demos/<slug>/index.html` — Standard Vite entry; `<title>` set to the display name.
+- `demos/<slug>/src/main.tsx` — React 19 root (`createRoot`).
+- `demos/<slug>/src/App.tsx` — Minimal shell (see below).
+
+Also register the new demo in root config files:
+
+- Add `{ "path": "./demos/<slug>/tsconfig.json" }` to the `references` array in
+  `tsconfig.json`.
+- Add `"demos/<slug>/vite.config.ts"` to the `include` array in `tsconfig.node.json`.
+
+Do NOT run `npm install` from the agent. Instruct the user to run it once
+after scaffolding is complete — **always from the repo root**, not from inside the
+demo folder. Running `npm install` from within `demos/<slug>/` will fail because
+npm cannot resolve workspace-relative paths without the root workspace context.
+
+---
+
+## Step 3 — Generate the first screen (Lo-fi by default)
+
+**Fidelity is always Lo-fi.** Never ask the user whether they want lo-fi or hi-fi.
+Never use colors, custom fonts, or external UI libraries. Everything is built from
+`lofi-kit` components and the existing SCSS token system.
+
+### Before writing any screen code
+
+Read these files:
+
+1. `docs/PATTERNS.md` — component catalog, visual rules, composition patterns
+2. `docs/UX_PATTERNS.md` — interaction rules, P1–P10 pattern inventory
+3. `LOFI_BLOCKS.md` — quick-lookup table, "Forbidden raw HTML" substitutions
+
+### Reference implementation
+
+Use `demos/bracket-demo/src/components/TeamManagement/` as the **gold standard**
+for how a well-built lo-fi screen looks:
+
+- Every component imported from `lofi-kit` (no raw `<button>`, `<select>`,
+  `<input>`, or `<table>`).
+- `LOFIText` for all copy — no raw `<span>`, `<p>`, `<h1>` in component JSX.
+- `LOFIButton` for every action.
+- `LOFIField` + `LOFIInput` / `LOFISelect` / `LOFICheckbox` for forms.
+- `LOFIModal` for overlays; `LOFIPanel` for side panels.
+- `LOFITable` (via `@tanstack/react-table`) for data tables.
+- BEM class names with SCSS tokens — no inline `style={{}}`.
+
+### `App.tsx` starting point
+
+```tsx
+import { LOFIText } from 'lofi-kit';
+
+export function App() {
+  return (
+    <main style={{ padding: '2rem' }}>
+      <LOFIText variant="caps">Your Demo Title</LOFIText>
+    </main>
+  );
+}
+```
+
+Build the first screen from the user's description, following
+`lofi-prototyping.mdc` — plan first (component map, states, mocked data),
+then execute. Do not start generating screen code until the plan is confirmed.
+
+---
+
+## Step 4 — Post-scaffold instructions for the user
+
+After scaffolding, tell the user to run the following commands **from the repo root**:
+
+```bash
+# Always from the repo root — NOT from inside demos/<slug>/
+npm install
+npm run dev
+```
+
+The new demo appears automatically on the Projects hub at `http://127.0.0.1:5172/`.
+No CI or config changes needed — the hub discovers `demos/*` automatically.
+
+**If `npm run dev` fails with `EADDRINUSE` (port already in use)**, a previous dev
+session is still running. Kill it first, then restart:
+
+```bash
+pkill -f "dev-gateway.mjs"; pkill -f "vite"; sleep 1 && npm run dev
+```
+
+**To run only the new demo** (no hub, no Storybook, avoids port conflicts):
+
+```bash
+npm run dev -w <slug>
+# Demo available at http://127.0.0.1:5174/ (or next available port)
+```
+
+To build:
+
+```bash
+npm run build -w <slug>       # check it compiles
+npm run demo-build            # full Pages-shaped output in public/
+```
+
+---
+
+## What this rule does NOT do
+
+- Generate hi-fi or themed prototypes (future workflow).
+- Add a monorepo-level React Router or shell app.
+- Create test files automatically (add tests separately when coverage is requested).

@@ -1,0 +1,119 @@
+---
+description: Transformer Patterns project conventions — always active
+alwaysApply: true
+---
+
+# Transformer Patterns — project conventions
+
+## Project identity
+
+This is **Transformer Patterns** (*UX flow patterns and lo-fi prototyping for
+transformation teams*) — built with React 19, TypeScript, Vite 8, and React Flow.
+
+### Two distinct artefacts
+
+**Transformers Patterns** (core) — the P1–P10 interaction pattern inventory, UPL
+shell model, and composition rules. These are the team's canonical definition of
+how operator interfaces should behave and are structured. In production, patterns
+are implemented using **Podium** (the high-fidelity design system).
+
+**LOFI Kit** (tool) — a low-fidelity, grayscale, monospace component library
+(`lib/`) for fast prototyping. It is used here to render live pattern examples.
+It is **not** the production design system. Demos use LOFI Kit components to keep
+prototypes abstract and focused on structure over visual polish.
+
+Public UI exports use a **`LOFI` prefix** (e.g. `LOFIButton`, `LOFIModal`).
+Diagram exports (`nodeTypes`, `edgeTypes`) are unprefixed.
+
+**Default fidelity is Lo-fi** in this workspace. All prototypes use grayscale,
+monospace typography, and `lofi-kit` components. Never ask the user to specify
+"lo-fi" — it is always assumed.
+
+---
+
+## Hard rules (no exceptions)
+
+- **No colour.** `#111` ink, `#fff` paper, token grays only. No colour ramp,
+  no accent colours, no arbitrary hex values.
+- **No external UI libraries in demos or app code** — **except** a **dedicated
+  high-fidelity demo package** under `demos/<slug>/` that is created or maintained
+  under the **`/high-fidelity`** Cursor skill workflow: that package **may** use
+  **Podium** (and its documented Mantine stack) from npm. **All other** demos
+  and demo UI code use **`lofi-kit` only**. No Radix, shadcn, MUI, or other UI
+  frameworks in those paths. **`lib/`** never imports Podium or themed kits.
+- **`lib/` may depend on headless, unstyled behavior primitives** (currently:
+  `@radix-ui/react-collapsible`) **as an implementation detail only.** These
+  are bundled into `lofi-kit` and are never part of the public design API.
+  Still forbidden inside `lib/`: themed component kits, CSS-in-JS UI frameworks,
+  Tailwind, colour.
+- **No raw `<button>` or `<input>` in the UI layer.** Use `LOFIButton` and `LOFIInput`
+  from `lofi-kit`.
+- **No modal stacking by default.** A modal never opens another modal, with one exception: a **confirmation-only** overlay (P7 — title, message, two buttons, no forms or tables) may appear on top of a primary editor modal when a destructive or save action inside it requires confirmation. This is the only permitted stacking pattern. Any other stacking scenario requires explicit stakeholder approval before implementation.
+- **No invented components.** If a pattern requires something `lofi-kit`
+  does not have, flag it before writing code.
+- **Monospace everywhere.** All text uses `$text-font-family`. Use the `LOFIText`
+  component for all rendered copy.
+- **BEM naming.** `.component-name`, `.component-name__element`,
+  `.component-name--modifier`. No utility classes, no inline styles.
+- **SCSS with tokens.** Always `@use '../../styles/tokens' as *;` in component
+  stylesheets. Never hard-code colours or sizes.
+- **Spacing grid.** All SCSS spacing uses `$space-*` tokens from the 4 / 8 px
+  grid. Regular layout: `$space-4`–`$space-16` (8–32 px). Fine intra-component:
+  `$space-2` / `$space-6` (4 / 12 px). Never hard-code arbitrary pixel values.
+
+---
+
+## Compliance debt
+
+Some files in `demos/bracket-demo/src/components/` still use raw HTML
+(`<button>`, `<select>`, etc.) instead of `lofi-kit` components:
+
+- `EdgeContextMenu.tsx`
+- `ProgressionEdge.tsx` (edge label control)
+
+When touching these files, migrate the UI elements you interact with to
+their `lofi-kit` equivalents. Do not copy their raw HTML patterns into new
+code. Reference `docs/LOFI_BLOCKS.md` → "Forbidden raw HTML" for the substitution
+table.
+
+---
+
+## Key commands
+
+```bash
+npm run dev                  # Hub on :5172 + demos + Storybook
+npm run dev:bracket-demo     # bracket-demo Vite only (no hub)
+npm run build:lofi           # Build lofi-kit → lib/dist
+npm run storybook    # Storybook on :6006
+npm test             # Vitest
+npm run lint         # ESLint
+npm run format       # Prettier
+```
+
+---
+
+## Agent instruction parity (Cursor + Copilot)
+
+Canonical behaviour lives in **`docs/`** (especially `UX_PATTERNS*.md`, `UI_PATTERNS*.md`, `COMPOSITION_PATTERNS.md`, `NL_COMPONENT_MAPPING_LO_FI.md`, `NL_COMPONENT_MAPPING_HI_FI.md`). **GitHub Copilot** consumes `.github/copilot-instructions.md`. When you change pattern semantics or Cursor rules that mirror those docs, update **both** surfaces in one change-set unless you explicitly defer with a noted TODO. See `ux-patterns-copilot-parity.mdc`.
+
+---
+
+## Docs index
+
+| File | Audience | Purpose |
+|---|---|---|
+| `docs/UX_PATTERNS.md` | Humans | P1–P10 pattern inventory (human-readable): P1 = Workspace structural shell, P2–P10 = interaction patterns; rationale, interaction rules |
+| `docs/UX_PATTERN_STORIES.md` | Humans | Story 1 / Story 2 reference flows (Storybook embeds on **PATTERNS → UX Patterns**) |
+| `docs/UX_PATTERNS_AGENT.md` | **Agents / LLMs** | P1–P10 terse numbered rules, imperative voice — **load this first when translating a brief or generating a prototype** |
+| `docs/COMPOSITION_PATTERNS.md` | Both | Control selection rules, composition recipes, UPL shell patterns |
+| `docs/NL_COMPONENT_MAPPING_LO_FI.md` | Agents | Signal phrase → LOFI / `lofi-kit` lookup (default prototype briefs) |
+| `docs/NL_COMPONENT_MAPPING_HI_FI.md` | Agents | Signal phrase → Podium / Mantine starting map; pair with Podium MCP (`/high-fidelity`) |
+| `docs/UI_PATTERNS.md` | Both | Podium **PDS** semantic rulebook (§1–§6), vocabulary tables, Storybook embeds, `Pds*` inventory |
+| `docs/UI_PATTERNS_AGENT.md` | **Agents / LLMs** | Terse numbered **UI** rules (`color`, `rank`, `surface`, …) — pair with `UX_PATTERNS_AGENT.md` for P1–P10 |
+| `docs/UI-Patterns-Confluence.md` | Humans | Confluence-oriented overview + button Do/Don't (mirrors `UI_PATTERNS.md`; refresh when that file changes) |
+| `docs/PODIUM_SEMANTIC_TYPES.md` | Agents | **Deprecated path in this repo** — use `docs/UI_PATTERNS.md` for PDS prop unions + inventory; pair with `NL_COMPONENT_MAPPING_HI_FI.md` + **pds-mcp** |
+| `docs/LOFI_KIT_PATTERNS.md` | Both | LOFI Kit component catalog, tokens, decision guide, compliance |
+| `docs/LOFI_BLOCKS.md` | Both | One-line quick-reference table |
+| `docs/briefs/*.md` | Both | Per-feature UX briefs |
+| `.cursor/skills/README.md` | **Agents (Cursor + Copilot)** | Project Cursor skills index, triggers (`/new-pattern`, `/high-fidelity`, `/ui-patterns`, prototype vs authoring); Podium MCP setup; Copilot parity in `.github/copilot-instructions.md` |
+| `CLAUDE.md` | Agents | Architecture, project structure, adding components |
