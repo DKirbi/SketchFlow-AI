@@ -1,0 +1,12 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import * as UIPatternsStories from './UIPatterns.stories';
+import uiPatterns from '../../docs/UI_PATTERNS.md?raw';
+import { UiPatternsWithStoryEmbeds } from './UiPatternsWithStoryEmbeds';
+import { PodiumProvider } from '@podium-design-system/react-components';
+import '@podium-design-system/react-components/pds-mantine-styles.css';
+
+<Meta of={UIPatternsStories} />
+
+<PodiumProvider>
+  <UiPatternsWithStoryEmbeds markdown={uiPatterns} storiesModule={UIPatternsStories} />
+</PodiumProvider>

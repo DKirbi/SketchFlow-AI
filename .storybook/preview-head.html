@@ -1,0 +1,39 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..900;1,6..12,300..900&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  /*
+   * Storybook TOC overrides — width and font
+   *
+   * Targets the Table of Contents nav rendered by @storybook/addon-docs.
+   * The nav element uses aria-label="Table of contents" as a stable semantic hook.
+   * Width uses !important to override the inline style applied by Storybook.
+   */
+  nav[aria-label='Table of contents'] {
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+  }
+
+  nav[aria-label='Table of contents'] * {
+    font-family: 'Nunito Sans', sans-serif !important;
+  }
+
+  /*
+   * Docs prose (Markdown / MDX) uses a shared heading margin (20px top) for h1–h6.
+   * Match project typography: h2 = 16px top, h4 = 8px top; keep Storybook’s
+   * first-heading flush to the content block.
+   */
+  .sbdocs.sbdocs-content h2:not(.sb-anchor) {
+    margin-top: 16px !important;
+  }
+
+  .sbdocs.sbdocs-content h4:not(.sb-anchor) {
+    margin-top: 8px !important;
+  }
+</style>
