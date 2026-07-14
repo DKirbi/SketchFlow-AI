@@ -12,9 +12,11 @@ export interface BadgeProps {
   active?:   boolean;
   /** If set, renders as a button and calls this on click; omit for static badge. */
   onClick?:  () => void;
+  /** Native `title` tooltip. */
+  title?:    string;
 }
 
-export function Badge({ label, variant = 'tag', active = true, onClick }: BadgeProps) {
+export function Badge({ label, variant = 'tag', active = true, onClick, title }: BadgeProps) {
   const classes = [
     'badge',
     `badge--${variant}`,
@@ -24,12 +26,12 @@ export function Badge({ label, variant = 'tag', active = true, onClick }: BadgeP
 
   return onClick
     ? (
-      <button type="button" className={classes} onClick={onClick}>
+      <button type="button" className={classes} onClick={onClick} title={title}>
         <Text as="span" variant="inherit">{label}</Text>
       </button>
     )
     : (
-      <span className={classes}>
+      <span className={classes} title={title}>
         <Text as="span" variant="inherit">{label}</Text>
       </span>
     );

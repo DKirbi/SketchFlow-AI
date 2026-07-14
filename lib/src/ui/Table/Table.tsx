@@ -7,8 +7,9 @@ import {
   type ColumnDef,
   type SortingState,
   type Row,
+  type ExpandedState,
 } from '@tanstack/react-table';
-import { useState, type ReactNode } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { Text } from '../Text/Text';
 import {
   LofiArrowDownIcon,
@@ -69,6 +70,8 @@ export interface TableProps<T> {
   expandableStickyDetail?: boolean;
   /** CSS max-height for the scrollable detail body (e.g. `min(70vh, 28rem)`). */
   expandableDetailMaxHeight?: string;
+  /** If true, all expandable rows start expanded; requires keyField. */
+  defaultExpandAll?: boolean;
 }
 
 export function Table<T>({
@@ -83,9 +86,21 @@ export function Table<T>({
   sortable,
   expandableStickyDetail,
   expandableDetailMaxHeight = 'min(70vh, 28rem)',
+  defaultExpandAll,
 }: TableProps<T>) {
   'use no memo';
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [expanded, setExpanded] = useState<ExpandedState>({});
+
+  useEffect(() => {
+    if (!defaultExpandAll || !keyField) return;
+    const allExpanded: ExpandedState = {};
+    for (const row of rows) {
+      const key = String(row[keyField]);
+      allExpanded[key] = true;
+    }
+    setExpanded(allExpanded);
+  }, [defaultExpandAll, keyField, rows]);
 
   const stickyDetail =
     expandable && expandableStickyDetail !== false;
@@ -95,8 +110,9 @@ export function Table<T>({
   const table = useReactTable({
     data: rows,
     columns,
-    state: { sorting },
+    state: { sorting, ...(expandable && { expanded }) },
     onSortingChange: setSorting,
+    ...(expandable && { onExpandedChange: setExpanded }),
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getSortedRowModel: sortable ? getSortedRowModel() : undefined,

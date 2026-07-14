@@ -61,6 +61,30 @@ export const WithHeader: Story = {
   parameters: { docs: { description: { story: 'With breadcrumb path and status badge next to the title.' } } },
 };
 
+export const WithTitleActions: Story = {
+  render: () => (
+    <div style={{ height: 400 }}>
+      <LOFIMainWorkspace
+        title="Property search"
+        titleBadges={<LOFIBadge variant="tag" label="12 tournaments" />}
+        titleActions={
+          <>
+            <LOFIBadge variant="tag" label="3 selected" />
+            <LOFIButton type="button" variant="default" size="small">
+              Edit Properties
+            </LOFIButton>
+          </>
+        }
+      >
+        <LOFIText variant="muted">Table body with right-aligned header actions.</LOFIText>
+      </LOFIMainWorkspace>
+    </div>
+  ),
+  parameters: {
+    docs: { description: { story: 'Title row with badges on the left and actions aligned right.' } },
+  },
+};
+
 // ── With tabs ─────────────────────────────────────────────────────────────────
 
 const competitorCols: ColumnDef<{ id: string; name: string; group: string }>[] = [

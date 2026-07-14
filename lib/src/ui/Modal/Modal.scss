@@ -29,7 +29,7 @@
   z-index: 1001;
 
   &--wide {
-    width: 560px;
+    width: 760px;
   }
 
   &__header {
@@ -56,7 +56,9 @@
     line-height: 1;
     flex-shrink: 0;
 
-    &:hover { color: $color-ink; }
+    &:hover {
+      color: $color-ink;
+    }
   }
 
   &__description {

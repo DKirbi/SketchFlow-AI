@@ -20,10 +20,12 @@ export interface ModalProps {
   footer?:       React.ReactNode;
   /** Layout width: default | wide. */
   size?:         ModalSize;
+  /** Optional CSS class name for the modal. */
+  className?:    string;
 }
 
-export function Modal({ open, onClose, title, description, children, footer, size = 'default' }: ModalProps) {
-  const dialogCls = ['modal', size === 'wide' ? 'modal--wide' : ''].filter(Boolean).join(' ');
+export function Modal({ open, onClose, title, description, children, footer, size = 'default', className }: ModalProps) {
+  const dialogCls = ['modal', size === 'wide' ? 'modal--wide' : '', className].filter(Boolean).join(' ');
 
   return (
     <Dialog.Root open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose(); }}>

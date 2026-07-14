@@ -9,6 +9,8 @@ export interface MainWorkspaceProps {
   title: string;
   /** LOFIBadge chips placed after the title (e.g. status or type labels). */
   titleBadges?: ReactNode;
+  /** Right-aligned header actions (e.g. selection badge + Edit). */
+  titleActions?: ReactNode;
   /** Optional LOFITabs strip between the header and body. */
   tabs?: ReactNode;
   /** Sticky footer actions — LOFIButton (primary + dismiss). Omit for read-only views. */
@@ -21,6 +23,7 @@ export function MainWorkspace({
   breadcrumb,
   title,
   titleBadges,
+  titleActions,
   tabs,
   footer,
   children,
@@ -35,6 +38,9 @@ export function MainWorkspace({
           <Text as="h2" variant="body">{title}</Text>
           {titleBadges && (
             <div className="main-workspace__badges">{titleBadges}</div>
+          )}
+          {titleActions && (
+            <div className="main-workspace__title-actions">{titleActions}</div>
           )}
         </div>
       </div>

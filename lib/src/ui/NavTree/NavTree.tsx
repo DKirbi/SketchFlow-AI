@@ -63,6 +63,11 @@ function Branch({
   expandedIds,
   onExpandChange,
 }: BranchProps) {
+  const isSelected = item.id === selectedId;
+  const activate = () => {
+    onSelect(item.id);
+    if (!isOpen) onOpenChange(true);
+  };
   return (
     <Collapsible.Root
       open={isOpen}
@@ -72,23 +77,42 @@ function Branch({
       <li
         role="treeitem"
         aria-expanded={isOpen}
-        className="nav-tree__item"
+        aria-selected={isSelected || undefined}
+        className={[
+          'nav-tree__item',
+          'nav-tree__item--branch',
+          isSelected ? 'nav-tree__item--selected' : '',
+        ].filter(Boolean).join(' ')}
         style={{ '--nav-tree-depth': depth } as React.CSSProperties}
       >
-        <Collapsible.Trigger asChild>
+        <div className="nav-tree__row">
           <button
             type="button"
-            className="nav-tree__trigger"
+            className="nav-tree__chevron-button"
             aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${item.label}`}
+            onClick={() => onOpenChange(!isOpen)}
           >
             <span className="nav-tree__chevron" aria-hidden="true">
               {isOpen ? <LofiChevronDownIcon size={12} /> : <LofiChevronRightIcon size={12} />}
             </span>
+          </button>
+          <button
+            type="button"
+            className="nav-tree__trigger"
+            onClick={activate}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                activate();
+              }
+            }}
+          >
+            <span className="nav-tree__active-dot" aria-hidden="true" />
             <Text as="span" variant="inherit" className="nav-tree__label">
               {item.label}
             </Text>
           </button>
-        </Collapsible.Trigger>
+        </div>
         <Collapsible.Content asChild>
           <ul role="group" className="nav-tree__group">
             {item.children!.map((child) => (
@@ -140,6 +164,7 @@ function Leaf({ item, selectedId, onSelect, depth }: LeafProps) {
           }
         }}
       >
+        <span className="nav-tree__active-dot" aria-hidden="true" />
         <Text as="span" variant="inherit" className="nav-tree__label">
           {item.label}
         </Text>

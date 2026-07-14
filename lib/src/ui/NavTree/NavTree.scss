@@ -20,18 +20,51 @@
   padding: 0;
 }
 
-// Indent all rows by depth. Depth 0 = no indent; each subsequent level adds
-// $space-8 (16px) indentation via the CSS custom property set inline.
+// ─── Branch row (chevron button + selectable trigger) ────────────────────────
+
+// Row groups the chevron-button (toggle only) and the trigger button (select +
+// expand) side by side. Depth indentation lives on the row so the two buttons
+// stay aligned visually with the leaf row at the same depth.
+.nav-tree__row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: calc(var(--nav-tree-depth, 0) * $space-8);
+}
+
+.nav-tree__chevron-button {
+  all: unset;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc($space-4 + $space-6);
+  padding: $space-2 0;
+  cursor: pointer;
+  color: $color-ink-muted;
+  border: 1px solid transparent;
+
+  &:hover {
+    background: $color-surface-hover;
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: $color-border-strong;
+  }
+}
+
+// ─── Shared button styles (leaf + branch trigger) ────────────────────────────
+
 .nav-tree__trigger,
 .nav-tree__leaf {
   all: unset;
   display: flex;
   align-items: center;
   gap: $space-3;
-  width: 100%;
   box-sizing: border-box;
   padding: $space-2 $space-4;
-  padding-left: calc($space-4 + var(--nav-tree-depth, 0) * $space-8);
   cursor: pointer;
   font-family: $text-font-family;
   font-size: $font-size-base;
@@ -50,29 +83,58 @@
   }
 }
 
-// ─── Branch trigger ──────────────────────────────────────────────────────────
+// Branch trigger fills the remaining width inside the row.
+.nav-tree__trigger {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+// Leaves have no chevron-button sibling, so depth indentation lives on the
+// button itself (parity with the previous behaviour).
+.nav-tree__leaf {
+  width: 100%;
+  padding-left: calc($space-4 + var(--nav-tree-depth, 0) * $space-8 + $space-4 + $space-6);
+}
+
+// ─── Chevron icon (inside the chevron-button) ────────────────────────────────
 
 .nav-tree__chevron {
   flex: 0 0 auto;
   width: $space-6;
-  display: inline-block;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: $font-size-xs;
   color: $color-ink-muted;
 }
 
-// ─── Leaf selection ──────────────────────────────────────────────────────────
+// ─── Active-dot indicator (branch + leaf) ────────────────────────────────────
+
+.nav-tree__active-dot {
+  flex: 0 0 auto;
+  width: $space-2;
+  height: $space-2;
+  border-radius: 50%;
+  background: $color-ink;
+  visibility: hidden;
+}
+
+.nav-tree__item--selected > .nav-tree__leaf .nav-tree__active-dot,
+.nav-tree__item--selected > .nav-tree__row .nav-tree__trigger .nav-tree__active-dot {
+  visibility: visible;
+}
+
+// ─── Selected row chrome (border + surface) ──────────────────────────────────
 
 .nav-tree__item--leaf {
-  // Position the left selection border on the leaf button, not the li, so it
-  // aligns within the indented area.
   .nav-tree__leaf {
     border-left-color: transparent;
     border-left-width: $border-width;
   }
 }
 
-.nav-tree__item--selected > .nav-tree__leaf {
+.nav-tree__item--selected > .nav-tree__leaf,
+.nav-tree__item--selected > .nav-tree__row .nav-tree__trigger {
   border-color: $color-border-strong;
   background: $color-surface;
 }
