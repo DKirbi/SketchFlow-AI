@@ -2,7 +2,8 @@
 
 // ─── Wrapper ─────────────────────────────────────────────────────
 .table-wrap {
-  border: $border-width solid $color-border;
+  border: $border-width solid $color-border-subtle;
+  border-radius: $radius-sm;
   background: $color-surface;
   overflow: hidden;
 
@@ -30,15 +31,15 @@
     font-size: $font-size-table-md-heading;
     font-weight: $font-weight-semibold;
     color: $color-ink-subtle;
-    background: $color-surface-inset;
+    background: $color-surface;
     padding: $space-3 $space-5;
     text-align: left;
-    border-bottom: $border-width solid $color-border-subtle;
+    border-bottom: $border-width solid $color-border-faint;
     white-space: nowrap;
     cursor: default;
 
     &--sortable { cursor: pointer; user-select: none; }
-    &--sorted   { color: $color-ink; }
+    &--sorted   { color: $color-ink; background: $color-surface-raised; }
 
     // Fluid: absorbs all remaining table width. One per table is recommended
     // (primary name / entity column). min-width: 0 lets nested text truncate.

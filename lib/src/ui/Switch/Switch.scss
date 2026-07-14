@@ -32,8 +32,9 @@ $switch-indicator-s-compact: 8px;
     display: inline-block;
     width: $switch-track-w;
     height: $switch-track-h;
-    border: $border-width solid $color-border;
+    border: $border-width solid $color-border-subtle;
     background: $color-paper;
+    border-radius: $radius-pill;
     flex-shrink: 0;
     transition: background 0.1s, border-color 0.1s;
   }
@@ -45,8 +46,9 @@ $switch-indicator-s-compact: 8px;
     transform: translateY(-50%);
     width: $switch-indicator-s;
     height: $switch-indicator-s;
-    border: $border-width solid $color-border;
+    border: $border-width solid $color-border-subtle;
     background: $color-paper;
+    border-radius: $radius-pill;
     transition: left 0.1s, right 0.1s, background 0.1s, border-color 0.1s;
   }
 
@@ -88,7 +90,7 @@ $switch-indicator-s-compact: 8px;
 
   // keyboard focus ring via hidden input focus-visible
   &__input:focus-visible ~ .switch__track {
-    outline: 2px solid $color-ink;
-    outline-offset: 2px;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
   }
 }

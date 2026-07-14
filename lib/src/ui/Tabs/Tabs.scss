@@ -5,7 +5,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: $space-6;
-  border-bottom: $border-width solid $color-border-subtle;
+  border-bottom: $border-width solid $color-border-faint;
 }
 
 .tabs__tab {
@@ -17,7 +17,7 @@
   padding: $space-2 $space-4;
   border: none;
   border-bottom: $border-width-strong solid transparent;
-  border-radius: $radius-none;
+  border-radius: $radius-sm $radius-sm 0 0;
   background: transparent;
   font-family: $text-font-family;
   font-size: $font-size-tab;
@@ -39,12 +39,19 @@
 
   &:hover:not(.tabs__tab--disabled):not(.tabs__tab--active) {
     color: $color-ink;
+    background: $color-surface;
+  }
+
+  &:focus-visible {
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
   }
 
   &--active {
     border-bottom-color: $color-ink;
     color: $color-ink;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
+    background: $color-surface;
     cursor: default;
   }
 

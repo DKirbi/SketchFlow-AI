@@ -5,10 +5,11 @@
   align-items: center;
   gap: $space-2;
   padding: $space-2 $space-3;
-  border: $border-width-strong solid $color-border;
+  border: $border-width solid $color-border-subtle;
+  border-radius: $radius-sm;
   background: $color-paper;
   font-family: $text-font-family;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   font-size: $text-body-size;
   white-space: nowrap;
 

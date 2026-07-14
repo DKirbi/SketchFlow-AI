@@ -1,16 +1,15 @@
 @use '../../styles/tokens' as *;
 
 .fieldset {
-  border: $border-width solid $color-border;
+  border: $border-width solid $color-border-subtle;
+  border-radius: $radius-sm;
   padding: $space-5 $space-6;
   margin-bottom: $space-6;
 
   &__legend {
     padding: 0 $space-2;
     font-size: $font-size-micro;
-    font-weight: $font-weight-bold;
-    text-transform: uppercase;
-    letter-spacing: $letter-spacing-caps;
+    font-weight: $font-weight-semibold;
     color: $color-ink-subtle;
   }
 

@@ -4,13 +4,11 @@
   display: inline-flex;
   align-items: center;
   padding: $space-1 $space-3;
-  border: $border-width solid $color-border;
+  border: $border-width solid $color-border-subtle;
   background: $color-paper;
   font-family: $text-font-family;
   font-size: $font-size-sm;
-  font-weight: $font-weight-bold;
-  text-transform: uppercase;
-  letter-spacing: $letter-spacing-caps;
+  font-weight: $font-weight-semibold;
   color: $color-ink-subtle;
   border-radius: $radius-pill;
   white-space: nowrap;
@@ -23,7 +21,7 @@
 
     &.badge--inactive {
       border-style: dashed;
-      border-color: $color-border;
+      border-color: $color-border-subtle;
       color: $color-ink-subtle;
     }
   }
@@ -32,11 +30,10 @@
   &--id {
     font-size: $font-size-sm;
     letter-spacing: 0.02em;
-    text-transform: none;
     font-weight: $font-weight-normal;
     color: $color-ink-muted;
     border-color: $color-border-subtle;
-    border-radius: $radius-none;
+    border-radius: $radius-sm;
   }
 
   // tag: category label

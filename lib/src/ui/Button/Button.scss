@@ -5,19 +5,22 @@
   align-items: center;
   gap: $space-2;
   padding: $space-3 $space-6;
-  border: $border-width-strong solid $color-ink;
+  border: $border-width solid $color-border;
   background: $color-paper;
   color: $color-ink;
   font-family: $text-font-family;
   font-size: $font-size-button-chrome;
-  font-weight: $font-weight-bold;
-  letter-spacing: $letter-spacing-caps;
-  text-transform: uppercase;
+  font-weight: $font-weight-semibold;
   cursor: pointer;
-  border-radius: $radius-none;
-  transition: background 0.1s, color 0.1s, border-color 0.1s;
+  border-radius: $radius-sm;
+  transition: background 0.1s, color 0.1s, border-color 0.1s, box-shadow 0.1s;
   white-space: nowrap;
   line-height: 1.4;
+
+  &:focus-visible {
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
+  }
 
   &--primary {
     background: $color-ink;
@@ -27,17 +30,18 @@
     &:hover:not(:disabled) {
       background: $color-ink-secondary;
       border-color: $color-ink-secondary;
+      box-shadow: $shadow-soft-xs;
     }
   }
 
   &--default {
     background: $color-paper;
     color: $color-ink;
-    border-color: $color-ink;
+    border-color: $color-border;
 
     &:hover:not(:disabled) {
-      background: $color-ink;
-      color: $color-paper;
+      border-color: $color-ink;
+      background: $color-surface-hover;
     }
   }
 
@@ -49,20 +53,19 @@
     &:hover:not(:disabled) {
       color: $color-ink;
       border-color: $color-border;
+      background: $color-surface-hover;
     }
   }
 
   &--small {
     padding: $space-2 $space-5;
     font-size: $font-size-base;
-    font-weight: $font-weight-bold;
-    border-width: $border-width;
+    font-weight: $font-weight-semibold;
   }
 
   &--compact {
     padding: $space-1 $space-3;
     font-size: $font-size-button-compact;
-    border-width: $border-width;
   }
 
   &:disabled {

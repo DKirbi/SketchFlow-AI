@@ -5,8 +5,9 @@ $z-dropdown: 1102;
 
 .dropdown-menu {
   background: $color-paper;
-  border: $border-width-strong solid $color-ink;
-  box-shadow: $shadow-sm;
+  border: $border-width solid $color-border-subtle;
+  border-radius: $radius-sm;
+  box-shadow: $shadow-soft-md;
   overflow-y: auto;
   max-height: 280px;
   min-width: var(--radix-select-trigger-width, 120px);

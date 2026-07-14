@@ -8,12 +8,12 @@
   gap: $space-2;
   width: 100%;
   padding: $space-3 $space-4;
-  border: $border-width solid $color-border;
+  border: $border-width solid $color-border-subtle;
   background: $color-paper;
   color: $color-ink;
   font-family: $text-font-family;
   font-size: $font-size-base;
-  border-radius: $radius-none;
+  border-radius: $radius-sm;
   // Reset native button chrome
   -webkit-appearance: none;
   appearance: none;
@@ -21,13 +21,13 @@
   cursor: pointer;
 
   &:focus-visible {
-    outline: none;
-    border-color: $color-border-strong;
-    border-width: $border-width-strong;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
+    border-color: $color-border;
   }
 
   &[data-disabled] {
-    background-color: $color-surface;
+    background-color: $color-surface-inset;
     color: $color-ink-muted;
     cursor: not-allowed;
 
@@ -90,8 +90,12 @@
   font-family: $text-font-family;
   font-size: $font-size-sm;
   line-height: 1;
+  border-radius: $radius-sm;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: $color-ink;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
   }
 }

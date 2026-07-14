@@ -11,7 +11,7 @@
   &__header {
     flex-shrink: 0;
     padding: $space-6 $space-8;
-    border-bottom: $border-width solid $color-border;
+    border-bottom: $border-width solid $color-border-subtle;
     background: $color-surface;
   }
 
@@ -46,7 +46,7 @@
   &__tabs {
     flex-shrink: 0;
     padding: 0 $space-8;
-    border-bottom: $border-width solid $color-border;
+    border-bottom: $border-width solid $color-border-subtle;
   }
 
   // ── Scrollable body ───────────────────────────────────────────────
@@ -65,7 +65,7 @@
     justify-content: flex-end;
     gap: $space-4;
     padding: $space-6 $space-8;
-    border-top: $border-width solid $color-border;
+    border-top: $border-width solid $color-border-subtle;
     background: $color-surface;
   }
 }

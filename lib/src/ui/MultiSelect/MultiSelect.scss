@@ -14,7 +14,7 @@
   &__search {
     flex-shrink: 0;
     padding: $space-2;
-    border-bottom: $border-width dashed $color-border;
+    border-bottom: $border-width dashed $color-border-subtle;
   }
 
   &__list {
@@ -43,7 +43,8 @@
     &:hover,
     &:focus-visible {
       background: $color-surface-hover;
-      outline: none;
+      outline: $focus-ring-width solid $focus-ring-color;
+      outline-offset: -$focus-ring-offset;
     }
 
     &--disabled {

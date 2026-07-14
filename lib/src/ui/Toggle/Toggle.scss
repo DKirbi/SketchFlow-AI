@@ -2,30 +2,36 @@
 
 .toggle {
   display: inline-flex;
-  border: $border-width solid $color-border;
-  background: $color-paper;
+  border: $border-width solid $color-border-subtle;
+  border-radius: $radius-sm;
+  background: $color-surface;
+  overflow: hidden;
 
   &__btn {
     padding: $space-2 $space-6;
     border: none;
-    background: $color-paper;
+    background: transparent;
     font-family: $text-font-family;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
-    text-transform: uppercase;
-    letter-spacing: $letter-spacing-caps;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
     color: $color-ink-subtle;
     cursor: pointer;
     white-space: nowrap;
     line-height: 1.4;
 
     & + & {
-      border-left: $border-width solid $color-border;
+      border-left: $border-width solid $color-border-subtle;
     }
 
     &:hover:not(.toggle__btn--active) {
       background: $color-surface-hover;
       color: $color-ink;
+    }
+
+    &:focus-visible {
+      outline: $focus-ring-width solid $focus-ring-color;
+      outline-offset: -$focus-ring-offset;
+      z-index: 1;
     }
 
     &--active {

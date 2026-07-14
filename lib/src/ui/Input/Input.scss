@@ -4,31 +4,31 @@
   display: block;
   width: 100%;
   padding: $space-3 $space-4;
-  border: $border-width solid $color-border;
+  border: $border-width solid $color-border-subtle;
   background: $color-paper;
   color: $color-ink;
   font-family: $text-font-family;
   font-size: $font-size-base;
-  border-radius: $radius-none;
+  border-radius: $radius-sm;
 
   &::placeholder {
     color: $color-ink-ghost;
   }
 
   &:focus {
-    outline: none;
-    border-color: $color-border-strong;
-    border-width: $border-width-strong;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
+    border-color: $color-border;
   }
 
   &:disabled {
-    background: $color-surface;
+    background: $color-surface-inset;
     color: $color-ink-muted;
     cursor: not-allowed;
   }
 
   &[readonly] {
-    background: $color-surface;
+    background: $color-surface-inset;
     color: $color-ink-subtle;
   }
 
@@ -60,8 +60,8 @@
   top: 50%;
   transform: translateY(-50%);
   background: $color-surface-raised;
-  border: $border-width solid $color-border;
-  border-radius: $radius-none;
+  border: $border-width solid $color-border-subtle;
+  border-radius: $radius-sm;
   padding: $space-1 $space-2;
   cursor: pointer;
   color: $color-ink-subtle;
@@ -72,7 +72,8 @@
   &:hover,
   &:focus-visible {
     color: $color-ink;
-    border-color: $color-border-strong;
-    outline: none;
+    border-color: $color-border;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
   }
 }

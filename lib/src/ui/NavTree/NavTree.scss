@@ -50,8 +50,9 @@
   }
 
   &:focus-visible {
-    outline: none;
-    border-color: $color-border-strong;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
+    border-color: transparent;
   }
 }
 
@@ -72,14 +73,16 @@
   color: $color-ink;
   background: transparent;
   border: 1px solid transparent;
+  border-radius: $radius-sm;
 
   &:hover {
     background: $color-surface-hover;
   }
 
   &:focus-visible {
-    outline: none;
-    border-color: $color-border-strong;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
+    border-color: transparent;
   }
 }
 
@@ -135,8 +138,8 @@
 
 .nav-tree__item--selected > .nav-tree__leaf,
 .nav-tree__item--selected > .nav-tree__row .nav-tree__trigger {
-  border-color: $color-border-strong;
-  background: $color-surface;
+  border-color: $color-border-subtle;
+  background: $color-surface-raised;
 }
 
 // ─── Group (children of a branch) ────────────────────────────────────────────

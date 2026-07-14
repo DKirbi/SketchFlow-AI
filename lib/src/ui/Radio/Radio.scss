@@ -36,7 +36,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    border: $border-width-strong solid $color-border;
+    border: $border-width solid $color-border;
     background: $color-paper;
     border-radius: $radius-pill;
     box-sizing: border-box;
@@ -57,8 +57,8 @@
   }
 
   &__input:focus-visible + &__box {
-    outline: $border-width-strong solid $color-ink;
-    outline-offset: 2px;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
   }
 
   &__label {

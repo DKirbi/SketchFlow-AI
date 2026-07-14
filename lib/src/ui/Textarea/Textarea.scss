@@ -30,9 +30,13 @@
   font-family: $text-font-family;
   font-size: $font-size-sm;
   line-height: 1;
+  border-radius: $radius-sm;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: $color-ink;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
   }
 }
 
@@ -41,13 +45,13 @@
   width: 100%;
   padding: $space-3 $space-4;
   padding-bottom: $space-8;
-  border: $border-width solid $color-border;
+  border: $border-width solid $color-border-subtle;
   background: $color-paper;
   color: $color-ink;
   font-family: $text-font-family;
   font-size: $font-size-base;
   line-height: $line-height-base;
-  border-radius: $radius-none;
+  border-radius: $radius-sm;
   resize: vertical;
   box-sizing: border-box;
 
@@ -56,20 +60,20 @@
   }
 
   &:focus {
-    outline: none;
-    border-color: $color-border-strong;
-    border-width: $border-width-strong;
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: $focus-ring-offset;
+    border-color: $color-border;
   }
 
   &:disabled {
-    background: $color-surface;
+    background: $color-surface-inset;
     color: $color-ink-muted;
     cursor: not-allowed;
     resize: none;
   }
 
   &[readonly] {
-    background: $color-surface;
+    background: $color-surface-inset;
     color: $color-ink-subtle;
   }
 
