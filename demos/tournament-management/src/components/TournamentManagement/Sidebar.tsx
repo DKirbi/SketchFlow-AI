@@ -33,9 +33,6 @@ export function Sidebar({
   return (
     <aside className="tmgmt__sidebar" aria-label="Tournament tree">
       <div className="tmgmt__sidebar-head">
-        <LOFIText variant="caps" className="tmgmt__sidebar-title">
-          Tournaments
-        </LOFIText>
         <LOFIButton type="button" variant="dismiss" size="compact" onClick={onToggleCollapse}>
           ◀
         </LOFIButton>
