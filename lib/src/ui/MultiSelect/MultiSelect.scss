@@ -1,0 +1,76 @@
+@use '../../styles/tokens' as *;
+
+// Trigger reuses `.select` from Select.scss; panel extends dropdown-menu patterns.
+.multiselect {
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    min-width: var(--radix-popover-trigger-width, 14rem);
+    max-height: 280px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  &__search {
+    flex-shrink: 0;
+    padding: $space-2;
+    border-bottom: $border-width dashed $color-border;
+  }
+
+  &__list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    width: 100%;
+    padding: $space-2 $space-3;
+    border: none;
+    background: transparent;
+    color: $color-ink;
+    font-family: $text-font-family;
+    font-size: $font-size-base;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      background: $color-surface-hover;
+      outline: none;
+    }
+
+    &--disabled {
+      color: $color-ink-ghost;
+      cursor: not-allowed;
+
+      &:hover,
+      &:focus-visible {
+        background: transparent;
+      }
+    }
+  }
+
+  &__option-checkbox {
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  &__option-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__empty {
+    padding: $space-3 $space-4;
+  }
+}

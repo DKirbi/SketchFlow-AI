@@ -3,6 +3,7 @@ export { StatefulButton as LOFIStatefulButton } from './StatefulButton/StatefulB
 export { Input as LOFIInput }         from './Input/Input';
 export { Textarea as LOFITextarea }   from './Textarea/Textarea';
 export { Select as LOFISelect }       from './Select/Select';
+export { MultiSelect as LOFIMultiSelect } from './MultiSelect/MultiSelect';
 export { Checkbox as LOFICheckbox }    from './Checkbox/Checkbox';
 export { Radio as LOFIRadio }         from './Radio/Radio';
 export { Field as LOFIField }         from './Field/Field';
@@ -12,6 +13,7 @@ export { Panel as LOFIPanel }         from './Panel/Panel';
 export { Table as LOFITable }         from './Table/Table';
 export { Pagination as LOFIPagination } from './Pagination/Pagination';
 export { Badge as LOFIBadge }         from './Badge/Badge';
+export { Chip as LOFIChip }           from './Chip/Chip';
 export { Steps as LOFISteps }        from './Steps/Steps';
 export { Tabs as LOFITabs }          from './Tabs/Tabs';
 export { Card as LOFICard }          from './Card/Card';
@@ -35,6 +37,7 @@ export type { StatefulButtonProps, StatefulButtonState }                        
 export type { InputProps, InputSize }                        from './Input/Input';
 export type { TextareaProps, TextareaSize }                  from './Textarea/Textarea';
 export type { SelectProps, SelectOption }                    from './Select/Select';
+export type { MultiSelectProps, MultiSelectOption }          from './MultiSelect/MultiSelect';
 export type { CheckboxProps, CheckboxSize }                  from './Checkbox/Checkbox';
 export type { RadioProps, RadioOption, RadioSize }           from './Radio/Radio';
 export type { FieldProps }                                   from './Field/Field';
@@ -44,6 +47,7 @@ export type { PanelProps }                                   from './Panel/Panel
 export type { TableProps, ColumnDef, TableColumnMeta }       from './Table/Table';
 export type { PaginationProps }                              from './Pagination/Pagination';
 export type { BadgeProps, BadgeVariant }                     from './Badge/Badge';
+export type { ChipProps }                                    from './Chip/Chip';
 export type { StepsProps, StepItem, StepState }              from './Steps/Steps';
 export type { TabsProps, TabItem }                           from './Tabs/Tabs';
 export type { CardProps }                                    from './Card/Card';
