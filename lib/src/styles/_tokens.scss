@@ -1,6 +1,6 @@
 // ─── Typography ──────────────────────────────────────────────────
 // Canonical stack for <Text>, form controls, and all lo-fi UI copy
-$text-font-family:    'Courier New', Courier, monospace;
+$text-font-family:    'JetBrains Mono', 'Courier New', Courier, monospace;
 $font-family:         $text-font-family;
 
 // Floor: no readable text below 11px
@@ -28,7 +28,7 @@ $font-size-table-sm-label:   11px;
 
 // ─── Button tiers ────────────────────────────────────────────────
 // chrome = screen-level toolbar/save; table = in-row action; compact = dense chrome
-$font-size-button-chrome:  12px;
+$font-size-button-chrome:  13px;
 $font-size-button-table:   14px;
 $font-size-button-compact: 11px;
 
@@ -94,12 +94,22 @@ $border-width-pattern-frame: 5px;
 // ─── Radius ──────────────────────────────────────────────────────
 $radius-none: 0;
 $radius-sm:   4px;
+$radius-md:   6px;
 $radius-pill: 999px;
 
 // ─── Shadow ──────────────────────────────────────────────────────
 $shadow-sm: 2px 2px 0 #{$color-border};
 $shadow-md: 4px 4px 0 #{$color-border};
 $shadow-lg: 6px 6px 0 #{$color-ink-ghost};
+$shadow-soft-xs: 0 1px 2px rgba(0, 0, 0, 0.06);
+$shadow-soft-sm: 0 1px 3px rgba(0, 0, 0, 0.10);
+$shadow-soft-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+$shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+// ─── Focus ring ──────────────────────────────────────────────────
+$focus-ring-width:  2px;
+$focus-ring-offset: 2px;
+$focus-ring-color:  rgba(17, 17, 17, 0.30);
 
 // ─── Spacing ─────────────────────────────────────────────────────
 $space-1:  2px;
