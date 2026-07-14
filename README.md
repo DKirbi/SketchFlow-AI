@@ -26,6 +26,9 @@ demos/bracket-demo/              Reference app (tournament bracket builder)
 .storybook/                      Storybook config (loads lib/stories/)
 scripts/                         Tooling (props catalog generator, Pages hub)
 docs/                            Design patterns, UX flows, brief guides
+.cursor/skills/                  Cursor Agent Skills (prototype, patterns, UI audit)
+.cursor/rules/                   Cursor project rules (lo-fi, NL mapping, demos)
+.github/                         GitHub Copilot instructions + Pages workflow
 ```
 
 ## Getting started
@@ -245,28 +248,32 @@ See [`docs/LOFI_KIT_PATTERNS.md`](docs/LOFI_KIT_PATTERNS.md) for the full compon
 
 ---
 
-## Component inventory (18 UI primitives)
+## Component inventory
 
-| Component | Export         | Purpose                                            |
-| --------- | -------------- | -------------------------------------------------- |
-| Badge     | `LOFIBadge`    | Status chips, ID tags, labels                      |
-| Button    | `LOFIButton`   | All actions and CTAs                               |
-| Card      | `LOFICard`     | Content container with optional header/footer      |
-| Checkbox  | `LOFICheckbox` | Boolean toggle with label                          |
-| Field     | `LOFIField`    | Label + hint/error wrapper for form controls       |
-| Fieldset  | `LOFIFieldset` | Grouped fields with a legend                       |
-| Input     | `LOFIInput`    | Text input (text, number, email, search, password) |
-| Loader    | `LOFILoader`   | Animated loading indicator with optional label     |
-| Modal     | `LOFIModal`    | Overlay dialog with header, body, footer           |
-| Panel     | `LOFIPanel`    | Side panel with header, body, footer               |
-| Radio     | `LOFIRadio`    | Radio group (row or column layout)                 |
-| Select    | `LOFISelect`   | Native dropdown with optional placeholder          |
-| Steps     | `LOFISteps`    | Step/wizard navigation bar                         |
-| Tabs      | `LOFITabs`     | Named parallel views (underline strip, badges)     |
-| Table     | `LOFITable`    | Data table (sorting, expansion via TanStack)       |
-| Text      | `LOFIText`     | Typography primitive (body, sm, micro, muted, …)   |
-| Toggle    | `LOFIToggle`   | Segmented toggle (exclusive options)               |
-| Toolbar   | `LOFIToolbar`  | Three-slot header (left / center / right)          |
+Quick reference for common primitives. See [`docs/LOFI_BLOCKS.md`](docs/LOFI_BLOCKS.md) for the full catalog (including `LOFIMainWorkspace`, `LOFINavTree`, `LOFIMultiSelect`, and more).
+
+| Component    | Export            | Purpose                                            |
+| ------------ | ----------------- | -------------------------------------------------- |
+| Badge        | `LOFIBadge`       | Status chips, ID tags, labels (optional `title`)     |
+| Button       | `LOFIButton`      | All actions and CTAs                               |
+| Card         | `LOFICard`        | Content container with optional header/footer      |
+| Checkbox     | `LOFICheckbox`    | Boolean toggle with label                          |
+| Chip         | `LOFIChip`        | Dismissible active-filter token (P9 chip strips)   |
+| Field        | `LOFIField`       | Label + hint/error wrapper for form controls       |
+| Fieldset     | `LOFIFieldset`    | Grouped fields with a legend                       |
+| Input        | `LOFIInput`       | Text input (text, number, email, search, password) |
+| Loader       | `LOFILoader`      | Animated loading indicator with optional label     |
+| Modal        | `LOFIModal`       | Overlay dialog with header, body, footer           |
+| MultiSelect  | `LOFIMultiSelect` | Searchable multi-value dropdown with checkboxes    |
+| Panel        | `LOFIPanel`       | Side panel with header, body, footer               |
+| Radio        | `LOFIRadio`       | Radio group (row or column layout)                 |
+| Select       | `LOFISelect`      | Native dropdown with optional placeholder          |
+| Steps        | `LOFISteps`       | Step/wizard navigation bar                         |
+| Tabs         | `LOFITabs`        | Named parallel views (underline strip, badges)     |
+| Table        | `LOFITable`       | Data table (sorting, expansion via TanStack)       |
+| Text         | `LOFIText`        | Typography primitive (body, sm, micro, muted, …)   |
+| Toggle       | `LOFIToggle`      | Segmented toggle (exclusive options)               |
+| Toolbar      | `LOFIToolbar`     | Three-slot header (left / center / right)          |
 
 ---
 
@@ -326,6 +333,20 @@ The [GitHub CI pipeline](.gitlab-ci.yml) runs:
 | `package` | Commit message flags or MR (manual) | Publishes `lofi-kit` to the npm registry             |
 
 Adding a new demo (`demos/<slug>/package.json`) is picked up automatically — no pipeline changes needed.
+
+---
+
+## Cursor agent skills
+
+Project skills live under [`.cursor/skills/`](.cursor/skills/README.md). Cursor loads them from `SKILL.md` frontmatter; GitHub Copilot mirrors equivalent behaviour in [`.github/copilot-instructions.md`](.github/copilot-instructions.md).
+
+| Skill | Trigger | Purpose |
+| ----- | ------- | ------- |
+| [`prototype-intake-plan`](.cursor/skills/prototype-intake-plan/SKILL.md) | Default for prototype briefs | Plan before code: P1–P10 map, NL → LOFI, open questions |
+| [`high-fidelity-prototype`](.cursor/skills/high-fidelity-prototype/SKILL.md) | `/high-fidelity` | Podium hi-fi prototypes via MCP + `NL_COMPONENT_MAPPING_HI_FI` |
+| [`ux-pattern-authoring`](.cursor/skills/ux-pattern-authoring/SKILL.md) | `/new-pattern` | Edit canonical UX/LOFI docs, Cursor rules, Copilot parity |
+| [`ui-patterns-agent`](.cursor/skills/ui-patterns-agent/SKILL.md) | `/ui-patterns` | Apply or audit Common Lib / Podium UI semantics (U0–U6) |
+| [`transformer-patterns`](.cursor/skills/transformer-patterns/SKILL.md) | `@transformer-patterns` | Consolidated P1–P10 + U0–U6 rulebook (regenerate with `npm run generate:skills`) |
 
 ---
 
