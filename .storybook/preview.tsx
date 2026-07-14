@@ -10,6 +10,7 @@ import {
 } from '@storybook/addon-docs/blocks';
 import '../lib/src/styles/index.scss';
 import '@xyflow/react/dist/style.css';
+import '../lib/stories/shadcn/globals.css';
 import React from 'react';
 
 const preview: Preview = {
