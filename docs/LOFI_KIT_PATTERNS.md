@@ -69,7 +69,59 @@ UI primitives are exported with a **`LOFI` prefix** (e.g. `LOFIButton`,
 
 ### Spacing
 
-`$space-1` (2 px) through `$space-16` (32 px), even increments.
+A shared **4 / 8 px spacing grid** for layout and component internals. All
+spacing in SCSS must use a `$space-*` token — never hard-code arbitrary pixel
+values. For the design-system-agnostic rule (exportable without LOFI
+dependencies), see [`UI_PATTERNS.md`](UI_PATTERNS.md) §6.
+
+#### Why we use this
+
+- **Consistency** — a small set of spacing values keeps layouts orderly across screens and teams.
+- **Shared language** — designers and developers refer to the same tokens (`$space-8`, 16 px, etc.) instead of one-off numbers.
+- **Sharp rendering** — values on a 4 px grid map cleanly to whole pixels at common screen densities (1×, 2×, 3×).
+
+#### Regular spacing (8 px scale)
+
+Use for padding inside containers, cards, and modals; gaps in stacks, grids,
+and flex layouts; margins between sections and components; space around page
+content.
+
+| Token | Value | Typical use |
+|-------|-------|-------------|
+| `$space-4` | 8 px | Tight section gaps, compact filter rows |
+| `$space-8` | 16 px | Default container padding, field gaps in filter rows |
+| `$space-12` | 24 px | Card/modal padding, space between major sections |
+| `$space-16` | 32 px | Page content margins, large section separation |
+
+#### Fine spacing (4 px scale)
+
+Use for space between icon and text; internal padding in compact chips, tags,
+and badges; optical alignment tweaks; tight spacing inside a single component.
+
+| Token | Value | Typical use |
+|-------|-------|-------------|
+| `$space-2` | 4 px | Label-to-control gap, icon-to-text gap, compact chip padding |
+| `$space-6` | 12 px | Intra-component tight spacing when 8 px feels too loose |
+
+#### Optical-only (component internals)
+
+Reserved for component-internal offsets — **not** for layout spacing between
+regions or sections.
+
+| Token | Value |
+|-------|-------|
+| `$space-1` | 2 px |
+| `$space-3` | 6 px |
+| `$space-5` | 10 px |
+| `$space-7` | 14 px |
+| `$space-10` | 20 px |
+
+#### Decision guide
+
+1. Start with the **regular 8 px scale** (`$space-4`–`$space-16`).
+2. If the result feels too loose, try the **next step down** within the 8 px scale (e.g. `$space-8` → `$space-4`).
+3. If it still feels wrong **inside one component**, try **fine spacing** (`$space-2` or `$space-6`).
+4. If no token fits, **discuss it** — do not ship arbitrary pixels.
 
 ### Shadow
 
@@ -104,6 +156,7 @@ UI primitives are exported with a **`LOFI` prefix** (e.g. `LOFIButton`,
 | **LOFIInput** | `input` | Single-line text entry. Sizes: `default`, `compact`. Types: `text`, `number`, `email`, `search`, `password`, `date`. Pass `allowClear` to show a ✕ button when the field has a value. |
 | **LOFITextarea** | `textarea` | Multi-line resizable text entry (notes, descriptions). Sizes: `default`, `compact`. Pass `allowClear` to show a top-right ✕ button. Wrap in `LOFIField` like `LOFIInput`. |
 | **LOFISelect** | `select` | Dropdown for a fixed option set. Use when options exceed 3 items or space is constrained. Sizes: `default`, `compact`. Pass `allowClear` to replace the chevron with a ✕ button when a value is selected. |
+| **LOFIMultiSelect** | `select` / `multiselect` | Multi-value dropdown with checkbox-leading menu rows and optional in-menu search. Closed trigger shows placeholder, a single selected label, or `multipleLabel` (default “Multiple Entries”) when two or more values are selected. Optional `allValue` prepends an “All” row. |
 | **LOFISwitch** | `switch` | Single boolean on/off toggle. Use for enabling or disabling a named setting or feature. Always has a visible label. |
 | **LOFICheckbox** | `checkbox` | Multi-select from a fixed set. Use when 2 or more independent options can each be on or off. Sizes: `default` (30x30) and `sm` (20x20). |
 | **LOFIRadio** | `radio-group` | Mutually exclusive choice from a fixed set of 2–3 options shown in full. Use when all options should be visible simultaneously. Layout: `row`, `column`; sizes: `default` (30x30) and `sm` (20x20). |

@@ -58,6 +58,7 @@ demo; full composition rules -> **[LOFI_KIT_PATTERNS.md — Unified Production L
 | `LOFIInput` | `input` | `ui/Input` | Single-line text entry. Size: `compact` for table cells. Types include `date`. `allowClear` shows a ✕ button when value is non-empty. |
 | `LOFITextarea` | `textarea` | `ui/Textarea` | Multi-line resizable text entry (notes, descriptions). Always wrap in `LOFIField`. `allowClear` shows a top-right ✕ button when value is non-empty. |
 | `LOFISelect` | `select` | `ui/Select` | Dropdown for a fixed set of options. Size: `compact` for table cells. `allowClear` replaces the chevron with ✕ when a value is selected. |
+| `LOFIMultiSelect` | `select` / `multiselect` | `ui/MultiSelect` | Searchable multi-select dropdown; checkbox-leading menu rows; closed trigger shows one label or `multipleLabel` (default “Multiple Entries”) when 2+ selected. Optional `allValue` / `allLabel` row at top. |
 | `LOFISwitch` | `switch` | `ui/Switch` | Single boolean on/off toggle. Use for enabling or disabling a named setting. Always has a visible label. |
 | `LOFICheckbox` | `checkbox` | `ui/Checkbox` | Multi-select from a fixed set. Use when 2+ independent options can each be on/off. Sizes: `default` (30x30) and `sm` (20x20). |
 | `LOFIRadio` | `radio-group` | `ui/Radio` | Mutually exclusive choice from a fixed set of 2-3 options shown in full. Layout: `row` or `column`; sizes: `default` (30x30) and `sm` (20x20). |
@@ -71,7 +72,8 @@ demo; full composition rules -> **[LOFI_KIT_PATTERNS.md — Unified Production L
 | `LOFIMainWorkspace` | `main-workspace` | `ui/MainWorkspace` | UPL main pane — stable frame (breadcrumb, title + badges, optional tabs, scrollable body, sticky footer) that hosts feature interfaces. Slots don't move; only content updates. |
 | `LOFINavTree` | `nav-tree` | `ui/NavTree` | Hierarchical sidebar navigation. Expand/collapse branch nodes (Radix Collapsible, bundled); single-leaf selection; optional controlled expand state. Replaces ad-hoc `<nav>/<ul>/<li>` markup (compliance debt). |
 | `LOFITable` | `table` / `table-wrap` | `ui/Table` | Dense data list powered by TanStack Table. `expandable` for detail rows. `sortable` for column sorting. Set `size: N` for fixed-width columns, `meta: { shrink: true }` for action/badge columns, no size for the primary name/entity column (fluid). |
-| `LOFIBadge` | `badge` | `ui/Badge` | Inline label chip. Variants: `status` (solid=active, dashed=inactive), `id` (record ref), `tag` (category). |
+| `LOFIBadge` | `badge` | `ui/Badge` | Inline label chip. Variants: `status` (solid=active, dashed=inactive), `id` (record ref), `tag` (category). Optional `title` for native hover tooltip. |
+| `LOFIChip` | `chip` | `ui/Chip` | Dismissible active-filter token (label + ✕). Use in P9 chip strips; optional `title`. |
 | `LOFISteps` | `steps` | `ui/Steps` | Step navigation strip. States: `active`, `default`, `muted`. |
 | `LOFITabs` | `tabs` | `ui/Tabs` | Underline tab strip when tab affordance matters (`icon`, `badge`, `disabled`). Prefer `LOFIToggle` for simple in-modal section switches. |
 | `LOFICard` | `card` | `ui/Card` | Bordered content block with optional `title`, `footer`, and `empty` state. |
