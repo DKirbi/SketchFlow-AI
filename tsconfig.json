@@ -7,6 +7,7 @@
     { "path": "./demos/notifications-overview/tsconfig.json" },
     { "path": "./demos/notifications-overview-hifi/tsconfig.json" },
     { "path": "./demos/tournament-management/tsconfig.json" },
+    { "path": "./demos/sketchflow-showcase/tsconfig.json" },
     { "path": "./tsconfig.node.json" }
   ]
 }

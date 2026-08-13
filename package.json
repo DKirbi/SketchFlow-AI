@@ -12,6 +12,7 @@
     "dev:bracket-demo": "npm run dev -w bracket-demo",
     "dev:notifications-overview": "npm run dev -w notifications-overview",
     "dev:notifications-overview-hifi": "npm run dev -w notifications-overview-hifi",
+    "dev:sketchflow-showcase": "npm run dev -w sketchflow-showcase",
     "build:lofi": "npm run build -w lofi-kit",
     "build:bracket-demo": "npm run build -w bracket-demo",
     "build:notifications-hifi": "npm run build -w notifications-overview-hifi",

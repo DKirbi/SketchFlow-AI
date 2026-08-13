@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume host fixture — SketchFlow Showcase</title>
+    <style>
+      :root {
+        font-family: system-ui, sans-serif;
+        color: #111;
+        background: #f3f3f3;
+      }
+
+      body {
+        margin: 0;
+        padding: 2rem;
+      }
+
+      .experience-card {
+        max-width: 960px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        padding: 1.5rem;
+      }
+
+      .experience-card__header {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .project-dots {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .project-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        border: 1px solid #111;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .project-dot--active {
+        background: #111;
+      }
+
+      .project-panel {
+        margin-top: 1rem;
+        border-top: 1px solid #ddd;
+        padding-top: 1rem;
+      }
+
+      .project-panel[hidden] {
+        display: none;
+      }
+
+      .project-panel__controls {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .project-panel__controls button {
+        font: inherit;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #111;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .project-panel__controls button.primary {
+        background: #111;
+        color: #fff;
+      }
+
+      iframe {
+        width: 100%;
+        min-height: 520px;
+        border: 1px solid #ddd;
+        background: #fff;
+      }
+
+      .host-log {
+        margin-top: 0.75rem;
+        font-size: 0.875rem;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <article class="experience-card">
+      <div class="experience-card__header">
+        <div>
+          <h1>Sportradar d.o.o.</h1>
+          <p>Senior UX Engineer · Feb 2023 – Present</p>
+        </div>
+        <div class="project-dots" aria-label="Project examples">
+          <button
+            type="button"
+            class="project-dot project-dot--active"
+            data-slug="mapping"
+            aria-label="Value Mapping example"
+          ></button>
+        </div>
+      </div>
+
+      <section class="project-panel" id="project-panel">
+        <div class="project-panel__controls">
+          <button type="button" class="primary" id="btn-toggle">Interact with prototype</button>
+        </div>
+        <iframe
+          id="showcase-frame"
+          title="Value Mapping interaction example"
+          src="../index.html?slug=mapping"
+          loading="lazy"
+        ></iframe>
+        <p class="host-log" id="host-log" aria-live="polite">Waiting for showcase…</p>
+      </section>
+    </article>
+
+    <script>
+      const PROTOCOL_VERSION = 1;
+      const frame = document.getElementById('showcase-frame');
+      const log = document.getElementById('host-log');
+      const btnToggle = document.getElementById('btn-toggle');
+      let isInteractive = false;
+
+      function post(type) {
+        if (!frame.contentWindow) return;
+        frame.contentWindow.postMessage({ type, version: PROTOCOL_VERSION }, '*');
+      }
+
+      btnToggle.addEventListener('click', () => {
+        if (isInteractive) {
+          post('showcase:replay');
+          isInteractive = false;
+          btnToggle.textContent = 'Interact with prototype';
+          log.textContent = 'Host sent replay (Automate)';
+        } else {
+          post('showcase:start-interactive');
+          isInteractive = true;
+          btnToggle.textContent = 'Automate';
+          log.textContent = 'Host sent start-interactive';
+        }
+      });
+
+      window.addEventListener('message', (event) => {
+        const data = event.data;
+        if (!data || data.version !== PROTOCOL_VERSION) return;
+        if (typeof data.type !== 'string' || !data.type.startsWith('showcase:')) return;
+        log.textContent = `Iframe → host: ${data.type}${data.mode ? ` (${data.mode})` : ''}`;
+        if (data.type === 'showcase:mode-change') {
+          isInteractive = data.mode === 'interactive' || data.mode === 'complete';
+          btnToggle.textContent = isInteractive ? 'Automate' : 'Interact with prototype';
+        }
+      });
+    </script>
+  </body>
+</html>

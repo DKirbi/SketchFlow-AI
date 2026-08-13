@@ -13,6 +13,9 @@
   color: $color-ink;
   font-family: $text-font-family;
   font-size: $font-size-base;
+  line-height: $line-height-base;
+  box-sizing: border-box;
+  min-height: 46px;
   border-radius: $radius-sm;
   // Reset native button chrome
   -webkit-appearance: none;
@@ -40,6 +43,7 @@
     padding: $space-1 $space-3;
     font-size: $font-size-xs;
     gap: $space-1;
+    min-height: 24px;
   }
 
   &--large {

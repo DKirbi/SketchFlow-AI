@@ -26,6 +26,7 @@
     "demos/mapping-prototype/vite.config.ts",
     "demos/notifications-overview/vite.config.ts",
     "demos/notifications-overview-hifi/vite.config.ts",
-    "demos/tournament-management/vite.config.ts"
+    "demos/tournament-management/vite.config.ts",
+    "demos/sketchflow-showcase/vite.config.ts"
   ]
 }

@@ -1,0 +1,84 @@
+@use 'tokens' as *;
+
+.showcase-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: $text-font-family;
+  background: $color-paper;
+  color: $color-ink;
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-8;
+    padding: $space-8;
+    border-bottom: 1px solid $color-border-subtle;
+  }
+
+  &__meta-copy {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    flex: 1;
+    min-width: 16rem;
+    max-width: 42rem;
+  }
+
+  &__patterns {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__pattern {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  &__pattern-body {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    padding: $space-4 $space-6;
+    border: 1px dashed $color-border;
+    background: $color-surface;
+  }
+
+  &__aside {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    width: 100%;
+    max-width: 20rem;
+  }
+
+  &__control-slot {
+    display: flex;
+    min-height: 2.5rem;
+    align-items: center;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  &__btn-label {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__stage {
+    flex: 1;
+
+    &--locked {
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+}

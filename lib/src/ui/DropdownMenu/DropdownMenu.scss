@@ -19,7 +19,8 @@ $z-dropdown: 1102;
     display: flex;
     align-items: center;
     gap: $space-2;
-    padding: $space-3 $space-4 $space-3 $space-7;
+    min-height: 46px;
+    padding: $space-4 $space-2;
     cursor: pointer;
     color: $color-ink;
     user-select: none;
@@ -54,7 +55,8 @@ $z-dropdown: 1102;
     font-size: $font-size-xs;
 
     .dropdown-menu__item {
-      padding: $space-1 $space-3;
+      min-height: 24px;
+      padding: $space-2 $space-4;
     }
   }
 }
