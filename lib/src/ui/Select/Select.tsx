@@ -32,9 +32,9 @@ export interface SelectProps {
   /** Extra CSS class on the select. */
   className?:   string;
   /**
-   * When true, a clear (✕) button replaces the dropdown chevron while the field
-   * has a value. Clicking it calls onChange(''), returning the control to the
-   * placeholder state. Requires a `placeholder` to restore the empty label.
+   * When true, a clear (✕) button appears to the left of the chevron while the
+   * field has a value. Clicking it calls onChange(''), returning the control to
+   * the placeholder state. Requires a `placeholder` to restore the empty label.
    */
   allowClear?:  boolean;
 }
@@ -77,11 +77,29 @@ export function Select({
         <span className="select__value">
           <RadixSelect.Value placeholder={placeholder ?? ''} />
         </span>
-        {!showClear && (
+        <span className="select__actions">
+          {showClear && (
+            <span
+              role="button"
+              className="select__clear"
+              aria-label="Clear"
+              tabIndex={-1}
+              onPointerDown={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+              }}
+              onClick={(event) => {
+                event.stopPropagation();
+                onChange('');
+              }}
+            >
+              <LofiCloseIcon size={12} />
+            </span>
+          )}
           <RadixSelect.Icon className="select__icon" aria-hidden>
             <LofiChevronDownIcon size={14} />
           </RadixSelect.Icon>
-        )}
+        </span>
       </RadixSelect.Trigger>
 
       <RadixSelect.Portal>
@@ -111,26 +129,6 @@ export function Select({
       </RadixSelect.Portal>
     </RadixSelect.Root>
   );
-
-  if (allowClear) {
-    return (
-      <div className="select-wrap">
-        {name && <input type="hidden" name={name} value={value} />}
-        {radixRoot}
-        {showClear && (
-          <button
-            type="button"
-            className="select-wrap__clear"
-            aria-label="Clear"
-            tabIndex={-1}
-            onClick={() => onChange('')}
-          >
-            <LofiCloseIcon size={12} />
-          </button>
-        )}
-      </div>
-    );
-  }
 
   return (
     <>

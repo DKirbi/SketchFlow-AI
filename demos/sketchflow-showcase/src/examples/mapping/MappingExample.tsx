@@ -465,7 +465,6 @@ export function MappingExample({
           <LOFIField label="Sport" htmlFor="map-sport">
             <LOFISelect
               id="map-sport"
-              size="compact"
               allowClear
               placeholder="All sports"
               disabled={automated}

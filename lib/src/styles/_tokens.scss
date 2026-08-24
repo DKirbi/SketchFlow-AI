@@ -124,5 +124,13 @@ $space-10: 20px;
 $space-12: 24px;
 $space-16: 32px;
 
+// ─── Single-line form control chrome ─────────────────────────────
+// Default height matches `.btn` vertical footprint (32px incl. border).
+$control-height-default: $space-16;
+$control-height-compact: 24px;
+$control-height-large:   40px;
+$control-padding-x:      $space-4;
+$control-line-height:    1.4;
+
 // ─── Modal ─────────────────────────────────────────────────────
 $modal-min-width: 500px;

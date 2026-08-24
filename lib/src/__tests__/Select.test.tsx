@@ -102,6 +102,13 @@ describe('Select', () => {
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument();
   });
 
+  it('keeps the dropdown chevron when allowClear and value is non-empty', () => {
+    const { container } = render(
+      <Select value="red" onChange={() => {}} options={options} allowClear />,
+    );
+    expect(container.querySelector('.select__icon')).toBeInTheDocument();
+  });
+
   it('calls onChange with empty string when clear button is clicked', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

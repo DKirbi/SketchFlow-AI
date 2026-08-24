@@ -3,15 +3,16 @@
 .input {
   display: block;
   width: 100%;
-  padding: $space-3 $space-4;
+  height: $control-height-default;
+  max-height: $control-height-default;
+  padding: 0 $control-padding-x;
   border: $border-width solid $color-border-subtle;
   background: $color-paper;
   color: $color-ink;
   font-family: $text-font-family;
   font-size: $font-size-base;
-  line-height: $line-height-base;
+  line-height: calc(#{$control-height-default} - #{$border-width} * 2);
   box-sizing: border-box;
-  min-height: 46px;
   border-radius: $radius-sm;
 
   &::placeholder {
@@ -36,9 +37,11 @@
   }
 
   &--compact {
-    padding: $space-1 $space-3;
+    height: $control-height-compact;
+    max-height: $control-height-compact;
+    padding: 0 $space-3;
     font-size: $font-size-xs;
-    min-height: 24px;
+    line-height: calc(#{$control-height-compact} - #{$border-width} * 2);
   }
 
   // Extra right padding reserves space for the clear button at all times,
