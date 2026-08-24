@@ -1,0 +1,33 @@
+@use 'tokens' as *;
+
+.film-row-detail {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  padding: $space-2 0;
+
+  &__body {
+    min-height: 3rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    display: flex;
+    align-items: baseline;
+    gap: $space-6;
+    padding: $space-2 0;
+    border-bottom: 1px solid $color-border-faint;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

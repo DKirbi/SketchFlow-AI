@@ -23,7 +23,21 @@ export type PreviewStepAction =
   | 'bulk-map-highlight'
   | 'bulk-map-confirm'
   | 'bulk-map-loading'
-  | 'bulk-map-success';
+  | 'bulk-map-success'
+  // merge-tool example
+  | 'expand-row'
+  | 'collapse-row'
+  | 'select-db-row'
+  | 'show-suggestions'
+  | 'select-crawled-row'
+  | 'highlight-merge-button'
+  | 'open-merge-modal'
+  | 'toggle-field-override'
+  | 'toggle-master-override'
+  | 'highlight-modal-merge'
+  | 'open-merge-confirm'
+  | 'confirm-merge-loading'
+  | 'confirm-merge-success';
 
 export interface PreviewStep {
   id: string;

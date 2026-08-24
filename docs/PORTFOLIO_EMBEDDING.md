@@ -114,6 +114,15 @@ Keep JSON/config for **metadata and preview timing**. Keep interaction logic in 
 - **Chrome notification:** **Automated preview** while automation runs; switches to **Interactive prototype** (with bulk-map hint) after takeover
 - **Interactive:** sport dropdown + tournament search (explicit **Search** / **Clear all**); visitor maps any pending row; completion fires `showcase:interaction-complete`
 
+## Merge Tool example
+
+- **Slug:** `merge-tool`
+- **Experience key:** `film-catalogue`
+- **Patterns:** P2 / P2.3 (data table + single-select radio column), P2.5 / P8 (expandable rows with a Cast / Staff / Filming Locations tab strip), P5 / P6 (review modal with commit gating), P7 (confirmation dialog stacked on the review modal)
+- **Automated preview:** cursor visits a database row, selects it, waits for crawler suggestions, selects the best match, highlights the (now-enabled) footer Merge button, opens the review modal, toggles two field overrides, highlights the modal Merge button, opens the P7 confirmation, shows a loading state, then a success toast on the merged row
+- **Chrome notification:** **Automated preview** while automation runs; switches to **Interactive prototype** after takeover
+- **Interactive:** two-column reconciliation — search/select a title in "Our Database", pick a suggested (or directly searched) crawler match, expand either table's rows for full cast/staff/filming-location detail, then Merge → review modal (per-field + master override checkboxes, live preview) → confirm → success; completion fires `showcase:interaction-complete`
+
 ## Local development
 
 ```bash

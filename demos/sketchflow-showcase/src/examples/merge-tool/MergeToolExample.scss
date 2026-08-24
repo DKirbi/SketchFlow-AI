@@ -1,0 +1,95 @@
+@use 'tokens' as *;
+
+.merge-tool-example {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  font-family: $text-font-family;
+
+  &__identity {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__content {
+    flex: 1;
+    padding: $space-8;
+  }
+
+  &__columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-12;
+    align-items: start;
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: $space-6;
+    min-width: 0;
+  }
+
+  &__search {
+    display: grid;
+    grid-template-columns: minmax(10rem, 1fr) auto auto;
+    gap: $space-4;
+    align-items: end;
+  }
+
+  &__title-cell,
+  &__cast-cell {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $space-3;
+    min-width: 0;
+  }
+
+  &__title-cell {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-1;
+  }
+
+  &__radio-cell {
+    display: inline-flex;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: $space-6;
+    padding: $space-6 $space-8;
+    border-top: 1px solid $color-border;
+    background: $color-surface;
+  }
+
+  &__btn-label {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__highlight {
+    display: inline-flex;
+    outline: 2px dashed $color-ink;
+    outline-offset: $space-2;
+    padding: $space-2;
+  }
+
+  &__review-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-3;
+  }
+
+  &__review-checkbox {
+    display: inline-flex;
+    align-items: center;
+  }
+}

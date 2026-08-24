@@ -3,6 +3,8 @@ import type { ShowcaseExampleConfig } from '../runtime/types';
 import type { ShowcaseExampleProps } from './mapping/metadata';
 import { mappingExampleConfig } from './mapping/metadata';
 import { MappingExample } from './mapping/MappingExample';
+import { mergeToolExampleConfig } from './merge-tool/metadata';
+import { MergeToolExample } from './merge-tool/MergeToolExample';
 
 export type { ShowcaseExampleConfig, ShowcaseExampleProps };
 
@@ -15,6 +17,10 @@ const EXAMPLES: RegisteredExample[] = [
   {
     config: mappingExampleConfig,
     Component: MappingExample,
+  },
+  {
+    config: mergeToolExampleConfig,
+    Component: MergeToolExample,
   },
 ];
 
