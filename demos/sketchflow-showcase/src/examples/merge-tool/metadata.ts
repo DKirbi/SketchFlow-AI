@@ -52,7 +52,7 @@ export const mergeToolExampleConfig: ShowcaseExampleConfig = {
     'LOFIInlineAlert',
     'LOFILoader',
   ],
-  iframePath: '?slug=merge-tool',
+  iframePath: '/Sportradar/merge-tool',
   previewSteps: [
     { id: 'peek-db-row', delayMs: 900, action: 'expand-row', targetId: 'FSD-1003' },
     { id: 'settle-db-row', delayMs: 700, action: 'collapse-row', targetId: 'FSD-1003' },

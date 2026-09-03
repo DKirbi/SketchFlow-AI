@@ -1,0 +1,29 @@
+@use '../styles/tokens' as *;
+
+.action-cluster {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-4;
+
+  &--end {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  &--start {
+    justify-content: flex-start;
+  }
+
+  &--split {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &__group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $space-4;
+  }
+}

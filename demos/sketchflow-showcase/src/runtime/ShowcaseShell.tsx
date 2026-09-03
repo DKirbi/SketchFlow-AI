@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { LOFIBadge, LOFIButton, LOFIInlineAlert, LOFIText } from 'lofi-kit';
+import { LOFIButton, LOFIInlineAlert, LOFIText } from 'lofi-kit';
 import type { RegisteredExample } from '../examples/registry';
 import { ShowcaseLockClosedIcon, ShowcaseLockOpenIcon } from './ShowcaseControlIcons';
 import { useShowcaseRuntime } from './useShowcaseRuntime';
@@ -14,14 +13,8 @@ export function ShowcaseShell({ example }: ShowcaseShellProps) {
   const { state, startInteractive, replay, completeInteraction } = useShowcaseRuntime({
     config,
   });
-  const [expandedPattern, setExpandedPattern] = useState<string | null>(null);
-
   const isInteractive = state.mode === 'interactive' || state.mode === 'complete';
   const isAutomateMode = !isInteractive;
-
-  const togglePattern = (patternId: string) => {
-    setExpandedPattern((current) => (current === patternId ? null : patternId));
-  };
 
   return (
     <div className="showcase-shell">
@@ -31,27 +24,6 @@ export function ShowcaseShell({ example }: ShowcaseShellProps) {
             {config.title}
           </LOFIText>
           <LOFIText variant="description">{config.summary}</LOFIText>
-          <div className="showcase-shell__patterns">
-            {config.patternSummaries.map((pattern) => {
-              const expanded = expandedPattern === pattern.id;
-              return (
-                <div key={pattern.id} className="showcase-shell__pattern">
-                  <LOFIBadge
-                    variant="tag"
-                    label={`${pattern.id}${expanded ? ' ▼' : ' ▶'}`}
-                    onClick={() => togglePattern(pattern.id)}
-                    title={`${expanded ? 'Hide' : 'Show'} ${pattern.title}`}
-                  />
-                  {expanded && (
-                    <div className="showcase-shell__pattern-body">
-                      <LOFIText variant="strong">{pattern.title}</LOFIText>
-                      <LOFIText variant="description">{pattern.body}</LOFIText>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
         </div>
 
         <div className="showcase-shell__aside">

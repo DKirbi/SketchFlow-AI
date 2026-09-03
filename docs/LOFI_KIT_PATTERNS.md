@@ -148,6 +148,16 @@ regions or sections.
 | **LOFINavTree** | `nav-tree` | Hierarchical sidebar navigation — expand/collapse branches (Radix Collapsible, bundled), single-leaf selection. |
 | **LOFIMainWorkspace** | `main-workspace` | UPL main pane — breadcrumb, title + badges, optional tabs, scrollable body, sticky footer. |
 
+### Component sets (config-driven compositions)
+
+Not primitives. JSON configs that group primitives. Storybook: **Sets / Component sets**. Rules: [`COMPOSITION_PATTERNS.md` — Component sets](COMPOSITION_PATTERNS.md).
+
+| Export | BEM root | When to use |
+|-----------|----------|-------------|
+| **LOFIActionCluster** | `action-cluster` | Footer / toolbar / bulk / row button groups from `ActionDescriptor[]`. |
+| **LOFIComponentSet** | `component-set` | Render a `kind` (`upl-shell`, `modal-editor`, `filter-query-row`, …). |
+| **LOFIFieldFromDescriptor** | — | One field from a `FieldDescriptor` (forms and filter rows). |
+
 ### Controls
 
 | Export | BEM root | When to use |

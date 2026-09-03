@@ -42,10 +42,12 @@
 | "an error in the form" / "validation failed" / "a warning message" / "alert below the field" | Embedded contextual alert | `LOFIInlineAlert` |
 | "how far along" / "percentage complete" / "progress bar" | Determinate progress | `LOFIProgressBar` _(backlog)_ |
 | "active filter chips" / "clear all filters" / "N results" label strip | Active filter state | `LOFIFilterBar` _(backlog)_ |
-| "filter criteria" / "Sport dropdown" / "Search + Reset" / "filter inputs" | Filter query row (composition) | `LOFIField` + `LOFISelect`/`LOFIInput` + `LOFIButton` — **not** `LOFIFilterBar` |
-| "hierarchy" / "tree nav" / "collapsible sidebar nav" / "accordion categories" | Hierarchical sidebar navigation | `LOFINavTree` |
-| "the main pane" / "production pane" / "feature surface" / "UPL main view" | Stable main workspace frame | `LOFIMainWorkspace` |
+| "filter criteria" / "Sport dropdown" / "Search + Reset" / "filter inputs" | Filter query row (set or composition) | `kind: 'filter-query-row'` — `LOFIField` + `LOFISelect`/`LOFIInput` + `LOFIButton` — **not** `LOFIFilterBar` |
+| "hierarchy" / "tree nav" / "collapsible sidebar nav" / "accordion categories" | Hierarchical sidebar navigation | `LOFINavTree` / `kind: 'sidebar'` |
+| "the main pane" / "production pane" / "feature surface" / "UPL main view" | Stable main workspace frame | `LOFIMainWorkspace` / `kind: 'main-workspace'` or `'upl-shell'` |
 | "breadcrumb" / "path trail" / "entity path" | Navigation breadcrumb (composition) | `LOFIText` segments + `›` separators — no new component |
+| "modal footer" / "Save and Cancel in the dialog" / "primary + secondary buttons" | Action cluster | `LOFIActionCluster` host `modal-footer` (`commit` + `dismiss`) |
+| "confirmation dialog" / "are you sure" | P7 set | `kind: 'p7-confirm'` |
 
 ---
 
@@ -58,9 +60,9 @@ These phrases refer to structural containers and chrome rather than controls or 
 | "a popup" / "a dialog" / "opens in a modal" / "opens up" | Blocking overlay | `LOFIModal` |
 | "a sidebar" / "a panel next to it" / "show detail beside the row" | Non-blocking contextual detail (row-adjacent) | `LOFIPanel` |
 | "a sidebar with categories" / "a tree in the sidebar" / "collapsible navigation" | Full-height hierarchical sidebar | `LOFINavTree` |
-| "the main view" / "the pane where the editor lives" / "the production main pane" | UPL main workspace frame | `LOFIMainWorkspace` |
-| "a box" / "a content block" / "wrap it in something" / "a card" | Free-form content surface | `LOFICard` |
-| "a header" / "top bar" / "app bar" / "nav bar at the top" | Top-of-page chrome | `LOFIToolbar` |
+| "the main view" / "the pane where the editor lives" / "the production main pane" | UPL main workspace frame | `LOFIMainWorkspace` / `kind: 'upl-shell'` |
+| "a box" / "a content block" / "wrap it in something" / "a card" | Free-form content surface | `LOFICard` / `kind: 'summary-card'` when it has a standard action footer |
+| "a header" / "top bar" / "app bar" / "nav bar at the top" | Top-of-page chrome | `LOFIToolbar` / `kind: 'upper-bar'` |
 | "group these fields" / "a section in the form" / "a form block with a title" | Grouped form section | `LOFIFieldset` (+ `LOFIField` children) |
 | "a chip" / "a pill" / "a tag" / "a label" / "a status badge" | Inline metadata label | `LOFIBadge` |
 | "tabs inside the modal" / "sections within a panel" (few segments, segmented control) | Exclusive sections in a child surface | `LOFIToggle` |

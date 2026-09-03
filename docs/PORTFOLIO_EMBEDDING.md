@@ -1,28 +1,28 @@
-# Portfolio embedding — SketchFlow Showcase
+# Portfolio embedding — UX Showcase
 
-This document describes how an **external resume website** embeds lo-fi interaction examples from the `sketchflow-showcase` demo package.
+This document describes how an **external resume website** embeds lo-fi interaction examples from the UX Showcase (`sketchflow-showcase`).
 
 ## What gets deployed
 
-Build the showcase demo from the repo root:
+From the repo root:
 
 ```bash
-npm run build -w sketchflow-showcase
+npm run build:showcase
 ```
 
-Deploy the contents of `demos/sketchflow-showcase/dist/` to any static host, e.g.:
+Deploy `demos/sketchflow-showcase/dist/` (or point Vercel at the root [`vercel.json`](../vercel.json)). Later you can attach `portfolio.davorkirbis.com`.
+
+Example project URLs:
 
 ```text
-https://your-domain.com/sketchflow-showcase/
+https://your-domain.com/Sportradar/mapping
+https://your-domain.com/Sportradar/merge-tool
+https://your-domain.com/Sportradar/bracket-demo
 ```
 
-Each example is loaded via query param:
+Legacy `?slug=mapping` redirects to `/Sportradar/mapping`.
 
-```text
-https://your-domain.com/sketchflow-showcase/?slug=mapping
-```
-
-No npm publish step is required. Vite bundles `lofi-kit` into the static output.
+No npm publish step is required. Vite bundles `lofi-kit` into the static output; curated embeds live under `/embeds/`.
 
 ## Resume integration pattern
 
@@ -37,7 +37,7 @@ See the reference host page at [`demos/sketchflow-showcase/host-fixture/index.ht
 
 ```html
 <iframe
-  src="https://your-domain.com/sketchflow-showcase/?slug=mapping"
+  src="https://your-domain.com/Sportradar/mapping"
   title="Value Mapping interaction example"
   loading="lazy"
   style="width: 100%; min-height: 520px; border: 1px solid #ddd;"
@@ -95,47 +95,33 @@ window.addEventListener('message', (event) => {
 
 When `prefers-reduced-motion: reduce` is set, preview step delays are capped at 80 ms. The same state sequence still runs.
 
-## Adding a new example
+## Adding a new SPA example
 
-1. Create `demos/sketchflow-showcase/src/examples/<slug>/` with:
-   - `metadata.ts` — title, patterns, preview steps, experience key
-   - `<Name>Example.tsx` — typed React renderer (lo-fi kit only)
-2. Register the example in `src/examples/registry.ts`.
-3. Embed with `?slug=<slug>`.
+1. Create `demos/sketchflow-showcase/src/examples/<slug>/` with metadata + example component.
+2. Register in `src/examples/registry.ts`.
+3. Add a `spa` entry under Sportradar in `src/hub/catalog.ts`.
+4. Embed with `/Sportradar/<slug>`.
 
-Keep JSON/config for **metadata and preview timing**. Keep interaction logic in typed React — do not build a generic JSON-to-UI renderer for v1.
+## Mapping example
 
-## Mapping example (first slice)
-
-- **Slug:** `mapping`
-- **Experience key:** `sportradar`
-- **Patterns:** P2.2 (row Map action), P3 (stateful button), P9 (sport + tournament filters)
-- **Automated preview:** animated cursor travels between Map, Unmap, checkboxes, and bulk controls; longer delays surface loading states; stage is non-interactive until **Interact with prototype**
-- **Chrome notification:** **Automated preview** while automation runs; switches to **Interactive prototype** (with bulk-map hint) after takeover
-- **Interactive:** sport dropdown + tournament search (explicit **Search** / **Clear all**); visitor maps any pending row; completion fires `showcase:interaction-complete`
+- **Path:** `/Sportradar/mapping`
+- **Patterns:** P2.2, P3, P9
 
 ## Merge Tool example
 
-- **Slug:** `merge-tool`
-- **Experience key:** `film-catalogue`
-- **Patterns:** P2 / P2.3 (data table + single-select radio column), P2.5 / P8 (expandable rows with a Cast / Staff / Filming Locations tab strip), P5 / P6 (review modal with commit gating), P7 (confirmation dialog stacked on the review modal)
-- **Automated preview:** cursor visits a database row, selects it, waits for crawler suggestions, selects the best match, highlights the (now-enabled) footer Merge button, opens the review modal, toggles two field overrides, highlights the modal Merge button, opens the P7 confirmation, shows a loading state, then a success toast on the merged row
-- **Chrome notification:** **Automated preview** while automation runs; switches to **Interactive prototype** after takeover
-- **Interactive:** two-column reconciliation — search/select a title in "Our Database", pick a suggested (or directly searched) crawler match, expand either table's rows for full cast/staff/filming-location detail, then Merge → review modal (per-field + master override checkboxes, live preview) → confirm → success; completion fires `showcase:interaction-complete`
+- **Path:** `/Sportradar/merge-tool`
+- **Patterns:** P2 / P2.3, P2.5 / P8, P5 / P6, P7
 
 ## Local development
 
 ```bash
-npm run dev:sketchflow-showcase
-# or via hub:
-npm run dev
-# open http://127.0.0.1:5172/sketchflow-showcase/?slug=mapping
+npm run build:showcase   # portfolio static tree
+npm run dev              # UX Showcase at http://127.0.0.1:5172/
+# open http://127.0.0.1:5172/Sportradar/mapping
 ```
 
-Host fixture (open after dev server starts):
+Host fixture (open after the gateway is up):
 
 ```text
 demos/sketchflow-showcase/host-fixture/index.html
 ```
-
-Adjust the iframe `src` in the fixture if your dev port differs.

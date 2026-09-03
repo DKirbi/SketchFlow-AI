@@ -300,6 +300,8 @@ Adds the surface dimension. Overlays are where `PdsSurface` matters.
 - Cancel / Close: `subtle` + `neutral`, immediately to the left of the commit.
 - Destructive confirm inside a P7 stacked overlay: `warning` + `fill` on the confirm button — this is **the** explicit exception to [§1.3](#13--destructive-action-semantics) because the operator has just opted in via P7.
 
+**Lo-fi encoding:** the same cluster is an `ActionDescriptor[]` with `role: 'commit' | 'dismiss' | …` and host `modal-footer` / `p7-footer`. `resolveActionPresentation` maps those roles onto LOFI `variant` **and** these `color`/`rank` pairs. See [`COMPOSITION_PATTERNS.md` — Component sets](COMPOSITION_PATTERNS.md).
+
 > **UX:** [P5.81 (commit rightmost)](UX_PATTERNS_AGENT.md#p5--modal), [P5.91 (P7 stacking exception)](UX_PATTERNS_AGENT.md#p5--modal), [P7 (confirmation)](UX_PATTERNS_AGENT.md#p7--confirmation-dialog)
 
 #### 4.3 — Drawer and popover defaults

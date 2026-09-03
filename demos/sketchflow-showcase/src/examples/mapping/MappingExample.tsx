@@ -16,7 +16,7 @@ import type { ColumnDef, TableColumnMeta, StatefulButtonState } from 'lofi-kit';
 import type { ShowcaseExampleProps } from './metadata';
 import { computeAutomatedSnapshot } from './automatedPreview';
 import { applyMappingFilters, filtersAreDefault } from './applyFilters';
-import { FILTER_ALL, SPORTS } from './catalog';
+import { FILTER_ALL, GENRES } from './catalog';
 import { MappingPreviewCursor } from './MappingPreviewCursor';
 import { previewTargetAttr, resolveCursorTarget } from './previewCursor';
 import { detectReducedMotion } from '../../runtime/previewStateMachine';
@@ -59,7 +59,7 @@ function statusLabel(item: MappingItem): string {
   return item.status === 'mapped' ? 'mapped' : 'pending';
 }
 
-function coerceSportValue(value: string): string {
+function coerceGenreValue(value: string): string {
   return value === '' ? FILTER_ALL : value;
 }
 
@@ -123,8 +123,8 @@ export function MappingExample({
   const displayStatusMessage = automated ? automatedSnapshot.statusMessage : statusMessage;
 
   const filtersMatch =
-    filtersDraft.sportId === filtersApplied.sportId &&
-    filtersDraft.tournamentQuery === filtersApplied.tournamentQuery;
+    filtersDraft.genreId === filtersApplied.genreId &&
+    filtersDraft.titleQuery === filtersApplied.titleQuery;
 
   const pendingCount = displayItems.filter((item) => item.status === 'pending').length;
   const mappedCount = displayItems.filter((item) => item.status === 'mapped').length;
@@ -449,7 +449,7 @@ export function MappingExample({
         }
         center={
           <LOFIText as="h1" variant="body">
-            Value Mapping
+            Mapping
           </LOFIText>
         }
         right={
@@ -462,29 +462,29 @@ export function MappingExample({
 
       <div className="mapping-example__content">
         <div className="mapping-example__filters" role="search">
-          <LOFIField label="Sport" htmlFor="map-sport">
+          <LOFIField label="Genre" htmlFor="map-genre">
             <LOFISelect
-              id="map-sport"
+              id="map-genre"
               allowClear
-              placeholder="All sports"
+              placeholder="All genres"
               disabled={automated}
-              value={filtersDraft.sportId === FILTER_ALL ? FILTER_ALL : filtersDraft.sportId}
-              onChange={(value) => patchFiltersDraft({ sportId: coerceSportValue(value) })}
+              value={filtersDraft.genreId === FILTER_ALL ? FILTER_ALL : filtersDraft.genreId}
+              onChange={(value) => patchFiltersDraft({ genreId: coerceGenreValue(value) })}
               options={[
-                { value: FILTER_ALL, label: 'All sports' },
-                ...SPORTS.map((sport) => ({ value: sport.id, label: sport.label })),
+                { value: FILTER_ALL, label: 'All genres' },
+                ...GENRES.map((genre) => ({ value: genre.id, label: genre.label })),
               ]}
             />
           </LOFIField>
-          <LOFIField label="Tournament" htmlFor="map-tournament">
+          <LOFIField label="Title" htmlFor="map-title">
             <LOFIInput
-              id="map-tournament"
+              id="map-title"
               type="search"
               allowClear
               disabled={automated}
               placeholder="Search by name or id…"
-              value={filtersDraft.tournamentQuery}
-              onChange={(value) => patchFiltersDraft({ tournamentQuery: value })}
+              value={filtersDraft.titleQuery}
+              onChange={(value) => patchFiltersDraft({ titleQuery: value })}
             />
           </LOFIField>
           <div className="mapping-example__filters-actions">

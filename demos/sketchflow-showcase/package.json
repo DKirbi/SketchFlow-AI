@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Portfolio iframe showcase — animated lo-fi interaction examples for resume embedding",
-  "displayName": "SketchFlow Showcase",
+  "description": "UX Showcase portfolio hub — sidebar navigation of lo-fi prototypes for Vercel / resume embedding",
+  "displayName": "UX Showcase",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -16,7 +16,8 @@
     "@tanstack/react-table": "^8.21.3",
     "lofi-kit": "*",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "react-router-dom": "^7.18.3"
   },
   "devDependencies": {
     "@types/react": "19.0.0",

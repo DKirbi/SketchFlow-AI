@@ -3,7 +3,8 @@
 .showcase-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  flex: 1;
+  min-height: 0;
   font-family: $text-font-family;
   background: $color-paper;
   color: $color-ink;
@@ -75,6 +76,8 @@
 
   &__stage {
     flex: 1;
+    min-height: 0;
+    overflow: auto;
 
     &--locked {
       pointer-events: none;

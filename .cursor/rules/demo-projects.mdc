@@ -174,8 +174,10 @@ And add the vite config to `tsconfig.node.json` include:
    "dev:<slug>": "npm run dev -w demos/<slug>"
    ```
 
-No CI changes are needed. The `pages` job loops over `demos/*/` and the hub
-generator (`scripts/generate-hub.mjs`) picks up the new demo automatically.
+New demos are still auto-discovered for local `npm run dev` proxies. To list a
+demo on the UX Showcase hub, add it to
+`demos/sketchflow-showcase/src/hub/catalog.ts` (and the portfolio build embeds
+list when it should ship inside `build:showcase`).
 
 ---
 
@@ -183,39 +185,21 @@ generator (`scripts/generate-hub.mjs`) picks up the new demo automatically.
 
 From the repo root, `npm run dev` starts:
 
-1. **Hub** — static launcher at `http://127.0.0.1:5172/` (generated into
-   `.hub-dev/index.html` with `--dev-gateway` links).
-2. **One Vite dev server per demo** — ports `5173`, `5174`, … in sorted slug
-   order (`npm run dev -w <slug> -- --port …`).
-3. **Storybook** — `http://127.0.0.1:6006/` (skip with `SKIP_STORYBOOK=1`).
+1. **UX Showcase hub** — React SPA at `http://127.0.0.1:5172/` (`/` opens `/Sportradar/merge-tool`; project routes stay nested).
+2. **One Vite server per demo** — ports `5173+`; curated embeds also under `/embeds/<slug>/`.
+3. **Storybook** — `/embeds/low-fi-ux-ui-patterns/` (skip with `SKIP_STORYBOOK=1`).
 
-The hub proxies `/<slug>/…` to the matching Vite port (HTTP and WebSocket for
-HMR). Demo buttons use root-relative `/slug/`; Storybook uses a direct URL.
+Portfolio static build: `npm run build:showcase`.
 
-To run a **single** demo without the hub: `npm run dev:demo` (bracket-demo).
+To run a **single** demo without the hub: `npm run dev -w <slug>`.
 
 ---
 
 ## How CI works
 
-The `pages` job in `.gitlab-ci.yml`:
-
-1. Builds Storybook → `public/storybook/`
-2. Loops every `demos/*/` directory with a `package.json`:
-   - Runs `npm run build -w demos/<name>`
-   - Copies `demos/<name>/dist/*` → `public/<name>/`
-3. Runs `npm run build:lofi`, then `node scripts/generate-hub.mjs --out public/index.html`,
-   which writes `public/index.html`, `public/lofi-kit.css`, and `public/hub-layout.css`
-   (LOFI BEM + tokens; see `LOFI_BLOCKS.md` → Static GitLab Pages hub).
-
-The resulting Pages site:
-
-```
-https://<pages-host>/              ← hub index (auto-generated)
-https://<pages-host>/storybook/    ← lofi-kit Storybook
-https://<pages-host>/bracket-demo/ ← bracket demo
-https://<pages-host>/<new-slug>/   ← any new demo
-```
+GitHub Pages (`.github/workflows/pages.yml`) runs
+`npm run build:showcase -- --out public` and deploys the UX Showcase portfolio
+(SPA + embeds). See `DEMO_HUB_AND_PAGES.md`.
 
 ---
 

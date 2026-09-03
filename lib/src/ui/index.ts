@@ -25,6 +25,12 @@ export { Toast as LOFIToast }         from './Toast/Toast';
 export {
   DismissIcon as LOFIDismissIcon,
   FeedbackSeverityIcon as LOFIFeedbackSeverityIcon,
+  LofiArrowRightIcon as LOFIArrowRightIcon,
+  LofiChevronDownIcon as LOFIChevronDownIcon,
+  LofiChevronLeftIcon as LOFIChevronLeftIcon,
+  LofiChevronRightIcon as LOFIChevronRightIcon,
+  LofiChevronUpIcon as LOFIChevronUpIcon,
+  LofiExternalLinkIcon as LOFIExternalLinkIcon,
 } from './Util/LofiRadixIcons';
 export { InlineAlert as LOFIInlineAlert } from './InlineAlert/InlineAlert';
 export { EmptyState as LOFIEmptyState }   from './EmptyState/EmptyState';
@@ -60,6 +66,7 @@ export type {
   DismissIconProps,
   FeedbackSeverityIconProps,
   LofiFeedbackIconSeverity,
+  LofiIconProps,
 } from './Util/LofiRadixIcons';
 export type { InlineAlertProps, InlineAlertSeverity }        from './InlineAlert/InlineAlert';
 export type { EmptyStateProps, EmptyStateVariant }           from './EmptyState/EmptyState';

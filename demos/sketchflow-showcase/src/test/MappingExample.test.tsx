@@ -77,7 +77,7 @@ describe('MappingExample', () => {
     expect(screen.getByRole('button', { name: /Bulk Map/i })).toBeDisabled();
   });
 
-  it('filters rows when tournament search is committed', async () => {
+  it('filters rows when title search is committed', async () => {
     const user = userEvent.setup();
 
     render(
@@ -89,10 +89,10 @@ describe('MappingExample', () => {
       />,
     );
 
-    await user.type(screen.getByLabelText(/Tournament/i), 'wimbledon');
+    await user.type(screen.getByLabelText(/Title/i), 'oldboy');
     await user.click(screen.getByRole('button', { name: /^Search$/i }));
 
-    expect(screen.getByText('Wimbledon')).toBeInTheDocument();
-    expect(screen.queryByText('LaLiga Santander')).not.toBeInTheDocument();
+    expect(screen.getByText('Oldboy')).toBeInTheDocument();
+    expect(screen.queryByText('Amelie')).not.toBeInTheDocument();
   });
 });

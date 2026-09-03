@@ -1,16 +1,19 @@
 import {
   ArrowDownIcon,
+  ArrowRightIcon,
   ArrowUpIcon,
   CaretSortIcon,
   CheckCircledIcon,
   CheckIcon,
   ChevronDownIcon,
+  ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
   Cross1Icon,
   CrossCircledIcon,
   ExclamationTriangleIcon,
   InfoCircledIcon,
+  OpenInNewWindowIcon,
 } from '@radix-ui/react-icons';
 import './LofiRadixIcons.scss';
 
@@ -92,14 +95,29 @@ export function LofiChevronDownIcon(props: LofiIconProps) {
   return <RadixGlyph Icon={ChevronDownIcon} {...props} />;
 }
 
-/** Radix `ChevronRightIcon`. Used for collapsed branches and rows. */
+/** Radix `ChevronLeftIcon`. Used for collapse-to-rail affordances. */
+export function LofiChevronLeftIcon(props: LofiIconProps) {
+  return <RadixGlyph Icon={ChevronLeftIcon} {...props} />;
+}
+
+/** Radix `ChevronRightIcon`. Used for collapsed branches, rows, and forward nav. */
 export function LofiChevronRightIcon(props: LofiIconProps) {
   return <RadixGlyph Icon={ChevronRightIcon} {...props} />;
 }
 
-/** Radix `ChevronUpIcon`. Reserved for inverted chevrons. */
+/** Radix `ChevronUpIcon`. Used for expanded accordion headings. */
 export function LofiChevronUpIcon(props: LofiIconProps) {
   return <RadixGlyph Icon={ChevronUpIcon} {...props} />;
+}
+
+/** Radix `OpenInNewWindowIcon`. Used for docs / Storybook / new-tab affordances. */
+export function LofiExternalLinkIcon(props: LofiIconProps) {
+  return <RadixGlyph Icon={OpenInNewWindowIcon} {...props} />;
+}
+
+/** Radix `ArrowRightIcon`. Used for forward / open-prototype affordances. */
+export function LofiArrowRightIcon(props: LofiIconProps) {
+  return <RadixGlyph Icon={ArrowRightIcon} {...props} />;
 }
 
 /** Radix `ArrowUpIcon`. Used for ascending sort indicators. */

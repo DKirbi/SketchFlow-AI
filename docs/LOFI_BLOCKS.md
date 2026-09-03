@@ -84,6 +84,16 @@ demo; full composition rules -> **[LOFI_KIT_PATTERNS.md — Unified Production L
 | `LOFIFeedbackSeverityIcon` | `lofi-icon` | `ui/Util/LofiRadixIcons` | Shared 25×25 severity glyph ([Radix Icons](https://www.radix-ui.com/icons)). Use with `LOFIToast`, `LOFIInlineAlert`, or any custom feedback strip — pass `severity`: `success` \| `info` \| `warning` \| `error`. |
 | `LOFIDismissIcon` | `lofi-icon` | `ui/Util/LofiRadixIcons` | Shared 25×25 dismiss glyph (Radix **Cross 1**). Pair with `LOFIButton` for icon-only dismiss, same as toast / inline-alert dismiss. |
 
+### Surface C — Component sets
+
+Config-driven groups. Not primitives. [`COMPOSITION_PATTERNS.md` — Component sets](COMPOSITION_PATTERNS.md). Storybook: **Sets / Component sets**.
+
+| Export (`lofi-kit`) | BEM root | Source file | Use when |
+|---|---|---|---|
+| `LOFIActionCluster` | `action-cluster` | `sets/ActionCluster` | Footer / toolbar / bulk / row button groups from JSON `ActionDescriptor[]`. Host supplies layout + LOFI variant + UI `color`/`rank`. |
+| `LOFIComponentSet` | `component-set` | `sets/ComponentSet` | Render a `kind` (`upl-shell`, `modal-editor`, `filter-query-row`, …). Example configs: `COMPONENT_SET_EXAMPLES`. |
+| `LOFIFieldFromDescriptor` | — | `sets/FieldFromDescriptor` | One form/filter field from a `FieldDescriptor`. |
+
 **Feedback icon mapping** (global across LOFI Kit):
 
 | `severity` | Radix icon |
@@ -120,6 +130,7 @@ Quick reference — common confusion points:
 | "save succeeded" / "action completed" / "transient notification" | `LOFIToast` | not `LOFIModal` (blocking) or `LOFIBadge` (persistent inline) |
 | "form error" / "validation failed" / "unsaved changes warning" | `LOFIInlineAlert` | not `LOFIToast` (transient, positional) or `LOFIModal` (blocking) |
 | "no data" / "empty table" / "nothing here yet" | `LOFIEmptyState` | not a blank table or an empty `LOFICard` with no message |
+| "modal footer buttons" / "UPL shell from config" / "JSON footer" | `LOFIComponentSet` / `LOFIActionCluster` | not hand-rolled `footer={<>…buttons…</>}` when a set kind already exists |
 
 ---
 

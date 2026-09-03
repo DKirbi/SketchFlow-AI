@@ -22,8 +22,19 @@ const config: StorybookConfig = {
       savePropValueAsString: true,
     },
   },
-  viteFinal: async (config) =>
-    mergeConfig(config, {
+  viteFinal: async (config) => {
+    const embedBase = process.env.LOFI_EMBED_BASE;
+    return mergeConfig(config, {
+      base: embedBase
+        ? embedBase.endsWith('/')
+          ? embedBase
+          : `${embedBase}/`
+        : config.base,
+      server: {
+        // Hub proxies via 127.0.0.1:5172; Storybook rejects that host unless allowed.
+        host: '127.0.0.1',
+        allowedHosts: true,
+      },
       plugins: [tailwindcss()],
       // Prevent Vite from copying the project's public/ directory into the
       // Storybook output. Without this, any prior contents of public/ (including
@@ -35,7 +46,8 @@ const config: StorybookConfig = {
           'lofi-kit': path.resolve(dirname, '../lib/src/index.ts'),
         },
       },
-    }),
+    });
+  },
 };
 
 export default config;

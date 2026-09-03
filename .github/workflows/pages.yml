@@ -1,4 +1,4 @@
-name: Deploy Demo Hub to GitHub Pages
+name: Deploy UX Showcase to GitHub Pages
 
 on:
   push:
@@ -28,8 +28,8 @@ jobs:
         run: npm install
       - name: Test
         run: npm run test:all
-      - name: Build demo hub
-        run: npm run demo-build -- --out public --with-storybook
+      - name: Build UX Showcase portfolio
+        run: npm run build:showcase -- --out public
       - name: Disable Jekyll
         run: touch public/.nojekyll
       - name: Configure Pages

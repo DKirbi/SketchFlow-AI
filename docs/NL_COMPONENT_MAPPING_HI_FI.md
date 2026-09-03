@@ -10,6 +10,8 @@
 
 Parse briefs phrase by phrase as in [`NL_COMPONENT_MAPPING_LO_FI.md`](NL_COMPONENT_MAPPING_LO_FI.md). For **implementation**, map the same signals to **Podium / Mantine** using **future high-fidelity API documentation** (`future design-system API source`), then align with [`COMPOSITION_PATTERNS.md`](COMPOSITION_PATTERNS.md) and [`UX_PATTERNS.md`](UX_PATTERNS.md) for behaviour (P1–P10).
 
+Lo-fi **component sets** (`ActionDescriptor.role` + `host`) already store the target Podium `color` / `rank` via `resolveActionPresentation`. When promoting a set to hi-fi, apply those UI columns (U1 / U4.2 / U5) rather than re-deriving emphasis from the LOFI `variant`.
+
 ---
 
 ## Signal grammar

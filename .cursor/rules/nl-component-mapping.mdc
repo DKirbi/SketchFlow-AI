@@ -56,10 +56,11 @@ For every sentence or phrase in the brief:
 | "page 3 of 47" / "next page" / "paginate" | `LOFIPagination` |
 | "a long description" / "notes field" / "multi-line text" | `LOFITextarea` |
 | "error in form" / "validation failed" / "alert below field" | `LOFIInlineAlert` |
-| "filter criteria" / "Search + Reset" / "Sport dropdown" | `LOFIField` + `LOFISelect`/`LOFIInput` + `LOFIButton` (NOT `LOFIFilterBar`) |
-| "hierarchy" / "tree nav" / "collapsible sidebar nav" | `LOFINavTree` |
-| "the main pane" / "production pane" / "UPL main view" | `LOFIMainWorkspace` |
+| "filter criteria" / "Search + Reset" / "Sport dropdown" | `kind: 'filter-query-row'` (`LOFIField` + controls — NOT `LOFIFilterBar`) |
+| "hierarchy" / "tree nav" / "collapsible sidebar nav" | `LOFINavTree` / `kind: 'sidebar'` |
+| "the main pane" / "production pane" / "UPL main view" | `LOFIMainWorkspace` / `kind: 'main-workspace'` or `'upl-shell'` |
 | "breadcrumb" / "path trail" | `LOFIText` segments + `›` separators |
+| "modal footer" / "Save and Cancel in the dialog" | `LOFIActionCluster` host `modal-footer` |
 
 ---
 

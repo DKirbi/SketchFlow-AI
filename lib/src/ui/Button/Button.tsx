@@ -28,6 +28,8 @@ export interface ButtonProps {
   onPointerDown?: (e: PointerEvent<HTMLButtonElement>) => void;
   /** Accessible name when children are not descriptive (e.g. icon-only controls). */
   'aria-label'?: string;
+  /** Disclosure state for accordion / collapse controls. */
+  'aria-expanded'?: boolean;
 }
 
 export function Button({
@@ -42,6 +44,7 @@ export function Button({
   form,
   onPointerDown,
   'aria-label': ariaLabel,
+  'aria-expanded': ariaExpanded,
 }: ButtonProps) {
   const classes = [
     'btn',
@@ -61,6 +64,7 @@ export function Button({
       form={form}
       onPointerDown={onPointerDown}
       aria-label={ariaLabel}
+      aria-expanded={ariaExpanded}
     >
       <Text as="span" variant="inherit">{children}</Text>
     </button>

@@ -560,7 +560,7 @@ Behaviour rules → **[`UX_PATTERNS.md` — P1: Workspace](UX_PATTERNS.md)**
 
 | Concern | Resolution |
 |---------|-----------|
-| Upper bar chrome, filter query row, breadcrumb segments, sticky footer buttons, sidebar collapse toggle | **Composition** — assembled from existing primitives in demo SCSS + BEM; no new kit export needed. |
+| Upper bar chrome, filter query row, breadcrumb segments, sticky footer buttons, sidebar collapse toggle | **Composition** — still assembled from primitives; prefer a **component set** config (`kind: 'upper-bar'`, `'filter-query-row'`, `'action-cluster'`) when the same cluster repeats. See [Component sets](#component-sets). |
 | Main interface view (stable pane with scrollable body, tab strip, sticky footer) | **`LOFIMainWorkspace`** — one BEM root encodes the structural contract across UPL demos. |
 | Hierarchical sidebar navigation | **`LOFINavTree`** — expand/collapse tree; uses Radix Collapsible internally. |
 
@@ -799,21 +799,100 @@ When the main interface body is a data table rather than a form editor, slot `LO
 
 ### Mock field descriptors (config-driven form pattern)
 
-In production systems, forms like the feature interface body are driven by a backend-supplied descriptor. Demos can mirror this concept with a typed field descriptor and a small switch renderer.
+In production systems, forms like the feature interface body are driven by a backend-supplied descriptor. Demos can mirror this with `FieldDescriptor` + `LOFIFieldFromDescriptor` from `lofi-kit` (`lib/src/sets/`). The same descriptor shape is used inside filter query rows and modal bodies.
 
 > **Industry terms:** schema-driven UI, declarative UI, metadata-driven forms. Sportradar's internal implementation is **Common Lib**, an abstraction over Podium. Transformer Patterns is a lo-fi parallel for prototyping — not a replacement.
 
 ```ts
-// types/fields.ts — discriminated union, one member per control type
-type FieldDescriptor =
-  | { type: 'text';     name: string; label: string; value: string;  onChange: (v: string) => void }
-  | { type: 'textarea'; name: string; label: string; value: string;  onChange: (v: string) => void; rows?: number }
-  | { type: 'select';   name: string; label: string; value: string;  onChange: (v: string) => void; options: SelectOption[] }
-  | { type: 'switch';   name: string; label: string; checked: boolean; onChange: (v: boolean) => void }
-  | { type: 'checkbox'; name: string; label: string; checked: boolean; onChange: (v: boolean) => void };
+import type { FieldDescriptor } from 'lofi-kit';
+
+const nameField: FieldDescriptor = {
+  name: 'name',
+  kind: 'text',
+  label: 'Name',
+  value: '',
+};
 ```
 
-Keep `FieldFromDescriptor` in the demo's `src/components/` folder — it is not a lofi-kit primitive.
+Handlers (`onFieldChange`, `onAction`) stay outside the JSON — bind `name` / `id` at render time.
+
+---
+
+## Component sets
+
+A **component set** is a JSON-serialisable group of primitives with a host layout and action roles. Primitives stay unchanged. Sets encode the recipes that every demo was hand-assembling (`footer={<>…buttons…</>}`).
+
+Live views: Storybook **Sets / Component sets**. Source configs: `lib/src/sets/examples.ts` (extracted from tournament-management, mapping, merge-tool, notifications-overview, bracket-demo).
+
+**UX** decides *where* the cluster lives and *when* it appears (P1 shell, P5 modal, P7 confirm, P3 save). **UI** decides *rank / color* of each action in that cluster (U1, U3.5, U4.2, U5.2). The set stores both: LOFI `variant` for the prototype, `uiColor` / `uiRank` for `/ui-patterns` / hi-fi.
+
+### Action roles
+
+| `role` | Meaning | Typical labels |
+|--------|---------|----------------|
+| `commit` | One primary per cluster | Save, Create, Search, Merge, Apply |
+| `dismiss` | Cancel / close | Cancel, Close, Clear all |
+| `secondary` | Peer utility, not commit | Reset, Clone, Edit selected |
+| `destructive` | Irreversible verb | Remove, Discard, Delete |
+| `tertiary` | Lowest emphasis / left cluster | Back, Move, Disable |
+
+`overrides.variant` / `overrides.size` are last-resort LOFI patches. Never put colour or arbitrary CSS in the config.
+
+### Host → layout + UI mapping
+
+`resolveActionPresentation(role, host)` in `lib/src/sets/actionRole.ts`. Lo-fi has no `warning` / `outline` tokens — demos collapse those into `primary` / `dismiss`. The UI columns are the hi-fi target.
+
+| Host | Layout | `commit` LOFI / UI | `dismiss` LOFI / UI | Notes |
+|------|--------|--------------------|---------------------|-------|
+| `modal-footer` | End | `primary` / `action`+`fill` | `dismiss` / `neutral`+`subtle` | P5 — cancel left of commit |
+| `p7-footer` | End | `primary` / `action`+`fill` (or `warning`+`fill` if `destructive`) | `dismiss` / `neutral`+`subtle` | P7 — two actions only |
+| `workspace-footer` | End | `primary` + P3 / `action`+`fill` | Reset is `secondary` → LOFI `dismiss`, UI `outline`+`neutral` | P1.2.3.2 — no P7 before Save |
+| `page-footer` | End | same as workspace | Reset as `secondary` | Merge tool page chrome |
+| `filter-actions` | Start | Search `commit` | Clear `dismiss` | P9. `applyMode: 'commit'` vs `'immediate'` |
+| `toolbar-right` | Start | — | compact `dismiss` / `ghost` | P1.1 Applications / Configuration |
+| `card-toolbar` | Start | rare | compact | Overview card actions |
+| `bulk-bar` | Start | LOFI `primary` small; UI `action`+`outline` | — | U5.5 — do not `fill` next to another table primary |
+| `row-actions` | Start | LOFI `default` compact; UI `neutral`+`outline` | — | U5.2 — never `fill` down a column |
+| `empty-state` | Start | one CTA | — | |
+| `list-header` | Start | Add `commit` small | — | Per-table management bar |
+
+### Set kinds (inventory)
+
+| `kind` | Composes | Demo source |
+|--------|----------|-------------|
+| `action-cluster` | `LOFIActionCluster` | Any footer / bulk / page bar |
+| `p7-confirm` | `LOFIModal` + cluster | `ConfirmDialog.tsx` (tournament-management) |
+| `modal-editor` | `LOFIModal` + body + cluster | `TournamentModal.tsx`, `TeamModal.tsx`, merge review |
+| `upper-bar` | `LOFIToolbar` | `UPLToolbar.tsx`; mapping / merge identity bars |
+| `filter-query-row` | fields + cluster | `FilterRow.tsx` (commit); `NotificationsFilters.tsx` (immediate) |
+| `sidebar` | `LOFINavTree` + collapse | tournament `Sidebar.tsx`; notifications sidebar |
+| `main-workspace` | `LOFIMainWorkspace` | `DetailView.tsx` |
+| `summary-card` | `LOFICard` + cluster | `OverviewPanel.tsx` |
+| `list-header` | search + checkboxes + Add | `ListHeader.tsx` |
+| `table-chrome` | `LOFITable` + row actions + empty | mapping table |
+| `tool-shell` | identity bar + bulk + table + optional page footer | mapping / merge |
+| `upl-shell` | upper bar + filter + sidebar + workspace | `TournamentManagement.tsx` |
+
+### Application types (later automation)
+
+| App type | Default shell | Sets to place |
+|----------|---------------|---------------|
+| `upl-management` | `upl-shell` | upper-bar, filter-query-row, sidebar, main-workspace, list-header, table-chrome, summary-card, modal-editor, p7-confirm |
+| `tool-table` | `tool-shell` | identity upper-bar, bulk-bar, table-chrome, p7-confirm |
+| `tool-split` | `tool-shell` (dual table + page footer) | merge-tool |
+| `canvas` | (not a set yet) | bracket-demo |
+
+Usage:
+
+```tsx
+import { LOFIComponentSet, exampleById } from 'lofi-kit';
+
+const example = exampleById('upl-shell-tournament');
+<LOFIComponentSet
+  set={example.set}
+  handlers={{ onAction: (id) => { /* bind ids */ } }}
+/>
+```
 
 ---
 

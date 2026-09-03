@@ -1,30 +1,41 @@
-import { LOFICard, LOFIText } from 'lofi-kit';
-import { getDefaultExample, getExampleBySlug, listExamples } from './examples/registry';
-import { ShowcaseShell } from './runtime/ShowcaseShell';
+import { Navigate, Route, Routes, useParams, useSearchParams } from 'react-router-dom';
+import { ProjectPage } from './hub/ProjectPage';
+import { ShowcaseLayout } from './hub/ShowcaseLayout';
+import {
+  DEFAULT_PROJECT_SLUG,
+  defaultProjectPath,
+  getCompany,
+  projectPath,
+} from './hub/catalog';
 
-function resolveSlug(): string {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('slug') ?? getDefaultExample().config.slug;
+/** `/` → default project. Legacy `?slug=` portfolio embeds keep their nested path. */
+function RootRedirect() {
+  const [params] = useSearchParams();
+  const slug = params.get('slug');
+  if (slug) {
+    return <Navigate to={projectPath('Sportradar', slug)} replace />;
+  }
+  return <Navigate to={defaultProjectPath()} replace />;
+}
+
+function CompanyRedirect() {
+  const { companyId = '' } = useParams();
+  const company = getCompany(companyId);
+  if (!company?.enabled) {
+    return <Navigate to={defaultProjectPath()} replace />;
+  }
+  return <Navigate to={projectPath(company.id, DEFAULT_PROJECT_SLUG)} replace />;
 }
 
 export function App() {
-  const slug = resolveSlug();
-  const example = getExampleBySlug(slug);
-
-  if (!example) {
-    const available = listExamples()
-      .map((entry) => entry.slug)
-      .join(', ');
-    return (
-      <div className="showcase-shell">
-        <LOFICard title="Example not found">
-          <LOFIText variant="body">
-            Unknown slug &quot;{slug}&quot;. Available examples: {available}.
-          </LOFIText>
-        </LOFICard>
-      </div>
-    );
-  }
-
-  return <ShowcaseShell example={example} />;
+  return (
+    <Routes>
+      <Route path="/" element={<RootRedirect />} />
+      <Route path="/:companyId" element={<CompanyRedirect />} />
+      <Route element={<ShowcaseLayout />}>
+        <Route path="/:companyId/:projectSlug" element={<ProjectPage />} />
+      </Route>
+      <Route path="*" element={<Navigate to={defaultProjectPath()} replace />} />
+    </Routes>
+  );
 }

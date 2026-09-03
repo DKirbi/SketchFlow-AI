@@ -255,7 +255,7 @@ export function MappingView() {
         }
         center={
           <LOFIText as="h1" variant="body">
-            Value Mapping
+            Mapping
           </LOFIText>
         }
         right={

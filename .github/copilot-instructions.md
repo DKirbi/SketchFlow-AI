@@ -299,6 +299,7 @@ Parse phrase-by-phrase before coding. Extend with `docs/NL_COMPONENT_MAPPING_LO_
 | Status / tag                              | `LOFIBadge`                                         |
 | Free-form block                           | `LOFICard`                                          |
 | Breadcrumb (composition)                  | `LOFIText` segments + separators (no new primitive) |
+| Recurring shell / footer / filter cluster | `LOFIComponentSet` / `LOFIActionCluster` (`docs/COMPOSITION_PATTERNS.md` — Component sets) |
 
 ### Disambiguation (ask internally when ambiguous)
 
@@ -325,7 +326,7 @@ Parse phrase-by-phrase before coding. Extend with `docs/NL_COMPONENT_MAPPING_LO_
 
 - **Modal form:** `LOFIModal` with fieldsets, dismiss + primary commit; modal commit uses **P7** then async flow as above (**P4** toasts).
 - **Tables:** one fluid column for the main entity where appropriate; **Actions** column present; destructive actions never visually dominant.
-- **Layout:** prefer `LOFIMainWorkspace`, `LOFIToolbar`, `LOFINavTree` for UPL-shaped screens per `docs/COMPOSITION_PATTERNS.md`.
+- **Layout:** prefer `LOFIMainWorkspace`, `LOFIToolbar`, `LOFINavTree` for UPL-shaped screens per `docs/COMPOSITION_PATTERNS.md`. Recurring clusters (modal footer, UPL shell, filter row) may use **component sets** (`LOFIComponentSet`, `COMPONENT_SET_EXAMPLES`) instead of hand-assembling JSX.
 
 ---
 

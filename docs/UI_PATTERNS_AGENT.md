@@ -83,8 +83,8 @@
 49. Mark **required** fields **typographically** — asterisk + label; **never** colour-only required signalling.
 50. Keep editable fields **`md`**; step to **`sm`** only for **filter strips** or **table-inline** edits.
 51. Group related inputs with **layout + labels** — **not** arbitrary background tints per field.
-52. **Modal** submit footer: **`action` + `fill`** commit + **`subtle` + `neutral`** cancel — order per **P5**.
-53. **Inline workspace** Save: **`action` + `fill`** + **P3 state machine**; **Reset** → **`outline` + `neutral`** — **do not** recolour the Save button across **idle/loading/success**.
+52. **Modal** submit footer: **`action` + `fill`** commit + **`subtle` + `neutral`** cancel — order per **P5**. In lo-fi encode as `ActionDescriptor` roles `commit` + `dismiss` on host `modal-footer` ([`COMPOSITION_PATTERNS.md`](COMPOSITION_PATTERNS.md) — Component sets).
+53. **Inline workspace** Save: **`action` + `fill`** + **P3 state machine**; **Reset** → **`outline` + `neutral`** — **do not** recolour the Save button across **idle/loading/success**. Lo-fi host `workspace-footer`; Reset role is `secondary`.
 
 ---
 

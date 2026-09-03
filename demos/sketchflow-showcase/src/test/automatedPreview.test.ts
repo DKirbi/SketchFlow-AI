@@ -10,14 +10,14 @@ describe('automatedPreview', () => {
     const bulkDoneIndex = steps.findIndex((step) => step.id === 'bulk-success');
 
     const afterMap = computeAutomatedSnapshot(steps, mapDoneIndex);
-    expect(afterMap.items.find((item) => item.id === 'COMP-LA-LIGA')?.status).toBe('mapped');
+    expect(afterMap.items.find((item) => item.id === 'FSD-1003')?.status).toBe('mapped');
 
     const afterUnmap = computeAutomatedSnapshot(steps, unmapDoneIndex);
-    expect(afterUnmap.items.find((item) => item.id === 'COMP-LA-LIGA')?.status).toBe('pending');
+    expect(afterUnmap.items.find((item) => item.id === 'FSD-1003')?.status).toBe('pending');
 
     const afterBulk = computeAutomatedSnapshot(steps, bulkDoneIndex);
-    expect(afterBulk.items.find((item) => item.id === 'COMP-SERIE-A')?.status).toBe('mapped');
-    expect(afterBulk.items.find((item) => item.id === 'COMP-BUNDESLIGA')?.status).toBe('mapped');
+    expect(afterBulk.items.find((item) => item.id === 'FSD-1006')?.status).toBe('mapped');
+    expect(afterBulk.items.find((item) => item.id === 'FSD-1007')?.status).toBe('mapped');
     expect(afterBulk.selected.size).toBe(0);
     expect(afterBulk.statusMessage).toMatch(/bulk-mapped/i);
   });
@@ -27,6 +27,6 @@ describe('automatedPreview', () => {
     const confirmIndex = steps.findIndex((step) => step.id === 'bulk-confirm');
     const snapshot = computeAutomatedSnapshot(steps, confirmIndex);
     expect(snapshot.bulkConfirmOpen).toBe(true);
-    expect(snapshot.selected.has('COMP-SERIE-A')).toBe(true);
+    expect(snapshot.selected.has('FSD-1006')).toBe(true);
   });
 });

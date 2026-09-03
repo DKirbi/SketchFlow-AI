@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build:showcase",
+  "outputDirectory": "demos/sketchflow-showcase/dist",
+  "installCommand": "npm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/((?!embeds/).*)", "destination": "/index.html" }
+  ]
+}

@@ -9,33 +9,37 @@ describe('applyMappingFilters', () => {
     expect(filtersAreDefault(DEFAULT_FILTERS)).toBe(true);
   });
 
-  it('filters by sport', () => {
+  it('filters by genre', () => {
     const filtered = applyMappingFilters(INITIAL_ITEMS, {
-      sportId: 'sp-tennis',
-      tournamentQuery: '',
+      genreId: 'gn-thriller',
+      titleQuery: '',
     });
-    expect(filtered.every((item) => item.sportId === 'sp-tennis')).toBe(true);
+    expect(filtered.every((item) => item.genreId === 'gn-thriller')).toBe(true);
     expect(filtered.length).toBeGreaterThan(0);
   });
 
-  it('filters by tournament search after sport is set', () => {
+  it('filters by title search after genre is set', () => {
     const filtered = applyMappingFilters(INITIAL_ITEMS, {
-      sportId: FILTER_ALL,
-      tournamentQuery: 'wimbledon',
+      genreId: FILTER_ALL,
+      titleQuery: 'oldboy',
     });
     expect(filtered).toHaveLength(1);
-    expect(filtered[0]?.id).toBe('COMP-WIMBLEDON');
+    expect(filtered[0]?.id).toBe('FSD-1003');
   });
 
-  it('combines sport and tournament with AND logic', () => {
+  it('combines genre and title with AND logic', () => {
     const filtered = applyMappingFilters(INITIAL_ITEMS, {
-      sportId: 'sp-soccer',
-      tournamentQuery: 'liga',
+      genreId: 'gn-thriller',
+      titleQuery: 'para',
     });
     expect(filtered.length).toBeGreaterThan(0);
-    expect(filtered.every((item) => item.sportId === 'sp-soccer')).toBe(true);
-    expect(filtered.every((item) => item.tournamentLabel.toLowerCase().includes('liga'))).toBe(
-      true,
-    );
+    expect(filtered.every((item) => item.genreId === 'gn-thriller')).toBe(true);
+    expect(
+      filtered.every(
+        (item) =>
+          item.internalValue.toLowerCase().includes('para') ||
+          item.externalSuggestion.toLowerCase().includes('para'),
+      ),
+    ).toBe(true);
   });
 });
