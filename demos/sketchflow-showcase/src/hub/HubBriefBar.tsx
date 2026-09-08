@@ -126,7 +126,12 @@ export function HubBriefBar({
                 project.patternSummaries.map((pattern) => {
                   const expanded = expandedPatternId === pattern.id;
                   return (
-                    <div key={pattern.id} className="hub-brief__pattern">
+                    <div
+                      key={pattern.id}
+                      className={
+                        expanded ? 'hub-brief__pattern hub-brief__pattern--expanded' : 'hub-brief__pattern'
+                      }
+                    >
                       <LOFIButton
                         variant="default"
                         size="compact"

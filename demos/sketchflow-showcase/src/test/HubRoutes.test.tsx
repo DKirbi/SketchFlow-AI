@@ -269,6 +269,9 @@ describe('App routes', () => {
       'aria-expanded',
       'true',
     );
+    expect(
+      screen.getByRole('button', { name: 'P7: Confirmation dialog' }).closest('.hub-brief__pattern'),
+    ).toHaveClass('hub-brief__pattern--expanded');
     expect(screen.getByText(/confirmation-only overlay/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Open pattern docs' }));

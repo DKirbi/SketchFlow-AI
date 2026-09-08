@@ -370,7 +370,7 @@ body,
 
 .hub-brief {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: $space-4;
   min-height: $hub-brief-band;
   padding: $space-4 $space-6;
@@ -381,6 +381,7 @@ body,
 
   &__icon {
     flex-shrink: 0;
+    align-self: flex-start;
     display: flex;
     align-items: center;
     color: $color-ink;
@@ -389,9 +390,11 @@ body,
   &__columns {
     flex: 1;
     min-width: 0;
+    min-height: 0;
     display: grid;
     grid-template-columns: minmax(0, 65%) minmax(0, 35%);
     gap: $space-8;
+    align-items: stretch;
   }
 
   &--full &__columns {
@@ -420,17 +423,24 @@ body,
 
   &__patterns {
     min-width: 0;
+    min-height: 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: $space-2;
-    max-height: calc(#{$hub-brief-band} - #{$space-8});
-    overflow: auto;
+    overflow: hidden;
   }
 
   &__pattern {
     display: flex;
     flex-direction: column;
     gap: $space-2;
+    flex-shrink: 0;
+
+    &--expanded {
+      flex: 1;
+      min-height: 0;
+    }
   }
 
   &__pattern-toggle.btn {
@@ -479,7 +489,8 @@ body,
     display: flex;
     flex-direction: column;
     gap: $space-2;
-    max-height: $space-16 * 4;
+    flex: 1;
+    min-height: 0;
     overflow: auto;
     padding: $space-3 $space-4;
     border: $border-width dashed $color-border;
