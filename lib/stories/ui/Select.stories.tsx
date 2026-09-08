@@ -10,7 +10,7 @@ const sampleOptions = [
 ];
 
 const meta: Meta<typeof LOFISelect> = {
-  title: 'UI / Select',
+  title: 'LOW FI Design system/Primitives/Select',
   component: LOFISelect,
   tags: ['autodocs'],
   render: SelectControlledRender,

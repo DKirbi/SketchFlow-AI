@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { LOFIInlineAlert } from 'lofi-kit';
 
 const meta: Meta<typeof LOFIInlineAlert> = {
-  title: 'UI / InlineAlert',
+  title: 'LOW FI Design system/Primitives/InlineAlert',
   component: LOFIInlineAlert,
   tags: ['autodocs'],
   parameters: {

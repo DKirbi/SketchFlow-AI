@@ -22,8 +22,9 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "lofi-kit": ["../../lib/src/index.ts"]
+      "lofi-kit": ["../../lib/src/index.ts"],
+      "shared-catalogs": ["../shared-catalogs/index.ts"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../shared-catalogs"]
 }

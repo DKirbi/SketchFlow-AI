@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { LOFIText } from 'lofi-kit';
 
 const meta: Meta<typeof LOFIText> = {
-  title: 'UI / Text',
+  title: 'LOW FI Design system/Primitives/Text',
   component: LOFIText,
   tags: ['autodocs'],
   parameters: {

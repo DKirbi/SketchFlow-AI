@@ -20,9 +20,63 @@ const preview: Preview = {
         order: [
           'Introduction',
           'PATTERNS',
-          ['PATTERNS/UX Patterns', 'PATTERNS/UI Patterns', 'PATTERNS/LOFI Kit'],
-          'UI',
-          'Diagram',
+          ['UX Patterns', 'UI Patterns'],
+          'LOW FI Design system',
+          [
+            'LOFI Kit',
+            'Primitives',
+            [
+              'Overview',
+              'Badge',
+              'Button',
+              'Card',
+              'Checkbox',
+              'Chip',
+              'EmptyState',
+              'Field',
+              'Fieldset',
+              'InlineAlert',
+              'Input',
+              'Loader',
+              'MainWorkspace',
+              'Modal',
+              'MultiSelect',
+              'NavTree',
+              'Pagination',
+              'Panel',
+              'Radio',
+              'Select',
+              'StatefulButton',
+              'Steps',
+              'Switch',
+              'Table',
+              'Tabs',
+              'Text',
+              'Textarea',
+              'Toast',
+              'Toggle',
+              'Toolbar',
+            ],
+            'Component sets',
+            [
+              'Overview',
+              'Action cluster',
+              'Upper bar',
+              'Filter query row',
+              'Filter chip group',
+              'Sidebar',
+              'Main workspace',
+              'Summary card',
+              'List header',
+              'Table chrome',
+              'Suggestion row',
+              'Modal editor',
+              'P7 confirm',
+              'Tool shell',
+              'UPL shell',
+            ],
+            'Diagram',
+          ],
         ],
       },
     },
@@ -36,8 +90,8 @@ const preview: Preview = {
         <>
           <Title />
           <Subtitle />
-          <Primary />
           <Description />
+          <Primary />
           <Controls />
           <Stories />
           <ArgTypes sort="none" />

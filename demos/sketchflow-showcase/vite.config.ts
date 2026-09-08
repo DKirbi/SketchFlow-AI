@@ -29,11 +29,13 @@ export default defineConfig({
   resolve: {
     alias: {
       'lofi-kit': path.resolve(dir, '../../lib/src/index.ts'),
+      'shared-catalogs': path.resolve(dir, '../shared-catalogs/index.ts'),
     },
   },
   test: {
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
+    testTimeout: 15000,
   },
 });

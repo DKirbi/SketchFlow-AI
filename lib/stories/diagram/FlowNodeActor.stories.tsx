@@ -3,7 +3,7 @@ import { ActorNode, ActorNodeDoc } from 'lofi-kit';
 import { flowNodePreviewDecorator } from './flowNodeCanvasDecorator';
 
 const meta: Meta<typeof ActorNodeDoc> = {
-  title: 'Diagram / Flow nodes / Actor',
+  title: 'LOW FI Design system/Diagram/Flow nodes/Actor',
   component: ActorNodeDoc,
   tags: ['autodocs'],
   decorators: [flowNodePreviewDecorator('actor', ActorNode)],

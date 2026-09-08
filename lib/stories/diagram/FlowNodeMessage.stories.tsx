@@ -3,7 +3,7 @@ import { MessageNode, MessageNodeDoc } from 'lofi-kit';
 import { flowNodePreviewDecorator } from './flowNodeCanvasDecorator';
 
 const meta: Meta<typeof MessageNodeDoc> = {
-  title: 'Diagram / Flow nodes / Message',
+  title: 'LOW FI Design system/Diagram/Flow nodes/Message',
   component: MessageNodeDoc,
   tags: ['autodocs'],
   decorators: [flowNodePreviewDecorator('message', MessageNode)],

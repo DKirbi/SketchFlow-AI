@@ -8,7 +8,7 @@ const choiceOptions = [
 ];
 
 const meta: Meta<typeof LOFIRadio> = {
-  title: 'UI / Radio',
+  title: 'LOW FI Design system/Primitives/Radio',
   component: LOFIRadio,
   tags: ['autodocs'],
   render: RadioControlledRender,

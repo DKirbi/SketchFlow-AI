@@ -83,6 +83,7 @@ It is **not** a replacement for:
 * **Pick rank from role**, not from **colour alone** — never make the primary differ **only** by hue while rank stays identical for all buttons.
 * **Do not mix `neutral` and `action`** in the same **horizontal** button strip — choose **one semantic family** for that cluster.
 * **Emphasis should increase monotonically** — avoid “wavy” patterns (e.g. outline–subtle–outline) that confuse scanning.
+* **Togglable actions stick inverted** — filter chips, segmented toggles, and other pressed buttons invert (`fill` + `neutral`; lo-fi ink/paper) and stay active until another option in that component takes the selection. Do not use `action` colour to mean “selected”. Pressing the already-active exclusive option is a no-op. Navigation tabs keep underline chrome; binary switches may turn off.
 
 ---
 

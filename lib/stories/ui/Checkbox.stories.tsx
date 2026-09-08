@@ -3,7 +3,7 @@ import { LOFICheckbox } from 'lofi-kit';
 import { CheckboxControlledRender } from './storyControls';
 
 const meta: Meta<typeof LOFICheckbox> = {
-  title: 'UI / Checkbox',
+  title: 'LOW FI Design system/Primitives/Checkbox',
   component: LOFICheckbox,
   tags: ['autodocs'],
   render: CheckboxControlledRender,

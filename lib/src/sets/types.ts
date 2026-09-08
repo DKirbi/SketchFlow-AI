@@ -153,6 +153,8 @@ export interface UpperBarConfig {
   subtitle?: string;
   identity?: { handle: string; role: string };
   counts?: { label: string; active: boolean }[];
+  /** Mock catalogue picker rendered in the tool upper-bar. */
+  catalog?: FieldDescriptor;
   rightActions: ActionDescriptor[];
 }
 
@@ -219,11 +221,38 @@ export interface P7ConfirmConfig {
   confirm: ActionDescriptor;
 }
 
+export interface FilterChipDescriptor {
+  id: string;
+  label: string;
+  count?: number;
+  selected?: boolean;
+}
+
+export interface FilterChipGroupConfig {
+  chips: FilterChipDescriptor[];
+  ariaLabel?: string;
+}
+
+export interface SuggestionRowConfig {
+  id: string;
+  external: string;
+  percent: number;
+  map: ActionDescriptor;
+  unmap: ActionDescriptor;
+}
+
 export interface ToolShellConfig {
   toolbar: UpperBarConfig;
+  filterRow?: FilterRowConfig;
+  chipGroup?: FilterChipGroupConfig;
+  tabs?: TabDescriptor[];
+  activeTab?: string;
   bulkBar?: ActionDescriptor[];
-  table: TableConfig;
+  /** Omit when the demo supplies `children` (expandable table). */
+  table?: TableConfig;
   pageFooter?: ActionDescriptor[];
+  /** Full-page demos set `false` to drop the framed border. */
+  framed?: boolean;
 }
 
 export interface UplShellConfig {
@@ -239,11 +268,13 @@ export type ComponentSet =
   | ({ kind: 'action-cluster' } & ActionClusterConfig)
   | ({ kind: 'upper-bar' } & UpperBarConfig)
   | ({ kind: 'filter-query-row' } & FilterRowConfig)
+  | ({ kind: 'filter-chip-group' } & FilterChipGroupConfig)
   | ({ kind: 'sidebar' } & SidebarConfig)
   | ({ kind: 'main-workspace' } & WorkspaceConfig)
   | ({ kind: 'summary-card' } & SummaryCardConfig)
   | ({ kind: 'list-header' } & ListHeaderConfig)
   | ({ kind: 'table-chrome' } & TableConfig)
+  | ({ kind: 'suggestion-row' } & SuggestionRowConfig)
   | ({ kind: 'modal-editor' } & ModalEditorConfig)
   | ({ kind: 'p7-confirm' } & P7ConfirmConfig)
   | ({ kind: 'tool-shell' } & ToolShellConfig)

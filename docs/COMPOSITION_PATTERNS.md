@@ -822,7 +822,7 @@ Handlers (`onFieldChange`, `onAction`) stay outside the JSON — bind `name` / `
 
 A **component set** is a JSON-serialisable group of primitives with a host layout and action roles. Primitives stay unchanged. Sets encode the recipes that every demo was hand-assembling (`footer={<>…buttons…</>}`).
 
-Live views: Storybook **Sets / Component sets**. Source configs: `lib/src/sets/examples.ts` (extracted from tournament-management, mapping, merge-tool, notifications-overview, bracket-demo).
+Live views: Storybook **LOW FI Design system / Component sets**. Source configs: `lib/src/sets/examples.ts` (extracted from tournament-management, mapping, merge-tool, notifications-overview, bracket-demo).
 
 **UX** decides *where* the cluster lives and *when* it appears (P1 shell, P5 modal, P7 confirm, P3 save). **UI** decides *rank / color* of each action in that cluster (U1, U3.5, U4.2, U5.2). The set stores both: LOFI `variant` for the prototype, `uiColor` / `uiRank` for `/ui-patterns` / hi-fi.
 
@@ -865,12 +865,14 @@ Live views: Storybook **Sets / Component sets**. Source configs: `lib/src/sets/e
 | `modal-editor` | `LOFIModal` + body + cluster | `TournamentModal.tsx`, `TeamModal.tsx`, merge review |
 | `upper-bar` | `LOFIToolbar` | `UPLToolbar.tsx`; mapping / merge identity bars |
 | `filter-query-row` | fields + cluster | `FilterRow.tsx` (commit); `NotificationsFilters.tsx` (immediate) |
+| `filter-chip-group` | `LOFIChip` row (no `onClear`, inverted `selected` on the active scope; stays pressed until another chip is chosen) | mapping All / Unmapped / Mapped — still ≠ `LOFIFilterBar` |
 | `sidebar` | `LOFINavTree` + collapse | tournament `Sidebar.tsx`; notifications sidebar |
 | `main-workspace` | `LOFIMainWorkspace` | `DetailView.tsx` |
 | `summary-card` | `LOFICard` + cluster | `OverviewPanel.tsx` |
 | `list-header` | search + checkboxes + Add | `ListHeader.tsx` |
 | `table-chrome` | `LOFITable` + row actions + empty | mapping table |
-| `tool-shell` | identity bar + bulk + table + optional page footer | mapping / merge |
+| `suggestion-row` | external + % + Map / Unmap | mapping expandable body (P2.5 + P3) |
+| `tool-shell` | identity bar + optional filter row, tabs, chip group + table or children | mapping / merge |
 | `upl-shell` | upper bar + filter + sidebar + workspace | `TournamentManagement.tsx` |
 
 ### Application types (later automation)

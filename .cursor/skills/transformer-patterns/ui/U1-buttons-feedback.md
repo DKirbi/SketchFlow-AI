@@ -42,6 +42,8 @@
 35. For **equal-importance** utilities, default `ghost` + **optional leading icon**.
 36. Prefer **text-first**; add icons only when they **disambiguate** or **speed scanning** — reject **icon + multi-rank** noise in footers without cause.
 37. Use `intensity` only to **nudge** emphasis — **never** as a substitute for fixing `rank`.
+38. Present **togglable** actions as **buttons** (`aria-pressed` or equivalent). Idle = outline/paper; **active inverts** (`fill` + `neutral`; lo-fi ink/paper) and **sticks** until another interaction on that component takes selection away.
+39. Exclusive groups (filter chips, segmented toggles): sibling press returns the previous option to idle; pressing the already-active option is a **no-op**. Binary switches may turn off; navigation tabs keep underline chrome.
 
 ---
 
@@ -52,3 +54,5 @@
 - ❌ Placing `neutral` and `action` buttons in the same horizontal row — pick one semantic family (U1.27).
 - ❌ Using `fill warning` in table rows — `fill warning` is only for P7 confirm buttons (U1.17).
 - ❌ Using "wavy" rank patterns (outline-subtle-outline) — emphasis should be monotonic (U1.24).
+- ❌ Painting selection with `action` colour on chips/toggles — invert / `fill` + `neutral` carries selected (U1.38).
+- ❌ Letting a selected filter chip toggle off on a second press — exclusive groups stick until a sibling is chosen (U1.39).

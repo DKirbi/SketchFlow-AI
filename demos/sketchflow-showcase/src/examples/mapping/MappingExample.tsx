@@ -13,10 +13,11 @@ import {
   LOFISelect,
 } from 'lofi-kit';
 import type { ColumnDef, TableColumnMeta, StatefulButtonState } from 'lofi-kit';
+import { MOCK_CATALOG_OPTIONS, getMappingCatalog, type MockCatalogId } from 'shared-catalogs';
 import type { ShowcaseExampleProps } from './metadata';
 import { computeAutomatedSnapshot } from './automatedPreview';
 import { applyMappingFilters, filtersAreDefault } from './applyFilters';
-import { FILTER_ALL, GENRES } from './catalog';
+import { FILTER_ALL, GENRES, type GenreOption } from './catalog';
 import { MappingPreviewCursor } from './MappingPreviewCursor';
 import { previewTargetAttr, resolveCursorTarget } from './previewCursor';
 import { detectReducedMotion } from '../../runtime/previewStateMachine';
@@ -63,6 +64,28 @@ function coerceGenreValue(value: string): string {
   return value === '' ? FILTER_ALL : value;
 }
 
+function itemsForCatalog(id: MockCatalogId): MappingItem[] {
+  if (id === 'film') return cloneItems(INITIAL_ITEMS);
+  const catalog = getMappingCatalog('wizarding');
+  const labels = Object.fromEntries(catalog.tabs.map((tab) => [tab.value, tab.label]));
+  return catalog.entities.map((entity) => ({
+    id: entity.id,
+    genreId: entity.tab,
+    genreLabel: labels[entity.tab] ?? entity.tab,
+    internalValue: entity.name,
+    externalSuggestion: entity.suggestions[0]?.externalLabel ?? entity.name,
+    confidence: entity.suggestions[0]?.confidence ?? 0,
+    status: entity.seedMappedId ? 'mapped' : 'pending',
+    mappedAt: entity.seedMappedId ? '02 Apr 2026, 09:14' : undefined,
+    mappedBy: entity.seedMappedId ? 'j.smith' : undefined,
+  }));
+}
+
+function genresForCatalog(id: MockCatalogId): GenreOption[] {
+  if (id === 'film') return GENRES;
+  return getMappingCatalog('wizarding').tabs.map((tab) => ({ id: tab.value, label: tab.label }));
+}
+
 export function MappingExample({
   mode,
   previewStepIndex,
@@ -82,6 +105,7 @@ export function MappingExample({
     return resolveCursorTarget(previewSteps[previewStepIndex]);
   }, [automated, previewStepIndex, previewSteps]);
 
+  const [catalogId, setCatalogId] = useState<MockCatalogId>('film');
   const [items, setItems] = useState<MappingItem[]>(() => cloneItems(INITIAL_ITEMS));
   const [selected, setSelected] = useState<Set<string>>(() => new Set());
   const [loadingIds, setLoadingIds] = useState<Set<string>>(() => new Set());
@@ -96,6 +120,7 @@ export function MappingExample({
 
   const resetState = useCallback(() => {
     const initial = createInitialState();
+    setCatalogId('film');
     setItems(initial.items);
     setSelected(initial.selected);
     setLoadingIds(initial.loadingIds);
@@ -107,12 +132,27 @@ export function MappingExample({
     setHasCompletedInteraction(false);
   }, []);
 
+  const applyCatalog = useCallback((nextId: MockCatalogId) => {
+    const initial = createInitialState();
+    setCatalogId(nextId);
+    setItems(itemsForCatalog(nextId));
+    setSelected(initial.selected);
+    setLoadingIds(initial.loadingIds);
+    setUnmapConfirmId(initial.unmapConfirmId);
+    setBulkConfirmOpen(initial.bulkConfirmOpen);
+    setStatusMessage(null);
+    setFiltersDraft({ ...DEFAULT_FILTERS });
+    setFiltersApplied({ ...DEFAULT_FILTERS });
+  }, []);
+
   useEffect(() => {
     if (mode === 'interactive') {
       resetState();
     }
   }, [mode, resetState]);
 
+  const effectiveCatalogId = automated ? 'film' : catalogId;
+  const catalogGenres = genresForCatalog(effectiveCatalogId);
   const sourceItems = automated ? automatedSnapshot.items : items;
   const displayItems = automated
     ? sourceItems
@@ -453,9 +493,24 @@ export function MappingExample({
           </LOFIText>
         }
         right={
-          <span className="mapping-example__counts">
-            <LOFIBadge variant="status" active label={`${mappedCount} mapped`} />
-            <LOFIBadge variant="status" active={false} label={`${pendingCount} pending`} />
+          <span className="mapping-example__toolbar-right">
+            <LOFIField label="Mock database" htmlFor="map-catalog" inline>
+              <LOFISelect
+                id="map-catalog"
+                size="compact"
+                value={effectiveCatalogId}
+                options={MOCK_CATALOG_OPTIONS.map((option) => ({
+                  value: option.value,
+                  label: option.label,
+                }))}
+                disabled={automated}
+                onChange={(value) => applyCatalog(value as MockCatalogId)}
+              />
+            </LOFIField>
+            <span className="mapping-example__counts">
+              <LOFIBadge variant="status" active label={`${mappedCount} mapped`} />
+              <LOFIBadge variant="status" active={false} label={`${pendingCount} pending`} />
+            </span>
           </span>
         }
       />
@@ -472,7 +527,7 @@ export function MappingExample({
               onChange={(value) => patchFiltersDraft({ genreId: coerceGenreValue(value) })}
               options={[
                 { value: FILTER_ALL, label: 'All genres' },
-                ...GENRES.map((genre) => ({ value: genre.id, label: genre.label })),
+                ...catalogGenres.map((genre) => ({ value: genre.id, label: genre.label })),
               ]}
             />
           </LOFIField>

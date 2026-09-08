@@ -13,6 +13,12 @@
     gap: $space-3;
   }
 
+  &__toolbar-right {
+    display: flex;
+    align-items: flex-end;
+    gap: $space-4;
+  }
+
   &__counts {
     display: flex;
     align-items: center;

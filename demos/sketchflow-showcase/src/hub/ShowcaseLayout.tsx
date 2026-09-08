@@ -11,11 +11,17 @@ import {
   getProject,
   listProjectsForCompany,
   projectPath,
+  resolveEmbedSrc,
 } from './catalog';
+import { DEFAULT_STORYBOOK_PATH, withStorybookPath } from './storybookNav';
 import './ShowcaseLayout.scss';
 
 const DESKTOP_OK_KEY = 'sketchflow-hub-desktop-ok';
 const MOBILE_QUERY = '(max-width: 767px)';
+
+export interface ShowcaseOutletContext {
+  storybookIframeSrc: string;
+}
 
 function useMobileViewport() {
   const [isMobile, setIsMobile] = useState(() =>
@@ -42,9 +48,11 @@ export function ShowcaseLayout() {
   const company = getCompany(companyId);
   const project = getProject(companyId, projectSlug);
   const isMobile = useMobileViewport();
+  const isStorybook = projectSlug === STORYBOOK_SLUG;
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [briefCollapsed, setBriefCollapsed] = useState(false);
   const [returnTo, setReturnTo] = useState<HubReturnTo | null>(null);
+  const [storybookPath, setStorybookPath] = useState(DEFAULT_STORYBOOK_PATH);
   const [desktopOk, setDesktopOk] = useState(
     () => sessionStorage.getItem(DESKTOP_OK_KEY) === '1',
   );
@@ -56,15 +64,27 @@ export function ShowcaseLayout() {
     }
   }, [projectSlug, returnTo]);
 
+  useEffect(() => {
+    if (projectSlug === STORYBOOK_SLUG) {
+      setStorybookPath(DEFAULT_STORYBOOK_PATH);
+    }
+  }, [projectSlug]);
+
   if (!company?.enabled) {
     return <Navigate to={defaultProjectPath()} replace />;
   }
 
   const activeCompany = company;
   const projects = listProjectsForCompany(activeCompany.id);
+  const storybookProject = getProject(activeCompany.id, STORYBOOK_SLUG);
+  const storybookIframeSrc =
+    storybookProject && isStorybook
+      ? withStorybookPath(resolveEmbedSrc(storybookProject), storybookPath)
+      : '';
   const shellClass = [
     'hub-shell',
     sidebarCollapsed ? 'hub-shell--sidebar-collapsed' : '',
+    isStorybook ? 'hub-shell--storybook' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -93,6 +113,8 @@ export function ShowcaseLayout() {
     navigate(projectPath(target.companyId, target.slug));
   }
 
+  const outletContext: ShowcaseOutletContext = { storybookIframeSrc };
+
   return (
     <div className={shellClass}>
       <HubSidebar
@@ -102,20 +124,24 @@ export function ShowcaseLayout() {
         selectedSlug={projectSlug}
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed((current) => !current)}
+        storybookPath={storybookPath}
+        onStorybookPathChange={setStorybookPath}
       />
       <div className="hub-shell__stage">
         <LOFICard className="hub-shell__content">
-          <Outlet />
+          <Outlet context={outletContext} />
         </LOFICard>
-        <HubBriefBar
-          project={project}
-          collapsed={briefCollapsed}
-          onToggle={() => setBriefCollapsed((current) => !current)}
-          returnTo={returnTo}
-          onShowMore={showMorePatterns}
-          onReturnToInterface={returnToInterface}
-          onDismissReturn={() => setReturnTo(null)}
-        />
+        {!isStorybook || returnTo ? (
+          <HubBriefBar
+            project={project}
+            collapsed={briefCollapsed}
+            onToggle={() => setBriefCollapsed((current) => !current)}
+            returnTo={returnTo}
+            onShowMore={showMorePatterns}
+            onReturnToInterface={returnToInterface}
+            onDismissReturn={() => setReturnTo(null)}
+          />
+        ) : null}
       </div>
       <HubMobileDisclaimer
         open={isMobile && !desktopOk}

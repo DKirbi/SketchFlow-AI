@@ -19,7 +19,7 @@
 66. **Reversible** row toggles (**Hide**, **Map**) → `neutral` + **P3** semantics (see P-rules above) — **no** hue swap across states.
 67. Table **header** controls → `sm`; **body** controls → `sm`; **inline icon-only** → `xs`.
 68. Body **cell text** → `table` role at **`600`–`700`** per density rules (U2).
-69. **Filter chips**: inactive **`outline` + `neutral`**; active `subtle`; apply `action` **only** when the chip encodes an **active mutation filter** — generic "selected" ≠ automatic `action` colour.
+69. **Filter chips**: inactive **`outline` + `neutral`**; selected uses the **sticky-pressed invert** (`fill` + `neutral`; lo-fi ink/paper) and **stays pressed** until another chip in the group is chosen; apply `action` **only** when the chip encodes an **active mutation filter** — generic "selected" ≠ automatic `action` colour.
 70. **Clear-all** chip → **`ghost` + `neutral`** at the **end** of the active strip.
 71. **Bulk destructive** → `warning` + **`outline` or `subtle`**, **disabled** until a selection exists.
 72. **Bulk import** CTA → **`action` + `outline`** — **do not `fill`** beside another competing primary.
@@ -31,6 +31,6 @@
 
 ## Common mistakes (U5)
 
-- ❌ Using `action` colour on all "selected" chips — `action` only for active mutation filters (U5.69).
+- ❌ Using `action` colour on all "selected" chips — `action` only for active mutation filters; selection is invert (U5.69).
 - ❌ Repeating `fill` down a column of row actions — use `outline` or `subtle` to avoid striped emphasis (U5.64).
 - ❌ Forgetting text labels on status cells — colour alone fails accessibility (U5.62).

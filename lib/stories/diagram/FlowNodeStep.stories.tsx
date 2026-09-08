@@ -3,7 +3,7 @@ import { StepNode, StepNodeDoc } from 'lofi-kit';
 import { flowNodePreviewDecorator } from './flowNodeCanvasDecorator';
 
 const meta: Meta<typeof StepNodeDoc> = {
-  title: 'Diagram / Flow nodes / Step',
+  title: 'LOW FI Design system/Diagram/Flow nodes/Step',
   component: StepNodeDoc,
   tags: ['autodocs'],
   decorators: [flowNodePreviewDecorator('step', StepNode)],

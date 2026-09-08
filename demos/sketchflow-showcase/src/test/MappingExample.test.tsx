@@ -95,4 +95,23 @@ describe('MappingExample', () => {
     expect(screen.getByText('Oldboy')).toBeInTheDocument();
     expect(screen.queryByText('Amelie')).not.toBeInTheDocument();
   });
+
+  it('switches the mock database to the wizarding catalogue', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MappingExample
+        mode="interactive"
+        previewStepIndex={-1}
+        previewSteps={mappingExampleConfig.previewSteps}
+        onInteractionComplete={vi.fn()}
+      />,
+    );
+
+    await user.click(screen.getByLabelText('Mock database'));
+    await user.click(screen.getByRole('option', { name: 'Wizarding world' }));
+
+    expect(screen.getByText('hp-pl-002')).toBeInTheDocument();
+    expect(screen.queryByText('FSD-1003')).not.toBeInTheDocument();
+  });
 });

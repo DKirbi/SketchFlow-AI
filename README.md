@@ -110,7 +110,7 @@ Then open the URL that `serve` prints. Use this when you want to share a snapsho
 
 ```bash
 npm run dev          # Hub on :5172 + all demo Vite servers + Storybook — open http://127.0.0.1:5172/
-npm run storybook    # Storybook only (http://localhost:6006)
+npm run storybook    # Storybook only (http://localhost:6007)
 ```
 
 ### Build
@@ -258,7 +258,7 @@ Quick reference for common primitives. See [`docs/LOFI_BLOCKS.md`](docs/LOFI_BLO
 | Button       | `LOFIButton`      | All actions and CTAs                               |
 | Card         | `LOFICard`        | Content container with optional header/footer      |
 | Checkbox     | `LOFICheckbox`    | Boolean toggle with label                          |
-| Chip         | `LOFIChip`        | Dismissible active-filter token (P9 chip strips)   |
+| Chip         | `LOFIChip`        | P9 chip: `onClear` for ✕, or `selected` + `onClick` for filter chips |
 | Field        | `LOFIField`       | Label + hint/error wrapper for form controls       |
 | Fieldset     | `LOFIFieldset`    | Grouped fields with a legend                       |
 | Input        | `LOFIInput`       | Text input (text, number, email, search, password) |
@@ -281,7 +281,7 @@ Quick reference for common primitives. See [`docs/LOFI_BLOCKS.md`](docs/LOFI_BLO
 
 | Command                                  | Purpose                                                                              |
 | ---------------------------------------- | ------------------------------------------------------------------------------------ |
-| `npm run dev`                            | Dev hub on :5172; proxies each demo (Vite from :5173+) and starts Storybook on :6006 |
+| `npm run dev`                            | Dev hub on :5172; proxies each demo (Vite from :5173+) and starts Storybook on :6007 |
 | `npm run dev:bracket-demo`               | Bracket demo Vite only (no hub, no Storybook)                                        |
 | `npm run build -w <slug>`                | Production build for one demo                                                        |
 | `npm run build:lofi`                     | Build lofi-kit → `lib/dist`                                                          |
@@ -289,7 +289,7 @@ Quick reference for common primitives. See [`docs/LOFI_BLOCKS.md`](docs/LOFI_BLO
 | `npm run build:all`                      | Build lofi-kit + all demos + hub → `public/` (alias for `demo-build`)                |
 | `npm run demo-build`                     | Build all demos + hub → `public/` (mirrors Pages)                                    |
 | `npm run demo-build -- --with-storybook` | Same + Storybook (used by CI)                                                        |
-| `npm run storybook`                      | Storybook dev server (port 6006)                                                     |
+| `npm run storybook`                      | Storybook dev server (port 6007)                                                     |
 | `npm run build-storybook`                | Static Storybook build                                                               |
 | `npm test`                               | Run bracket-demo tests                                                               |
 | `npm run test:lib`                       | Run lofi-kit tests                                                                   |

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { LOFIBadge, LOFIButton, LOFICard } from 'lofi-kit';
 
 const meta: Meta<typeof LOFICard> = {
-  title: 'UI / Card',
+  title: 'LOW FI Design system/Primitives/Card',
   component: LOFICard,
   tags: ['autodocs'],
   parameters: {

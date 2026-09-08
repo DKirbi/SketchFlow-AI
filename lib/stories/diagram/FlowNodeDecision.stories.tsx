@@ -3,7 +3,7 @@ import { DecisionNode, DecisionNodeDoc } from 'lofi-kit';
 import { flowNodePreviewDecorator } from './flowNodeCanvasDecorator';
 
 const meta: Meta<typeof DecisionNodeDoc> = {
-  title: 'Diagram / Flow nodes / Decision',
+  title: 'LOW FI Design system/Diagram/Flow nodes/Decision',
   component: DecisionNodeDoc,
   tags: ['autodocs'],
   decorators: [flowNodePreviewDecorator('decision', DecisionNode)],

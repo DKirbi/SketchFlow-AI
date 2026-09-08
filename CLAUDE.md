@@ -95,11 +95,11 @@ demos/bracket-demo/           Reference consumer (not published)
 ## Key commands
 
 ```bash
-npm run dev               # Hub on :5172 + every demo’s Vite (:5173+) + Storybook (:6006)
+npm run dev               # Hub on :5172 + every demo’s Vite (:5173+) + Storybook (:6007)
 npm run dev -w <slug>     # Single demo only — no hub, no Storybook; avoids port conflicts
 npm run dev:bracket-demo  # Shorthand for the above, bracket-demo only
 npm run build:lofi        # Build lofi-kit → lib/dist
-npm run storybook         # Storybook on :6006
+npm run storybook         # Storybook on :6007
 npm test                  # Vitest (bracket-demo)
 npm run lint              # ESLint
 npm run format            # Prettier

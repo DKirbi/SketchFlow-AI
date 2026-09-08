@@ -24,7 +24,7 @@ const edges = [
 ];
 
 const meta: Meta = {
-  title: 'Diagram / Canvas',
+  title: 'LOW FI Design system/Diagram/Canvas',
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
