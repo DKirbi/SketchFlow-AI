@@ -175,12 +175,12 @@ export function defaultProjectPath(): string {
 /**
  * iframe src for embed projects.
  * Storybook's Vite preview emits absolute `/@vite`, `/index.ts`, etc. URLs that cannot
- * be proxied cleanly through the hub — in local DEV open Storybook on :6006 directly.
+ * be proxied cleanly through the hub — in local DEV open Storybook on :6007 directly.
  * Production/static builds use `/embeds/low-fi-ux-ui-patterns/`.
  */
 export function resolveEmbedSrc(project: HubProject): string {
   if (import.meta.env.DEV && project.slug === STORYBOOK_SLUG) {
-    return 'http://127.0.0.1:6006/';
+    return 'http://127.0.0.1:6007/';
   }
   return project.embedPath ?? `/embeds/${project.slug}/`;
 }

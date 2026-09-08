@@ -21,6 +21,11 @@ export function SetKindDocsPage() {
   );
 }
 
+/**
+ * Storybook's CSF indexer only accepts `export default` of an object literal
+ * (or a variable initialized to one). Do not `export default createSetKindMeta(...)`.
+ * Spread into a meta object that also has a string-literal `title`.
+ */
 export function createSetKindMeta(kind: ComponentSet['kind']): Meta {
   const nav = COMPONENT_SET_KIND_NAV.find((item) => item.kind === kind)?.nav;
   if (!nav) throw new Error(`Unknown set kind: ${kind}`);

@@ -1,6 +1,10 @@
 import { createSetKindMeta, setExampleStory } from './createSetKindMeta';
 
-export default createSetKindMeta('modal-editor');
+const meta = {
+  title: 'LOW FI Design system/Component sets/Modal editor',
+  ...createSetKindMeta('modal-editor'),
+};
+export default meta;
 
 export const ModalCreateTournament = setExampleStory('modal-create-tournament');
 export const ModalTeam = setExampleStory('modal-team');

@@ -54,7 +54,7 @@ function generateHTML(demos, options = {}) {
   const devGateway = Boolean(options.devGateway);
   const demoHrefBase = devGateway ? '/' : './';
   const storybookHref = devGateway
-    ? (process.env.HUB_STORYBOOK_URL ?? 'http://127.0.0.1:6006/')
+    ? (process.env.HUB_STORYBOOK_URL ?? 'http://127.0.0.1:6007/')
     : './storybook/index.html';
   const demoBlocks = demos
     .map((d) => {

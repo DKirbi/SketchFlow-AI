@@ -23,7 +23,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview:bracket-demo": "npm run preview -w bracket-demo",
-    "storybook": "storybook dev -p 6006 --host 127.0.0.1 --ci --no-open --exact-port",
+    "storybook": "storybook dev -p 6007 --host 127.0.0.1 --ci --no-open --exact-port",
     "build-storybook": "storybook build",
     "props:catalog": "node scripts/props-catalog.mjs",
     "props:catalog:md": "node scripts/props-catalog.mjs --emit-md",
