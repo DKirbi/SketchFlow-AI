@@ -204,6 +204,18 @@ These guidelines align Podium **Ghost / Subtle / Outlined / Filled** with **`Pds
 
 <!-- storybook:embed UI_ButtonHierarchyDoDont -->
 
+#### 1.8 — Togglable / sticky-pressed actions
+
+A **togglable** control is a **button** (`aria-pressed`, or the equivalent selected state on a chip/segment), not a one-shot commit. Idle looks like an outline / paper control. **Active inverts** and **sticks** until another interaction **on that same component** takes the selection away.
+
+- **Lo-fi invert:** `$color-ink` fill + `$color-paper` label (same treatment as `LOFIToggle`).
+- **Hi-fi invert:** `fill` + `neutral`. Do **not** paint generic selection with `action` colour — `action` remains for commits and for chips that encode an **active mutation** filter.
+- **Exclusive groups** (filter chips All / Unmapped / Mapped, segmented `LOFIToggle`): pressing a sibling returns the previous option to idle. Pressing the already-active option does **nothing** — it does not toggle off.
+- **Binary switches** (`LOFISwitch`) are the exception: they have an explicit off state, so a second press is allowed.
+- **Navigation tabs** keep underline chrome ([§4.4](#44--tabs-and-menus)); they are parallel views, not filter buttons. Filter chips and segmented toggles invert.
+
+> **UX:** [P8 (tab navigation)](UX_PATTERNS_AGENT.md#p8--tab-navigation), [P9 (filters)](UX_PATTERNS_AGENT.md#p9--filters)
+
 ---
 
 ### 2. Typography
@@ -363,8 +375,9 @@ Highest-complexity composition. Tables consume every previous rule and add scann
 
 #### 5.4 — Filter chips and toolbar
 
-- Filter chip default: `neutral` colour, `outline` rank when inactive, `subtle` rank when active.
-- Active chip uses **`action` colour only when the chip represents an active mutation** (e.g. "Show only mine" actively filtering). Colour ≠ "selected"; selection is shown by rank/treatment.
+- Filter chip default: `neutral` colour, `outline` rank when inactive.
+- Selected / active scope chip uses the **sticky-pressed invert** from [§1.8](#18--togglable--sticky-pressed-actions) (`fill` + `neutral` at hi-fi; ink/paper invert in lo-fi). The pressed chip stays inverted until another chip in the group is chosen.
+- Active chip uses **`action` colour only when the chip represents an active mutation** (e.g. "Show only mine" actively filtering). Colour ≠ "selected"; selection is invert / rank, not hue.
 - Clear-all chip: `ghost neutral`, sits at the end of the active-filter strip.
 
 > **UX:** [P9 (filters)](UX_PATTERNS_AGENT.md#p9--filters), [P9.119 (active-filter chip strip)](UX_PATTERNS_AGENT.md#p9--filters)
@@ -395,7 +408,6 @@ The rulebook above is the first numbered baseline. Each component family below h
 **1. Buttons + feedback**
 
 - Split button (`PdsSplitButton`) rank when the secondary menu contains a destructive item — does the trigger inherit `warning`?
-- Toggle button group selection state — colour vs rank vs intensity?
 - Skeleton / loader colour discipline (currently implied as `neutral`).
 
 **2. Typography**

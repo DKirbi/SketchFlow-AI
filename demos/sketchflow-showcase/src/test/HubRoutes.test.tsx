@@ -197,7 +197,7 @@ describe('App routes', () => {
     await user.click(within(nav).getByRole('button', { name: 'P7 confirm' }));
     expect(screen.getByTitle('SketchFlowAI Patterns')).toHaveAttribute(
       'src',
-      expect.stringContaining(docsPath('LOW FI Design system/Component sets/P7 confirm')),
+      expect.stringContaining(canvasPath('LOW FI Design system/Component sets/P7 confirm', 'P7Save')),
     );
   });
 
@@ -229,10 +229,12 @@ describe('App routes', () => {
     expect(brief).toHaveTextContent('Merge Tool');
     expect(brief).toHaveTextContent(/Reconciles two records/i);
     expect(brief).toHaveTextContent(/P2 \/ P2\.3/);
-    expect(brief).not.toHaveTextContent(/Mock data is movie-based/i);
+    expect(brief).not.toHaveTextContent(/Mock catalogues protect real business sports data/i);
 
     await user.click(screen.getByRole('button', { name: 'Expand project brief' }));
-    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Mock data is movie-based/i);
+    expect(screen.getByLabelText('Project brief')).toHaveTextContent(
+      /Mock catalogues protect real business sports data/i,
+    );
   });
 
   it('expands a pattern accordion and Show more returns via Get back to the interface', async () => {
@@ -304,7 +306,13 @@ describe('storybook nav catalog', () => {
     expect(ancestorIds(STORYBOOK_NAV, 'ux-p1-2-1')).toEqual(['ux-patterns', 'ux-p1', 'ux-p1-2']);
     expect(docsPath('Introduction')).toBe('/docs/introduction--docs');
     expect(canvasPath('PATTERNS/UX Patterns', 'P1_2_1_FilterRow')).toBe(
-      '/story/patterns-ux-patterns--p1-2-1-filterrow',
+      '/story/patterns-ux-patterns--p-1-2-1-filter-row',
+    );
+    expect(canvasPath('PATTERNS/UX Patterns', 'P1_1_UPLShell')).toBe(
+      '/story/patterns-ux-patterns--p-1-1-upl-shell',
+    );
+    expect(canvasPath('PATTERNS/UI Patterns', 'UI_ModalCommitAndP7')).toBe(
+      '/story/patterns-ui-patterns--ui-modal-commit-and-p-7',
     );
   });
 
@@ -320,11 +328,11 @@ describe('storybook nav catalog', () => {
     expect(docsPath('LOW FI Design system/Primitives/Button')).toBe(
       '/docs/low-fi-design-system-primitives-button--docs',
     );
-    expect(docsPath('LOW FI Design system/Component sets/P7 confirm')).toBe(
-      '/docs/low-fi-design-system-component-sets-p7-confirm--docs',
-    );
     expect(docsPath('LOW FI Design system/Component sets/Overview')).toBe(
       '/docs/low-fi-design-system-component-sets-overview--docs',
+    );
+    expect(canvasPath('LOW FI Design system/Component sets/P7 confirm', 'P7Save')).toBe(
+      '/story/low-fi-design-system-component-sets-p7-confirm--p-7-save',
     );
   });
 });

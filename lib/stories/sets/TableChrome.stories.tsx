@@ -1,5 +1,9 @@
 import { createSetKindMeta, setExampleStory } from './createSetKindMeta';
 
-export default createSetKindMeta('table-chrome');
+const meta = {
+  title: 'LOW FI Design system/Component sets/Table chrome',
+  ...createSetKindMeta('table-chrome'),
+};
+export default meta;
 
 export const TableMapping = setExampleStory('table-mapping');

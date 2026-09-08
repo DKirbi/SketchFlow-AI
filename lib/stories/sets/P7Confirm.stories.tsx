@@ -1,6 +1,10 @@
 import { createSetKindMeta, setExampleStory } from './createSetKindMeta';
 
-export default createSetKindMeta('p7-confirm');
+const meta = {
+  title: 'LOW FI Design system/Component sets/P7 confirm',
+  ...createSetKindMeta('p7-confirm'),
+};
+export default meta;
 
 export const P7Save = setExampleStory('p7-save');
 export const P7Discard = setExampleStory('p7-discard');

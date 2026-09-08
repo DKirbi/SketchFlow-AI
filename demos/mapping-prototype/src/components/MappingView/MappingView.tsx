@@ -1,159 +1,204 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
-  LOFIToolbar,
-  LOFITable,
-  LOFICheckbox,
-  LOFIButton,
-  LOFIStatefulButton,
   LOFIBadge,
+  LOFIComponentSet,
+  LOFIEmptyState,
+  LOFITable,
   LOFIText,
-  LOFIModal,
 } from 'lofi-kit';
-import type { ColumnDef, TableColumnMeta } from 'lofi-kit';
-import { INITIAL_ITEMS, CURRENT_USER, nowTimestamp } from './mockData';
-import type { MappingItem } from './mockData';
+import type { ColumnDef, ComponentSet, TableColumnMeta } from 'lofi-kit';
+import {
+  CURRENT_USER,
+  MOCK_CATALOG_OPTIONS,
+  getMappingCatalog,
+  seedAccepted,
+  type MappingEntity,
+  type MappingSuggestion,
+  type MappingTabId,
+  type MockCatalogId,
+} from 'shared-catalogs';
+import {
+  applyMappingFilters,
+  mappingChipCounts,
+  type ChipScope,
+} from '../../lib/applyMappingFilters';
 import './MappingView.scss';
 
+const MAP_DELAY_MS = 800;
+const UNMAPPED_HOLD_MS = 1100;
+
 export function MappingView() {
-  const [items, setItems] = useState<MappingItem[]>(INITIAL_ITEMS);
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [loadingIds, setLoadingIds] = useState<Set<string>>(new Set());
-  const [unmapConfirmId, setUnmapConfirmId] = useState<string | null>(null);
-  const [bulkConfirmOpen, setBulkConfirmOpen] = useState(false);
+  const [catalogId, setCatalogId] = useState<MockCatalogId>('wizarding');
+  const catalog = useMemo(() => getMappingCatalog(catalogId), [catalogId]);
+  const [tab, setTab] = useState<MappingTabId>(catalog.tabs[0]?.value ?? 'players');
+  const [draftQuery, setDraftQuery] = useState('');
+  const [appliedQuery, setAppliedQuery] = useState('');
+  const [scope, setScope] = useState<ChipScope>('all');
+  const [accepted, setAccepted] = useState<Record<string, string>>(() =>
+    seedAccepted(catalog.entities),
+  );
+  const [heldUnmappedIds, setHeldUnmappedIds] = useState<string[]>([]);
+  const [loadingKey, setLoadingKey] = useState<string | null>(null);
+  const timers = useRef<number[]>([]);
 
-  const pendingCount = items.filter((i) => i.status === 'pending').length;
-  const mappedCount = items.filter((i) => i.status === 'mapped').length;
-  const selectedCount = selected.size;
-  const allSelected = items.length > 0 && selected.size === items.length;
-  const someSelected = selected.size > 0 && !allSelected;
+  const queueTimer = useCallback((fn: () => void, ms: number) => {
+    const id = window.setTimeout(fn, ms);
+    timers.current.push(id);
+  }, []);
 
-  // ── Selection helpers ──
-  const toggleRow = useCallback((id: string) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
+  const resetForCatalog = useCallback((nextId: MockCatalogId) => {
+    const next = getMappingCatalog(nextId);
+    setCatalogId(nextId);
+    setTab(next.tabs[0]?.value ?? '');
+    setDraftQuery('');
+    setAppliedQuery('');
+    setScope('all');
+    setAccepted(seedAccepted(next.entities));
+    setHeldUnmappedIds([]);
+    setLoadingKey(null);
+  }, []);
+
+  const visible = useMemo(
+    () =>
+      applyMappingFilters(catalog.entities, {
+        tab,
+        query: appliedQuery,
+        scope,
+        accepted,
+        heldUnmappedIds,
+      }),
+    [catalog.entities, tab, appliedQuery, scope, accepted, heldUnmappedIds],
+  );
+
+  const counts = useMemo(
+    () =>
+      mappingChipCounts(catalog.entities, {
+        tab,
+        query: appliedQuery,
+        accepted,
+        heldUnmappedIds,
+      }),
+    [catalog.entities, tab, appliedQuery, accepted, heldUnmappedIds],
+  );
+
+  const searchIdle = draftQuery === appliedQuery;
+
+  const applyMap = useCallback(
+    (entityId: string, suggestionId: string, currentScope: ChipScope) => {
+      const key = `${entityId}|${suggestionId}`;
+      setLoadingKey(key);
+      queueTimer(() => {
+        setAccepted((prev) => ({ ...prev, [entityId]: suggestionId }));
+        setLoadingKey(null);
+        if (currentScope === 'unmapped') {
+          setHeldUnmappedIds((prev) => (prev.includes(entityId) ? prev : [...prev, entityId]));
+          queueTimer(() => {
+            setHeldUnmappedIds((prev) => prev.filter((id) => id !== entityId));
+          }, UNMAPPED_HOLD_MS);
+        }
+      }, MAP_DELAY_MS);
+    },
+    [queueTimer],
+  );
+
+  const applyUnmap = useCallback((entityId: string) => {
+    setAccepted((prev) => {
+      const next = { ...prev };
+      delete next[entityId];
       return next;
     });
+    setHeldUnmappedIds((prev) => prev.filter((id) => id !== entityId));
   }, []);
 
-  const toggleAll = useCallback(() => {
-    if (allSelected || someSelected) {
-      setSelected(new Set());
-    } else {
-      setSelected(new Set(items.map((i) => i.id)));
-    }
-  }, [allSelected, someSelected, items]);
+  function suggestionSet(entity: MappingEntity, suggestion: MappingSuggestion): ComponentSet {
+    const key = `${entity.id}|${suggestion.id}`;
+    const mappedId = accepted[entity.id];
+    const isChosen = mappedId === suggestion.id;
+    const isLoading = loadingKey === key;
+    const parentBusy = loadingKey?.startsWith(`${entity.id}|`) ?? false;
 
-  // ── Map / Unmap ──
-  const applyMap = useCallback((id: string) => {
-    setLoadingIds((prev) => new Set(prev).add(id));
-    setTimeout(() => {
-      setItems((prev) =>
-        prev.map((item) =>
-          item.id === id
-            ? { ...item, status: 'mapped', mappedAt: nowTimestamp(), mappedBy: CURRENT_USER.handle }
-            : item,
-        ),
-      );
-      setLoadingIds((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-      setSelected((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-    }, 600);
-  }, []);
+    return {
+      kind: 'suggestion-row',
+      id: suggestion.id,
+      external: suggestion.externalLabel,
+      percent: suggestion.confidence,
+      map: {
+        id: `map|${key}`,
+        role: 'commit',
+        label: 'Map',
+        stateful: true,
+        state: isLoading ? 'loading' : isChosen ? 'success' : 'idle',
+        loadingLabel: 'Mapping',
+        successLabel: 'Mapped',
+        disabled: (Boolean(mappedId) && !isChosen) || (parentBusy && !isLoading),
+      },
+      unmap: {
+        id: `unmap|${entity.id}`,
+        role: 'secondary',
+        label: 'Unmap',
+        disabled: !isChosen || isLoading,
+      },
+    };
+  }
 
-  const applyUnmap = useCallback((id: string) => {
-    setLoadingIds((prev) => new Set(prev).add(id));
-    setUnmapConfirmId(null);
-    setTimeout(() => {
-      setItems((prev) =>
-        prev.map((item) =>
-          item.id === id
-            ? { ...item, status: 'pending', mappedAt: undefined, mappedBy: undefined }
-            : item,
-        ),
-      );
-      setLoadingIds((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-    }, 600);
-  }, []);
+  const shell: ComponentSet = {
+    kind: 'tool-shell',
+    framed: false,
+    toolbar: {
+      variant: 'tool',
+      title: catalog.title,
+      identity: { handle: CURRENT_USER.handle, role: CURRENT_USER.role },
+      catalog: {
+        name: 'catalog',
+        kind: 'select',
+        label: 'Mock database',
+        value: catalogId,
+        options: MOCK_CATALOG_OPTIONS.map((option) => ({
+          value: option.value,
+          label: option.label,
+        })),
+      },
+      rightActions: [],
+    },
+    filterRow: {
+      applyMode: 'commit',
+      fields: [
+        {
+          name: 'nameOrId',
+          kind: 'search',
+          label: 'Name or ID',
+          value: draftQuery,
+          placeholder: 'Search by name or id…',
+          allowClear: true,
+        },
+      ],
+      actions: [
+        { id: 'search', role: 'commit', label: 'Search', disabled: searchIdle },
+        { id: 'clear', role: 'dismiss', label: 'Clear all' },
+      ],
+    },
+    chipGroup: {
+      ariaLabel: 'Mapping status',
+      chips: [
+        { id: 'all', label: 'All', count: counts.all, selected: scope === 'all' },
+        { id: 'unmapped', label: 'Unmapped', count: counts.unmapped, selected: scope === 'unmapped' },
+        { id: 'mapped', label: 'Mapped', count: counts.mapped, selected: scope === 'mapped' },
+      ],
+    },
+    tabs: catalog.tabs,
+    activeTab: tab,
+  };
 
-  const applyBulkMap = useCallback(() => {
-    const ids = Array.from(selected);
-    setBulkConfirmOpen(false);
-    ids.forEach((id) => {
-      setLoadingIds((prev) => new Set(prev).add(id));
-    });
-    setTimeout(() => {
-      const ts = nowTimestamp();
-      setItems((prev) =>
-        prev.map((item) =>
-          ids.includes(item.id)
-            ? { ...item, status: 'mapped', mappedAt: ts, mappedBy: CURRENT_USER.handle }
-            : item,
-        ),
-      );
-      setLoadingIds((prev) => {
-        const next = new Set(prev);
-        ids.forEach((id) => next.delete(id));
-        return next;
-      });
-      setSelected(new Set());
-    }, 800);
-  }, [selected]);
-
-  // ── Column definitions ──
-  const columns: ColumnDef<MappingItem, unknown>[] = useMemo(
+  const columns: ColumnDef<MappingEntity, unknown>[] = useMemo(
     () => [
       {
-        id: 'select',
-        header: () => (
-          <LOFICheckbox
-            id="select-all"
-            label=""
-            checked={allSelected || someSelected}
-            onChange={toggleAll}
-          />
-        ),
+        id: 'internal',
+        header: 'Internal entity',
         cell: ({ row }) => (
-          <LOFICheckbox
-            id={`sel-${row.original.id}`}
-            label=""
-            checked={selected.has(row.original.id)}
-            onChange={() => toggleRow(row.original.id)}
-          />
-        ),
-        size: 36,
-        meta: { shrink: true } satisfies TableColumnMeta,
-      },
-      {
-        id: 'internalValue',
-        header: 'Internal Value',
-        cell: ({ row }) => (
-          <span className="mapping-view__internal">
+          <div className="mapping-view__entity">
             <LOFIBadge variant="id" label={row.original.id} />
-            <LOFIText variant="body">{row.original.internalValue}</LOFIText>
-          </span>
-        ),
-      },
-      {
-        id: 'externalSuggestion',
-        header: 'External Suggestion',
-        cell: ({ row }) => (
-          <span className="mapping-view__suggestion">
-            <LOFIText variant="body">{row.original.externalSuggestion}</LOFIText>
-            <LOFIBadge variant="tag" label={`${row.original.confidence}%`} />
-          </span>
+            <LOFIText variant="body">{row.original.name}</LOFIText>
+          </div>
         ),
       },
       {
@@ -161,162 +206,97 @@ export function MappingView() {
         header: 'Status',
         meta: { shrink: true } satisfies TableColumnMeta,
         cell: ({ row }) => {
-          const item = row.original;
-          if (item.status === 'mapped') {
-            return (
-              <span className="mapping-view__status-cell">
-                <LOFIBadge variant="status" active label="mapped" />
-              </span>
-            );
-          }
+          const mapped = Boolean(accepted[row.original.id]);
           return (
-            <span className="mapping-view__status-cell">
-              <LOFIBadge variant="status" active={false} label="pending" />
-            </span>
-          );
-        },
-      },
-      {
-        id: 'actions',
-        header: 'Actions',
-        meta: { shrink: true } satisfies TableColumnMeta,
-        cell: ({ row }) => {
-          const item = row.original;
-          const isLoading = loadingIds.has(item.id);
-          const mapState = isLoading
-            ? 'loading'
-            : item.status === 'mapped'
-              ? 'success'
-              : 'idle';
-
-          if (unmapConfirmId === item.id) {
-            return (
-              <span className="mapping-view__inline-confirm">
-                <LOFIText variant="sm">Remove mapping?</LOFIText>
-                <LOFIButton variant="primary" size="compact" onClick={() => applyUnmap(item.id)}>
-                  Yes, remove
-                </LOFIButton>
-                <LOFIButton
-                  variant="dismiss"
-                  size="compact"
-                  onClick={() => setUnmapConfirmId(null)}
-                >
-                  Cancel
-                </LOFIButton>
-              </span>
-            );
-          }
-
-          return (
-            <span className="mapping-view__actions">
-              <LOFIStatefulButton
-                state={mapState}
-                idleLabel="Map"
-                successLabel="Mapped"
-                loadingLabel="Working"
-                size="compact"
-                onClick={() => applyMap(item.id)}
-              />
-              {item.status === 'mapped' && !isLoading && (
-                <LOFIButton
-                  variant="dismiss"
-                  size="compact"
-                  onClick={() => setUnmapConfirmId(item.id)}
-                >
-                  Unmap
-                </LOFIButton>
-              )}
-            </span>
+            <LOFIBadge
+              variant="status"
+              active={mapped}
+              label={mapped ? 'mapped' : 'unmapped'}
+            />
           );
         },
       },
     ],
-    [
-      allSelected,
-      someSelected,
-      selected,
-      loadingIds,
-      unmapConfirmId,
-      toggleAll,
-      toggleRow,
-      applyMap,
-      applyUnmap,
-    ],
+    [accepted],
   );
 
   return (
     <div className="mapping-view">
-      <LOFIToolbar
-        left={
-          <span className="mapping-view__identity">
-            <LOFIText variant="sm">{CURRENT_USER.handle}</LOFIText>
-            <LOFIBadge variant="tag" label={CURRENT_USER.role} />
-          </span>
-        }
-        center={
-          <LOFIText as="h1" variant="body">
-            Mapping
-          </LOFIText>
-        }
-        right={
-          <span className="mapping-view__counts">
-            <LOFIBadge variant="status" active label={`${mappedCount} mapped`} />
-            <LOFIBadge variant="status" active={false} label={`${pendingCount} pending`} />
-          </span>
-        }
-      />
-
-      <div className="mapping-view__content">
-        <div className="mapping-view__toolbar">
-          <LOFIButton
-            variant="primary"
-            disabled={selectedCount === 0}
-            onClick={() => setBulkConfirmOpen(true)}
-          >
-            {selectedCount > 0 ? `Bulk Map (${selectedCount})` : 'Bulk Map'}
-          </LOFIButton>
-          {selectedCount > 0 && (
-            <LOFIText variant="muted">
-              {selectedCount} row{selectedCount !== 1 ? 's' : ''} selected
-            </LOFIText>
-          )}
-        </div>
-
-        <LOFITable<MappingItem>
-          columns={columns}
-          rows={items}
-          keyField="id"
-          sortable
-          emptyText="No mapping items."
-          hint="Select rows to bulk-map. Use Map / Unmap to manage individual entries."
-        />
-      </div>
-
-      {/* Bulk Map confirmation modal */}
-      <LOFIModal
-        open={bulkConfirmOpen}
-        onClose={() => setBulkConfirmOpen(false)}
-        title="Confirm Bulk Map"
-        footer={
-          <>
-            <LOFIButton variant="dismiss" onClick={() => setBulkConfirmOpen(false)}>
-              Cancel
-            </LOFIButton>
-            <LOFIButton variant="primary" onClick={applyBulkMap}>
-              Apply to {selectedCount} item{selectedCount !== 1 ? 's' : ''}
-            </LOFIButton>
-          </>
-        }
+      <LOFIComponentSet
+        set={shell}
+        handlers={{
+          onFieldChange: (name, value) => {
+            if (name === 'nameOrId') setDraftQuery(String(value));
+            if (name === 'catalog') resetForCatalog(String(value) as MockCatalogId);
+          },
+          onTabChange: (value) => {
+            setTab(value);
+          },
+          onAction: (id) => {
+            if (id === 'search') {
+              setAppliedQuery(draftQuery);
+              return;
+            }
+            if (id === 'clear') {
+              setDraftQuery('');
+              setAppliedQuery('');
+              return;
+            }
+            if (id === 'all' || id === 'unmapped' || id === 'mapped') {
+              setScope(id);
+              return;
+            }
+            if (id.startsWith('map|')) {
+              const rest = id.slice(4);
+              const sep = rest.indexOf('|');
+              const entityId = rest.slice(0, sep);
+              const suggestionId = rest.slice(sep + 1);
+              applyMap(entityId, suggestionId, scope);
+              return;
+            }
+            if (id.startsWith('unmap|')) {
+              applyUnmap(id.slice(6));
+            }
+          },
+        }}
       >
-        <LOFIText variant="body">
-          Apply the external suggestion to {selectedCount} selected item
-          {selectedCount !== 1 ? 's' : ''}?
-        </LOFIText>
-        <LOFIText variant="muted">
-          This will mark each selected row as mapped using the suggested external value. Individual
-          mappings can be removed using Unmap.
-        </LOFIText>
-      </LOFIModal>
+        <LOFITable<MappingEntity>
+          key={`${catalogId}:${tab}`}
+          columns={columns}
+          rows={visible}
+          keyField="id"
+          expandable
+          sortable
+          emptySlot={
+            <LOFIEmptyState
+              variant="no-results"
+              title="No mapping items."
+              description="Widen filters or retry Search."
+            />
+          }
+          renderExpanded={(row) => (
+            <div className="mapping-view__suggestions">
+              {row.original.suggestions.map((suggestion) => (
+                <LOFIComponentSet
+                  key={suggestion.id}
+                  set={suggestionSet(row.original, suggestion)}
+                  handlers={{
+                    onAction: (id) => {
+                      if (id.startsWith('map|')) {
+                        const rest = id.slice(4);
+                        const sep = rest.indexOf('|');
+                        applyMap(rest.slice(0, sep), rest.slice(sep + 1), scope);
+                        return;
+                      }
+                      if (id.startsWith('unmap|')) applyUnmap(id.slice(6));
+                    },
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        />
+      </LOFIComponentSet>
     </div>
   );
 }

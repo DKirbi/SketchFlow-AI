@@ -32,6 +32,12 @@ const DOCS: Record<ComponentSet['kind'], Omit<SetKindDoc, 'kind' | 'nav'>> = {
     intro:
       'P1.2.1 / P9 query row. Fields are `FieldDescriptor`s (the same schema used in modal bodies). `applyMode: "commit"` waits for Search; `applyMode: "immediate"` applies on change and usually keeps only Clear. Values are not stored as live app state inside the JSON — bind `onFieldChange(name, value)` and `onAction` (`search` / `clear`) at render time.',
   },
+  'filter-chip-group': {
+    primitives: ['LOFIChip'],
+    exampleIds: ['filter-chip-group-mapping'],
+    intro:
+      'Exclusive status filters built from `LOFIChip` — not `LOFIButton`, not `LOFIFilterBar`. Each chip has `selected` on the active option and **no** `onClear` (no ✕). The selected chip inverts (ink fill) and stays pressed until another chip is chosen; a repeat press is a no-op. Counts belong in the label (`Unmapped (14)`). Gap between chips is `$space-8` (16px). Bind `onAction` to the chip `id`.',
+  },
   sidebar: {
     primitives: ['LOFINavTree', 'LOFIToggle', 'LOFIButton', 'LOFIText'],
     exampleIds: ['sidebar-upl', 'sidebar-notifications'],
@@ -62,6 +68,12 @@ const DOCS: Record<ComponentSet['kind'], Omit<SetKindDoc, 'kind' | 'nav'>> = {
     intro:
       'P2 table plus row actions and empty state. Columns / rows are serialisable descriptors. Row actions use host `row-actions` (compact, never fill down the column). Optional `empty` is an `EmptyDescriptor` mapped to `LOFIEmptyState`. Sort affordance is the `sortable` flag — the set does not own sort state.',
   },
+  'suggestion-row': {
+    primitives: ['LOFIText', 'LOFIBadge', 'LOFIStatefulButton', 'LOFIButton'],
+    exampleIds: ['suggestion-row-high', 'suggestion-row-mapped'],
+    intro:
+      'One AI suggestion under an expanded mapping entity (P2.5 nested body). External label, match %, Map (`LOFIStatefulButton` P3) and Unmap (disabled until that suggestion is the accepted map). Only one suggestion can be mapped per parent; sibling Map buttons disable after success. Use inside the expanded body of a demo `LOFITable`, not as a second modal.',
+  },
   'modal-editor': {
     primitives: ['LOFIModal', 'LOFIField', 'LOFIInput', 'LOFISelect', 'LOFITable', 'LOFIButton', 'LOFIText'],
     exampleIds: ['modal-create-tournament', 'modal-team', 'modal-merge-review'],
@@ -78,7 +90,7 @@ const DOCS: Record<ComponentSet['kind'], Omit<SetKindDoc, 'kind' | 'nav'>> = {
     primitives: ['LOFIToolbar', 'LOFITable', 'LOFIButton', 'LOFIStatefulButton', 'LOFIEmptyState', 'LOFIText'],
     exampleIds: ['tool-shell-mapping'],
     intro:
-      'Standalone tool layout (mapping, merge): identity upper bar + optional bulk bar + table + optional page footer. Not a full UPL. Compose `upper-bar` + `action-cluster` (bulk) + `table-chrome` when you need the pieces separately; use `tool-shell` when the whole frame should ship as one config.',
+      'Standalone tool layout (mapping, merge): identity upper bar, optional commit search row, optional tabs, optional filter-chip group, optional bulk bar, and a table **or** `children` for a demo-owned expandable table. Full-page demos set `framed: false`. Not a full UPL.',
   },
   'upl-shell': {
     primitives: [
@@ -113,10 +125,12 @@ const FRAMED_KINDS = new Set<ComponentSet['kind']>([
   'action-cluster',
   'upper-bar',
   'filter-query-row',
+  'filter-chip-group',
   'sidebar',
   'summary-card',
   'list-header',
   'table-chrome',
+  'suggestion-row',
 ]);
 
 export function isFramedSetKind(kind: ComponentSet['kind']): boolean {
@@ -167,6 +181,10 @@ function handlerSnippet(set: ComponentSet): string {
   if (actions.length > 0) {
     lines.push(`    onAction: (id) => {`);
     lines.push(`      // ${actions.join(' | ')}`);
+    lines.push(`    },`);
+  } else if (set.kind === 'filter-chip-group') {
+    lines.push(`    onAction: (id) => {`);
+    lines.push(`      // ${set.chips.map((chip) => chip.id).join(' | ')}`);
     lines.push(`    },`);
   }
   if (fields.length > 0) {

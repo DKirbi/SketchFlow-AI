@@ -84,7 +84,7 @@ table.
 npm run dev                  # Hub on :5172 + demos + Storybook
 npm run dev:bracket-demo     # bracket-demo Vite only (no hub)
 npm run build:lofi           # Build lofi-kit → lib/dist
-npm run storybook    # Storybook on :6006
+npm run storybook    # Storybook on :6007
 npm test             # Vitest
 npm run lint         # ESLint
 npm run format       # Prettier

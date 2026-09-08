@@ -20,7 +20,7 @@ const root = path.join(__dirname, '..');
 const useShell = process.platform === 'win32';
 const GATEWAY_PORT = 5172;
 const VITE_FIRST_PORT = 5173;
-const STORYBOOK_PORT = 6006;
+const STORYBOOK_PORT = 6007;
 const SHOWCASE_SLUG = 'sketchflow-showcase';
 
 /** Curated portfolio embeds (iframe targets under the showcase chrome). */
@@ -40,7 +40,7 @@ function matchEmbed(rawUrl, embedToPort, storybook) {
   const pathname = u.pathname || '/';
 
   // Do NOT forward bare /@vite, /node_modules, etc. to Storybook — those belong
-  // to the showcase SPA on /. Local Storybook is iframe'd to :6006 directly
+  // to the showcase SPA on /. Local Storybook is iframe'd to :6007 directly
   // (see resolveEmbedSrc). Only the /embeds/low-fi-… prefix is proxied here.
   if (storybook?.port) {
     const prefix = storybook.prefix.endsWith('/')

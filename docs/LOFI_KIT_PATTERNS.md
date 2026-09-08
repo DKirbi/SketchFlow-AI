@@ -170,6 +170,7 @@ Not primitives. JSON configs that group primitives. Storybook: **LOW FI Design s
 | **LOFISwitch** | `switch` | Single boolean on/off toggle. Use for enabling or disabling a named setting or feature. Always has a visible label. |
 | **LOFICheckbox** | `checkbox` | Multi-select from a fixed set. Use when 2 or more independent options can each be on or off. Sizes: `default` (30x30) and `sm` (20x20). |
 | **LOFIRadio** | `radio-group` | Mutually exclusive choice from a fixed set of 2–3 options shown in full. Use when all options should be visible simultaneously. Layout: `row`, `column`; sizes: `default` (30x30) and `sm` (20x20). |
+| **LOFIChip** | `chip` | P9 chip. `onClear` (or deprecated `onDismiss`) shows ✕ for an active-filter token. Omit `onClear` and pass `selected` + `onClick` for exclusive status filters (count in the label). Selected filter chips invert (ink fill) and stay pressed until another chip in the group is chosen. Do not fake chips with `LOFIButton`. |
 | **LOFIToggle** | `toggle` | Segmented control for switching **mode or scenario** on a surface (e.g. "Grid / List"). Use `LOFITabs` for **named parallel sections** (e.g. General / Changelog) instead. |
 
 ### Data & typography

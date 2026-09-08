@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Open the hub at `http://127.0.0.1:5172/`. Storybook is linked from the hub and normally runs on `http://127.0.0.1:6006/`.
+Open the hub at `http://127.0.0.1:5172/`. Storybook is linked from the hub and normally runs on `http://127.0.0.1:6007/`.
 
 To skip Storybook during local hub startup:
 

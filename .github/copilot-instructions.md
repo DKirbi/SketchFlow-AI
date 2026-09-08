@@ -255,6 +255,7 @@ Any other stacking needs explicit stakeholder sign-off.
 - **Never** collapse the main search input behind an icon.
 - **Filter query row (composition):** build with `**LOFIField`** + `**LOFIInput**`/`**LOFISelect**`/`**LOFISwitch**`+`**LOFIButton**` as needed. Do **not** use `**LOFIFilterBar`** — it is **backlog** / not the composed filter row (`docs/NL_COMPONENT_MAPPING_LO_FI.md`).
 - Optional **active-filter chips** below the row: each chip clears one dimension; trailing **Clear all** removes everything (`docs/UX_PATTERNS_AGENT.md` P9).
+- **Exclusive filter chips** (All / Unmapped / Mapped): render as **pressed buttons**. The selected chip **inverts** (lo-fi ink fill / paper label; hi-fi `fill` + `neutral`) and **stays pressed** until another chip in the group is chosen. A second press on the active chip is a no-op. Selection is not `action` colour (`docs/UI_PATTERNS.md` §1.8, `docs/UI_PATTERNS_AGENT.md` U1.78–81).
 
 ---
 

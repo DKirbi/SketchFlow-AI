@@ -83,6 +83,8 @@ describe('COMPONENT_SET_EXAMPLES', () => {
         'p7-confirm',
         'tool-shell',
         'upl-shell',
+        'filter-chip-group',
+        'suggestion-row',
       ]),
     );
   });
@@ -102,5 +104,35 @@ describe('COMPONENT_SET_EXAMPLES', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Discard' })).toBeInTheDocument();
+  });
+
+  it('renders filter chips without ✕ and selects by action id', async () => {
+    const user = userEvent.setup();
+    const onAction = vi.fn();
+    const example = exampleById('filter-chip-group-mapping');
+    render(<ComponentSetView set={example!.set} handlers={{ onAction }} />);
+    expect(screen.queryByRole('button', { name: /Remove filter/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Unmapped (14)' })).toHaveAttribute('aria-pressed', 'true');
+    await user.click(screen.getByRole('button', { name: 'All (20)' }));
+    expect(onAction).toHaveBeenCalledWith('all');
+    onAction.mockClear();
+    await user.click(screen.getByRole('button', { name: 'Unmapped (14)' }));
+    expect(onAction).not.toHaveBeenCalled();
+  });
+
+  it('keeps Unmap disabled on an unmapped suggestion row', () => {
+    const example = exampleById('suggestion-row-high');
+    render(<ComponentSetView set={example!.set} />);
+    expect(screen.getByRole('button', { name: 'Unmap' })).toBeDisabled();
+    expect(screen.getByText('99%')).toBeInTheDocument();
+  });
+
+  it('renders tool-shell tabs above filter chips', () => {
+    const example = exampleById('tool-shell-mapping');
+    render(<ComponentSetView set={example!.set} />);
+    const tabs = screen.getByRole('tablist');
+    const chips = screen.getByRole('group', { name: 'Mapping status' });
+    expect(tabs.compareDocumentPosition(chips) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByLabelText('Mock database')).toBeInTheDocument();
   });
 });
