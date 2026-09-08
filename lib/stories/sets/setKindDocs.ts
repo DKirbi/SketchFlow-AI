@@ -90,7 +90,7 @@ const DOCS: Record<ComponentSet['kind'], Omit<SetKindDoc, 'kind' | 'nav'>> = {
     primitives: ['LOFIToolbar', 'LOFITable', 'LOFIButton', 'LOFIStatefulButton', 'LOFIEmptyState', 'LOFIText'],
     exampleIds: ['tool-shell-mapping'],
     intro:
-      'Standalone tool layout (mapping, merge): identity upper bar, optional commit search row, optional filter-chip group, optional tabs, optional bulk bar, and a table **or** `children` for a demo-owned expandable table. Full-page demos set `framed: false`. Not a full UPL.',
+      'Standalone tool layout (mapping, merge): identity upper bar, optional commit search row, optional tabs, optional filter-chip group, optional bulk bar, and a table **or** `children` for a demo-owned expandable table. Full-page demos set `framed: false`. Not a full UPL.',
   },
   'upl-shell': {
     primitives: [

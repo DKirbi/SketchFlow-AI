@@ -1,6 +1,7 @@
 import type { PatternSummary } from '../runtime/types';
 import { mappingExampleConfig } from '../examples/mapping/metadata';
 import { mergeToolExampleConfig } from '../examples/merge-tool/metadata';
+import { MAPPING_EXPAND_HINT } from 'shared-catalogs';
 
 export type HubProjectKind = 'spa' | 'embed';
 
@@ -73,7 +74,7 @@ export const PROJECTS: HubProject[] = [
       'Reconciles two records of the same entity, lets the operator choose field overrides, and writes the result to the database.',
     brief: [
       'Reconciles two records of the same entity, lets the operator choose field overrides, and writes the result to the database.',
-      'Mock data is movie-based to protect business data.',
+      'Choose a mock database (film catalogue or wizarding world) from the toolbar. Mock catalogues protect real business sports data.',
     ],
     patternSummaries: mergeToolExampleConfig.patternSummaries,
     kind: 'spa',
@@ -87,7 +88,8 @@ export const PROJECTS: HubProject[] = [
       'Maps messy or legacy internal names onto newly crawled canonical names, row by row. The flow is the operator job of reconciling catalogue values.',
     brief: [
       'Maps messy or legacy internal names onto newly crawled canonical names, row by row. The flow is the operator job of reconciling catalogue values.',
-      'Rows use film titles (same catalogue as Merge Tool) so the demo does not expose real business sports data.',
+      'Choose a mock database (film catalogue or wizarding world) from the toolbar. Mock catalogues protect real business sports data.',
+      MAPPING_EXPAND_HINT,
     ],
     patternSummaries: mappingExampleConfig.patternSummaries,
     kind: 'spa',

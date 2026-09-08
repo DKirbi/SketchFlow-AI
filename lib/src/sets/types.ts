@@ -153,6 +153,8 @@ export interface UpperBarConfig {
   subtitle?: string;
   identity?: { handle: string; role: string };
   counts?: { label: string; active: boolean }[];
+  /** Mock catalogue picker rendered in the tool upper-bar. */
+  catalog?: FieldDescriptor;
   rightActions: ActionDescriptor[];
 }
 

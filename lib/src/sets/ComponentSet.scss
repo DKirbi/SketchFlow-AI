@@ -19,10 +19,15 @@
 
   &__upl-left,
   &__tool-identity,
-  &__tool-counts {
+  &__tool-counts,
+  &__tool-right {
     display: flex;
     align-items: center;
     gap: $space-4;
+  }
+
+  &__tool-right {
+    align-items: flex-end;
   }
 
   &__upl-titles {

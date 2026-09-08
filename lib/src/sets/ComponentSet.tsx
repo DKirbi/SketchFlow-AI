@@ -160,9 +160,11 @@ function BodyFromConfig({
 function UpperBarFromConfig({
   config,
   onAction,
+  onFieldChange,
 }: {
   config: UpperBarConfig;
   onAction?: ComponentSetHandlers['onAction'];
+  onFieldChange?: ComponentSetHandlers['onFieldChange'];
 }) {
   if (config.variant === 'upl') {
     return (
@@ -205,14 +207,21 @@ function UpperBarFromConfig({
         </LOFIText>
       }
       right={
-        config.counts ? (
-          <span className="component-set__tool-counts">
-            {config.counts.map((count) => (
-              <LOFIBadge key={count.label} variant="status" active={count.active} label={count.label} />
-            ))}
+        config.catalog || config.counts || config.rightActions.length > 0 ? (
+          <span className="component-set__tool-right">
+            {config.catalog ? (
+              <FieldFromDescriptor field={config.catalog} onFieldChange={onFieldChange} />
+            ) : null}
+            {config.counts ? (
+              <span className="component-set__tool-counts">
+                {config.counts.map((count) => (
+                  <LOFIBadge key={count.label} variant="status" active={count.active} label={count.label} />
+                ))}
+              </span>
+            ) : config.rightActions.length > 0 ? (
+              <ActionCluster host="toolbar-right" actions={config.rightActions} onAction={onAction} />
+            ) : null}
           </span>
-        ) : config.rightActions.length > 0 ? (
-          <ActionCluster host="toolbar-right" actions={config.rightActions} onAction={onAction} />
         ) : undefined
       }
     />
@@ -554,12 +563,13 @@ function ToolShellFromConfig({
 
   return (
     <div className={rootCls}>
-      <UpperBarFromConfig config={config.toolbar} onAction={handlers.onAction} />
+      <UpperBarFromConfig
+        config={config.toolbar}
+        onAction={handlers.onAction}
+        onFieldChange={handlers.onFieldChange}
+      />
       <div className="component-set__tool-body">
         {config.filterRow ? <FilterRowFromConfig config={config.filterRow} handlers={handlers} /> : null}
-        {config.chipGroup ? (
-          <FilterChipGroupFromConfig config={config.chipGroup} onAction={handlers.onAction} />
-        ) : null}
         <div className="component-set__tool-interface">
           {config.tabs ? (
             <LOFITabs
@@ -568,6 +578,9 @@ function ToolShellFromConfig({
               onChange={(v) => handlers.onTabChange?.(v)}
               tabs={config.tabs}
             />
+          ) : null}
+          {config.chipGroup ? (
+            <FilterChipGroupFromConfig config={config.chipGroup} onAction={handlers.onAction} />
           ) : null}
           {config.bulkBar ? (
             <div className="component-set__bulk-bar">
@@ -627,7 +640,9 @@ export function ComponentSetView({ set, handlers, children }: ComponentSetProps)
     case 'action-cluster':
       return <ActionCluster host={set.host} actions={set.actions} onAction={h.onAction} />;
     case 'upper-bar':
-      return <UpperBarFromConfig config={set} onAction={h.onAction} />;
+      return (
+        <UpperBarFromConfig config={set} onAction={h.onAction} onFieldChange={h.onFieldChange} />
+      );
     case 'filter-query-row':
       return <FilterRowFromConfig config={set} handlers={h} />;
     case 'filter-chip-group':

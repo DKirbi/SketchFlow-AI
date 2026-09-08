@@ -14,8 +14,10 @@ import {
   LOFIToast,
   LOFIEmptyState,
   LOFIInlineAlert,
+  LOFISelect,
 } from 'lofi-kit';
 import type { ColumnDef, TableColumnMeta } from 'lofi-kit';
+import { MOCK_CATALOG_OPTIONS, type MockCatalogId } from 'shared-catalogs';
 import type { ShowcaseExampleProps } from './metadata';
 import { computeAutomatedSnapshot } from './automatedPreview';
 import { MergeToolPreviewCursor } from './MergeToolPreviewCursor';
@@ -23,10 +25,9 @@ import { previewTargetAttr, resolveCursorTarget } from './previewCursor';
 import { detectReducedMotion } from '../../runtime/previewStateMachine';
 import { FilmRowDetail, DEFAULT_FILM_DETAIL_TAB, type FilmDetailTab } from './FilmRowDetail';
 import { MergeToolResetIcon, MergeToolMergeIcon } from './MergeToolIcons';
+import { getMergeCatalog } from './catalogs';
 import {
   applyOverrides,
-  cloneDbMovies,
-  CRAWLED_RECORDS,
   CURRENT_USER,
   FIELD_KEYS,
   FIELD_LABELS,
@@ -34,7 +35,6 @@ import {
   matchesQuery,
   matchLabel,
   nowTimestamp,
-  SUGGESTIONS,
   type CrawledRecord,
   type DbFilmRecord,
   type FieldKey,
@@ -76,7 +76,13 @@ export function MergeToolExample({
     return resolveCursorTarget(previewSteps[previewStepIndex]);
   }, [automated, previewStepIndex, previewSteps]);
 
-  const [dbMovies, setDbMovies] = useState<DbFilmRecord[]>(() => cloneDbMovies());
+  const [catalogId, setCatalogId] = useState<MockCatalogId>('film');
+  const mergeSource = useMemo(
+    () => getMergeCatalog(automated ? 'film' : catalogId),
+    [automated, catalogId],
+  );
+
+  const [dbMovies, setDbMovies] = useState<DbFilmRecord[]>(() => getMergeCatalog('film').cloneDb());
   const [dbSearchDraft, setDbSearchDraft] = useState('');
   const [dbSearchApplied, setDbSearchApplied] = useState('');
   const [selectedDbId, setSelectedDbId] = useState<string | null>(null);
@@ -96,19 +102,41 @@ export function MergeToolExample({
   const [hasCompletedInteraction, setHasCompletedInteraction] = useState(false);
 
   const resetState = useCallback(() => {
-    setDbMovies(cloneDbMovies());
+    setCatalogId('film');
+    setDbMovies(getMergeCatalog('film').cloneDb());
     setDbSearchDraft('');
     setDbSearchApplied('');
     setSelectedDbId(null);
     setCrawlerSearchDraft('');
     setCrawlerSearchApplied('');
     setSelectedCrawledId(null);
+    setDbExpandedTabs({});
+    setCrawlerExpandedTabs({});
     setModalOpen(false);
     setOverrides(new Set());
     setConfirmOpen(false);
     setConfirmLoading(false);
     setToast(null);
     setHasCompletedInteraction(false);
+  }, []);
+
+  const applyCatalog = useCallback((nextId: MockCatalogId) => {
+    const source = getMergeCatalog(nextId);
+    setCatalogId(nextId);
+    setDbMovies(source.cloneDb());
+    setDbSearchDraft('');
+    setDbSearchApplied('');
+    setSelectedDbId(null);
+    setCrawlerSearchDraft('');
+    setCrawlerSearchApplied('');
+    setSelectedCrawledId(null);
+    setDbExpandedTabs({});
+    setCrawlerExpandedTabs({});
+    setModalOpen(false);
+    setOverrides(new Set());
+    setConfirmOpen(false);
+    setConfirmLoading(false);
+    setToast(null);
   }, []);
 
   useEffect(() => {
@@ -131,8 +159,8 @@ export function MergeToolExample({
     [displayDbMovies, displaySelectedDbId],
   );
   const selectedCrawledRecord = useMemo(
-    () => CRAWLED_RECORDS.find((r) => r.id === displaySelectedCrawledId) ?? null,
-    [displaySelectedCrawledId],
+    () => mergeSource.crawled.find((r) => r.id === displaySelectedCrawledId) ?? null,
+    [displaySelectedCrawledId, mergeSource.crawled],
   );
 
   const dbRows = useMemo(() => {
@@ -144,11 +172,11 @@ export function MergeToolExample({
 
   const crawlerRows = useMemo<CrawlerRow[]>(() => {
     if (crawlerQueryActive) {
-      return CRAWLED_RECORDS.filter((r) => matchesQuery(r, crawlerSearchApplied)).map((r) => ({ ...r }));
+      return mergeSource.crawled.filter((r) => matchesQuery(r, crawlerSearchApplied)).map((r) => ({ ...r }));
     }
     if (!selectedDbMovie) return [];
-    return (SUGGESTIONS[selectedDbMovie.id] ?? []).map((c) => ({ ...c.record, confidence: c.confidence }));
-  }, [crawlerQueryActive, crawlerSearchApplied, selectedDbMovie]);
+    return (mergeSource.suggestions[selectedDbMovie.id] ?? []).map((c) => ({ ...c.record, confidence: c.confidence }));
+  }, [crawlerQueryActive, crawlerSearchApplied, mergeSource, selectedDbMovie]);
 
   const showCrawlerFirstUse = !selectedDbMovie && !crawlerQueryActive;
 
@@ -543,6 +571,21 @@ export function MergeToolExample({
           <LOFIText as="h1" variant="body">
             Merge Tool
           </LOFIText>
+        }
+        right={
+          <LOFIField label="Mock database" htmlFor="merge-catalog" inline>
+            <LOFISelect
+              id="merge-catalog"
+              size="compact"
+              value={automated ? 'film' : catalogId}
+              options={MOCK_CATALOG_OPTIONS.map((option) => ({
+                value: option.value,
+                label: option.label,
+              }))}
+              disabled={automated}
+              onChange={(value) => applyCatalog(value as MockCatalogId)}
+            />
+          </LOFIField>
         }
       />
 

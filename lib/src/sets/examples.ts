@@ -488,7 +488,6 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
     ui: ['U5.1', 'U5.2'],
     set: {
       kind: 'table-chrome',
-      hint: 'Expand a row to rank AI suggestions. Map one suggestion per entity.',
       sortable: true,
       columns: [
         { id: 'internal', header: 'Internal entity', field: 'internal' },
@@ -506,7 +505,7 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
   },
   {
     id: 'tool-shell-mapping',
-    title: 'Tool shell — Wizarding mapping',
+    title: 'Tool shell — Mapping',
     source: 'demos/mapping-prototype/src/components/MappingView/MappingView.tsx',
     ux: ['P1', 'P2', 'P2.5', 'P9'],
     ui: ['U5', 'U6'],
@@ -516,6 +515,16 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
         variant: 'tool',
         title: 'Wizarding mapping',
         identity: { handle: 'j.smith', role: 'Operator' },
+        catalog: {
+          name: 'catalog',
+          kind: 'select',
+          label: 'Mock database',
+          value: 'wizarding',
+          options: [
+            { value: 'wizarding', label: 'Wizarding world' },
+            { value: 'film', label: 'Film catalogue' },
+          ],
+        },
         rightActions: [],
       },
       filterRow: {
@@ -551,7 +560,6 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
       ],
       activeTab: 'players',
       table: {
-        hint: 'Expand a row to rank AI suggestions. Map one suggestion per entity.',
         columns: [
           { id: 'internal', header: 'Internal entity', field: 'internal' },
           { id: 'status', header: 'Status', field: 'status', shrink: true },

@@ -872,7 +872,7 @@ Live views: Storybook **LOW FI Design system / Component sets**. Source configs:
 | `list-header` | search + checkboxes + Add | `ListHeader.tsx` |
 | `table-chrome` | `LOFITable` + row actions + empty | mapping table |
 | `suggestion-row` | external + % + Map / Unmap | mapping expandable body (P2.5 + P3) |
-| `tool-shell` | identity bar + optional filter row, chip group, tabs + table or children | mapping / merge |
+| `tool-shell` | identity bar + optional filter row, tabs, chip group + table or children | mapping / merge |
 | `upl-shell` | upper bar + filter + sidebar + workspace | `TournamentManagement.tsx` |
 
 ### Application types (later automation)

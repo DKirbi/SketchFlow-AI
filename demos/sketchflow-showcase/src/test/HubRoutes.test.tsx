@@ -229,10 +229,12 @@ describe('App routes', () => {
     expect(brief).toHaveTextContent('Merge Tool');
     expect(brief).toHaveTextContent(/Reconciles two records/i);
     expect(brief).toHaveTextContent(/P2 \/ P2\.3/);
-    expect(brief).not.toHaveTextContent(/Mock data is movie-based/i);
+    expect(brief).not.toHaveTextContent(/Mock catalogues protect real business sports data/i);
 
     await user.click(screen.getByRole('button', { name: 'Expand project brief' }));
-    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Mock data is movie-based/i);
+    expect(screen.getByLabelText('Project brief')).toHaveTextContent(
+      /Mock catalogues protect real business sports data/i,
+    );
   });
 
   it('expands a pattern accordion and Show more returns via Get back to the interface', async () => {

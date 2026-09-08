@@ -9,13 +9,14 @@ import {
 import type { ColumnDef, ComponentSet, TableColumnMeta } from 'lofi-kit';
 import {
   CURRENT_USER,
-  MAPPING_TABS,
-  WIZARDING_ENTITIES,
+  MOCK_CATALOG_OPTIONS,
+  getMappingCatalog,
   seedAccepted,
   type MappingEntity,
   type MappingSuggestion,
   type MappingTabId,
-} from '../../data/wizardingCatalog';
+  type MockCatalogId,
+} from 'shared-catalogs';
 import {
   applyMappingFilters,
   mappingChipCounts,
@@ -27,11 +28,15 @@ const MAP_DELAY_MS = 800;
 const UNMAPPED_HOLD_MS = 1100;
 
 export function MappingView() {
-  const [tab, setTab] = useState<MappingTabId>('players');
+  const [catalogId, setCatalogId] = useState<MockCatalogId>('wizarding');
+  const catalog = useMemo(() => getMappingCatalog(catalogId), [catalogId]);
+  const [tab, setTab] = useState<MappingTabId>(catalog.tabs[0]?.value ?? 'players');
   const [draftQuery, setDraftQuery] = useState('');
   const [appliedQuery, setAppliedQuery] = useState('');
   const [scope, setScope] = useState<ChipScope>('all');
-  const [accepted, setAccepted] = useState<Record<string, string>>(() => seedAccepted());
+  const [accepted, setAccepted] = useState<Record<string, string>>(() =>
+    seedAccepted(catalog.entities),
+  );
   const [heldUnmappedIds, setHeldUnmappedIds] = useState<string[]>([]);
   const [loadingKey, setLoadingKey] = useState<string | null>(null);
   const timers = useRef<number[]>([]);
@@ -41,27 +46,39 @@ export function MappingView() {
     timers.current.push(id);
   }, []);
 
+  const resetForCatalog = useCallback((nextId: MockCatalogId) => {
+    const next = getMappingCatalog(nextId);
+    setCatalogId(nextId);
+    setTab(next.tabs[0]?.value ?? '');
+    setDraftQuery('');
+    setAppliedQuery('');
+    setScope('all');
+    setAccepted(seedAccepted(next.entities));
+    setHeldUnmappedIds([]);
+    setLoadingKey(null);
+  }, []);
+
   const visible = useMemo(
     () =>
-      applyMappingFilters(WIZARDING_ENTITIES, {
+      applyMappingFilters(catalog.entities, {
         tab,
         query: appliedQuery,
         scope,
         accepted,
         heldUnmappedIds,
       }),
-    [tab, appliedQuery, scope, accepted, heldUnmappedIds],
+    [catalog.entities, tab, appliedQuery, scope, accepted, heldUnmappedIds],
   );
 
   const counts = useMemo(
     () =>
-      mappingChipCounts(WIZARDING_ENTITIES, {
+      mappingChipCounts(catalog.entities, {
         tab,
         query: appliedQuery,
         accepted,
         heldUnmappedIds,
       }),
-    [tab, appliedQuery, accepted, heldUnmappedIds],
+    [catalog.entities, tab, appliedQuery, accepted, heldUnmappedIds],
   );
 
   const searchIdle = draftQuery === appliedQuery;
@@ -129,8 +146,18 @@ export function MappingView() {
     framed: false,
     toolbar: {
       variant: 'tool',
-      title: 'Wizarding mapping',
+      title: catalog.title,
       identity: { handle: CURRENT_USER.handle, role: CURRENT_USER.role },
+      catalog: {
+        name: 'catalog',
+        kind: 'select',
+        label: 'Mock database',
+        value: catalogId,
+        options: MOCK_CATALOG_OPTIONS.map((option) => ({
+          value: option.value,
+          label: option.label,
+        })),
+      },
       rightActions: [],
     },
     filterRow: {
@@ -158,7 +185,7 @@ export function MappingView() {
         { id: 'mapped', label: 'Mapped', count: counts.mapped, selected: scope === 'mapped' },
       ],
     },
-    tabs: MAPPING_TABS,
+    tabs: catalog.tabs,
     activeTab: tab,
   };
 
@@ -200,9 +227,10 @@ export function MappingView() {
         handlers={{
           onFieldChange: (name, value) => {
             if (name === 'nameOrId') setDraftQuery(String(value));
+            if (name === 'catalog') resetForCatalog(String(value) as MockCatalogId);
           },
           onTabChange: (value) => {
-            setTab(value as MappingTabId);
+            setTab(value);
           },
           onAction: (id) => {
             if (id === 'search') {
@@ -233,13 +261,12 @@ export function MappingView() {
         }}
       >
         <LOFITable<MappingEntity>
-          key={tab}
+          key={`${catalogId}:${tab}`}
           columns={columns}
           rows={visible}
           keyField="id"
           expandable
           sortable
-          hint="Expand a row to rank AI suggestions. Map one suggestion per entity."
           emptySlot={
             <LOFIEmptyState
               variant="no-results"

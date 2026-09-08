@@ -123,4 +123,13 @@ describe('COMPONENT_SET_EXAMPLES', () => {
     expect(screen.getByRole('button', { name: 'Unmap' })).toBeDisabled();
     expect(screen.getByText('99%')).toBeInTheDocument();
   });
+
+  it('renders tool-shell tabs above filter chips', () => {
+    const example = exampleById('tool-shell-mapping');
+    render(<ComponentSetView set={example!.set} />);
+    const tabs = screen.getByRole('tablist');
+    const chips = screen.getByRole('group', { name: 'Mapping status' });
+    expect(tabs.compareDocumentPosition(chips) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByLabelText('Mock database')).toBeInTheDocument();
+  });
 });

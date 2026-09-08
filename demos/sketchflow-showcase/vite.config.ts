@@ -29,6 +29,7 @@ export default defineConfig({
   resolve: {
     alias: {
       'lofi-kit': path.resolve(dir, '../../lib/src/index.ts'),
+      'shared-catalogs': path.resolve(dir, '../shared-catalogs/index.ts'),
     },
   },
   test: {

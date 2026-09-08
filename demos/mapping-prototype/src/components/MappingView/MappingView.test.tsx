@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MappingView } from './MappingView';
 
@@ -69,6 +70,29 @@ describe('MappingView', () => {
     act(() => {
       vi.advanceTimersByTime(1100);
     });
+    expect(screen.queryByText('hp-pl-003')).not.toBeInTheDocument();
+  });
+
+  it('places tabs above status chips and omits the table hint', () => {
+    render(<MappingView />);
+    const tabs = screen.getByRole('tablist');
+    const chips = screen.getByRole('group', { name: 'Mapping status' });
+    expect(tabs.compareDocumentPosition(chips) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.queryByText(/Expand a row to rank/i)).not.toBeInTheDocument();
+  });
+});
+
+describe('MappingView catalog switch', () => {
+  it('loads the film catalogue from the toolbar dropdown', async () => {
+    const user = userEvent.setup();
+    render(<MappingView />);
+
+    await user.click(screen.getByLabelText('Mock database'));
+    await user.click(screen.getByRole('option', { name: 'Film catalogue' }));
+
+    expect(screen.getByRole('heading', { name: 'Film mapping' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Titles' })).toBeInTheDocument();
+    expect(screen.getByText('fl-ti-003')).toBeInTheDocument();
     expect(screen.queryByText('hp-pl-003')).not.toBeInTheDocument();
   });
 });
