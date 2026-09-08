@@ -33,4 +33,4 @@ Primary seed/data files:
 
 ## High-Fidelity Future Demo
 
-`demos/notifications-overview-hifi` is included as source only. Its package scripts are preserved, but it requires restoring Podium/Mantine or replacement high-fidelity design-system dependencies before running.
+`demos/notifications-overview-hifi` is included as source only. Its package scripts are preserved, but it requires restoring High Fidelity Design System dependencies before running.

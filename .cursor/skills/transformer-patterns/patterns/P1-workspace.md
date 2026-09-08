@@ -18,7 +18,7 @@ The structural shell of a UPL interface. "Workspace" here means the complete ope
 2. Upper bar composition (left to right): logo → interface name → optional subtitle → [Applications] [Configuration] [username].
 3. **User identity strip** (far right of upper bar): username in `j.smith` format + role label (Operator / Supervisor / Admin). Informational only in production. In prototypes it acts as a **role switcher** — label it clearly as prototype-only.
 4. A **module context strip** (tab row) below the upper bar is optional. Include it only when the interface groups multiple modules (e.g. Tournaments / Competitors / Venues). Switching modules resets filter, sidebar, and main interface.
-5. Use real brand assets and Podium styling in production UPL chrome per your design system; the shell structure (regions and affordances) stays as defined here.
+5. Use real brand assets and High Fidelity Design System styling in production UPL chrome per your design system; the shell structure (regions and affordances) stays as defined here.
 
 ## P1.2 — Internal Workspace
 

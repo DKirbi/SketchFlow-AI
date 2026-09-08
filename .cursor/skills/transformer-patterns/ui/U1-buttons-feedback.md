@@ -32,7 +32,7 @@
 25. When three distinct levels are justified, ladder **`ghost` → `subtle` → `fill`** within **one** semantic colour family.
 26. Do **not** make `outline` the visually **strongest** neighbour of `subtle` as "secondary" — **`subtle` can outweigh `outline`**; use `fill` for the real commit when `subtle` is cancel/dismiss beside it.
 27. Do **not** place **`neutral`-coloured** and **`action`-coloured** buttons **side by side** in one **horizontal** cluster — pick **one** family for that strip.
-28. `outline` **may** be the cluster primary when context warrants — transparent or **opaque/tinted** outline per Podium — valid **local** emphasis.
+28. `outline` **may** be the cluster primary when context warrants — transparent or **opaque/tinted** outline per the High Fidelity Design System — valid **local** emphasis.
 29. Do **not** add **decorative** rank differences unrelated to **real** task importance.
 30. When **one** action is clearly dominant, use **one** clear step up (e.g. **`ghost` / `outline` peers + `fill`** or strong `outline` for the single primary) — **avoid** gratuitous **three-rank** stacks.
 31. **Start** new compositions `neutral`; move the **entire** relevant cluster to `action` when the **CTA is urgent and habitual**.

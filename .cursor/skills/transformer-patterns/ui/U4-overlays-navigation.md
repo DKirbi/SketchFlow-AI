@@ -11,7 +11,7 @@
 ## Rules
 
 54. Default modal/drawer/chrome to `surface="on-light"` unless the parent is explicitly dark.
-55. For `on-dark` parents, flip **all** nested Podium controls consistently — **no** mixed-surface overlays.
+55. For `on-dark` parents, flip **all** nested High Fidelity Design System controls consistently — **no** mixed-surface overlays.
 56. **Modal** commit: **`fill` + `action`** rightmost; **`subtle` + `neutral`** cancel immediately **left** of commit.
 57. **P7 destructive confirm** confirm button: **`fill` + `warning`** — **only** in that stacked confirmation surface (P7 from P-rules above).
 58. Treat drawers/popovers as **structural** — **neutral**, low rank; **escalate** real commits to **P5** modals, not crowded popovers.

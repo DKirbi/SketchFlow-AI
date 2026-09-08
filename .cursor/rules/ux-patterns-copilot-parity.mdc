@@ -12,7 +12,7 @@ This repo ships **two agent surfaces**: **Cursor** (`.cursor/rules/*.mdc`, `.cur
 
 In the **same change-set** as edits that alter how agents should behave or quote rules, update Copilot instructions when you touch any of:
 
-- `docs/UX_PATTERNS.md`, `docs/UX_PATTERN_STORIES.md`, `docs/UX_PATTERNS_AGENT.md`, `docs/UI_PATTERNS.md`, `docs/UI_PATTERNS_AGENT.md`, `docs/UI-Patterns-Confluence.md`, `docs/COMPOSITION_PATTERNS.md`, `docs/NL_COMPONENT_MAPPING_LO_FI.md`, `docs/NL_COMPONENT_MAPPING_HI_FI.md`, `docs/LOFI_BLOCKS.md`, `docs/LOFI_KIT_PATTERNS.md`, `docs/PET-Patterns-Confluence.md` (when pattern semantics, Podium UI rules, or NL/LOFI mirror content changes)
+- `docs/UX_PATTERNS.md`, `docs/UX_PATTERN_STORIES.md`, `docs/UX_PATTERNS_AGENT.md`, `docs/UI_PATTERNS.md`, `docs/UI_PATTERNS_AGENT.md`, `docs/UI-Patterns-Confluence.md`, `docs/COMPOSITION_PATTERNS.md`, `docs/NL_COMPONENT_MAPPING_LO_FI.md`, `docs/NL_COMPONENT_MAPPING_HI_FI.md`, `docs/LOFI_BLOCKS.md`, `docs/LOFI_KIT_PATTERNS.md`, `docs/PET-Patterns-Confluence.md` (when pattern semantics, High Fidelity Design System UI rules, or NL/LOFI mirror content changes)
 - Cursor rules that **encode or duplicate** those docs: especially `project.mdc`, `lofi-prototyping.mdc`, `nl-component-mapping.mdc`
 - **Cursor project skills** in `.cursor/skills/**/SKILL.md` when you change **prototype brief vs pattern authoring** behaviour, triggers (`/new-pattern`, `/high-fidelity`), or parity obligations — mirror the equivalent guidance in the **Agent modes** section of `.github/copilot-instructions.md` (or leave an explicit `TODO` there).
 

@@ -15,8 +15,8 @@
 - `node_modules`
 - build outputs such as `dist`, `public`, `storybook-static`, and `.hub-dev`
 - `.git`, GitLab CI files, logs, caches, generated catalogs
-- Podium/Mantine dependencies
-- Podium MCP configuration
+- High Fidelity Design System dependencies
+- High Fidelity Design System MCP configuration
 - package-lock entries that force private dependency resolution
 
 ## Notes

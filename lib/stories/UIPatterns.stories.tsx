@@ -2,9 +2,9 @@
  * ShadCN reference demos for `docs/UI_PATTERNS.md` — embedded via
  * `<!-- storybook:embed ExportName -->`.
  *
- * These are visual illustrations of Podium semantic rules (rank, color, surface).
- * Production code uses @podium-design-system/react-components; this file provides
- * portable reference demos that run without the private Podium registry.
+ * These are visual illustrations of High Fidelity Design System semantic rules (rank, color, surface).
+ * Production code uses a High Fidelity Design System; this file provides
+ * portable reference demos that run without a private design-system registry.
  */
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
@@ -396,7 +396,7 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          'Reference visuals use ShadCN components as portable illustrations. Production semantics (rank, color, surface) follow Podium props documented in the sections below.',
+          'Reference visuals use ShadCN components as portable illustrations. Production semantics (rank, color, surface) follow High Fidelity Design System props documented in the sections below.',
       },
       toc: {
         title: 'Table of Contents',

@@ -50,13 +50,13 @@ When the **first line** of the user message is **`/new-pattern`** (or the user h
 
 ### High-fidelity prototype mode (`/high-fidelity`)
 
-When the first line starts with `/high-fidelity`, treat the request as **planning/reference only** in this export. Load `docs/UX_PATTERNS_AGENT.md`, `docs/UI_PATTERNS_AGENT.md`, `docs/UI_PATTERNS.md`, and `docs/NL_COMPONENT_MAPPING_HI_FI.md`, then produce a component mapping and dependency/API checklist. Do not implement runnable high-fidelity code until the user restores the target design-system runtime. Podium/Mantine dependencies and future high-fidelity API documentation config are intentionally omitted from this export.
+When the first line starts with `/high-fidelity`, treat the request as **planning/reference only** in this export. Load `docs/UX_PATTERNS_AGENT.md`, `docs/UI_PATTERNS_AGENT.md`, `docs/UI_PATTERNS.md`, and `docs/NL_COMPONENT_MAPPING_HI_FI.md`, then produce a component mapping and dependency/API checklist. Do not implement runnable high-fidelity code until the user restores the target design-system runtime. High Fidelity Design System dependencies and future high-fidelity API documentation config are intentionally omitted from this export.
 
 ### Project identity
 
-- **Patterns** (P1–P10, UPL) describe how operator UIs should behave; production targets **Podium** (hi-fi). **LOFI Kit** (`lib/`, import `lofi-kit`) is the **lo-fi prototyping** surface only — not the production design system.
-- **Diagram / React Flow** types (`nodeTypes`, `edgeTypes`) are exported **without** the `LOFI` prefix; everything else in app UI uses `**LOFI*`** primitives (except **Podium-only\*\* demos under `demos/` per `.cursor/rules/project.mdc`).
-- `**lib/**` may bundle **headless** behaviour (e.g. Radix Collapsible for `LOFINavTree`) as an implementation detail. **Demos and app UI** must **not** import `@radix-ui/*` or other UI kits — only `lofi-kit` for chrome, **except** a **Podium** stack in a dedicated `demos/<slug>/` package allowed by `project.mdc`.
+- **Patterns** (P1–P10, UPL) describe how operator UIs should behave; future production work maps them onto a **High Fidelity Design System**. **LOFI Kit** (`lib/`, import `lofi-kit`) is the **lo-fi prototyping** surface only — not the production design system.
+- **Diagram / React Flow** types (`nodeTypes`, `edgeTypes`) are exported **without** the `LOFI` prefix; everything else in app UI uses `**LOFI*`** primitives (except **High Fidelity Design System** demos under `demos/` per `.cursor/rules/project.mdc`).
+- `**lib/**` may bundle **headless** behaviour (e.g. Radix Collapsible for `LOFINavTree`) as an implementation detail. **Demos and app UI** must **not** import `@radix-ui/*` or other UI kits — only `lofi-kit` for chrome, **except** a **High Fidelity Design System** stack in a dedicated `demos/<slug>/` package allowed by `project.mdc`.
 - **No utility-class styling** in component code; **BEM** + **SCSS tokens** only (`@use '…/tokens' as *;` in `lib/` stylesheets).
 
 ---

@@ -1,9 +1,9 @@
 # lofi-kit — Komponentenreferenz
 
 **LOFI Kit** is a low-fidelity design tool: a grayscale, monospace component
-library for fast prototyping. It is used alongside **Transformers Patterns** when
+library for fast prototyping. It is used alongside **SketchFlowAI Patterns** when
 building lo-fi prototypes. It is **not** the production design system —
-production UIs use **Podium** (the high-fidelity design system).
+production UIs use a **High Fidelity Design System**.
 
 UI primitives are exported with a **`LOFI` prefix** (e.g. `LOFIButton`,
 `LOFIModal`). If a primitive is missing, add it to `lib/src/ui/` first (see
@@ -17,7 +17,7 @@ UI primitives are exported with a **`LOFI` prefix** (e.g. `LOFIButton`,
 |------|----------|
 | [`COMPOSITION_PATTERNS.md`](COMPOSITION_PATTERNS.md) | Control selection rules, composition recipes (modal form, tables, UPL), filter query row, sidebar, `LOFIMainWorkspace`. Required reading when building a prototype. |
 | [`NL_COMPONENT_MAPPING_LO_FI.md`](NL_COMPONENT_MAPPING_LO_FI.md) | Signal phrase → LOFI / `lofi-kit` lookup. Use when translating a prose brief into a lo-fi component list. |
-| [`NL_COMPONENT_MAPPING_HI_FI.md`](NL_COMPONENT_MAPPING_HI_FI.md) | Signal phrase → Podium / Mantine starting map; use with Podium MCP for hi-fi work (`/high-fidelity`). |
+| [`NL_COMPONENT_MAPPING_HI_FI.md`](NL_COMPONENT_MAPPING_HI_FI.md) | Signal phrase → High Fidelity Design System starting map; use for hi-fi work (`/high-fidelity`). |
 | [`UX_PATTERNS.md`](UX_PATTERNS.md) | P1–P10 interaction behaviour: P1 = Workspace structural shell (UPL), P2–P10 = data table, stateful button, toast notification messages, modal, inline validation, confirmation, tab navigation, filters, sticky disclosure while scrolling. |
 | [`LOFI_BLOCKS.md`](LOFI_BLOCKS.md) | One-line component quick-reference table. |
 

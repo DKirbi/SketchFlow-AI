@@ -2,7 +2,7 @@
   "name": "notifications-overview-hifi",
   "private": true,
   "version": "0.0.0",
-  "description": "High-fidelity notifications triage dashboard source (requires restoring Podium/Mantine dependencies before running)",
+  "description": "High-fidelity notifications triage dashboard source (requires restoring High Fidelity Design System dependencies before running)",
   "type": "module",
   "scripts": {
     "dev": "vite",

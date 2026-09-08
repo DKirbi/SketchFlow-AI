@@ -1,7 +1,7 @@
 ---
 name: ux-pattern-authoring
 description: >-
-  When the user types /new-pattern at the start of a message or uses @ux-pattern-authoring, maintain canonical UX pattern docs, NL component mapping, LOFI blocks, LOFI kit patterns, Cursor rules, and GitHub Copilot instructions; reconcile with `docs/PET-Patterns-Confluence.md` and `docs/UI-Patterns-Confluence.md` when Podium UI copy changes. Use for editing P1–P10 text, adding pattern inventory, or cross-surface agent parity — not for ordinary lo-fi demo briefs. VS Code Copilot users without @-mention should start with /new-pattern or attach this file.
+  When the user types /new-pattern at the start of a message or uses @ux-pattern-authoring, maintain canonical UX pattern docs, NL component mapping, LOFI blocks, LOFI kit patterns, Cursor rules, and GitHub Copilot instructions; reconcile with `docs/PET-Patterns-Confluence.md` and `docs/UI-Patterns-Confluence.md` when High Fidelity Design System UI copy changes. Use for editing P1–P10 text, adding pattern inventory, or cross-surface agent parity — not for ordinary lo-fi demo briefs. VS Code Copilot users without @-mention should start with /new-pattern or attach this file.
 ---
 
 # UX pattern authoring (infrastructure)
@@ -23,7 +23,7 @@ Open the current versions of these paths, then apply the user’s requested chan
 
 | Area | Paths |
 |------|--------|
-| Human + machine patterns | `docs/UX_PATTERNS.md`, `docs/UX_PATTERNS_AGENT.md`, `docs/UX_PATTERN_STORIES.md` (if story text is affected); `docs/UI_PATTERNS.md`, `docs/UI_PATTERNS_AGENT.md` (Podium semantics — if hi-fi rules change) |
+| Human + machine patterns | `docs/UX_PATTERNS.md`, `docs/UX_PATTERNS_AGENT.md`, `docs/UX_PATTERN_STORIES.md` (if story text is affected); `docs/UI_PATTERNS.md`, `docs/UI_PATTERNS_AGENT.md` (High Fidelity Design System semantics — if hi-fi rules change) |
 | NL → components (lo-fi + hi-fi) | `docs/NL_COMPONENT_MAPPING_LO_FI.md`, `docs/NL_COMPONENT_MAPPING_HI_FI.md` |
 | LOFI catalog | `docs/LOFI_BLOCKS.md`, `docs/LOFI_KIT_PATTERNS.md` |
 | Cursor rules | `.cursor/rules/project.mdc`, `lofi-prototyping.mdc`, `nl-component-mapping.mdc`, and any other `.cursor/rules/*.mdc` that duplicate those semantics |

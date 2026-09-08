@@ -345,9 +345,9 @@ Project skills live under [`.cursor/skills/`](.cursor/skills/README.md). Cursor 
 | Skill | Trigger | Purpose |
 | ----- | ------- | ------- |
 | [`prototype-intake-plan`](.cursor/skills/prototype-intake-plan/SKILL.md) | Default for prototype briefs | Plan before code: P1–P10 map, NL → LOFI, open questions |
-| [`high-fidelity-prototype`](.cursor/skills/high-fidelity-prototype/SKILL.md) | `/high-fidelity` | Podium hi-fi prototypes via MCP + `NL_COMPONENT_MAPPING_HI_FI` |
+| [`high-fidelity-prototype`](.cursor/skills/high-fidelity-prototype/SKILL.md) | `/high-fidelity` | High Fidelity Design System prototypes via `NL_COMPONENT_MAPPING_HI_FI` |
 | [`ux-pattern-authoring`](.cursor/skills/ux-pattern-authoring/SKILL.md) | `/new-pattern` | Edit canonical UX/LOFI docs, Cursor rules, Copilot parity |
-| [`ui-patterns-agent`](.cursor/skills/ui-patterns-agent/SKILL.md) | `/ui-patterns` | Apply or audit Common Lib / Podium UI semantics (U0–U6) |
+| [`ui-patterns-agent`](.cursor/skills/ui-patterns-agent/SKILL.md) | `/ui-patterns` | Apply or audit High Fidelity Design System UI semantics (U0–U6) |
 | [`transformer-patterns`](.cursor/skills/transformer-patterns/SKILL.md) | `@transformer-patterns` | Consolidated P1–P10 + U0–U6 rulebook (regenerate with `npm run generate:skills`) |
 
 ---

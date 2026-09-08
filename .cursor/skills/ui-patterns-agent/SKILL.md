@@ -1,18 +1,18 @@
 ---
 name: ui-patterns-agent
 description: >-
-  Apply or audit Transformer Patterns UI semantics from docs/UI_PATTERNS_AGENT.md (U0–U6) and
+  Apply or audit SketchFlowAI UI semantics from docs/UI_PATTERNS_AGENT.md (U0–U6) and
   docs/UI_PATTERNS.md (§1–§6): color, rank, surface, size, typography, forms, overlays, tables,
-  spacing. Prefer Common Lib (@pet-transformers/common-react) per COMPONENT_REFERENCE.md; use raw
-  Podium (Pds*) only when Common Lib has no wrapper. Use when the user starts with /ui-patterns,
-  asks to review Common Lib or hi-fi UI, or @ui-patterns-agent. Pair with docs/UX_PATTERNS_AGENT.md
+  spacing. Use High Fidelity Design System (`Pds*`) components when mapping lo-fi to hi-fi.
+  Use when the user starts with /ui-patterns,
+  asks to review hi-fi UI, or @ui-patterns-agent. Pair with docs/UX_PATTERNS_AGENT.md
   for P1–P10 behaviour. For editing the rulebook, use /new-pattern or @ux-pattern-authoring.
   For full hi-fi prototype intake in this repo, use /high-fidelity.
 ---
 
-# Transformer UI patterns (agent apply / audit)
+# SketchFlowAI UI patterns (agent apply / audit)
 
-Use when the user **explicitly** invokes **UI** semantics work for **Common Lib — Transformer** interfaces:
+Use when the user **explicitly** invokes **UI** semantics work for SketchFlowAI interfaces:
 
 - **Primary:** first line or start of message is **`/ui-patterns`**
 - **Backup:** **`@ui-patterns-agent`** (Cursor)
@@ -31,14 +31,13 @@ This skill **loads and applies** the UI pattern rulebook. It is **not** for edit
 | ------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | UX behaviour (when both apply)                    | `docs/UX_PATTERNS_AGENT.md` — **P1–P10 take precedence** on interaction conflicts               |
 | Terse UI rules                                    | **`docs/UI_PATTERNS_AGENT.md`** — U0–U6 numbered rules (load fully)                             |
-| Vocabulary, Common Lib priority, `Pds*` inventory | `docs/UI_PATTERNS.md` §1–§6                                                                     |
-| **Common Lib component catalog**                  | `COMPONENT_REFERENCE.md` in **`@pet-transformers/common-react`** — primary implementation layer |
+| Vocabulary, `Pds*` inventory                      | `docs/UI_PATTERNS.md` §1–§6                                                                     |
 | Consolidated UX + UI skill                        | `.cursor/skills/transformer-patterns/SKILL.md` (generated from the docs above)                  |
 | Phrase → hi-fi starting map                       | `docs/NL_COMPONENT_MAPPING_HI_FI.md`                                                            |
 | Lo-fi spacing tokens (this repo)                  | `docs/LOFI_KIT_PATTERNS.md` → Spacing (maps to UI §6 / U6)                                      |
-| Raw Podium / Mantine APIs                         | **Podium MCP** (`pds-mcp`) when working below Common Lib — list tool schemas before calling     |
+| High Fidelity Design System APIs                  | Installed design-system typings or future high-fidelity API documentation                       |
 
-**Reuse-first:** Common Lib (`Field`, `Table`, `Menu`, `BaseLayout`, …) → raw `Pds*` → discuss net-new with the developer.
+**Reuse-first:** High Fidelity Design System (`Pds*`) → discuss net-new with the developer.
 
 **Read-only** on canonical docs unless the user uses pattern-authoring triggers.
 
@@ -52,7 +51,7 @@ This skill **loads and applies** the UI pattern rulebook. It is **not** for edit
 | **U3**  | Forms + inputs                                                                    |
 | **U4**  | Overlays + navigation (modals, drawers, tabs, menus)                              |
 | **U5**  | Tables, filters, row actions                                                      |
-| **U6**  | Spacing — 4 / 8 px grid; theme tokens in Podium/Mantine; `$space-*` in lo-fi SCSS |
+| **U6**  | Spacing — 4 / 8 px grid; theme tokens in the High Fidelity Design System; `$space-*` in lo-fi SCSS |
 
 When **UX** and **UI** conflict, follow **UX** for behaviour; reconcile props afterward.
 
@@ -60,13 +59,12 @@ When **UX** and **UI** conflict, follow **UX** for behaviour; reconcile props af
 
 ### Apply (implementation)
 
-User is building or fixing **Common Lib** or **Podium** UI:
+User is building or fixing **High Fidelity Design System** UI:
 
 1. Restate the UI task and which **U0–U6** sections apply.
-2. **Check Common Lib** `COMPONENT_REFERENCE.md` for an existing component (`Field`, `Table`, etc.).
-3. Load **`UI_PATTERNS_AGENT.md`**; cite rule numbers when choosing props.
-4. Verify props: Common Lib types first; raw `Pds*` via MCP or installed typings — do not invent prop names.
-5. Implement or patch code; flag gaps if the rulebook has no guidance.
+2. Load **`UI_PATTERNS_AGENT.md`**; cite rule numbers when choosing props.
+3. Verify props via installed High Fidelity Design System typings — do not invent prop names.
+4. Implement or patch code; flag gaps if the rulebook has no guidance.
 
 ### Audit (review)
 
@@ -75,12 +73,12 @@ User asks to **review** Figma, a PR, or existing screens:
 1. Scan against **U0–U6** and the **Common mistakes** section in `UI_PATTERNS_AGENT.md`.
 2. Output findings as: **rule #** → **location** → **issue** → **recommended fix**.
 3. Cross-check **P1–P10** only when interaction behaviour is in scope.
-4. Flag unnecessary raw `Pds*` usage when Common Lib already provides a wrapper.
+4. Flag unnecessary custom components when the High Fidelity Design System already provides the primitive.
 
 ### Spacing pass (common `/ui-patterns` sub-task)
 
 1. Apply **U6** and `UI_PATTERNS.md` §6 decision guide.
-2. **Common Lib / Podium:** theme spacing tokens only — no arbitrary px in layout props.
+2. **High Fidelity Design System:** theme spacing tokens only — no arbitrary px in layout props.
 3. Enforce filter-region recipe: top 16 px, bottom 8 px, control-row 16 px, wrapped-row 8 px, sidebar↔main 16 px.
 4. UPL shell exception: `46px` left+right insets are allowed only on the main interface shell (left rail includes absolute collapse button).
 5. Run `npm run spacing:check` before finalizing changes.

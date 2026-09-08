@@ -12,7 +12,7 @@ export default defineConfig({
   plugins: [react()],
   base: viaHub ? `/${demoSlug}/` : './',
   build: {
-    // Main chunk still includes Podium + Mantine + global CSS; dock is split via React.lazy.
+    // Main chunk still includes High Fidelity Design System + global CSS; dock is split via React.lazy.
     chunkSizeWarningLimit: 800,
   },
   server: {

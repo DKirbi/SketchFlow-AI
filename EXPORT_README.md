@@ -28,7 +28,7 @@ SKIP_STORYBOOK=1 npm run dev
 
 ## High-Fidelity Caveat
 
-The high-fidelity demo source and scripts are preserved, but Podium/Mantine dependencies and Podium MCP configuration are intentionally removed. The default hub skips `*-hifi` demos. Restore the target design-system dependencies and set `INCLUDE_HIFI_DEMOS=1` before trying to run or publish hi-fi demos.
+The high-fidelity demo source and scripts are preserved, but High Fidelity Design System dependencies and high-fidelity API documentation configuration are intentionally removed. The default hub skips `*-hifi` demos. Restore the target design-system dependencies and set `INCLUDE_HIFI_DEMOS=1` before trying to run or publish hi-fi demos.
 
 ## Static Build
 

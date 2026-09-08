@@ -1,9 +1,9 @@
-# Podium UI Patterns — Internal tools
+# High Fidelity Design System UI Patterns
 
 **Version:** 0.1  
 **Audience:** Designers, Frontend Engineers, Product Managers, Agents (high-fidelity prototypes)  
 **Last updated:** 28 Apr 2026  
-**Owner:** Transformer Patterns / Product Engineering (adjust for your space)  
+**Owner:** SketchFlowAI  
 **Canonical repo source:** `docs/UI_PATTERNS.md` (full rulebook)  
 **Agent-terse rules:** `docs/UI_PATTERNS_AGENT.md`
 
@@ -13,12 +13,12 @@
 
 ## What this page covers
 
-This page summarises **how to apply Podium semantic props** (`color`, `rank`, `surface`, `size`, typography roles) when building **Sportradar internal-tool** interfaces on **`@podium-design-system/react-components`**.
+This page summarises **how to apply High Fidelity Design System semantic props** (`color`, `rank`, `surface`, `size`, typography roles) when building operator-tool interfaces. These patterns were originally crafted during professional work at Sportradar and are published here as standalone SketchFlowAI patterns.
 
 It is **not** a replacement for:
 
 * **UX flow patterns (P1–P10)** — behaviour, sequencing, modal stacking, confirmations: see the UX Patterns Confluence mirror / [`UX_PATTERNS.md`](UX_PATTERNS.md) and [`UX_PATTERNS_AGENT.md`](UX_PATTERNS_AGENT.md).
-* **Lo-fi prototyping** — grayscale LOFI Kit (`lofi-kit`) for Transformer Patterns demos.
+* **Lo-fi prototyping** — grayscale LOFI Kit (`lofi-kit`) for SketchFlowAI demos.
 
 **Relationship:** UI Patterns describe *visual semantics* that **must not contradict** UX flow rules. If unsure, satisfy **P1–P10** first, then map props.
 
@@ -58,7 +58,7 @@ It is **not** a replacement for:
 
 ### Rank (`PdsRank`) — emphasis ladder
 
-| Rank | Podium label (docs) | Typical use |
+| Rank | High Fidelity Design System label (docs) | Typical use |
 | --- | --- | --- |
 | `ghost` | Ghost | Lowest emphasis — back, tertiary, subtle row actions. |
 | `subtle` | Subtle | Low emphasis — often Cancel/dismiss; **can** be “primary among ghosts” in toolbars when justified. |
@@ -89,7 +89,7 @@ It is **not** a replacement for:
 
 ## Button hierarchy: Do and Don’t
 
-Use these pairs when reviewing Figma or PRs. Wording tracks Podium design guidance and the canonical table in [`docs/UI_PATTERNS.md`](UI_PATTERNS.md) §1.7.
+Use these pairs when reviewing Figma or PRs. Wording tracks High Fidelity Design System design guidance and the canonical table in [`docs/UI_PATTERNS.md`](UI_PATTERNS.md) §1.7.
 
 ### Pair A — Basic three steps
 
@@ -147,8 +147,8 @@ Details, Storybook embed IDs, and edge cases live in the repo **only** — keep 
 ## Implementation notes
 
 * Prefer **`PdsMantine*`** exports when Mantine-backed duplicates exist — non-Mantine `Pds*` may be deprecated.
-* Wrap prototypes in **`PodiumProvider`**; load **`pds-mantine-styles.css`** per project setup.
-* **Git / package access** — Podium packages may require registry tokens; see team **`.npmrc`** and Podium MCP setup in Cursor where applicable.
+* Wrap prototypes in the High Fidelity Design System **provider**; load the design-system stylesheet per project setup.
+* **Git / package access** — High Fidelity Design System packages may require registry tokens; see team **`.npmrc`** and high-fidelity API documentation setup in Cursor where applicable.
 
 ---
 

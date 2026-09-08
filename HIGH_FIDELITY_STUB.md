@@ -1,6 +1,6 @@
 # High-Fidelity Documentation Stub
 
-This export preserves high-fidelity documentation and demo source, but it does not include Podium/Mantine dependencies or Podium MCP configuration.
+This export preserves high-fidelity documentation and demo source, but it does not include High Fidelity Design System dependencies or high-fidelity API documentation configuration.
 
 ## Included For Later Prompting
 

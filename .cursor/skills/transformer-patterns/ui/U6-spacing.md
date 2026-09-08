@@ -48,7 +48,7 @@ Use for:
 3. If it still feels wrong **inside one component**, try **4 px or 12 px**.
 4. If no step fits, **discuss it** — never ship arbitrary pixel values.
 
-## 6.4 — Implementation (Podium / Mantine)
+## 6.4 — Implementation (High Fidelity Design System)
 
 - Use **theme spacing tokens** (`xs`, `sm`, `md`, `lg`, `xl`) or design-system spacing props — not raw px/rem literals in `gap`, `p`, `m`, or `sx` props.
 - Map the regular scale to the nearest theme step; reserve 4 px and 12 px for fine intra-component work.
@@ -90,7 +90,7 @@ This is an explicit exception to the 4/8 grid. Use `46px` only for UPL shell hor
 77. Use the **regular 8 px scale** (8, 16, 24, 32 px) for container padding, flex/grid gaps, section margins, and page content spacing.
 78. Use the **fine 4 px scale** (4, 12 px) for icon-to-text gap, compact chip/tag padding, optical tweaks, and tight intra-component spacing.
 79. **Decision order:** start at 8 px scale → step down within 8 px scale (e.g. 16 → 8) → try 4 or 12 px inside one component → discuss if no step fits.
-80. For Podium/Mantine: use **theme spacing tokens** (`xs`, `sm`, `md`, `lg`, `xl`) or design-system spacing props — not raw px/rem literals in `gap`, `p`, `m`, or `sx`.
+80. For the High Fidelity Design System: use **theme spacing tokens** (`xs`, `sm`, `md`, `lg`, `xl`) or design-system spacing props — not raw px/rem literals in `gap`, `p`, `m`, or `sx`.
 81. Filter-region baseline (P1.2.1): top padding 16 px, bottom padding 8 px, same-row control gap 16 px, wrapped-row gap 8 px.
 82. Sidebar ↔ main workspace gap is 16 px.
 83. Implement the filter region with nested `PdsBox`: filter column `topPadding="md"` + `bottomPadding="sm"` + `gap="lg"`; row `fixedGap="1rem"`.

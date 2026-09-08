@@ -4,7 +4,7 @@
 > screens and shells** from `lofi-kit` primitives. It is companion reading to:
 >
 > - [`LOFI_KIT_PATTERNS.md`](LOFI_KIT_PATTERNS.md) — component catalog, tokens, decision guide
-> - [`NL_COMPONENT_MAPPING_LO_FI.md`](NL_COMPONENT_MAPPING_LO_FI.md) — NL → LOFI component translation · [`NL_COMPONENT_MAPPING_HI_FI.md`](NL_COMPONENT_MAPPING_HI_FI.md) — hi-fi (Podium) companion + MCP
+> - [`NL_COMPONENT_MAPPING_LO_FI.md`](NL_COMPONENT_MAPPING_LO_FI.md) — NL → LOFI component translation · [`NL_COMPONENT_MAPPING_HI_FI.md`](NL_COMPONENT_MAPPING_HI_FI.md) — hi-fi (High Fidelity Design System) companion
 > - [`UX_PATTERNS.md`](UX_PATTERNS.md) — P1–P10 interaction behaviour rules (P1 = Workspace structural shell, P2–P10 = interaction patterns)
 >
 > Both this file and `UX_PATTERNS.md` are required when building a prototype.
@@ -801,7 +801,7 @@ When the main interface body is a data table rather than a form editor, slot `LO
 
 In production systems, forms like the feature interface body are driven by a backend-supplied descriptor. Demos can mirror this with `FieldDescriptor` + `LOFIFieldFromDescriptor` from `lofi-kit` (`lib/src/sets/`). The same descriptor shape is used inside filter query rows and modal bodies.
 
-> **Industry terms:** schema-driven UI, declarative UI, metadata-driven forms. Sportradar's internal implementation is **Common Lib**, an abstraction over Podium. Transformer Patterns is a lo-fi parallel for prototyping — not a replacement.
+> **Industry terms:** schema-driven UI, declarative UI, metadata-driven forms. These SketchFlowAI patterns originated during professional work at Sportradar and are published here as a standalone prototyping system — not a lo-fi equivalent of a vendor design system. Future production work maps the same patterns onto a **High Fidelity Design System**.
 
 ```ts
 import type { FieldDescriptor } from 'lofi-kit';

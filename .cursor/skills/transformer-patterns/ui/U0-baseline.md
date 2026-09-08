@@ -1,6 +1,6 @@
 # U0 — Imports and internal-tool baseline
 
-Podium ships with a **minimalistic, "invisible" base appearance** on purpose — for heavy data interfaces operators use daily.
+The High Fidelity Design System ships with a **minimalistic, "invisible" base appearance** on purpose — for heavy data interfaces operators use daily.
 
 ## Internal-tool UX baseline
 
@@ -10,7 +10,7 @@ Podium ships with a **minimalistic, "invisible" base appearance** on purpose —
 
 **Default posture:** `neutral` or `action`, `md`, `outline` or `subtle`, `on-light`. Exceptions must justify themselves.
 
-### Prefer Mantine-backed Podium components
+### Prefer Mantine-backed High Fidelity Design System components
 
 When the package exposes **two** exports for the same role (e.g. `PdsButton` and `PdsMantineButton`), **prefer `PdsMantine*`** — plain `Pds*` is often deprecated. Where **no** `PdsMantine*` exists yet, use the shipped `Pds*` API normally. Semantic props apply the same either way.
 
@@ -18,7 +18,7 @@ When the package exposes **two** exports for the same role (e.g. `PdsButton` and
 
 ## Core semantic vocabulary
 
-The seven types below are the **only** Podium semantic props this rulebook treats as load-bearing. Every UI Pattern in §1–§6 is expressed in terms of these.
+The seven types below are the **only** High Fidelity Design System semantic props this rulebook treats as load-bearing. Every UI Pattern in §1–§6 is expressed in terms of these.
 
 ### `PdsColor` — semantic intent
 
@@ -108,7 +108,7 @@ Numeric ladder. **`700` is the default body** (~16px). Range used in internal to
 3. Reserve colour for **semantic intent**; if you cannot name the intent, use `neutral`.
 4. `brand-primary` is **not** the default operator **action** colour — use `action` (`#1F58CF`).
 5. Default posture for internal tools: **`neutral` or `action`**, `md`, **`outline` or `subtle`**, `on-light`.
-6. When installed Podium types disagree with these rules, **update the source** in vocabulary tables in this file first, then mirror here in the same change-set.
+6. When installed High Fidelity Design System types disagree with these rules, **update the source** in vocabulary tables in this file first, then mirror here in the same change-set.
 
 ---
 

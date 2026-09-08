@@ -1,11 +1,11 @@
 ---
 name: transformer-patterns
 description: >-
-  Apply P1–P10 interaction patterns and UI semantics (U0–U6) for Transformer Patterns /
-  Common Lib interfaces: UPL workspace shell, data tables, stateful buttons, toasts, modals,
+  Apply P1–P10 interaction patterns and UI semantics (U0–U6) for SketchFlowAI
+  interfaces: UPL workspace shell, data tables, stateful buttons, toasts, modals,
   validation, confirmations, tabs, filters, sticky disclosure, plus color, rank, surface,
-  size, typography, spacing. Use when building or reviewing Common Lib screens, flows, props,
-  or Figma/PRs. Prefer @pet-transformers/common-react; pair with Podium MCP (pds-mcp) for raw
+  size, typography, spacing. Use when building or reviewing screens, flows, props,
+  or Figma/PRs. Pair with a High Fidelity Design System for raw
   Pds* when needed. When UX behaviour and UI semantics conflict, UX wins.
 ---
 
@@ -121,16 +121,15 @@ Only proceed with option 2 or 3 after explicit confirmation.
 
 ## Design system integration
 
-**Common Lib** (`@pet-transformers/common-react`) is the **primary** component library.
+The **High Fidelity Design System** is the production target for these patterns.
 
 **Reuse-first order:**
 
-1. **Common Lib** — `COMPONENT_REFERENCE.md` in the package.
-2. **Raw Podium** (`Pds*`) — only when Common Lib has no wrapper.
-3. **Discuss before building new** — extend Common Lib, compose Podium, or net-new?
+1. **High Fidelity Design System** (`Pds*`) — prefer existing primitives.
+2. **Discuss before building new** — compose the High Fidelity Design System, or net-new?
 
-- Verify props: Common Lib types first; for raw Podium, use Podium MCP (`pds-mcp`) or `@podium-design-system/react-components` typings — do not invent prop names.
-- `Pds*` names describe semantic types; Common Lib `Field` configs follow the same vocabulary.
+- Verify props from installed High Fidelity Design System typings or future high-fidelity API documentation — do not invent prop names.
+- `Pds*` names describe semantic types.
 
 ---
 

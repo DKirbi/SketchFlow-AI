@@ -1,10 +1,10 @@
-# Master Prompt: Generate `xcommonlib` From Podium Patterns
+# Master Prompt: Generate `xcommonlib` From High Fidelity Design System Patterns
 
-Use this prompt with an implementation model/agent to scaffold a portfolio-ready UI library based on Podium semantics, but with fully rebranded public naming.
+Use this prompt with an implementation model/agent to scaffold a portfolio-ready UI library based on High Fidelity Design System semantics, but with fully rebranded public naming.
 
 ---
 
-You are a senior design-system engineer. Create a reusable React + TypeScript UI library named **`xcommonlib`** by extracting the same conceptual surface from Podium docs/storybook (tokens, styles, components, props, prop types), then publishing it under a new naming system.
+You are a senior design-system engineer. Create a reusable React + TypeScript UI library named **`xcommonlib`** by extracting the same conceptual surface from High Fidelity Design System docs/storybook (tokens, styles, components, props, prop types), then publishing it under a new naming system.
 
 ## Goal
 
@@ -27,7 +27,7 @@ Extract and normalize these four artifacts:
    - intensity (`low`, `high`)
    - surface (`on-light`, `on-dark`)
    - size scale (`xs`, `sm`, `md`, `lg`, `xl`)
-   - typography scale (`font size ladder`, with body baseline equivalent to Podium `700`)
+   - typography scale (`font size ladder`, with body baseline equivalent to High Fidelity Design System `700`)
 2. **`styles`**
    - semantic color application rules,
    - rank hierarchy and one-primary-per-cluster behavior,
@@ -41,7 +41,7 @@ Extract and normalize these four artifacts:
 
 ## Required rename contract (strict)
 
-Rebrand all public names from Podium to `xcommonlib` conventions.
+Rebrand all public names from the High Fidelity Design System to `xcommonlib` conventions.
 
 1. Remove prefixes from public component names:
    - remove `PdsMantine`
@@ -51,7 +51,7 @@ Rebrand all public names from Podium to `xcommonlib` conventions.
    - if both `PdsButton` and `PdsMantineButton` map to `Button`, keep one public `Button` API and track source parity internally.
    - if legacy and newer variants differ, expose one canonical `xcommonlib` component and document compatibility notes.
 3. Provider rename:
-   - `PodiumProvider` -> `XCommonProvider`
+   - design-system `Provider` -> `XCommonProvider`
 4. Shared type rename:
    - `PdsColor` -> `XColor`
    - `PdsBrandColor` -> `XBrandColor`
@@ -60,7 +60,7 @@ Rebrand all public names from Podium to `xcommonlib` conventions.
    - `PdsSurface` -> `XSurface`
    - `PdsSize` -> `XSize`
    - `PdsFontSize` -> `XFontSize`
-5. Remove Podium/Mantine branding from all exported symbol names, docs headings, examples, and Storybook titles.
+5. Remove High Fidelity Design System / Mantine branding from all exported symbol names, docs headings, examples, and Storybook titles.
 6. Preserve behavior semantics and UX rationale even after renaming.
 
 ## Output requirements
@@ -111,7 +111,7 @@ Do not generate:
 
 ## Final validation checklist (must pass)
 
-1. No `Pds`, `PdsMantine`, `Mantine`, or `Podium` prefixes in public exports.
+1. No `Pds`, `PdsMantine`, `Mantine`, or vendor design-system prefixes in public exports.
 2. Shared semantic unions are present under `X*` types.
 3. Storybook contains iframe-embeddable examples and a portfolio index.
 4. Controlled component docs exist for all relevant form/input primitives.
@@ -120,7 +120,7 @@ Do not generate:
 
 ## Optional MCP enhancement step
 
-If Podium MCP access is available, enrich prop-level docs from live Storybook and typings before finalizing APIs. If MCP is unavailable, proceed from local rulebook + component inventory sources and flag any uncertain prop details as `verify_later`.
+If High Fidelity Design System MCP access is available, enrich prop-level docs from live Storybook and typings before finalizing APIs. If MCP is unavailable, proceed from local rulebook + component inventory sources and flag any uncertain prop details as `verify_later`.
 
 ---
 

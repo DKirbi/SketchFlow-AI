@@ -5,7 +5,7 @@ description: Documentation/reference workflow for future high-fidelity planning.
 
 # High-Fidelity Prototype Planning (Reference Only)
 
-This export preserves high-fidelity documentation and demo source, but it does not include Podium/Mantine dependencies or MCP configuration. Treat this skill as a planning aid only.
+This export preserves high-fidelity documentation and demo source, but it does not include High Fidelity Design System dependencies or high-fidelity API documentation configuration. Treat this skill as a planning aid only.
 
 ## Authority
 
@@ -25,5 +25,5 @@ This export preserves high-fidelity documentation and demo source, but it does n
 ## Guardrails
 
 - Do not add dependencies in this export without an explicit setup request.
-- Do not call Podium MCP; it is not configured here.
+- Do not call High Fidelity Design System MCP; it is not configured here.
 - Do not edit canonical LoFi docs from a product brief. Use `/new-pattern` for pattern-authoring changes.

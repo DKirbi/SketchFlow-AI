@@ -9,8 +9,8 @@ import type { NotificationFilters } from '../../types';
 import { ISSUE_TYPES } from '../../data/messageTypes';
 
 /**
- * Single-select filters using Podium’s Mantine multiselect (there is no `PdsMantineSelect`
- * export in `@podium-design-system/react-components@2.19.4`; `maxDisplayValues={1}` matches
+ * Single-select filters using the High Fidelity Design System Mantine multiselect (there is no `PdsMantineSelect`
+ * export in the installed package; `maxDisplayValues={1}` matches
  * select behaviour).
  */
 export interface NotificationsFiltersProps {

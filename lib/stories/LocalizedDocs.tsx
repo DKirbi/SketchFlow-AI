@@ -9,7 +9,7 @@ import { UxPatternsWithStoryEmbeds } from './UxPatternsWithStoryEmbeds';
 const INTRO: Record<string, string> = {
   en: `# SketchFlowAI Patterns
 
-**SketchFlowAI Patterns** is the UX pattern library for SketchFlowAI — a living inventory of interaction behaviours, interface flows, and composition rules for the interfaces this team builds and reviews.
+**SketchFlowAI Patterns** is the UX pattern library for SketchFlowAI — a living inventory of interaction behaviours, interface flows, and composition rules for operator interfaces.
 
 ## Two separate things
 
@@ -19,7 +19,7 @@ This Storybook presents **two distinct artefacts** that work together but are no
 
 The **patterns** — the interaction pattern inventory and the workspace composition model — are the **core artefact**. They define how interfaces should behave, how screens are structured, and which interaction conventions apply across operator tools.
 
-Patterns are independent of any specific component library. In production they are implemented using **Podium**.
+Patterns are independent of any specific component library. They were originally crafted during professional work at Sportradar and are published here as standalone SketchFlowAI patterns — not a lo-fi equivalent of any vendor design system. Future production implementations use a **High Fidelity Design System**.
 
 ### 2. LOFI Kit (tool)
 
@@ -39,7 +39,7 @@ Dieses Storybook zeigt **zwei unterschiedliche Artefakte**:
 
 ### 1. SketchFlowAI Patterns (Kern)
 
-Die **Muster** definieren Verhalten, Bildschirmstruktur und Konventionen. Unabhängig von einer konkreten Komponentenbibliothek. In Produktion setzt **Podium** sie um.
+Die **Muster** definieren Verhalten, Bildschirmstruktur und Konventionen. Sie sind unabhängig von einer konkreten Komponentenbibliothek. Sie entstanden während der beruflichen Arbeit bei Sportradar und werden hier als eigenständige SketchFlowAI-Muster veröffentlicht — nicht als Lo-Fi-Äquivalent eines Hersteller-Designsystems. Künftige Produktionsumsetzungen nutzen ein **High Fidelity Design System**.
 
 ### 2. LOFI Kit (Werkzeug)
 
@@ -59,7 +59,7 @@ Ta Storybook prikazuje **dva različna artefakta**:
 
 ### 1. SketchFlowAI Patterns (jedro)
 
-**Vzorci** določajo vedenje, zgradbo zaslonov in konvencije. Neodvisni so od konkretne knjižnice komponent. V produkciji jih uresničuje **Podium**.
+**Vzorci** določajo vedenje, zgradbo zaslonov in konvencije. Neodvisni so od konkretne knjižnice komponent. Nastali so med poklicnim delom pri Sportradarju in so tu objavljeni kot samostojni vzorci SketchFlowAI — ne kot lo-fi ustreznica katerega koli proizvajalčevega oblikovalskega sistema. Prihodnje produkcijske izvedbe uporabljajo **High Fidelity Design System**.
 
 ### 2. LOFI Kit (orodje)
 

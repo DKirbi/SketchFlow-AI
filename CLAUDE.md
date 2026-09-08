@@ -116,7 +116,7 @@ npm run format            # Prettier
   Module resolution happens through vite's `resolve.alias` and tsconfig `paths`.
 - If `npm run dev` fails with `EADDRINUSE`, free leftover listeners then restart:
   `npm run dev:fresh` (or `npm run dev:free` if you only want to clear ports)
-- **High-fidelity note:** this export preserves high-fidelity documentation and demo source, but omits Podium/Mantine dependencies and MCP configuration. Restore the target design-system runtime before running high-fidelity demo scripts.
+- **High-fidelity note:** this export preserves high-fidelity documentation and demo source, but omits High Fidelity Design System dependencies and high-fidelity API documentation configuration. Restore the target design-system runtime before running high-fidelity demo scripts.
 
 ## When adding a new lo-fi component
 

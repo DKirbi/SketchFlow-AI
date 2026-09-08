@@ -1,6 +1,6 @@
 # UI Patterns — Agent rules (machine-optimised)
 
-> Terse, numbered, imperative rules for LLM/coding-agent consumption (**high-fidelity / Podium** semantic props).
+> Terse, numbered, imperative rules for LLM/coding-agent consumption (**High Fidelity Design System** semantic props).
 > For vocabulary tables, Storybook embeds, gap analysis, and **`Pds*`** inventory see [`UI_PATTERNS.md`](UI_PATTERNS.md).
 > For **UX flow** behaviour (**P1–P10**) see [`UX_PATTERNS_AGENT.md`](UX_PATTERNS_AGENT.md) — that document wins on **interaction** when the two differ.
 
@@ -9,8 +9,8 @@
 ## How to use
 
 1. Load [`UX_PATTERNS_AGENT.md`](UX_PATTERNS_AGENT.md) first for **interaction** constraints (P1–P10).
-2. Apply every numbered rule below when choosing **Podium** semantics: `color`, `rank`, `surface`, `size`, typography roles, and composition calls in [**`UI_PATTERNS.md`**](UI_PATTERNS.md) §1–§5.
-3. **`Pds*` prop names and allowed unions** — verify against installed `@podium-design-system/react-components` typings or **future high-fidelity API documentation**; refresh [`UI_PATTERNS.md`](UI_PATTERNS.md) when the package drifts.
+2. Apply every numbered rule below when choosing **High Fidelity Design System** semantics: `color`, `rank`, `surface`, `size`, typography roles, and composition calls in [**`UI_PATTERNS.md`**](UI_PATTERNS.md) §1–§5.
+3. **`Pds*` prop names and allowed unions** — verify against the installed High Fidelity Design System typings or **future high-fidelity API documentation**; refresh [`UI_PATTERNS.md`](UI_PATTERNS.md) when the package drifts.
 4. When a visual rule here appears to conflict with **P1–P10**, follow **UX** for behaviour and reconcile props after (e.g. modal footer order, P7 destructive flow).
 
 ---
@@ -49,7 +49,7 @@
 25. When three distinct levels are justified, ladder **`ghost` → `subtle` → `fill`** within **one** semantic colour family.
 26. Do **not** make **`outline`** the visually **strongest** neighbour of **`subtle`** as “secondary” — **`subtle` can outweigh `outline`**; use **`fill`** for the real commit when **`subtle`** is cancel/dismiss beside it.
 27. Do **not** place **`neutral`-coloured** and **`action`-coloured** buttons **side by side** in one **horizontal** cluster — pick **one** family for that strip.
-28. **`outline`** **may** be the cluster primary when context warrants — transparent or **opaque/tinted** outline per Podium — valid **local** emphasis.
+28. **`outline`** **may** be the cluster primary when context warrants — transparent or **opaque/tinted** outline per the High Fidelity Design System — valid **local** emphasis.
 29. Do **not** add **decorative** rank differences unrelated to **real** task importance.
 30. When **one** action is clearly dominant, use **one** clear step up (e.g. **`ghost` / `outline` peers + `fill`** or strong **`outline`** for the single primary) — **avoid** gratuitous **three-rank** stacks.
 31. **Start** new compositions **`neutral`**; move the **entire** relevant cluster to **`action`** when the **CTA is urgent and habitual**.
@@ -91,7 +91,7 @@
 ## U4 — Overlays + navigation
 
 54. Default modal/drawer/chrome to **`surface="on-light"`** unless the parent is explicitly dark.
-55. For **`on-dark`** parents, flip **all** nested Podium controls consistently — **no** mixed-surface overlays.
+55. For **`on-dark`** parents, flip **all** nested High Fidelity Design System controls consistently — **no** mixed-surface overlays.
 56. **Modal** commit: **`fill` + `action`** rightmost; **`subtle` + `neutral`** cancel immediately **left** of commit.
 57. **P7 destructive confirm** confirm button: **`fill` + `warning`** — **only** in that stacked confirmation surface.
 58. Treat drawers/popovers as **structural** — **neutral**, low rank; **escalate** real commits to **P5** modals, not crowded popovers.
@@ -122,7 +122,7 @@
 
 ## Global
 
-76. When installed Podium types or **MCP** disagree with these rules, **update the source** in [`UI_PATTERNS.md`](UI_PATTERNS.md) first, then mirror here in the same change-set.
+76. When installed High Fidelity Design System types or **MCP** disagree with these rules, **update the source** in [`UI_PATTERNS.md`](UI_PATTERNS.md) first, then mirror here in the same change-set.
 77. **`Subtle` in a modal footer** is almost always **Cancel** beside **`fill` commit**; **`subtle` in a ghost-heavy toolbar** may instead mean **primary among equals** (same semantic colour as peer **ghosts**) — see [`UI_PATTERNS.md`](UI_PATTERNS.md) §1.2. [`UI_PATTERNS.md`](UI_PATTERNS.md), [`UX_PATTERNS_AGENT.md`](UX_PATTERNS_AGENT.md), [`NL_COMPONENT_MAPPING_HI_FI.md`](NL_COMPONENT_MAPPING_HI_FI.md)._
 78. Present **togglable** actions as **buttons** (`aria-pressed` or equivalent) — **not** one-shot commits. Idle = outline/paper; **active inverts** (`fill` + `neutral`; lo-fi ink fill / paper label) and **sticks** until another interaction **on that component** takes selection away. See [`UI_PATTERNS.md`](UI_PATTERNS.md) §1.8.
 79. In **exclusive groups** (filter chips, segmented toggles), pressing a **sibling** returns the previous option to idle; pressing the **already-active** option is a **no-op** (does not toggle off).

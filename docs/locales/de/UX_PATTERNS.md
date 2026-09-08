@@ -1,6 +1,6 @@
 # UX-Muster — interaction & flow rules
 
-> This file is the **human-readable** interaction rulebook for Transformers interfaces.
+> This file is the **human-readable** interaction rulebook for SketchFlowAI interfaces.
 > It describes **behaviour** — how interfaces flow, validate, confirm, and
 > sequence. The P1–P10 patterns here apply regardless of design system, though
 > examples use lo-fi vocabulary.

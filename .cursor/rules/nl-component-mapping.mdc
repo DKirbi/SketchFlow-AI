@@ -11,7 +11,7 @@ alwaysApply: false
 > writing any component code.
 
 The authoritative full reference for **lo-fi** work is **[`docs/NL_COMPONENT_MAPPING_LO_FI.md`](docs/NL_COMPONENT_MAPPING_LO_FI.md)**.
-For **high-fidelity (Podium)** briefs (message starts with **`/high-fidelity`**), use **[`docs/NL_COMPONENT_MAPPING_HI_FI.md`](docs/NL_COMPONENT_MAPPING_HI_FI.md)**, **[`docs/UI_PATTERNS.md`](docs/UI_PATTERNS.md)** and **[`docs/UI_PATTERNS_AGENT.md`](docs/UI_PATTERNS_AGENT.md)** (PDS prop unions, UI rules, and `Pds*` inventory when MCP is offline), and **Podium MCP** (`pds-mcp`) for authoritative APIs — see `.cursor/skills/high-fidelity-prototype/SKILL.md`.
+For **high-fidelity (High Fidelity Design System)** briefs (message starts with **`/high-fidelity`**), use **[`docs/NL_COMPONENT_MAPPING_HI_FI.md`](docs/NL_COMPONENT_MAPPING_HI_FI.md)**, **[`docs/UI_PATTERNS.md`](docs/UI_PATTERNS.md)** and **[`docs/UI_PATTERNS_AGENT.md`](docs/UI_PATTERNS_AGENT.md)** (prop unions, UI rules, and component inventory when API docs are offline) — see `.cursor/skills/high-fidelity-prototype/SKILL.md`.
 The tables below are the high-priority fast lookup for **lo-fi**.
 
 ---

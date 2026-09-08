@@ -1,10 +1,10 @@
-# Podium semantic types — UI Pattern rulebook
+# High Fidelity Design System semantic types — UI Pattern rulebook
 
-**Audience:** agents and humans building **high-fidelity** (`/high-fidelity`) demos with `@podium-design-system/react-components`. **Companion:** [`UI_PATTERNS_AGENT.md`](UI_PATTERNS_AGENT.md) (terse machine rules for this rulebook), [`NL_COMPONENT_MAPPING_HI_FI.md`](NL_COMPONENT_MAPPING_HI_FI.md) (phrase → component starting map), [`UX_PATTERNS_AGENT.md`](UX_PATTERNS_AGENT.md) (P1–P10 behaviour).
+**Audience:** agents and humans building **high-fidelity** (`/high-fidelity`) demos with a **High Fidelity Design System**. **Companion:** [`UI_PATTERNS_AGENT.md`](UI_PATTERNS_AGENT.md) (terse machine rules for this rulebook), [`NL_COMPONENT_MAPPING_HI_FI.md`](NL_COMPONENT_MAPPING_HI_FI.md) (phrase → component starting map), [`UX_PATTERNS_AGENT.md`](UX_PATTERNS_AGENT.md) (P1–P10 behaviour).
 
-**Authority for literals and drift:** this page mirrors **`@podium-design-system/react-components`** (`dist/lib/types/*.d.ts`). When props change in a newer PDS release, update this file. **future high-fidelity API documentation** (`future design-system API source`) remains the source for examples, accessibility notes, and Mantine cross-references.
+**Authority for literals and drift:** this page mirrors the **High Fidelity Design System** type surface (`dist/lib/types/*.d.ts`). When props change in a newer design-system release, update this file. **future high-fidelity API documentation** (`future design-system API source`) remains the source for examples, accessibility notes, and Mantine cross-references.
 
-**Storybook embeds:** the interactive demos embedded in this page use **ShadCN** as portable reference components — no private registry required. The rule text below remains Podium-oriented for production hi-fi work; restore `@podium-design-system/react-components` when implementing against the real design system.
+**Storybook embeds:** the interactive demos embedded in this page use **ShadCN** as portable reference components — no private registry required. The rule text below remains oriented to a **High Fidelity Design System** for production hi-fi work; restore the target design-system package when implementing against it.
 
 ---
 
@@ -12,7 +12,7 @@
 
 This file does three things:
 
-1. Defines a **small, opinionated vocabulary** of Podium semantic props that carry meaning in internal-tool UI.
+1. Defines a **small, opinionated vocabulary** of High Fidelity Design System semantic props that carry meaning in internal-tool UI.
 2. Encodes that vocabulary as a **numbered UI Pattern rulebook** (1.x → 5.x) you can quote when generating high-fidelity prototypes. The rulebook reinforces — never contradicts — the **UX flow patterns P1–P10** in [`UX_PATTERNS_AGENT.md`](UX_PATTERNS_AGENT.md).
 3. Serves as the **source** for [`UI_PATTERNS_AGENT.md`](UI_PATTERNS_AGENT.md) — terse, imperative rules for LLMs derived from this document without duplicating vocabulary tables or the component inventory.
 
@@ -20,9 +20,9 @@ Read in order: **internal-tool UX baseline** → **core semantic vocabulary** �
 
 ---
 
-## Prefer Mantine-backed Podium components (high-fidelity prompts)
+## Prefer Mantine-backed High Fidelity Design System components (high-fidelity prompts)
 
-When `@podium-design-system/react-components` exposes **two** exports for the same role — for example **`PdsButton`** and **`PdsMantineButton`**, **`PdsText`** and **`PdsMantineText`**, **`PdsBadge`** and **`PdsMantineBadge`** — **always prefer the `PdsMantine*` component** for high-fidelity prototypes and for agent-generated code. The non-Mantine `Pds*` variants are often **deprecated** in JSDoc (e.g. “Please use `PdsMantine…` instead”) and are expected to be **removed in a future major release**.
+When the High Fidelity Design System exposes **two** exports for the same role — for example **`PdsButton`** and **`PdsMantineButton`**, **`PdsText`** and **`PdsMantineText`**, **`PdsBadge`** and **`PdsMantineBadge`** — **always prefer the `PdsMantine*` component** for high-fidelity prototypes and for agent-generated code. The non-Mantine `Pds*` variants are often **deprecated** in JSDoc (e.g. “Please use `PdsMantine…` instead”) and are expected to be **removed in a future major release**.
 
 **Many primitives still ship only as `Pds*`.** Where there is **no** `PdsMantine*` counterpart yet, that component is **not** legacy by default — it is simply **waiting for its Mantine release**. Use those **`Pds*`** exports as normal during the high-fidelity prototype phase until a matching **`PdsMantine*`** lands in the package.
 
@@ -32,7 +32,7 @@ This is **not** an additional numbered UI Pattern (it does not change P1–P10 b
 
 ## Internal-tool UX baseline
 
-Podium components ship with an intentionally **minimalistic, "invisible" base appearance**. That is not an accident — it is a UX practice for **heavy data interfaces** that operators visit daily. Three principles drive every rule below:
+High Fidelity Design System components ship with an intentionally **minimalistic, "invisible" base appearance**. That is not an accident — it is a UX practice for **heavy data interfaces** that operators visit daily. Three principles drive every rule below:
 
 1. **Lower cognitive load.** Meaning is carried by **structure, typography, and semantic state** — not by chroma. The interface should fade into the background so the data and operator's task stay foreground.
 2. **Color is reserved for semantic intent**, not decoration. If a colour does not communicate **status** (`success`, `warning`, `attention`) or **action** (`action`), it should be `neutral`.
@@ -44,7 +44,7 @@ In practice this means: most controls in an internal tool surface should be `neu
 
 ## Core semantic vocabulary
 
-The seven types below are the **only** Podium semantic props this rulebook treats as load-bearing. Every UI Pattern in §1–§5 is expressed in terms of these.
+The seven types below are the **only** High Fidelity Design System semantic props this rulebook treats as load-bearing. Every UI Pattern in §1–§5 is expressed in terms of these.
 
 ### `PdsColor` — semantic intent
 
@@ -141,9 +141,9 @@ Foundational — every other surface composes buttons and status feedback.
 - `outline` is the default secondary rank for utility actions and toolbar controls.
 - `subtle` is the most common rank for **Cancel** and dismiss controls — preferred over `ghost` because it remains visibly tappable.
 - `ghost` is reserved for back, tertiary, and deprioritised destructive actions where you do **not** want the eye to land first.
-- Within a **single cluster**, step ranks **monotonically** in one direction (lowest → highest emphasis). **Do not** alternate ranks in a “wavy” sequence (e.g. `outline` → `subtle` → `outline`) — see [§ 1.7](#17--button-hierarchy-podium-do--dont).
+- Within a **single cluster**, step ranks **monotonically** in one direction (lowest → highest emphasis). **Do not** alternate ranks in a “wavy” sequence (e.g. `outline` → `subtle` → `outline`) — see [§ 1.7](#17--button-hierarchy-high-fidelity-design-system-do--dont).
 - In **dense toolbars** where **most** actions are **`ghost`**, the **one** emphasised utility may use **`subtle`** at the **same** semantic colour (primary among ghosts). That pattern is **different** from the modal footer, where **`subtle`** is **Cancel** beside a **`fill`** commit ([§ 4.2](#42--modal-commit-emphasis)).
-- **Icons:** prefer **plain labels**; add **leading icons** only when they **disambiguate** or aid **scanning** (e.g. equal-importance **ghost** utilities). Avoid **icons on every** control **plus** multiple ranks without justification — [§ 1.7](#17--button-hierarchy-podium-do--dont).
+- **Icons:** prefer **plain labels**; add **leading icons** only when they **disambiguate** or aid **scanning** (e.g. equal-importance **ghost** utilities). Avoid **icons on every** control **plus** multiple ranks without justification — [§ 1.7](#17--button-hierarchy-high-fidelity-design-system-do--dont).
 
 > **UX:** [P5 (modal footer)](UX_PATTERNS_AGENT.md#p5--modal), [P7 (confirmation)](UX_PATTERNS_AGENT.md#p7--confirmation-dialog)
 
@@ -178,9 +178,9 @@ Foundational — every other surface composes buttons and status feedback.
 - Default button size is `md`. Step down to `sm` when the button lives one hierarchy level below the canonical level (nested toolbar, modal subaction).
 - `xs` only for icon-only row buttons inside dense tables.
 
-#### 1.7 — Button hierarchy: Podium Do / Don't
+#### 1.7 — Button hierarchy: High Fidelity Design System Do / Don't
 
-These guidelines align Podium **Ghost / Subtle / Outlined / Filled** with **`PdsRank`** (`ghost` → `subtle` → `outline` → `fill`) and **`PdsColor`** (`neutral` vs `action`). They reinforce [§ 1.1](#11--action-color-hierarchy) and [§ 1.2](#12--rank-emphasis-ladder); they do not override modal footer defaults in [§ 4.2](#42--modal-commit-emphasis) or row-action constraints in [§ 5.2](#52--row-actions).
+These guidelines align High Fidelity Design System **Ghost / Subtle / Outlined / Filled** with **`PdsRank`** (`ghost` → `subtle` → `outline` → `fill`) and **`PdsColor`** (`neutral` vs `action`). They reinforce [§ 1.1](#11--action-color-hierarchy) and [§ 1.2](#12--rank-emphasis-ladder); they do not override modal footer defaults in [§ 4.2](#42--modal-commit-emphasis) or row-action constraints in [§ 5.2](#52--row-actions).
 
 **Baseline**
 
@@ -193,7 +193,7 @@ These guidelines align Podium **Ghost / Subtle / Outlined / Filled** with **`Pds
 | --- | --- |
 | For a **classic three-step** ladder when you need tertiary → secondary → strongest, use **`ghost` → `subtle` → `fill`** (same semantic colour family). | Do **not** place **`outline` as the strongest** action **next to `subtle` as “secondary”** — **`subtle` can read heavier than `outline`**, reversing the intended order. Prefer **`fill`** for the true commit when **`subtle`** sits beside it as cancel/dismiss. |
 | Keep **one semantic colour per group**: either all **`neutral`** (e.g. ghost secondaries + subtle primary-among-neutrals) or all **`action`**. | Do **not** mix **`neutral` and `action`** in the **same horizontal cluster** (e.g. gray utilities beside a blue primary in one strip). |
-| **`outline` is a valid primary** in many contexts; use **transparent** or **opaque / tinted outline** when the surface or Podium API calls for it (local emphasis on gray panels). | Do **not** invent **rank contrast** (e.g. unrelated ghost + subtle pairings) where **task importance** does not warrant hierarchy — no decorative emphasis. |
+| **`outline` is a valid primary** in many contexts; use **transparent** or **opaque / tinted outline** when the surface or High Fidelity Design System API calls for it (local emphasis on gray panels). | Do **not** invent **rank contrast** (e.g. unrelated ghost + subtle pairings) where **task importance** does not warrant hierarchy — no decorative emphasis. |
 | When actions are **grouped** and **one** path is clearly strongest, use **one** clear step up (e.g. ghost/outline peers + **`fill`** or strong **outline** for the single primary). | Do **not** stack **three ranks** “for variety” — **ghost + subtle + fill** without need adds noise and cognitive load. |
 | **Start** new UI in **`neutral`**; move the **whole cluster** to **`action`** when the CTA is **urgent and frequent** (still one semantic family per cluster). | Do **not** place **two `fill`** buttons **side by side**; **rule of thumb: one `fill` per view** (or per coherent action cluster). |
 | On **light gray** toolbars or cards, **outline with an opaque / tinted field** can mark the **local** primary against **`ghost`** neighbours. | Do **not** use **non-monotonic** rank sequences in one cluster (e.g. outline–subtle–outline) — emphasis should **not** zig-zag. |
@@ -464,9 +464,9 @@ Exported from `dist/lib/main.d.ts` (icons excluded). Prefer **`PdsMantine*`** va
 
 ## Package surface (short)
 
-- **Entry:** `@podium-design-system/react-components` exports **`Pds*`** components, **`export *` from `./types`**, **`PodiumProvider`** (alias of Mantine's `MantineProvider`), and **`export *` from `@mantine/core` + `@mantine/hooks`** via the same barrel — layout primitives may be Mantine symbols, not `Pds*` names.
-- **Styles:** `@podium-design-system/react-components/pds-mantine-styles.css`
-- **Peers (Podium 2.19.4):** `@mantine/core`, `@mantine/dates`, `@mantine/hooks` **8.3.18**, `dayjs`, `react` / `react-dom`.
+- **Entry:** the High Fidelity Design System package exports **`Pds*`** components, **`export *` from `./types`**, a root **provider** (alias of Mantine's `MantineProvider`), and **`export *` from `@mantine/core` + `@mantine/hooks`** via the same barrel — layout primitives may be Mantine symbols, not `Pds*` names.
+- **Styles:** the High Fidelity Design System stylesheet (Mantine-backed).
+- **Peers:** `@mantine/core`, `@mantine/dates`, `@mantine/hooks` **8.3.18**, `dayjs`, `react` / `react-dom`.
 - **Icons:** ~**915** named `Pds*Icon` exports from the icons barrel (see package `exports["./icons.js"]`).
 
 ---

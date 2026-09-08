@@ -1,16 +1,16 @@
-# Natural language → high-fidelity (Podium) component mapping
+# Natural language → High Fidelity Design System component mapping
 
-> **Hi-fi companion.** This file is the **phrase → Podium / Mantine** counterpart to [`NL_COMPONENT_MAPPING_LO_FI.md`](NL_COMPONENT_MAPPING_LO_FI.md) (LOFI Kit prototypes in this repo). **Authoritative props, types, examples, accessibility, and Mantine integration** for Podium components come from the **future high-fidelity API documentation** server in Cursor (`future design-system API source`) and official PDS documentation — **consult the installed design-system API documentation** before locking APIs. The tables below still mirror LOFI signal grammar as a **starting point**; evolve rows toward `Pds*` / Mantine components as the team extends this doc.
+> **Hi-fi companion.** This file is the **phrase → High Fidelity Design System** counterpart to [`NL_COMPONENT_MAPPING_LO_FI.md`](NL_COMPONENT_MAPPING_LO_FI.md) (LOFI Kit prototypes in this repo). **Authoritative props, types, examples, accessibility, and integration notes** for High Fidelity Design System components come from the **future high-fidelity API documentation** server in Cursor (`future design-system API source`) and official design-system documentation — **consult the installed design-system API documentation** before locking APIs. The tables below still mirror LOFI signal grammar as a **starting point**; evolve rows toward High Fidelity Design System components as the team extends this doc.
 
-**PDS semantic props (draft vocabulary):** reusable TypeScript unions (`PdsColor`, `PdsSize`, `PdsRank`, …), a full **`Pds*`** export list for the installed package, and the numbered UI rulebook live in [`UI_PATTERNS.md`](UI_PATTERNS.md). Terse agent rules: [`UI_PATTERNS_AGENT.md`](UI_PATTERNS_AGENT.md). Use those docs when mapping natural language to **hi-fi prop choices**; extend the phrase tables _here_ via **`/new-pattern`** when team definitions are ready.
+**High Fidelity Design System semantic props (draft vocabulary):** reusable TypeScript unions (`PdsColor`, `PdsSize`, `PdsRank`, …), a full **`Pds*`** export list for the installed package, and the numbered UI rulebook live in [`UI_PATTERNS.md`](UI_PATTERNS.md). Terse agent rules: [`UI_PATTERNS_AGENT.md`](UI_PATTERNS_AGENT.md). Use those docs when mapping natural language to **hi-fi prop choices**; extend the phrase tables _here_ via **`/new-pattern`** when team definitions are ready.
 
 ---
 
 ## Starting point (LOFI-aligned tables)
 
-Parse briefs phrase by phrase as in [`NL_COMPONENT_MAPPING_LO_FI.md`](NL_COMPONENT_MAPPING_LO_FI.md). For **implementation**, map the same signals to **Podium / Mantine** using **future high-fidelity API documentation** (`future design-system API source`), then align with [`COMPOSITION_PATTERNS.md`](COMPOSITION_PATTERNS.md) and [`UX_PATTERNS.md`](UX_PATTERNS.md) for behaviour (P1–P10).
+Parse briefs phrase by phrase as in [`NL_COMPONENT_MAPPING_LO_FI.md`](NL_COMPONENT_MAPPING_LO_FI.md). For **implementation**, map the same signals to a **High Fidelity Design System** using **future high-fidelity API documentation** (`future design-system API source`), then align with [`COMPOSITION_PATTERNS.md`](COMPOSITION_PATTERNS.md) and [`UX_PATTERNS.md`](UX_PATTERNS.md) for behaviour (P1–P10).
 
-Lo-fi **component sets** (`ActionDescriptor.role` + `host`) already store the target Podium `color` / `rank` via `resolveActionPresentation`. When promoting a set to hi-fi, apply those UI columns (U1 / U4.2 / U5) rather than re-deriving emphasis from the LOFI `variant`.
+Lo-fi **component sets** (`ActionDescriptor.role` + `host`) already store the target High Fidelity Design System `color` / `rank` via `resolveActionPresentation`. When promoting a set to hi-fi, apply those UI columns (U1 / U4.2 / U5) rather than re-deriving emphasis from the LOFI `variant`.
 
 ---
 
