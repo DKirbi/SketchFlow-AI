@@ -138,7 +138,7 @@ Use these pairs when reviewing Figma or PRs. Wording tracks Podium design guidan
 * **Typography** — default body scale **`700`**; practical body/interface **`500`–`900`**; avoid hero sizes in internal tools. Use **size** for hierarchy, **weight** sparingly.
 * **Forms** — default fields **`neutral` + `outline` + `md`**; **focus** signals **`action`**; validation colours per **P6** (hard **`warning`**, soft **`attention`**).
 * **Modals** — commit **`fill` + `action`**; cancel **`subtle` + `neutral`**; **P7** destructive confirm uses **`fill` + `warning`** on confirm **only** after opt-in.
-* **Tables** — row **Edit/View** usually **`outline`/`subtle` + neutral** (not a column of **fills**); destructive rows **lower rank + `warning`**; filter chips follow **neutral/outline** inactive → **subtle** active patterns in the full doc.
+* **Tables** — row **Edit/View** usually **`outline`/`subtle` + neutral** (not a column of **fills**); destructive rows **lower rank + `warning`**; filter chips idle **outline + neutral** and selected **fill + neutral** (sticky invert; see full doc §1.8).
 
 Details, Storybook embed IDs, and edge cases live in the repo **only** — keep this Confluence page as an overview.
 
