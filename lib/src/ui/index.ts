@@ -35,6 +35,7 @@ export {
 export { InlineAlert as LOFIInlineAlert } from './InlineAlert/InlineAlert';
 export { EmptyState as LOFIEmptyState }   from './EmptyState/EmptyState';
 export { Switch as LOFISwitch }       from './Switch/Switch';
+export { Tooltip as LOFITooltip, TooltipMarker as LOFITooltipMarker } from './Tooltip/Tooltip';
 export { MainWorkspace as LOFIMainWorkspace } from './MainWorkspace/MainWorkspace';
 export { NavTree as LOFINavTree }            from './NavTree/NavTree';
 
@@ -71,5 +72,6 @@ export type {
 export type { InlineAlertProps, InlineAlertSeverity }        from './InlineAlert/InlineAlert';
 export type { EmptyStateProps, EmptyStateVariant }           from './EmptyState/EmptyState';
 export type { SwitchProps, SwitchSize }                      from './Switch/Switch';
+export type { TooltipProps, TooltipSide }                    from './Tooltip/Tooltip';
 export type { MainWorkspaceProps }                           from './MainWorkspace/MainWorkspace';
 export type { NavTreeProps, NavTreeItem }                    from './NavTree/NavTree';

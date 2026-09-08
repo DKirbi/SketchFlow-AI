@@ -82,6 +82,8 @@ table.
 
 ```bash
 npm run dev                  # Hub on :5172 + demos + Storybook
+npm run dev:free             # Stop leftover listeners on :5172–5185 and :6007
+npm run dev:fresh            # Free those ports, then start the hub
 npm run dev:bracket-demo     # bracket-demo Vite only (no hub)
 npm run build:lofi           # Build lofi-kit → lib/dist
 npm run storybook    # Storybook on :6007

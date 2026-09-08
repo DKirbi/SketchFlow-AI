@@ -133,7 +133,7 @@ regions or sections.
 
 ---
 
-## Component catalog (18 primitives)
+## Component catalog (19 primitives)
 
 ### Layout
 
@@ -144,7 +144,7 @@ regions or sections.
 | **LOFIPanel** | `panel` | Anchored side panel. No overlay. Use near a row or node for contextual detail. |
 | **LOFIModal** | `modal` | Overlay dialog. Backdrop dismiss + Escape. Sizes: `default`, `wide`. |
 | **LOFIFieldset** | `fieldset` | Bordered group with `legend`. Use inside forms/modals for section grouping. |
-| **LOFIField** | `field` | Label + control wrapper. `inline` for side-by-side. `hint` for helper text. |
+| **LOFIField** | `field` | Label + control wrapper. `inline` for side-by-side. `tooltip` for extra information about the input (ℹ marker on the label). `hint` only when helper copy must stay visible. |
 | **LOFINavTree** | `nav-tree` | Hierarchical sidebar navigation — expand/collapse branches (Radix Collapsible, bundled), single-leaf selection. |
 | **LOFIMainWorkspace** | `main-workspace` | UPL main pane — breadcrumb, title + badges, optional tabs, scrollable body, sticky footer. |
 
@@ -167,7 +167,8 @@ Not primitives. JSON configs that group primitives. Storybook: **LOW FI Design s
 | **LOFITextarea** | `textarea` | Multi-line resizable text entry (notes, descriptions). Sizes: `default`, `compact`. Pass `allowClear` to show a top-right ✕ button. Wrap in `LOFIField` like `LOFIInput`. |
 | **LOFISelect** | `select` | Dropdown for a fixed option set. Use when options exceed 3 items or space is constrained. Sizes: `default`, `compact`. Pass `allowClear` to replace the chevron with a ✕ button when a value is selected. |
 | **LOFIMultiSelect** | `select` / `multiselect` | Multi-value dropdown with checkbox-leading menu rows and optional in-menu search. Closed trigger shows placeholder, a single selected label, or `multipleLabel` (default “Multiple Entries”) when two or more values are selected. Optional `allValue` prepends an “All” row. |
-| **LOFISwitch** | `switch` | Single boolean on/off toggle. Use for enabling or disabling a named setting or feature. Always has a visible label. |
+| **LOFISwitch** | `switch` | Single boolean on/off toggle. Use for enabling or disabling a named setting or feature. Always has a visible label beside the track — do not add a second label above. Extra information uses `LOFITooltip`. |
+| **LOFITooltip** | `tooltip` | Hover/focus bubble for extra information about an input. Pair with `LOFITooltipMarker` (ℹ) next to a field label or switch. |
 | **LOFICheckbox** | `checkbox` | Multi-select from a fixed set. Use when 2 or more independent options can each be on or off. Sizes: `default` (30x30) and `sm` (20x20). |
 | **LOFIRadio** | `radio-group` | Mutually exclusive choice from a fixed set of 2–3 options shown in full. Use when all options should be visible simultaneously. Layout: `row`, `column`; sizes: `default` (30x30) and `sm` (20x20). |
 | **LOFIChip** | `chip` | P9 chip. `onClear` (or deprecated `onDismiss`) shows ✕ for an active-filter token. Omit `onClear` and pass `selected` + `onClick` for exclusive status filters (count in the label). Selected filter chips invert (ink fill) and stay pressed until another chip in the group is chosen. Do not fake chips with `LOFIButton`. |
@@ -219,6 +220,7 @@ import { edgeTypes, nodeTypes } from 'lofi-kit';
 | User triggers an action | `LOFIButton` (variant = primary / default / dismiss) |
 | Async commit whose label/state changes (idle → loading → success) — inline save or row toggle | `LOFIStatefulButton` (P3 inline save, P2.2 row toggle) |
 | User turns a single named setting on or off | `LOFISwitch` |
+| Extra information about an input (shown on hover/focus, not under the control) | `LOFITooltip` (+ `LOFIField tooltip` or `LOFITooltipMarker`) |
 | User selects multiple independent options | `LOFICheckbox` per option, in `LOFIFieldset` |
 | User picks one of 2–3 mutually exclusive options | `LOFIRadio` |
 | User picks one of 4+ mutually exclusive options | `LOFISelect` |

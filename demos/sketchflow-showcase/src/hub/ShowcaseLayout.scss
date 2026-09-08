@@ -122,6 +122,7 @@ $hub-gap: $space-12;
     &:hover:not(:disabled) {
       background: $color-surface-hover;
       border-color: transparent;
+      color: $color-ink;
     }
   }
 
@@ -171,6 +172,7 @@ $hub-gap: $space-12;
       &:hover:not(:disabled) {
         background: $color-surface-hover;
         border-color: transparent;
+        color: $color-ink;
       }
     }
 
@@ -222,6 +224,7 @@ $hub-gap: $space-12;
     &:hover:not(:disabled) {
       background: $color-surface-hover;
       border-color: transparent;
+      color: $color-ink;
     }
   }
 
@@ -295,6 +298,7 @@ $hub-gap: $space-12;
 
     .hub-sidebar__collapse.btn {
       width: 100%;
+      justify-content: center;
       border-radius: $radius-none;
       border-color: transparent;
       background: transparent;
@@ -376,6 +380,13 @@ $hub-gap: $space-12;
     gap: $space-2;
   }
 
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    min-width: 0;
+  }
+
   &__title,
   &__summary,
   &__message {
@@ -409,6 +420,7 @@ $hub-gap: $space-12;
     &:hover:not(:disabled) {
       background: $color-surface-hover;
       border-color: transparent;
+      color: $color-ink;
     }
 
     .text {
@@ -474,6 +486,11 @@ $hub-gap: $space-12;
     gap: $space-4;
   }
 
+  &__more.btn {
+    flex-shrink: 0;
+    align-self: center;
+  }
+
   &__toggle.btn {
     flex-shrink: 0;
     padding: $space-1;
@@ -487,6 +504,7 @@ $hub-gap: $space-12;
     &:hover:not(:disabled) {
       background: $color-surface-hover;
       border-color: transparent;
+      color: $color-ink;
     }
   }
 
@@ -517,6 +535,19 @@ $hub-gap: $space-12;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .hub-brief__more.btn {
+      align-self: center;
+      border-color: $color-paper;
+      background: transparent;
+      color: $color-paper;
+
+      &:hover:not(:disabled) {
+        background: $color-ink-secondary;
+        border-color: $color-paper;
+        color: $color-paper;
+      }
     }
 
     .hub-brief__toggle.btn {

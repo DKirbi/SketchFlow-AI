@@ -38,6 +38,12 @@ export const COMPANIES: HubCompany[] = [
   { id: 'OTHER', label: 'OTHER', enabled: false },
 ];
 
+const ROLE_GATING_PATTERN: PatternSummary = {
+  id: 'Role gating',
+  title: 'Role gating — restricted editing',
+  body: 'Change the prototype user in the toolbar to see how roles restrict editing of sensitive data. Move and Remove stay hidden while the role is Operator.',
+};
+
 const BRACKET_PATTERNS: PatternSummary[] = [
   {
     id: 'P5',
@@ -49,19 +55,21 @@ const BRACKET_PATTERNS: PatternSummary[] = [
     title: 'P7 — Confirmation dialog',
     body: 'Destructive or commit actions on the bracket ask for a confirmation-only overlay before they apply.',
   },
+  ROLE_GATING_PATTERN,
 ];
 
 const TOURNAMENT_PATTERNS: PatternSummary[] = [
   {
     id: 'P1',
     title: 'P1 — Workspace',
-    body: 'A UPL shell with filter row, collapsible sidebar tree, and a persistent main interface view.',
+    body: 'A UPL workspace with a minified tool identity bar, filter row, collapsible sidebar tree, and a persistent main interface view on its own card.',
   },
   {
     id: 'P9',
     title: 'P9 — Filters',
     body: 'Search and filter controls gate the sidebar tree. Clearing filters resets dependent selection state.',
   },
+  ROLE_GATING_PATTERN,
 ];
 
 export const PROJECTS: HubProject[] = [
@@ -75,6 +83,7 @@ export const PROJECTS: HubProject[] = [
     brief: [
       'Reconciles two records of the same entity, lets the operator choose field overrides, and writes the result to the database.',
       'Choose a mock database (film catalogue or wizarding world) from the toolbar. Mock catalogues protect real business sports data.',
+      'Select one database row and one crawled match, then Merge. The review modal stays gated until at least one field is overridden.',
     ],
     patternSummaries: mergeToolExampleConfig.patternSummaries,
     kind: 'spa',
@@ -89,6 +98,7 @@ export const PROJECTS: HubProject[] = [
     brief: [
       'Maps messy or legacy internal names onto newly crawled canonical names, row by row. The flow is the operator job of reconciling catalogue values.',
       'Choose a mock database (film catalogue or wizarding world) from the toolbar. Mock catalogues protect real business sports data.',
+      'Select rows to bulk-map. Use Map / Unmap to manage individual entries.',
       MAPPING_EXPAND_HINT,
     ],
     patternSummaries: mappingExampleConfig.patternSummaries,
@@ -103,6 +113,7 @@ export const PROJECTS: HubProject[] = [
     brief: [
       'A bracket builder for how matches connect and progress.',
       'It is meant to stress robust, complex cases: pairing, byes, progression edges, and the different connection rules across bracket systems.',
+      'Change the prototype user in the toolbar (Team Management) to see how roles restrict editing of sensitive team data.',
     ],
     patternSummaries: BRACKET_PATTERNS,
     kind: 'embed',
@@ -117,6 +128,7 @@ export const PROJECTS: HubProject[] = [
       'Large nested hierarchies in a UPL workspace, for navigating and maintaining sports and tournament entities.',
     brief: [
       'Management testing for large nested hierarchies (sports, tournaments, and related entities) in a UPL workspace, to see how operators could navigate and maintain that scale.',
+      'Change the prototype user in the toolbar to see how different roles influence usage. Operator cannot Move or Remove sensitive records; switch role to unlock those actions.',
     ],
     patternSummaries: TOURNAMENT_PATTERNS,
     kind: 'embed',

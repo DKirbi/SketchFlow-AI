@@ -212,8 +212,8 @@ export function TeamManagement({ onBack }: TeamManagementProps) {
               variant="tag"
               label={currentUser.role}
               onClick={cycleRole}
+              title="Prototype role — click to switch"
             />
-            <LOFIText variant="ghost">(click role to switch)</LOFIText>
           </span>
         }
         center={<LOFIText as="h1" variant="body">Team Management</LOFIText>}

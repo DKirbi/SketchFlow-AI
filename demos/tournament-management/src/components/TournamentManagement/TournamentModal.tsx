@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { LOFIButton, LOFIModal, LOFIText } from 'lofi-kit';
+import { LOFIButton, LOFIModal } from 'lofi-kit';
 
 import { createNewSimpleTournamentId, snapshotToTournament } from '../../lib/tournamentFormMappers';
 import { validateSnapshot } from '../../lib/modalValidate';
@@ -61,8 +61,8 @@ export function TournamentModal({
     mode === 'edit'
       ? `Edit — ${sourceTournament?.name ?? 'tournament'}`
       : mode === 'clone'
-        ? 'Clone simple tournament'
-        : 'Create simple tournament';
+        ? 'Clone tournament'
+        : 'Create tournament';
 
   const runSave = async () => {
     if (!valid) return;
@@ -111,9 +111,6 @@ export function TournamentModal({
           </>
         }
       >
-        <LOFIText variant="description">
-          Section numbering follows brief (Section 5 omitted by product). Classification prefills mirror sidebar Browse selection.
-        </LOFIText>
         <TournamentForm
           mode={mode}
           snapshot={snapshot}

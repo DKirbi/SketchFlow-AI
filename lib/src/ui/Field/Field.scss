@@ -5,6 +5,12 @@
   flex-direction: column;
   gap: $space-2;
 
+  &__label-row {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
   &__label {
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
@@ -44,12 +50,16 @@
     align-items: center;
     gap: $space-4;
 
+    .field__label-row {
+      flex-shrink: 0;
+    }
+
     .field__label {
       white-space: nowrap;
       flex-shrink: 0;
     }
 
-    > :not(.field__label):not(.field__hint) {
+    > :not(.field__label-row):not(.field__hint):not(.field__error) {
       flex: 1;
     }
   }

@@ -8,6 +8,10 @@ import {
   LOFIButton,
   LOFIText,
   LOFITabs,
+  LOFIToolbar,
+  LOFIBadge,
+  LOFITooltip,
+  LOFITooltipMarker,
 } from 'lofi-kit';
 import type { ColumnDef } from 'lofi-kit';
 import {
@@ -17,6 +21,7 @@ import {
 import { cupRoundAbbrev } from '../lib/roundNaming';
 import { useTournamentStore } from '../store/useTournamentStore';
 import type { RoundsetRow, Tournament, TournamentEntrant, TournamentStructure } from '../types';
+import { useTeamStore } from './TeamManagement/useTeamStore';
 
 function deriveEntrants(tournament: Tournament): TournamentEntrant[] {
   // Prefer the stored entrants list — it carries user-defined ordering.
@@ -212,6 +217,8 @@ export function StructureSetupView({ onGenerated, onTeams }: Props) {
   const applyGenerateFinishedFromStructure = useTournamentStore(
     (s) => s.applyGenerateFinishedFromStructure,
   );
+  const currentUser = useTeamStore((s) => s.currentUser);
+  const cycleRole = useTeamStore((s) => s.cycleRole);
   const tournament = useTournamentStore((s) => s.tournament);
   const tournamentStructure = useTournamentStore((s) => s.tournamentStructure);
 
@@ -402,27 +409,41 @@ export function StructureSetupView({ onGenerated, onTeams }: Props) {
 
   return (
     <div className="structure-setup">
-      <header className="structure-header">
-        <div className="structure-header__identity">
-          <div className="structure-app-title">BRACKET BUILDER</div>
-          <div className="structure-tournament-line">
-            <span className="structure-name">{name || 'Tournament'}</span>
-            <span className="structure-season">{season ? ` · Season ${season}` : ''}</span>
-          </div>
-        </div>
-        <LOFITabs
-          value="setup"
-          onChange={() => {}}
-          tabs={[
-            { value: 'setup',   label: 'Structure setup' },
-            { value: 'bracket', label: 'Bracket view', disabled: true },
-          ]}
-          ariaLabel="App navigation"
+      <div className="structure-header">
+        <LOFIToolbar
+          className="structure-toolbar"
+          left={
+            <span className="tool-identity">
+              <LOFIText variant="sm">{currentUser.handle}</LOFIText>
+              <LOFIBadge
+                variant="tag"
+                label={currentUser.role}
+                onClick={cycleRole}
+                title="Prototype role — click to switch"
+              />
+            </span>
+          }
+          center={
+            <LOFIText as="h1" variant="body">
+              Bracket Builder
+            </LOFIText>
+          }
         />
-      </header>
+        <div className="structure-nav-tabs">
+          <LOFITabs
+            value="setup"
+            onChange={() => {}}
+            tabs={[
+              { value: 'setup',   label: 'Structure setup' },
+              { value: 'bracket', label: 'Bracket view', disabled: true },
+            ]}
+            ariaLabel="App navigation"
+          />
+        </div>
+      </div>
 
       <main className="structure-main">
-        <LOFIText as="h1" variant="body" className="structure-page-title">Bracket setup for tournament</LOFIText>
+        <LOFIText as="h2" variant="body" className="structure-page-title">Bracket setup for tournament</LOFIText>
         <LOFIText as="p" variant="muted" className="structure-intro">
           Pick a bracket type, configure rounds, and define progression logic. This step runs before
           the interactive bracket canvas.
@@ -499,7 +520,9 @@ export function StructureSetupView({ onGenerated, onTeams }: Props) {
         <section className="structure-table-wrap">
           <div className="structure-rounds-header">
             <span className="structure-table-hint">
-              Each row = one cup round. Progression type determines who advances automatically.
+              <LOFITooltip content="Each row = one cup round. Progression type determines who advances automatically.">
+                <LOFITooltipMarker label="rounds" />
+              </LOFITooltip>
             </span>
           </div>
           <div className="structure-table-scroll">
@@ -533,7 +556,7 @@ export function StructureSetupView({ onGenerated, onTeams }: Props) {
           </LOFIButton>
           <LOFIButton
             type="button"
-            variant="primary"
+            variant="default"
             className="structure-generate-btn structure-generate-btn--finished"
             onClick={handleGenerateFinished}
           >

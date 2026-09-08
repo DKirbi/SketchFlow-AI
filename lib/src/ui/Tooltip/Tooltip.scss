@@ -1,0 +1,42 @@
+@use '../../styles/tokens' as *;
+
+.tooltip {
+  z-index: 1100;
+  max-width: 16rem;
+  padding: $space-2 $space-4;
+  background: $color-paper;
+  color: $color-ink;
+  border: $border-width solid $color-border;
+  border-radius: $radius-none;
+  box-shadow: $shadow-soft-sm;
+  font-family: $text-font-family;
+  font-size: $font-size-xs;
+  line-height: $line-height-base;
+
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  &__marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-ink-muted;
+    font-size: $font-size-xs;
+    line-height: 1;
+    cursor: default;
+
+    &:focus-visible {
+      outline: $focus-ring-width solid $focus-ring-color;
+      outline-offset: $focus-ring-offset;
+    }
+  }
+
+  &__arrow {
+    fill: $color-paper;
+    stroke: $color-border;
+    stroke-width: $border-width;
+  }
+}

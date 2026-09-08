@@ -1,4 +1,4 @@
-import { LOFIButton, LOFIField, LOFISelect, LOFIText } from 'lofi-kit';
+import { LOFIButton, LOFIField, LOFISelect, LOFITooltip, LOFITooltipMarker } from 'lofi-kit';
 import { FILTER_OPTION_ALL } from '../../constants';
 import type { NotificationFilters } from '../../types';
 import { ISSUE_TYPES } from '../../data/messageTypes';
@@ -52,9 +52,6 @@ export function NotificationsFilters({ value, onChange, onClearAll }: Notificati
 
   return (
     <div className="notifications-overview__filters" role="search">
-      <LOFIText as="p" variant="micro" className="notifications-overview__filters-legend">
-        Filters apply together (AND). Each field can be cleared independently.
-      </LOFIText>
       <div className="notifications-overview__filters-grid">
         <LOFIField label="Days back" htmlFor="f-days">
           <LOFISelect
@@ -99,6 +96,9 @@ export function NotificationsFilters({ value, onChange, onClearAll }: Notificati
           />
         </LOFIField>
         <div className="notifications-overview__filters-actions">
+          <LOFITooltip content="Filters apply together (AND). Each field can be cleared independently.">
+            <LOFITooltipMarker label="filters" />
+          </LOFITooltip>
           <LOFIButton type="button" variant="dismiss" onClick={onClearAll}>
             Clear all
           </LOFIButton>

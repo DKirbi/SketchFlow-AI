@@ -7,3 +7,10 @@ window.HTMLElement.prototype.setPointerCapture = vi.fn();
 window.HTMLElement.prototype.releasePointerCapture = vi.fn();
 // Radix Select uses scrollIntoView internally.
 window.HTMLElement.prototype.scrollIntoView = vi.fn();
+// Radix Tooltip measures the trigger with ResizeObserver.
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+window.ResizeObserver = ResizeObserverMock as typeof ResizeObserver;

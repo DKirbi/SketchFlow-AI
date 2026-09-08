@@ -177,7 +177,7 @@ export const useTournamentStore = create<TournamentStore>((set, get) => ({
       set((s) => ({
         tournaments: s.tournaments.map((t) => (t.id === previousId ? st : t)),
       }));
-      get().appendChangelog(st.id, 'updated', `Updated simple tournament "${st.name}"`);
+      get().appendChangelog(st.id, 'updated', `Updated tournament "${st.name}"`);
       get().showToast(`Saved "${st.name}".`, 'success');
     } else {
       set((s) => ({ tournaments: [...s.tournaments, st] }));
@@ -211,7 +211,7 @@ export const useTournamentStore = create<TournamentStore>((set, get) => ({
       tournaments: s.tournaments.filter((t) => t.id !== id),
       selectedNavId: s.selectedNavId === id ? undefined : s.selectedNavId,
     }));
-    get().appendChangelog(id, 'removed', `Removed simple tournament "${st.name}"`);
+    get().appendChangelog(id, 'removed', `Removed tournament "${st.name}"`);
     get().showToast(`Removed "${st.name}".`, 'success');
     return true;
   },

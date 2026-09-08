@@ -10,7 +10,7 @@ library, curated UX flow/pattern documentation, Cursor rules, and forkable demos
 
 This repo has three pillars:
 
-1. **`lofi-kit`** (`lib/`) — a publishable lo-fi component library. **18**
+1. **`lofi-kit`** (`lib/`) — a publishable lo-fi component library. **19**
    BEM + SCSS + grayscale primitives (exported as `LOFIButton`, `LOFIInput`, … —
    see `lib/src/ui/index.ts`) plus React Flow diagram node/edge types (`nodeTypes`,
    `edgeTypes`, unprefixed). Everything uses monospace typography, `#111`/`#fff`
@@ -96,6 +96,8 @@ demos/bracket-demo/           Reference consumer (not published)
 
 ```bash
 npm run dev               # Hub on :5172 + every demo’s Vite (:5173+) + Storybook (:6007)
+npm run dev:free          # Stop leftover listeners on :5172–5185 and :6007
+npm run dev:fresh         # Free those ports, then start the hub
 npm run dev -w <slug>     # Single demo only — no hub, no Storybook; avoids port conflicts
 npm run dev:bracket-demo  # Shorthand for the above, bracket-demo only
 npm run build:lofi        # Build lofi-kit → lib/dist
@@ -112,8 +114,8 @@ npm run format            # Prettier
 - Demo `package.json` files must use `"lofi-kit": "*"` — **not** `"workspace:*"`.
   The `workspace:` protocol is pnpm/yarn-only and is rejected by npm.
   Module resolution happens through vite's `resolve.alias` and tsconfig `paths`.
-- If `npm run dev` fails with `EADDRINUSE`, kill the old session first:
-  `pkill -f "dev-gateway.mjs"; pkill -f "vite"; sleep 1 && npm run dev`
+- If `npm run dev` fails with `EADDRINUSE`, free leftover listeners then restart:
+  `npm run dev:fresh` (or `npm run dev:free` if you only want to clear ports)
 - **High-fidelity note:** this export preserves high-fidelity documentation and demo source, but omits Podium/Mantine dependencies and MCP configuration. Restore the target design-system runtime before running high-fidelity demo scripts.
 
 ## When adding a new lo-fi component

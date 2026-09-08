@@ -55,4 +55,10 @@ describe('Field', () => {
     expect(container.querySelector('.field__hint')).not.toBeInTheDocument();
     expect(container.querySelector('.field__error')).not.toBeInTheDocument();
   });
+
+  it('renders a tooltip marker when tooltip is set', () => {
+    render(<Field label="Age" tooltip="Must be 18+"><input /></Field>);
+    expect(screen.getByLabelText('More information about Age')).toBeInTheDocument();
+    expect(screen.queryByText('Must be 18+')).not.toBeInTheDocument();
+  });
 });

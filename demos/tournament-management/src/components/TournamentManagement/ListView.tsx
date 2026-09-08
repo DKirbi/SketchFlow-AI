@@ -9,6 +9,8 @@ import {
   LOFIStatefulButton,
   LOFITable,
   LOFIText,
+  LOFITooltip,
+  LOFITooltipMarker,
   type ColumnDef,
   type TableColumnMeta,
 } from 'lofi-kit';
@@ -87,7 +89,6 @@ export function ListView({
   const selectedRows = visibleRows.filter((row) => selectedRowIds.has(row.id));
   const selectedCount = selectedRows.length;
   const allSelected = visibleRows.length > 0 && selectedCount === visibleRows.length;
-  const firstSelectedId = selectedRows[0]?.id;
   const disableAnyActive = selectedRows.some((row) => !row.disabled);
   const disableSelectedLabel =
     selectedCount === 0
@@ -128,7 +129,7 @@ export function ListView({
       },
       {
         accessorKey: 'name',
-        header: 'Name',
+        header: 'Tournament',
         cell: ({ row }) => <LOFIText variant="body">{row.original.name}</LOFIText>,
       },
       {
@@ -138,7 +139,7 @@ export function ListView({
         cell: ({ row }) => (
           <LOFIBadge
             variant="tag"
-            label={row.original.uniqueTournamentId === '' ? 'Simple' : 'Unique'}
+            label={row.original.uniqueTournamentId === '' ? 'Tournament' : 'Unique'}
           />
         ),
       },
@@ -249,7 +250,6 @@ export function ListView({
       <LOFIMainWorkspace breadcrumb={breadcrumb} title={title}>
         <div className="tmgmt__list">
           <ListHeader
-            scopeKey="list-loading"
             onCreate={onCreate}
             search={search}
             onSearchChange={setSearch}
@@ -271,7 +271,6 @@ export function ListView({
     <LOFIMainWorkspace breadcrumb={breadcrumb} title={title}>
       <div className="tmgmt__list">
         <ListHeader
-          scopeKey="list"
           onCreate={onCreate}
           search={search}
           onSearchChange={setSearch}
@@ -282,15 +281,6 @@ export function ListView({
         />
 
         <div className="tmgmt__list-actions">
-          <LOFIButton
-            type="button"
-            variant="default"
-            size="small"
-            disabled={!firstSelectedId || selectedCount > 1}
-            onClick={() => firstSelectedId && onEdit(firstSelectedId)}
-          >
-            Edit selected
-          </LOFIButton>
           <LOFIStatefulButton
             state="idle"
             variant="dismiss"
@@ -341,11 +331,10 @@ export function ListView({
               }
             />
           )}
+          <LOFITooltip content="Move, Disable / Enable, and Remove use confirmation. Clone applies immediately.">
+            <LOFITooltipMarker label="list actions" />
+          </LOFITooltip>
         </div>
-
-        <LOFIText variant="description" className="tmgmt__list-hint">
-          Move, Disable / Enable, and Remove use confirmation. Clone applies immediately.
-        </LOFIText>
 
         <LOFITable
           columns={columns}

@@ -40,8 +40,9 @@
     border-color: $color-border;
 
     &:hover:not(:disabled) {
+      background: $color-ink;
+      color: $color-paper;
       border-color: $color-ink;
-      background: $color-surface-hover;
     }
   }
 

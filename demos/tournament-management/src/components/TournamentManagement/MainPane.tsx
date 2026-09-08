@@ -4,7 +4,6 @@ import type { NavSelectionKind } from '../../lib/listScope';
 import { DetailView } from './DetailView';
 import { ListView } from './ListView';
 import { MainEmptyState } from './MainEmptyState';
-import { SportManagementView } from './SportManagementView';
 
 export interface MainPaneProps {
   hadSearchWithNoMatches: boolean;
@@ -119,35 +118,16 @@ export function MainPane({
     );
   }
 
-  if (showSport) {
-    return (
-      <SportManagementView
-        title="Sport tournament management"
-        breadcrumb={breadcrumb}
-        rows={listRows}
-        uniqueTournamentLabels={uniqueTournamentLabels}
-        role={role}
-        selectedRowIds={selectedRowIds}
-        onToggleRowSelection={onSelectRow}
-        onToggleAllRows={onSelectAllRows}
-        onCreate={onCreate}
-        onEdit={onEdit}
-        onClone={onClone}
-        onRemove={onRemove}
-        onMove={onMove}
-        onToggleDisabled={onToggleDisabled}
-        onBulkMove={onBulkMove}
-        onBulkClone={onBulkClone}
-        onBulkRemove={onBulkRemove}
-        onBulkToggleDisabled={onBulkToggleDisabled}
-      />
-    );
-  }
-
-  if (showList) {
+  if (showList || showSport) {
     return (
       <ListView
-        title={selectionKind === 'unique' ? 'Unique tournament management' : listTitle}
+        title={
+          showSport
+            ? 'Tournament management'
+            : selectionKind === 'unique'
+              ? 'Tournament management'
+              : listTitle
+        }
         breadcrumb={breadcrumb}
         rows={listRows}
         uniqueTournamentLabels={uniqueTournamentLabels}

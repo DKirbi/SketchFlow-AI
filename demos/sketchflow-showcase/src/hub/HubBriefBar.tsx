@@ -82,9 +82,19 @@ export function HubBriefBar({
       ) : (
         <div className="hub-brief__columns">
           <div className="hub-brief__copy">
-            <LOFIText as="h2" variant="strong" className="hub-brief__title">
-              {project.title}
-            </LOFIText>
+            <div className="hub-brief__heading">
+              <LOFIText as="h2" variant="strong" className="hub-brief__title">
+                {project.title}
+              </LOFIText>
+              <LOFIButton
+                variant="default"
+                size="compact"
+                className="hub-brief__more"
+                onClick={onToggle}
+              >
+                {collapsed ? 'Show more' : 'Show less'}
+              </LOFIButton>
+            </div>
             <LOFIText as="p" variant="description" className="hub-brief__summary">
               {project.summary}
             </LOFIText>
@@ -137,7 +147,7 @@ export function HubBriefBar({
                         <div className="hub-brief__pattern-body">
                           <LOFIText variant="description">{pattern.body}</LOFIText>
                           <LOFIButton variant="dismiss" size="compact" onClick={onShowMore}>
-                            Show more
+                            Open pattern docs
                           </LOFIButton>
                         </div>
                       ) : null}
@@ -149,16 +159,6 @@ export function HubBriefBar({
           ) : null}
         </div>
       )}
-
-      <LOFIButton
-        variant="default"
-        size="compact"
-        className="hub-brief__toggle"
-        aria-label={collapsed ? 'Expand project brief' : 'Collapse project brief'}
-        onClick={onToggle}
-      >
-        <LOFIFeedbackSeverityIcon severity="info" />
-      </LOFIButton>
     </section>
   );
 }

@@ -111,55 +111,13 @@
       </div>
 
       <section class="project-panel" id="project-panel">
-        <div class="project-panel__controls">
-          <button type="button" class="primary" id="btn-toggle">Interact with prototype</button>
-        </div>
         <iframe
           id="showcase-frame"
           title="Value Mapping interaction example"
           src="http://127.0.0.1:5172/Sportradar/mapping"
           loading="lazy"
         ></iframe>
-        <p class="host-log" id="host-log" aria-live="polite">Waiting for showcase…</p>
       </section>
     </article>
-
-    <script>
-      const PROTOCOL_VERSION = 1;
-      const frame = document.getElementById('showcase-frame');
-      const log = document.getElementById('host-log');
-      const btnToggle = document.getElementById('btn-toggle');
-      let isInteractive = false;
-
-      function post(type) {
-        if (!frame.contentWindow) return;
-        frame.contentWindow.postMessage({ type, version: PROTOCOL_VERSION }, '*');
-      }
-
-      btnToggle.addEventListener('click', () => {
-        if (isInteractive) {
-          post('showcase:replay');
-          isInteractive = false;
-          btnToggle.textContent = 'Interact with prototype';
-          log.textContent = 'Host sent replay (Automate)';
-        } else {
-          post('showcase:start-interactive');
-          isInteractive = true;
-          btnToggle.textContent = 'Automate';
-          log.textContent = 'Host sent start-interactive';
-        }
-      });
-
-      window.addEventListener('message', (event) => {
-        const data = event.data;
-        if (!data || data.version !== PROTOCOL_VERSION) return;
-        if (typeof data.type !== 'string' || !data.type.startsWith('showcase:')) return;
-        log.textContent = `Iframe → host: ${data.type}${data.mode ? ` (${data.mode})` : ''}`;
-        if (data.type === 'showcase:mode-change') {
-          isInteractive = data.mode === 'interactive' || data.mode === 'complete';
-          btnToggle.textContent = isInteractive ? 'Automate' : 'Interact with prototype';
-        }
-      });
-    </script>
   </body>
 </html>

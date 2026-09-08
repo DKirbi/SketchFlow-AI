@@ -219,20 +219,16 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
   },
   {
     id: 'upl-upper-bar',
-    title: 'UPL upper bar',
+    title: 'Tool identity bar — Tournament management',
     source: 'demos/tournament-management/src/components/TournamentManagement/UPLToolbar.tsx',
     ux: ['P1.1'],
     ui: ['U1.2', 'U4'],
     set: {
       kind: 'upper-bar',
-      variant: 'upl',
-      title: 'Unified Production Landscape | Tournament management (prototype shell)',
-      subtitle: 'Manage simple tournaments linked to sidebar classification',
-      rightActions: [
-        { id: 'apps', role: 'dismiss', label: 'Applications' },
-        { id: 'config', role: 'dismiss', label: 'Configuration' },
-        { id: 'role', role: 'dismiss', label: 'r.operator' },
-      ],
+      variant: 'tool',
+      title: 'Tournament Management',
+      identity: { handle: 'r.operator', role: 'Operator' },
+      rightActions: [],
     },
   },
   {
@@ -585,14 +581,10 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
     set: {
       kind: 'upl-shell',
       upperBar: {
-        variant: 'upl',
-        title: 'Unified Production Landscape | Tournament management',
-        subtitle: 'Prototype shell',
-        rightActions: [
-          { id: 'apps', role: 'dismiss', label: 'Applications' },
-          { id: 'config', role: 'dismiss', label: 'Configuration' },
-          { id: 'role', role: 'dismiss', label: 'r.operator' },
-        ],
+        variant: 'tool',
+        title: 'Tournament Management',
+        identity: { handle: 'r.operator', role: 'Operator' },
+        rightActions: [],
       },
       filterRow: {
         applyMode: 'commit',

@@ -1,41 +1,32 @@
-import { LOFIButton, LOFIText, LOFIToolbar } from 'lofi-kit';
+import { LOFIBadge, LOFIText, LOFIToolbar } from 'lofi-kit';
 
 import './TournamentManagement.scss';
 
 export interface UPLToolbarProps {
   onCycleRole: () => void;
-  roleLabel: string;
+  handle: string;
+  role: string;
 }
 
-export function UPLToolbar({ onCycleRole, roleLabel }: UPLToolbarProps) {
+export function UPLToolbar({ onCycleRole, handle, role }: UPLToolbarProps) {
   return (
     <LOFIToolbar
       className="tmgmt__upl-toolbar"
       left={
-        <div className="tmgmt__upl-left">
-          <div className="tmgmt__logo-placeholder" aria-hidden />
-          <div className="tmgmt__upl-titles">
-            <LOFIText as="span" variant="body">
-              Unified Production Landscape | Tournament management (prototype shell)
-            </LOFIText>
-            <LOFIText as="span" variant="muted">
-              Manage simple tournaments linked to sidebar classification
-            </LOFIText>
-          </div>
-        </div>
+        <span className="tmgmt__identity">
+          <LOFIText variant="sm">{handle}</LOFIText>
+          <LOFIBadge
+            variant="tag"
+            label={role}
+            onClick={onCycleRole}
+            title="Prototype role — click to switch"
+          />
+        </span>
       }
-      right={
-        <div className="tmgmt__upl-right">
-          <LOFIButton type="button" variant="dismiss" size="compact">
-            Applications
-          </LOFIButton>
-          <LOFIButton type="button" variant="dismiss" size="compact">
-            Configuration
-          </LOFIButton>
-          <LOFIButton type="button" variant="dismiss" size="compact" onClick={onCycleRole}>
-            <LOFIText variant="micro">{roleLabel}</LOFIText>
-          </LOFIButton>
-        </div>
+      center={
+        <LOFIText as="h1" variant="body">
+          Tournament Management
+        </LOFIText>
       }
     />
   );

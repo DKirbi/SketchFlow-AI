@@ -59,10 +59,11 @@ demo; full composition rules -> **[LOFI_KIT_PATTERNS.md — Unified Production L
 | `LOFITextarea` | `textarea` | `ui/Textarea` | Multi-line resizable text entry (notes, descriptions). Always wrap in `LOFIField`. `allowClear` shows a top-right ✕ button when value is non-empty. |
 | `LOFISelect` | `select` | `ui/Select` | Dropdown for a fixed set of options. Size: `compact` for table cells. `allowClear` replaces the chevron with ✕ when a value is selected. |
 | `LOFIMultiSelect` | `select` / `multiselect` | `ui/MultiSelect` | Searchable multi-select dropdown; checkbox-leading menu rows; closed trigger shows one label or `multipleLabel` (default “Multiple Entries”) when 2+ selected. Optional `allValue` / `allLabel` row at top. |
-| `LOFISwitch` | `switch` | `ui/Switch` | Single boolean on/off toggle. Use for enabling or disabling a named setting. Always has a visible label. |
+| `LOFISwitch` | `switch` | `ui/Switch` | Single boolean on/off toggle. Use for enabling or disabling a named setting. Always has a visible label beside the track. Extra information uses `LOFITooltip`, not a second label above. |
+| `LOFITooltip` | `tooltip` | `ui/Tooltip` | Hover/focus bubble for extra information about an input. Pair with `LOFITooltipMarker` (ℹ) next to a field label or switch. |
 | `LOFICheckbox` | `checkbox` | `ui/Checkbox` | Multi-select from a fixed set. Use when 2+ independent options can each be on/off. Sizes: `default` (30x30) and `sm` (20x20). |
 | `LOFIRadio` | `radio-group` | `ui/Radio` | Mutually exclusive choice from a fixed set of 2-3 options shown in full. Layout: `row` or `column`; sizes: `default` (30x30) and `sm` (20x20). |
-| `LOFIField` | `field` | `ui/Field` | Label + control wrapper. `inline` for side-by-side. `hint` for helper text. |
+| `LOFIField` | `field` | `ui/Field` | Label + control wrapper. `inline` for side-by-side. `tooltip` for extra information about the input (ℹ on the label). `hint` only when helper copy must stay visible. |
 | `LOFIFieldset` | `fieldset` | `ui/Fieldset` | Bordered section grouping related fields under a legend. |
 | `LOFIModal` | `modal` / `modal-overlay` | `ui/Modal` | Overlay dialog for create/edit/confirm. Size: `default` or `wide`. |
 | `LOFIPanel` | `panel` | `ui/Panel` | Anchored contextual panel near a row or node. |

@@ -1,11 +1,14 @@
 import { Text } from '../Text/Text';
+import { Tooltip, TooltipMarker } from '../Tooltip/Tooltip';
 import './Field.scss';
 
 export interface FieldProps {
   /** Field label shown above or beside the control. */
   label:     string;
-  /** Helper line under the control; omit if none. */
+  /** Helper line under the control; omit if none. Prefer `tooltip` for input information. */
   hint?:     string;
+  /** Extra information about the input, shown in a tooltip on the label marker. */
+  tooltip?:  string;
   /** Inline validation error message; replaces hint when set. */
   error?:    string;
   /** If true, shows required marker on the label. */
@@ -18,7 +21,7 @@ export interface FieldProps {
   children:  React.ReactNode;
 }
 
-export function Field({ label, hint, error, required, inline, htmlFor, children }: FieldProps) {
+export function Field({ label, hint, tooltip, error, required, inline, htmlFor, children }: FieldProps) {
   const classes = [
     'field',
     inline ? 'field--inline' : '',
@@ -28,9 +31,16 @@ export function Field({ label, hint, error, required, inline, htmlFor, children 
 
   return (
     <div className={classes}>
-      <label className={labelClass} htmlFor={htmlFor}>
-        <Text as="span" variant="inherit">{label}</Text>
-      </label>
+      <div className="field__label-row">
+        <label className={labelClass} htmlFor={htmlFor}>
+          <Text as="span" variant="inherit">{label}</Text>
+        </label>
+        {tooltip ? (
+          <Tooltip content={tooltip}>
+            <TooltipMarker label={label} />
+          </Tooltip>
+        ) : null}
+      </div>
       {children}
       {error ? (
         <span className="field__error" role="alert">

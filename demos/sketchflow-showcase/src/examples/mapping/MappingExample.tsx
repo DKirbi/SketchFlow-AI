@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   LOFIToolbar,
   LOFITable,
@@ -14,13 +14,8 @@ import {
 } from 'lofi-kit';
 import type { ColumnDef, TableColumnMeta, StatefulButtonState } from 'lofi-kit';
 import { MOCK_CATALOG_OPTIONS, getMappingCatalog, type MockCatalogId } from 'shared-catalogs';
-import type { ShowcaseExampleProps } from './metadata';
-import { computeAutomatedSnapshot } from './automatedPreview';
 import { applyMappingFilters, filtersAreDefault } from './applyFilters';
 import { FILTER_ALL, GENRES, type GenreOption } from './catalog';
-import { MappingPreviewCursor } from './MappingPreviewCursor';
-import { previewTargetAttr, resolveCursorTarget } from './previewCursor';
-import { detectReducedMotion } from '../../runtime/previewStateMachine';
 import {
   cloneItems,
   createInitialState,
@@ -36,22 +31,7 @@ import './MappingExample.scss';
 const MAP_DELAY_MS = 1200;
 const BULK_MAP_DELAY_MS = 1400;
 
-function isAutomatedMode(mode: ShowcaseExampleProps['mode']): boolean {
-  return mode === 'preview' || mode === 'ready';
-}
 
-function resolveAutomatedMapState(
-  item: MappingItem,
-  snapshot: ReturnType<typeof computeAutomatedSnapshot>,
-): StatefulButtonState {
-  if (snapshot.loadingIds.has(item.id)) {
-    return 'loading';
-  }
-  if (item.status === 'mapped') {
-    return 'success';
-  }
-  return 'idle';
-}
 
 function statusLabel(item: MappingItem): string {
   if (item.status === 'mapped' && item.mappedBy) {
@@ -86,25 +66,7 @@ function genresForCatalog(id: MockCatalogId): GenreOption[] {
   return getMappingCatalog('wizarding').tabs.map((tab) => ({ id: tab.value, label: tab.label }));
 }
 
-export function MappingExample({
-  mode,
-  previewStepIndex,
-  previewSteps,
-  onInteractionComplete,
-}: ShowcaseExampleProps) {
-  const automated = isAutomatedMode(mode);
-  const reducedMotion = useMemo(() => detectReducedMotion(), []);
-
-  const automatedSnapshot = useMemo(
-    () => computeAutomatedSnapshot(previewSteps, previewStepIndex),
-    [previewStepIndex, previewSteps],
-  );
-
-  const cursorTarget = useMemo(() => {
-    if (!automated || previewStepIndex < 0) return null;
-    return resolveCursorTarget(previewSteps[previewStepIndex]);
-  }, [automated, previewStepIndex, previewSteps]);
-
+export function MappingExample() {
   const [catalogId, setCatalogId] = useState<MockCatalogId>('film');
   const [items, setItems] = useState<MappingItem[]>(() => cloneItems(INITIAL_ITEMS));
   const [selected, setSelected] = useState<Set<string>>(() => new Set());
@@ -116,21 +78,6 @@ export function MappingExample({
   const [filtersApplied, setFiltersApplied] = useState<MappingFilters>(() => ({
     ...DEFAULT_FILTERS,
   }));
-  const [hasCompletedInteraction, setHasCompletedInteraction] = useState(false);
-
-  const resetState = useCallback(() => {
-    const initial = createInitialState();
-    setCatalogId('film');
-    setItems(initial.items);
-    setSelected(initial.selected);
-    setLoadingIds(initial.loadingIds);
-    setUnmapConfirmId(initial.unmapConfirmId);
-    setBulkConfirmOpen(initial.bulkConfirmOpen);
-    setStatusMessage(initial.statusMessage);
-    setFiltersDraft(initial.filtersDraft);
-    setFiltersApplied(initial.filtersApplied);
-    setHasCompletedInteraction(false);
-  }, []);
 
   const applyCatalog = useCallback((nextId: MockCatalogId) => {
     const initial = createInitialState();
@@ -145,22 +92,14 @@ export function MappingExample({
     setFiltersApplied({ ...DEFAULT_FILTERS });
   }, []);
 
-  useEffect(() => {
-    if (mode === 'interactive') {
-      resetState();
-    }
-  }, [mode, resetState]);
-
-  const effectiveCatalogId = automated ? 'film' : catalogId;
+  const effectiveCatalogId = catalogId;
   const catalogGenres = genresForCatalog(effectiveCatalogId);
-  const sourceItems = automated ? automatedSnapshot.items : items;
-  const displayItems = automated
-    ? sourceItems
-    : applyMappingFilters(sourceItems, filtersApplied);
-  const displaySelected = automated ? automatedSnapshot.selected : selected;
-  const displayLoadingIds = automated ? automatedSnapshot.loadingIds : loadingIds;
-  const displayBulkConfirmOpen = automated ? automatedSnapshot.bulkConfirmOpen : bulkConfirmOpen;
-  const displayStatusMessage = automated ? automatedSnapshot.statusMessage : statusMessage;
+  const sourceItems = items;
+  const displayItems = applyMappingFilters(sourceItems, filtersApplied);
+  const displaySelected = selected;
+  const displayLoadingIds = loadingIds;
+  const displayBulkConfirmOpen = bulkConfirmOpen;
+  const displayStatusMessage = statusMessage;
 
   const filtersMatch =
     filtersDraft.genreId === filtersApplied.genreId &&
@@ -177,42 +116,37 @@ export function MappingExample({
   }, []);
 
   const commitSearch = useCallback(() => {
-    if (automated) return;
     setFiltersApplied({ ...filtersDraft });
-  }, [automated, filtersDraft]);
+  }, [filtersDraft]);
 
   const clearAllFilters = useCallback(() => {
-    if (automated) return;
     setFiltersDraft({ ...DEFAULT_FILTERS });
     setFiltersApplied({ ...DEFAULT_FILTERS });
-  }, [automated]);
+  }, []);
 
   const toggleRow = useCallback(
     (id: string) => {
-      if (automated) return;
-      setSelected((prev) => {
+        setSelected((prev) => {
         const next = new Set(prev);
         if (next.has(id)) next.delete(id);
         else next.add(id);
         return next;
       });
     },
-    [automated],
+    [],
   );
 
   const toggleAll = useCallback(() => {
-    if (automated) return;
     if (allSelected || someSelected) {
       setSelected(new Set());
     } else {
       setSelected(new Set(displayItems.map((item) => item.id)));
     }
-  }, [allSelected, automated, displayItems, someSelected]);
+  }, [allSelected, displayItems, someSelected]);
 
   const applyMap = useCallback(
     (id: string) => {
-      if (automated) return;
-      setLoadingIds((prev) => new Set(prev).add(id));
+        setLoadingIds((prev) => new Set(prev).add(id));
       setStatusMessage(null);
       setTimeout(() => {
         setItems((prev) =>
@@ -238,19 +172,14 @@ export function MappingExample({
           return next;
         });
         setStatusMessage('Mapping saved to external catalogue.');
-        if (!hasCompletedInteraction) {
-          setHasCompletedInteraction(true);
-          onInteractionComplete();
-        }
       }, MAP_DELAY_MS);
     },
-    [automated, hasCompletedInteraction, onInteractionComplete],
+    [],
   );
 
   const applyUnmap = useCallback(
     (id: string) => {
-      if (automated) return;
-      setLoadingIds((prev) => new Set(prev).add(id));
+        setLoadingIds((prev) => new Set(prev).add(id));
       setUnmapConfirmId(null);
       setTimeout(() => {
         setItems((prev) =>
@@ -268,11 +197,10 @@ export function MappingExample({
         setStatusMessage('Mapping removed.');
       }, MAP_DELAY_MS);
     },
-    [automated],
+    [],
   );
 
   const applyBulkMap = useCallback(() => {
-    if (automated) return;
     const ids = Array.from(selected);
     setBulkConfirmOpen(false);
     ids.forEach((id) => {
@@ -294,12 +222,8 @@ export function MappingExample({
       });
       setSelected(new Set());
       setStatusMessage(`${ids.length} item${ids.length !== 1 ? 's' : ''} bulk-mapped.`);
-      if (!hasCompletedInteraction) {
-        setHasCompletedInteraction(true);
-        onInteractionComplete();
-      }
     }, BULK_MAP_DELAY_MS);
-  }, [automated, hasCompletedInteraction, onInteractionComplete, selected]);
+  }, [selected]);
 
   const columns: ColumnDef<MappingItem, unknown>[] = useMemo(
     () => [
@@ -312,23 +236,16 @@ export function MappingExample({
             size="default"
             checked={allSelected || someSelected}
             onChange={toggleAll}
-            disabled={automated}
           />
         ),
         cell: ({ row }) => (
-          <span
-            data-preview-target={previewTargetAttr({
-              kind: 'row-checkbox',
-              rowId: row.original.id,
-            })}
-          >
+          <span>
             <LOFICheckbox
               id={`sel-${row.original.id}`}
               label=""
               size="default"
               checked={displaySelected.has(row.original.id)}
               onChange={() => toggleRow(row.original.id)}
-              disabled={automated}
             />
           </span>
         ),
@@ -339,10 +256,7 @@ export function MappingExample({
         id: 'internalValue',
         header: 'Internal Value',
         cell: ({ row }) => (
-          <span
-            className="mapping-example__internal"
-            data-preview-target={previewTargetAttr({ kind: 'row', rowId: row.original.id })}
-          >
+          <span className="mapping-example__internal">
             <LOFIBadge variant="id" label={row.original.id} />
             <LOFIText variant="body" className="mapping-example__internal-value">
               {row.original.internalValue}
@@ -380,23 +294,13 @@ export function MappingExample({
         cell: ({ row }) => {
           const item = row.original;
           const isLoading = displayLoadingIds.has(item.id);
-          const mapState: StatefulButtonState = automated
-            ? resolveAutomatedMapState(item, automatedSnapshot)
-            : isLoading
-              ? 'loading'
-              : item.status === 'mapped'
-                ? 'success'
-                : 'idle';
+          const mapState: StatefulButtonState = isLoading
+            ? 'loading'
+            : item.status === 'mapped'
+              ? 'success'
+              : 'idle';
 
-          const isMapHighlight =
-            automated && automatedSnapshot.highlightRowId === item.id && item.status === 'pending';
-
-          const isUnmapHighlight =
-            automated &&
-            (automatedSnapshot.unmapHighlightRowId === item.id ||
-              (automatedSnapshot.loadingIds.has(item.id) && item.status === 'mapped'));
-
-          if (!automated && unmapConfirmId === item.id) {
+          if (unmapConfirmId === item.id) {
             return (
               <span className="mapping-example__inline-confirm mapping-example__actions-col">
                 <LOFIText variant="sm">Remove mapping?</LOFIText>
@@ -415,14 +319,8 @@ export function MappingExample({
           }
 
           return (
-            <span
-              className={
-                isMapHighlight || isUnmapHighlight
-                  ? 'mapping-example__actions mapping-example__actions-col mapping-example__actions--highlight'
-                  : 'mapping-example__actions mapping-example__actions-col'
-              }
-            >
-              <span data-preview-target={previewTargetAttr({ kind: 'row-map', rowId: item.id })}>
+            <span className="mapping-example__actions mapping-example__actions-col">
+              <span>
                 <LOFIStatefulButton
                   state={mapState}
                   idleLabel="Map"
@@ -430,25 +328,22 @@ export function MappingExample({
                   loadingLabel="Working"
                   size="compact"
                   onClick={() => {
-                    if (!automated && item.status === 'pending' && !isLoading) {
+                    if (item.status === 'pending' && !isLoading) {
                       applyMap(item.id);
                     }
                   }}
                 />
               </span>
-              {(automated ? item.status === 'mapped' : item.status === 'mapped' && !isLoading) && (
-                <span
-                  data-preview-target={previewTargetAttr({ kind: 'row-unmap', rowId: item.id })}
-                >
+              {item.status === 'mapped' && !isLoading && (
+                <span>
                   <LOFIButton
                     variant="dismiss"
                     size="compact"
-                    disabled={automated}
                     onClick={() => {
-                      if (!automated) setUnmapConfirmId(item.id);
+                      setUnmapConfirmId(item.id);
                     }}
                   >
-                    {automated && isLoading ? 'Working' : 'Unmap'}
+                    Unmap
                   </LOFIButton>
                 </span>
               )}
@@ -461,8 +356,6 @@ export function MappingExample({
       allSelected,
       applyMap,
       applyUnmap,
-      automated,
-      automatedSnapshot,
       displayLoadingIds,
       displaySelected,
       someSelected,
@@ -474,12 +367,6 @@ export function MappingExample({
 
   return (
     <div className="mapping-example">
-      <MappingPreviewCursor
-        target={cursorTarget}
-        visible={automated}
-        reducedMotion={reducedMotion}
-      />
-
       <LOFIToolbar
         left={
           <span className="mapping-example__identity">
@@ -503,7 +390,6 @@ export function MappingExample({
                   value: option.value,
                   label: option.label,
                 }))}
-                disabled={automated}
                 onChange={(value) => applyCatalog(value as MockCatalogId)}
               />
             </LOFIField>
@@ -522,7 +408,6 @@ export function MappingExample({
               id="map-genre"
               allowClear
               placeholder="All genres"
-              disabled={automated}
               value={filtersDraft.genreId === FILTER_ALL ? FILTER_ALL : filtersDraft.genreId}
               onChange={(value) => patchFiltersDraft({ genreId: coerceGenreValue(value) })}
               options={[
@@ -536,7 +421,6 @@ export function MappingExample({
               id="map-title"
               type="search"
               allowClear
-              disabled={automated}
               placeholder="Search by name or id…"
               value={filtersDraft.titleQuery}
               onChange={(value) => patchFiltersDraft({ titleQuery: value })}
@@ -546,7 +430,7 @@ export function MappingExample({
             <LOFIButton
               type="button"
               variant="primary"
-              disabled={automated || filtersMatch}
+              disabled={filtersMatch}
               onClick={commitSearch}
             >
               Search
@@ -554,7 +438,7 @@ export function MappingExample({
             <LOFIButton
               type="button"
               variant="dismiss"
-              disabled={automated || filtersAreDefault(filtersDraft)}
+              disabled={filtersAreDefault(filtersDraft)}
               onClick={clearAllFilters}
             >
               Clear all
@@ -562,17 +446,10 @@ export function MappingExample({
           </div>
         </div>
 
-        <div
-          className={
-            automated && automatedSnapshot.highlightBulkToolbar
-              ? 'mapping-example__toolbar mapping-example__toolbar--highlight'
-              : 'mapping-example__toolbar'
-          }
-          data-preview-target={previewTargetAttr({ kind: 'bulk-toolbar' })}
-        >
+        <div className="mapping-example__toolbar">
           <LOFIButton
             variant="primary"
-            disabled={automated || selectedCount === 0}
+            disabled={selectedCount === 0}
             onClick={() => setBulkConfirmOpen(true)}
           >
             {selectedCount > 0 ? `Bulk Map (${selectedCount})` : 'Bulk Map'}
@@ -608,11 +485,9 @@ export function MappingExample({
             <LOFIButton variant="dismiss" onClick={() => setBulkConfirmOpen(false)}>
               Cancel
             </LOFIButton>
-            <span data-preview-target={previewTargetAttr({ kind: 'bulk-confirm' })}>
-              <LOFIButton variant="primary" onClick={applyBulkMap}>
-                Apply to {selectedCount} item{selectedCount !== 1 ? 's' : ''}
-              </LOFIButton>
-            </span>
+            <LOFIButton variant="primary" onClick={applyBulkMap}>
+              Apply to {selectedCount} item{selectedCount !== 1 ? 's' : ''}
+            </LOFIButton>
           </>
         }
       >

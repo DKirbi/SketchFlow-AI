@@ -93,7 +93,7 @@ describe('COMPONENT_SET_EXAMPLES', () => {
     const example = exampleById('upl-shell-tournament');
     expect(example).toBeDefined();
     render(<ComponentSetView set={example!.set} />);
-    expect(screen.getByText(/Tournament management/)).toBeInTheDocument();
+    expect(screen.getByText(/Tournament Management/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Knockout 24/25' })).toBeInTheDocument();
   });
@@ -125,6 +125,13 @@ describe('COMPONENT_SET_EXAMPLES', () => {
     render(<ComponentSetView set={example!.set} />);
     expect(screen.getByRole('button', { name: 'Unmap' })).toBeDisabled();
     expect(screen.getByText('99%')).toBeInTheDocument();
+  });
+
+  it('renders filter legend as a tooltip marker, not persistent copy', () => {
+    const example = exampleById('filter-immediate');
+    render(<ComponentSetView set={example!.set} />);
+    expect(screen.getByLabelText('More information about filters')).toBeInTheDocument();
+    expect(screen.queryByText(/Filters apply together/)).not.toBeInTheDocument();
   });
 
   it('renders tool-shell tabs above filter chips', () => {

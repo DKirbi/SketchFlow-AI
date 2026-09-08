@@ -4,6 +4,8 @@ import {
   LOFIInput,
   LOFISelect,
   LOFISwitch,
+  LOFITooltip,
+  LOFITooltipMarker,
 } from '../ui/index';
 import type { ComponentSetHandlers, FieldDescriptor } from './types';
 
@@ -19,13 +21,19 @@ export function FieldFromDescriptor({ field, onFieldChange }: FieldFromDescripto
 
   if (field.kind === 'switch') {
     return (
-      <LOFIField label={field.label} htmlFor={id} hint={field.hint}>
+      <span className="component-set__switch-field">
         <LOFISwitch
+          id={id}
           label={field.label}
           checked={boolValue}
           onChange={(v) => onFieldChange?.(field.name, v)}
         />
-      </LOFIField>
+        {field.hint ? (
+          <LOFITooltip content={field.hint}>
+            <LOFITooltipMarker label={field.label} />
+          </LOFITooltip>
+        ) : null}
+      </span>
     );
   }
 
@@ -42,10 +50,9 @@ export function FieldFromDescriptor({ field, onFieldChange }: FieldFromDescripto
 
   if (field.kind === 'select') {
     return (
-      <LOFIField label={field.label} htmlFor={id} hint={field.hint} required={field.required}>
+      <LOFIField label={field.label} htmlFor={id} tooltip={field.hint} required={field.required}>
         <LOFISelect
           id={id}
-          size="compact"
           value={stringValue}
           options={field.options ?? []}
           placeholder={field.placeholder}
@@ -60,7 +67,7 @@ export function FieldFromDescriptor({ field, onFieldChange }: FieldFromDescripto
   const inputType = field.kind === 'date' ? 'date' : field.kind === 'search' ? 'search' : 'text';
 
   return (
-    <LOFIField label={field.label} htmlFor={id} hint={field.hint} required={field.required}>
+    <LOFIField label={field.label} htmlFor={id} tooltip={field.hint} required={field.required}>
       <LOFIInput
         id={id}
         type={inputType}

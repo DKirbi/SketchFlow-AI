@@ -1,16 +1,15 @@
 import type { ComponentType } from 'react';
 import type { ShowcaseExampleConfig } from '../runtime/types';
-import type { ShowcaseExampleProps } from './mapping/metadata';
 import { mappingExampleConfig } from './mapping/metadata';
 import { MappingExample } from './mapping/MappingExample';
 import { mergeToolExampleConfig } from './merge-tool/metadata';
 import { MergeToolExample } from './merge-tool/MergeToolExample';
 
-export type { ShowcaseExampleConfig, ShowcaseExampleProps };
+export type { ShowcaseExampleConfig };
 
 export interface RegisteredExample {
   config: ShowcaseExampleConfig;
-  Component: ComponentType<ShowcaseExampleProps>;
+  Component: ComponentType;
 }
 
 const EXAMPLES: RegisteredExample[] = [

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
-import { LOFIButton, LOFIText, LOFIToast } from 'lofi-kit';
+import { LOFIButton, LOFICard, LOFIText, LOFIToast } from 'lofi-kit';
 
 import {
   UNIQUE_TOURNAMENTS,
@@ -35,7 +35,6 @@ import type { SimpleTournament, TournamentFormSnapshot } from '../../types';
 import { ConfirmDialog } from './ConfirmDialog';
 import { FilterRow } from './FilterRow';
 import { MainPane } from './MainPane';
-import { ModuleTabs } from './ModuleTabs';
 import { MoveTournamentModal } from './MoveTournamentModal';
 import { Sidebar } from './Sidebar';
 import { TournamentModal } from './TournamentModal';
@@ -126,15 +125,15 @@ export function TournamentManagement() {
 
   const listTitle =
     selectedNavId?.startsWith('browse-cat')
-      ? 'Simple tournaments in category (Browse scope)'
+      ? 'Tournaments in category (Browse scope)'
       : selectedNavId?.startsWith('browse-ut')
-        ? 'Simple tournaments in unique tournament (Browse scope)'
+        ? 'Tournaments in unique tournament (Browse scope)'
         : selectionKind === 'unique'
-          ? 'Simple tournaments in unique tournament'
+          ? 'Tournaments in unique tournament'
           : selectionKind === 'category'
-            ? 'Simple tournaments in category'
+            ? 'Tournaments in category'
             : selectionKind === 'sport'
-              ? 'Sport tournament management'
+              ? 'Tournament management'
               : '';
 
   const breadcrumb = useMemo<ReactNode>(() => {
@@ -174,7 +173,7 @@ export function TournamentManagement() {
         segments.push({ id: first.sportId, label: sportById(first.sportId)?.label ?? first.sportId });
       }
       segments.push({ label: categoryById(categoryId)?.label ?? categoryId });
-      segments.push({ label: 'All simple tournaments' });
+      segments.push({ label: 'All tournaments' });
     } else if (selectionKind === 'browse-unique') {
       const branchId = parseBrowseUtId(selectedNavId);
       const rows = listRows ?? [];
@@ -190,7 +189,7 @@ export function TournamentManagement() {
             ? 'No cross-season grouping'
             : uniqueTournamentById(branchId)?.label ?? branchId,
       });
-      segments.push({ label: 'All simple tournaments' });
+      segments.push({ label: 'All tournaments' });
     }
     if (segments.length === 0) return undefined;
     return (
@@ -238,7 +237,7 @@ export function TournamentManagement() {
     void upsertTournament('clone', clone);
   };
 
-  const roleChip = `${prototypeUserHandle(role)} (${role}) — prototype role`;
+  const roleHandle = prototypeUserHandle(role);
   const detailUniqueTournamentLabel =
     selectedLeaf?.uniqueTournamentId === ''
       ? 'No cross-season grouping'
@@ -321,9 +320,7 @@ export function TournamentManagement() {
 
   return (
     <div className="tmgmt">
-      <UPLToolbar onCycleRole={cycleRole} roleLabel={roleChip} />
-
-      <ModuleTabs />
+      <UPLToolbar onCycleRole={cycleRole} handle={roleHandle} role={role} />
 
       <FilterRow
         draft={filtersDraft}
@@ -346,6 +343,7 @@ export function TournamentManagement() {
         />
 
         <div className="tmgmt__main">
+          <LOFICard className="tmgmt__main-card">
           <MainPane
             hadSearchWithNoMatches={hadSearchWithNoMatches}
             selectedNavId={selectedNavId}
@@ -391,6 +389,7 @@ export function TournamentManagement() {
             onBulkToggleDisabled={(ids) => setDisableTargetIds(ids)}
             onRetrySearch={commitSearch}
           />
+          </LOFICard>
         </div>
       </div>
 

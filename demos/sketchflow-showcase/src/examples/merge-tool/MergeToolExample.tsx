@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   LOFIToolbar,
   LOFITable,
+  LOFIPagination,
   LOFIField,
   LOFIInput,
   LOFIButton,
@@ -18,11 +19,6 @@ import {
 } from 'lofi-kit';
 import type { ColumnDef, TableColumnMeta } from 'lofi-kit';
 import { MOCK_CATALOG_OPTIONS, type MockCatalogId } from 'shared-catalogs';
-import type { ShowcaseExampleProps } from './metadata';
-import { computeAutomatedSnapshot } from './automatedPreview';
-import { MergeToolPreviewCursor } from './MergeToolPreviewCursor';
-import { previewTargetAttr, resolveCursorTarget } from './previewCursor';
-import { detectReducedMotion } from '../../runtime/previewStateMachine';
 import { FilmRowDetail, DEFAULT_FILM_DETAIL_TAB, type FilmDetailTab } from './FilmRowDetail';
 import { MergeToolResetIcon, MergeToolMergeIcon } from './MergeToolIcons';
 import { getMergeCatalog } from './catalogs';
@@ -43,6 +39,16 @@ import {
 import './MergeToolExample.scss';
 
 const MERGE_DELAY_MS = 1200;
+const MERGE_PAGE_SIZE = 5;
+
+function pageCount(total: number, pageSize: number): number {
+  return Math.ceil(total / pageSize);
+}
+
+function slicePage<T>(rows: T[], page: number, pageSize: number): T[] {
+  const start = (page - 1) * pageSize;
+  return rows.slice(start, start + pageSize);
+}
 
 interface CrawlerRow extends CrawledRecord {
   confidence?: number;
@@ -53,33 +59,11 @@ interface ReviewRow {
   record: FilmRecord;
 }
 
-function isAutomatedMode(mode: ShowcaseExampleProps['mode']): boolean {
-  return mode === 'preview' || mode === 'ready';
-}
-
-export function MergeToolExample({
-  mode,
-  previewStepIndex,
-  previewSteps,
-  onInteractionComplete,
-}: ShowcaseExampleProps) {
-  const automated = isAutomatedMode(mode);
-  const reducedMotion = useMemo(() => detectReducedMotion(), []);
-
-  const automatedSnapshot = useMemo(
-    () => computeAutomatedSnapshot(previewSteps, previewStepIndex),
-    [previewStepIndex, previewSteps],
-  );
-
-  const cursorTarget = useMemo(() => {
-    if (!automated || previewStepIndex < 0) return null;
-    return resolveCursorTarget(previewSteps[previewStepIndex]);
-  }, [automated, previewStepIndex, previewSteps]);
-
+export function MergeToolExample() {
   const [catalogId, setCatalogId] = useState<MockCatalogId>('film');
   const mergeSource = useMemo(
-    () => getMergeCatalog(automated ? 'film' : catalogId),
-    [automated, catalogId],
+    () => getMergeCatalog(catalogId),
+    [catalogId],
   );
 
   const [dbMovies, setDbMovies] = useState<DbFilmRecord[]>(() => getMergeCatalog('film').cloneDb());
@@ -90,6 +74,8 @@ export function MergeToolExample({
   const [crawlerSearchDraft, setCrawlerSearchDraft] = useState('');
   const [crawlerSearchApplied, setCrawlerSearchApplied] = useState('');
   const [selectedCrawledId, setSelectedCrawledId] = useState<string | null>(null);
+  const [dbPage, setDbPage] = useState(1);
+  const [crawlerPage, setCrawlerPage] = useState(1);
 
   const [dbExpandedTabs, setDbExpandedTabs] = useState<Record<string, FilmDetailTab>>({});
   const [crawlerExpandedTabs, setCrawlerExpandedTabs] = useState<Record<string, FilmDetailTab>>({});
@@ -99,26 +85,6 @@ export function MergeToolExample({
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [toast, setToast] = useState<{ severity: 'success'; message: string } | null>(null);
-  const [hasCompletedInteraction, setHasCompletedInteraction] = useState(false);
-
-  const resetState = useCallback(() => {
-    setCatalogId('film');
-    setDbMovies(getMergeCatalog('film').cloneDb());
-    setDbSearchDraft('');
-    setDbSearchApplied('');
-    setSelectedDbId(null);
-    setCrawlerSearchDraft('');
-    setCrawlerSearchApplied('');
-    setSelectedCrawledId(null);
-    setDbExpandedTabs({});
-    setCrawlerExpandedTabs({});
-    setModalOpen(false);
-    setOverrides(new Set());
-    setConfirmOpen(false);
-    setConfirmLoading(false);
-    setToast(null);
-    setHasCompletedInteraction(false);
-  }, []);
 
   const applyCatalog = useCallback((nextId: MockCatalogId) => {
     const source = getMergeCatalog(nextId);
@@ -130,6 +96,8 @@ export function MergeToolExample({
     setCrawlerSearchDraft('');
     setCrawlerSearchApplied('');
     setSelectedCrawledId(null);
+    setDbPage(1);
+    setCrawlerPage(1);
     setDbExpandedTabs({});
     setCrawlerExpandedTabs({});
     setModalOpen(false);
@@ -139,20 +107,14 @@ export function MergeToolExample({
     setToast(null);
   }, []);
 
-  useEffect(() => {
-    if (mode === 'interactive') resetState();
-  }, [mode, resetState]);
-
-  const displayDbMovies = automated ? automatedSnapshot.dbMovies : dbMovies;
-  const displaySelectedDbId = automated ? automatedSnapshot.selectedDbId : selectedDbId;
-  const displaySelectedCrawledId = automated ? automatedSnapshot.selectedCrawledId : selectedCrawledId;
-  const displayModalOpen = automated ? automatedSnapshot.modalOpen : modalOpen;
-  const displayOverrides = automated ? automatedSnapshot.overrides : overrides;
-  const displayConfirmOpen = automated ? automatedSnapshot.confirmOpen : confirmOpen;
-  const displayConfirmLoading = automated ? automatedSnapshot.confirmLoading : confirmLoading;
-  const displayToast = automated ? automatedSnapshot.toast : toast;
-  const displayHighlightMergeButton = automated && automatedSnapshot.highlightMergeButton;
-  const displayHighlightModalMerge = automated && automatedSnapshot.highlightModalMerge;
+  const displayDbMovies = dbMovies;
+  const displaySelectedDbId = selectedDbId;
+  const displaySelectedCrawledId = selectedCrawledId;
+  const displayModalOpen = modalOpen;
+  const displayOverrides = overrides;
+  const displayConfirmOpen = confirmOpen;
+  const displayConfirmLoading = confirmLoading;
+  const displayToast = toast;
 
   const selectedDbMovie = useMemo(
     () => displayDbMovies.find((m) => m.id === displaySelectedDbId) ?? null,
@@ -164,11 +126,11 @@ export function MergeToolExample({
   );
 
   const dbRows = useMemo(() => {
-    const query = automated ? '' : dbSearchApplied;
+    const query = dbSearchApplied;
     return displayDbMovies.filter((m) => matchesQuery(m, query));
-  }, [automated, dbSearchApplied, displayDbMovies]);
+  }, [dbSearchApplied, displayDbMovies]);
 
-  const crawlerQueryActive = !automated && crawlerSearchApplied.trim().length > 0;
+  const crawlerQueryActive = crawlerSearchApplied.trim().length > 0;
 
   const crawlerRows = useMemo<CrawlerRow[]>(() => {
     if (crawlerQueryActive) {
@@ -177,6 +139,21 @@ export function MergeToolExample({
     if (!selectedDbMovie) return [];
     return (mergeSource.suggestions[selectedDbMovie.id] ?? []).map((c) => ({ ...c.record, confidence: c.confidence }));
   }, [crawlerQueryActive, crawlerSearchApplied, mergeSource, selectedDbMovie]);
+
+  useEffect(() => {
+    const count = pageCount(dbRows.length, MERGE_PAGE_SIZE);
+    setDbPage((current) => (count === 0 ? 1 : Math.min(current, count)));
+  }, [dbRows.length, dbSearchApplied, catalogId]);
+
+  useEffect(() => {
+    const count = pageCount(crawlerRows.length, MERGE_PAGE_SIZE);
+    setCrawlerPage((current) => (count === 0 ? 1 : Math.min(current, count)));
+  }, [crawlerRows.length, crawlerSearchApplied, displaySelectedDbId]);
+
+  const dbPageCount = pageCount(dbRows.length, MERGE_PAGE_SIZE);
+  const crawlerPageCount = pageCount(crawlerRows.length, MERGE_PAGE_SIZE);
+  const pagedDbRows = slicePage(dbRows, dbPage, MERGE_PAGE_SIZE);
+  const pagedCrawlerRows = slicePage(crawlerRows, crawlerPage, MERGE_PAGE_SIZE);
 
   const showCrawlerFirstUse = !selectedDbMovie && !crawlerQueryActive;
 
@@ -198,36 +175,33 @@ export function MergeToolExample({
   const allOverridden = FIELD_KEYS.every((f) => displayOverrides.has(f));
 
   const handleReset = useCallback(() => {
-    if (automated) return;
     setDbSearchDraft('');
     setDbSearchApplied('');
     setSelectedDbId(null);
     setCrawlerSearchDraft('');
     setCrawlerSearchApplied('');
     setSelectedCrawledId(null);
-  }, [automated]);
+    setDbPage(1);
+    setCrawlerPage(1);
+  }, []);
 
   const openMergeModal = useCallback(() => {
-    if (automated) return;
     if (!selectedDbId || !selectedCrawledId) return;
     setOverrides(new Set());
     setModalOpen(true);
-  }, [automated, selectedDbId, selectedCrawledId]);
+  }, [selectedDbId, selectedCrawledId]);
 
   const closeModal = useCallback(() => {
-    if (automated) return;
     setModalOpen(false);
     setOverrides(new Set());
-  }, [automated]);
+  }, []);
 
   const modalReset = useCallback(() => {
-    if (automated) return;
     setOverrides(new Set());
-  }, [automated]);
+  }, []);
 
   const toggleOverride = useCallback(
     (field: FieldKey) => {
-      if (automated) return;
       setOverrides((prev) => {
         const next = new Set(prev);
         if (next.has(field)) next.delete(field);
@@ -235,27 +209,23 @@ export function MergeToolExample({
         return next;
       });
     },
-    [automated],
+    [],
   );
 
   const toggleMaster = useCallback(() => {
-    if (automated) return;
     setOverrides((prev) => (prev.size === FIELD_KEYS.length ? new Set() : new Set(FIELD_KEYS)));
-  }, [automated]);
+  }, []);
 
   const requestMerge = useCallback(() => {
-    if (automated) return;
     if (overrides.size === 0) return;
     setConfirmOpen(true);
-  }, [automated, overrides]);
+  }, [overrides]);
 
   const cancelConfirm = useCallback(() => {
-    if (automated) return;
     setConfirmOpen(false);
-  }, [automated]);
+  }, []);
 
   const commitMerge = useCallback(() => {
-    if (automated) return;
     if (!selectedDbMovie || !selectedCrawledRecord) return;
     setConfirmLoading(true);
     setTimeout(() => {
@@ -278,12 +248,8 @@ export function MergeToolExample({
       setSelectedDbId(null);
       setSelectedCrawledId(null);
       setOverrides(new Set());
-      if (!hasCompletedInteraction) {
-        setHasCompletedInteraction(true);
-        onInteractionComplete();
-      }
     }, MERGE_DELAY_MS);
-  }, [automated, hasCompletedInteraction, onInteractionComplete, overrides, selectedCrawledRecord, selectedDbMovie]);
+  }, [overrides, selectedCrawledRecord, selectedDbMovie]);
 
   const dbColumns = useMemo<ColumnDef<DbFilmRecord, unknown>[]>(
     () => [
@@ -293,7 +259,7 @@ export function MergeToolExample({
         size: 96,
         meta: { shrink: true } satisfies TableColumnMeta,
         cell: ({ row }) => (
-          <span data-preview-target={previewTargetAttr({ kind: 'db-row', targetId: row.original.id })}>
+          <span>
             <LOFIBadge variant="id" label={row.original.id} />
           </span>
         ),
@@ -367,16 +333,16 @@ export function MergeToolExample({
               name="db-select"
               value={displaySelectedDbId ?? ''}
               onChange={(value) => {
-                if (!automated) setSelectedDbId(value);
+                setSelectedDbId(value);
+                setCrawlerPage(1);
               }}
               options={[{ value: row.original.id, label: '' }]}
-              disabled={automated}
             />
           </span>
         ),
       },
     ],
-    [automated, displaySelectedDbId],
+    [displaySelectedDbId],
   );
 
   const crawlerColumns = useMemo<ColumnDef<CrawlerRow, unknown>[]>(
@@ -387,7 +353,7 @@ export function MergeToolExample({
         size: 96,
         meta: { shrink: true } satisfies TableColumnMeta,
         cell: ({ row }) => (
-          <span data-preview-target={previewTargetAttr({ kind: 'crawled-row', targetId: row.original.id })}>
+          <span>
             <LOFIBadge variant="id" label={row.original.id} />
           </span>
         ),
@@ -473,16 +439,15 @@ export function MergeToolExample({
               name="crawled-select"
               value={displaySelectedCrawledId ?? ''}
               onChange={(value) => {
-                if (!automated) setSelectedCrawledId(value);
+                setSelectedCrawledId(value);
               }}
               options={[{ value: row.original.id, label: '' }]}
-              disabled={automated}
             />
           </span>
         ),
       },
     ],
-    [automated, displaySelectedCrawledId],
+    [displaySelectedCrawledId],
   );
 
   const reviewColumns = useMemo<ColumnDef<ReviewRow, unknown>[]>(() => {
@@ -504,7 +469,6 @@ export function MergeToolExample({
             <LOFIText variant="body">{value}</LOFIText>
             <span
               className="merge-tool-example__review-checkbox"
-              data-preview-target={previewTargetAttr({ kind: 'field-checkbox', targetId: field })}
             >
               <LOFICheckbox
                 size="sm"
@@ -512,8 +476,7 @@ export function MergeToolExample({
                 id={`override-${field}`}
                 checked={displayOverrides.has(field)}
                 onChange={() => toggleOverride(field)}
-                disabled={automated}
-              />
+                />
             </span>
           </div>
         );
@@ -533,7 +496,6 @@ export function MergeToolExample({
               <LOFIText variant="strong">Crawled data</LOFIText>
               <span
                 className="merge-tool-example__review-checkbox"
-                data-preview-target={previewTargetAttr({ kind: 'master-checkbox' })}
               >
                 <LOFICheckbox
                   size="sm"
@@ -541,8 +503,7 @@ export function MergeToolExample({
                   id="override-all"
                   checked={allOverridden}
                   onChange={toggleMaster}
-                  disabled={automated}
-                />
+                    />
               </span>
             </div>
           ),
@@ -554,12 +515,10 @@ export function MergeToolExample({
       fieldColumn('director'),
       fieldColumn('cast'),
     ];
-  }, [allOverridden, automated, displayOverrides, toggleMaster, toggleOverride]);
+  }, [allOverridden, displayOverrides, toggleMaster, toggleOverride]);
 
   return (
     <div className="merge-tool-example">
-      <MergeToolPreviewCursor target={cursorTarget} visible={automated} reducedMotion={reducedMotion} />
-
       <LOFIToolbar
         left={
           <span className="merge-tool-example__identity">
@@ -577,12 +536,11 @@ export function MergeToolExample({
             <LOFISelect
               id="merge-catalog"
               size="compact"
-              value={automated ? 'film' : catalogId}
+              value={catalogId}
               options={MOCK_CATALOG_OPTIONS.map((option) => ({
                 value: option.value,
                 label: option.label,
               }))}
-              disabled={automated}
               onChange={(value) => applyCatalog(value as MockCatalogId)}
             />
           </LOFIField>
@@ -590,7 +548,7 @@ export function MergeToolExample({
       />
 
       <div className="merge-tool-example__content">
-        <div className="merge-tool-example__columns">
+        <div className="merge-tool-example__stack">
           <section className="merge-tool-example__column">
             <LOFIText as="h2" variant="strong">
               Our Database
@@ -601,25 +559,28 @@ export function MergeToolExample({
                   id="db-search"
                   type="search"
                   allowClear
-                  disabled={automated}
-                  placeholder="Title, ID, director…"
+                      placeholder="Title, ID, director…"
                   value={dbSearchDraft}
                   onChange={setDbSearchDraft}
                 />
               </LOFIField>
               <LOFIButton
                 variant="primary"
-                disabled={automated || dbSearchDraft === dbSearchApplied}
-                onClick={() => setDbSearchApplied(dbSearchDraft)}
+                disabled={dbSearchDraft === dbSearchApplied}
+                onClick={() => {
+                  setDbSearchApplied(dbSearchDraft);
+                  setDbPage(1);
+                }}
               >
                 Search
               </LOFIButton>
               <LOFIButton
                 variant="dismiss"
-                disabled={automated || (!dbSearchDraft && !dbSearchApplied)}
+                disabled={(!dbSearchDraft && !dbSearchApplied)}
                 onClick={() => {
                   setDbSearchDraft('');
                   setDbSearchApplied('');
+                  setDbPage(1);
                 }}
               >
                 Clear
@@ -627,7 +588,7 @@ export function MergeToolExample({
             </div>
             <LOFITable<DbFilmRecord>
               columns={dbColumns}
-              rows={dbRows}
+              rows={pagedDbRows}
               keyField="id"
               expandable
               renderExpanded={(row) => (
@@ -647,6 +608,14 @@ export function MergeToolExample({
                 />
               }
             />
+            <LOFIPagination
+              ariaLabel="Our Database pagination"
+              page={dbPage}
+              pageCount={dbPageCount}
+              total={dbRows.length}
+              pageSize={MERGE_PAGE_SIZE}
+              onPageChange={setDbPage}
+            />
           </section>
 
           <section className="merge-tool-example__column">
@@ -657,7 +626,7 @@ export function MergeToolExample({
               <LOFIEmptyState
                 variant="first-use"
                 title="Select a title from the database"
-                description="Choose a row on the left to see suggested crawl matches, or search the crawler directly."
+                description="Choose a row from Our Database to see suggested crawl matches, or search the crawler directly."
               />
             ) : (
               <>
@@ -667,25 +636,28 @@ export function MergeToolExample({
                       id="crawler-search"
                       type="search"
                       allowClear
-                      disabled={automated}
-                      placeholder="Search the full crawler database…"
+                              placeholder="Search the full crawler database…"
                       value={crawlerSearchDraft}
                       onChange={setCrawlerSearchDraft}
                     />
                   </LOFIField>
                   <LOFIButton
                     variant="primary"
-                    disabled={automated || crawlerSearchDraft === crawlerSearchApplied}
-                    onClick={() => setCrawlerSearchApplied(crawlerSearchDraft)}
+                    disabled={crawlerSearchDraft === crawlerSearchApplied}
+                    onClick={() => {
+                      setCrawlerSearchApplied(crawlerSearchDraft);
+                      setCrawlerPage(1);
+                    }}
                   >
                     Search
                   </LOFIButton>
                   <LOFIButton
                     variant="dismiss"
-                    disabled={automated || (!crawlerSearchDraft && !crawlerSearchApplied)}
+                    disabled={(!crawlerSearchDraft && !crawlerSearchApplied)}
                     onClick={() => {
                       setCrawlerSearchDraft('');
                       setCrawlerSearchApplied('');
+                      setCrawlerPage(1);
                     }}
                   >
                     {crawlerQueryActive ? 'Back to suggestions' : 'Clear'}
@@ -700,7 +672,7 @@ export function MergeToolExample({
                 )}
                 <LOFITable<CrawlerRow>
                   columns={crawlerColumns}
-                  rows={crawlerRows}
+                  rows={pagedCrawlerRows}
                   keyField="id"
                   expandable
                   renderExpanded={(row) => (
@@ -720,6 +692,14 @@ export function MergeToolExample({
                     />
                   }
                 />
+                <LOFIPagination
+                  ariaLabel="Crawler Matches pagination"
+                  page={crawlerPage}
+                  pageCount={crawlerPageCount}
+                  total={crawlerRows.length}
+                  pageSize={MERGE_PAGE_SIZE}
+                  onPageChange={setCrawlerPage}
+                />
               </>
             )}
           </section>
@@ -727,7 +707,7 @@ export function MergeToolExample({
       </div>
 
       <div className="merge-tool-example__footer">
-        <LOFIButton variant="dismiss" onClick={handleReset} disabled={automated}>
+        <LOFIButton variant="dismiss" onClick={handleReset}>
           <span className="merge-tool-example__btn-label">
             <MergeToolResetIcon />
             <LOFIText as="span" variant="inherit">
@@ -735,14 +715,7 @@ export function MergeToolExample({
             </LOFIText>
           </span>
         </LOFIButton>
-        <span
-          data-preview-target={previewTargetAttr({ kind: 'merge-button' })}
-          className={
-            displayHighlightMergeButton
-              ? 'merge-tool-example__highlight'
-              : undefined
-          }
-        >
+        <span>
           <LOFIButton variant="primary" onClick={openMergeModal} disabled={!canMerge}>
             <span className="merge-tool-example__btn-label">
               <MergeToolMergeIcon />
@@ -764,10 +737,7 @@ export function MergeToolExample({
             <LOFIButton variant="dismiss" onClick={modalReset} disabled={displayOverrides.size === 0}>
               Reset
             </LOFIButton>
-            <span
-              data-preview-target={previewTargetAttr({ kind: 'modal-merge-button' })}
-              className={displayHighlightModalMerge ? 'merge-tool-example__highlight' : undefined}
-            >
+            <span>
               <LOFIButton variant="primary" onClick={requestMerge} disabled={displayOverrides.size === 0}>
                 Merge
               </LOFIButton>
@@ -787,7 +757,7 @@ export function MergeToolExample({
             <LOFIButton variant="dismiss" onClick={cancelConfirm} disabled={displayConfirmLoading}>
               Cancel
             </LOFIButton>
-            <span data-preview-target={previewTargetAttr({ kind: 'confirm-button' })}>
+            <span>
               <LOFIButton variant="primary" onClick={commitMerge} disabled={displayConfirmLoading}>
                 {displayConfirmLoading ? <LOFILoader label="Merging" /> : 'Merge movie'}
               </LOFIButton>
@@ -806,7 +776,7 @@ export function MergeToolExample({
         <LOFIToast
           severity={displayToast.severity}
           message={displayToast.message}
-          autoDismiss={automated ? undefined : 4000}
+          autoDismiss={4000}
           onDismiss={() => setToast(null)}
         />
       )}
