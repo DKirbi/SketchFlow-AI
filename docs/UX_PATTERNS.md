@@ -10,6 +10,29 @@
 >
 > An interface that uses the right components but ignores these flow rules will look correct and behave wrong.
 
+<!-- TODO: agent pages (`UX_PATTERNS_AGENT.md`, `UI_PATTERNS_AGENT.md`), Copilot (`.github/copilot-instructions.md`), and `docs/locales/*` are not updated in this pass. Hub EN/DE/SL briefs are in scope. -->
+
+---
+
+## Laws of UX
+
+Each pattern heading names the [Laws of UX](https://lawsofux.com/) that explain *why* the behaviour exists. Pattern IDs stay the product names. The same law may apply to more than one pattern.
+
+- [Jakob’s Law](https://lawsofux.com/jakobs-law/) → P1
+- [Law of Common Region](https://lawsofux.com/law-of-common-region/) → P1, P5
+- [Chunking](https://lawsofux.com/chunking/) → P2, P8
+- [Miller’s Law](https://lawsofux.com/millers-law/) → P2
+- [Zeigarnik Effect](https://lawsofux.com/zeigarnik-effect/) → P3, P8
+- [Peak-End Rule](https://lawsofux.com/peak-end-rule/) → P3, P4
+- [Selective Attention](https://lawsofux.com/selective-attention/) → P4, P10
+- [Cognitive Load](https://lawsofux.com/cognitive-load/) → P5
+- [Postel’s Law](https://lawsofux.com/postels-law/) → P6
+- [Working Memory](https://lawsofux.com/working-memory/) → P6
+- [Tesler’s Law](https://lawsofux.com/teslers-law/) → P7
+- [Hick’s Law](https://lawsofux.com/hicks-law/) → P7, P9
+- [Choice Overload](https://lawsofux.com/choice-overload/) → P9
+- [Fitts’s Law](https://lawsofux.com/fittss-law/) → P10
+
 ---
 
 ## Patterns
@@ -20,15 +43,9 @@ Patterns are ordered from **structural / shell** patterns to **interaction / pri
 
 ---
 
-### P1: Workspace (Unified Production Landscape)
+### P1: Workspace (Unified Production Landscape) — Jakob’s Law / Law of Common Region
 
-The structural shell of a UPL interface. "Workspace" here means the complete
-operator environment — the containing frame and its sub-regions. This is not
-to be confused with a browser window; the term describes the product concept only.
-
-All Workspace interfaces begin with the **UPL Shell** (§ 1.1). What appears
-beneath it depends on the interface, but the hierarchy from the spec always
-holds: shell → filter → sidebar → main interface.
+The structural shell of a UPL interface. [Jakob’s Law](https://lawsofux.com/jakobs-law/): operators spend most of their time in other tools, so the UPL shell stays a familiar frame (upper bar, optional module strip, then filter → sidebar → main). [Law of Common Region](https://lawsofux.com/law-of-common-region/): those three working areas sit in clearly bounded regions so they read as one workspace, not disconnected chrome. “Workspace” is the product concept, not a browser window. All Workspace interfaces begin with the UPL Shell; the hierarchy always holds: shell → filter → sidebar → main interface.
 
 **Base layout (ultra-low-fi view — outer regions before components):**
 
@@ -236,9 +253,9 @@ feature interface lives.
 
 ---
 
-### P2: Data Table
+### P2: Data Table — Chunking / Miller’s Law
 
-> **Pattern brief:** Data tables are the primary surface for scanning, sorting, and acting on entity lists. Keep structure, row affordances, column contracts, and bulk flows predictable as data grows.
+> **Pattern brief:** Data tables are the primary surface for scanning, sorting, and acting on entity lists. [Chunking](https://lawsofux.com/chunking/): columns, row actions, and bulk flows group a large dataset into meaningful units. [Miller’s Law](https://lawsofux.com/millers-law/): search-at-scale, persistent headers, and empty/loading shells keep working memory on a handful of columns and the current task—not an unbounded grid. Keep structure, row affordances, column contracts, and bulk flows predictable as data grows.
 
 > _Docs note — hints: use **LOFIInlineAlert** (info / warning) and border tokens for secondary notes. Radix Primitives do not ship a Callout; Radix Themes Callout is chromatic and out of scope for lo-fi kit._
 
@@ -353,9 +370,9 @@ Use **row expansion** to reveal secondary context (detail fields, nested lists, 
 
 ---
 
-### P3: Stateful Button
+### P3: Stateful Button — Zeigarnik Effect / Peak-End Rule
 
-Controls whose **label**, **visual weight**, and/or **disabled** state encode async **commit progress** or the **current reversible mode** of an action (so the operator always knows what will happen next).
+Controls whose **label**, **visual weight**, and/or **disabled** state encode async **commit progress** or the **current reversible mode** of an action. [Zeigarnik Effect](https://lawsofux.com/zeigarnik-effect/): a dirty sticky footer (or a Map→Mapped control still in flight) keeps the unfinished save in mind until it completes or is reset. [Peak-End Rule](https://lawsofux.com/peak-end-rule/): operators judge the save by the loading beat and the success/error ending, so idle → loading → success/error must be explicit. Show progress so neither side feels idle; prototypes still simulate 500ms–1.5s and do not claim a sub-400ms round-trip.
 
 **Variant A — Async commit (`LOFIStatefulButton`):**
 
@@ -440,9 +457,9 @@ For reversible row actions such as **Hide**, use one **secondary** control whose
 
 ---
 
-### P4: Toast notification messages
+### P4: Toast notification messages — Peak-End Rule / Selective Attention
 
-Transient **success**, **error**, and optional **informational** feedback for async outcomes — especially **inline workspace** saves and resets coordinated with **P1.2.3.2 Footer**, **P3 (Stateful Button)**, and **P7 (Confirmation)** for discard.
+Transient **success**, **error**, and optional **informational** feedback for async outcomes. Peak-End Rule: the toast is the remembered end of Save / Reset / modal commit, coordinated with the footer, **P3**, and **P7**. [Selective Attention](https://lawsofux.com/selective-attention/): a fixed upper-right layer makes the outcome noticeable without stealing the workspace the operator is still in. P6 owns per-field errors; P4 owns operation outcomes.
 
 **Placement**
 
@@ -468,9 +485,9 @@ Transient **success**, **error**, and optional **informational** feedback for as
 
 ---
 
-### P5: Modal
+### P5: Modal — Cognitive Load / Law of Common Region
 
-A modal overlay that presents entity detail and allows editing or creation.
+A modal overlay that presents entity detail for editing or creation. [Cognitive Load](https://lawsofux.com/cognitive-load/): one editor at a time (header, body, footer) so the operator is not holding a second form in mind. Law of Common Region: the overlay’s boundary groups title, fields, and the commit cluster as a single task. The only permitted second layer is a confirmation-only P7.
 
 **Structure:**
 
@@ -517,9 +534,9 @@ A modal overlay that presents entity detail and allows editing or creation.
 
 ---
 
-### P6: Inline Validation
+### P6: Inline Validation — Postel’s Law / Working Memory
 
-Form and field validation behaviour, and feedback during and after save operations.
+Form and field validation behaviour, and feedback during and after save. [Postel’s Law](https://lawsofux.com/postels-law/): be liberal on input (validate on blur, re-check as the operator fixes the field) and conservative on commit (disabled until required checks pass and, on edit, the form is dirty). [Working Memory](https://lawsofux.com/working-memory/): keep each error adjacent to its field so the operator is not storing a banner of problems. Inline-workspace saves use P3; modal saves use P7.
 
 **Field-level validation:**
 
@@ -551,9 +568,9 @@ Form and field validation behaviour, and feedback during and after save operatio
 
 ---
 
-### P7: Confirmation Dialog
+### P7: Confirmation Dialog — Tesler’s Law / Hick’s Law
 
-A dialog that interrupts a meaningful action to require explicit user confirmation.
+A dialog that interrupts a meaningful action to require explicit confirmation. [Tesler’s Law](https://lawsofux.com/teslers-law/): irreversible work has complexity you cannot remove—Remove, Delete, discard, and modal Save/Create keep a checkpoint. [Hick’s Law](https://lawsofux.com/hicks-law/): that checkpoint is only a title, a brief consequence, and two answers with specific verbs (never OK/Yes). Reversible actions and inline-workspace saves skip this interrupt.
 
 **When confirmation is required:**
 
@@ -579,9 +596,9 @@ A dialog that interrupts a meaningful action to require explicit user confirmati
 
 ---
 
-### P8: Tab Navigation
+### P8: Tab Navigation — Chunking / Zeigarnik Effect
 
-A tab bar that switches between parallel views of the same domain.
+A tab bar that switches between parallel views of the same domain. Chunking: tabs split one entity into named sections (including inside a modal) instead of one endless page. Zeigarnik Effect: switching tabs does not discard state—unfinished work stays until the operator returns. Use a stepper when the flow is sequential; do not substitute a segmented control for tabs in a modal.
 
 **Rules:**
 
@@ -601,11 +618,9 @@ A tab bar that switches between parallel views of the same domain.
 
 ---
 
-### P9: Filters
+### P9: Filters — Hick’s Law / Choice Overload
 
-Filter controls can appear above a data table (see P2.1 — Table Structure) or
-in the UPL filter query row (see P1.2.1 — Filter Row). This pattern covers
-their complete behaviour in both contexts.
+Filter controls above a data table (P2.1) or in the UPL filter query row (P1.2.1). Hick’s Law: each extra dimension and each extra control type increases the time to decide what to apply. [Choice Overload](https://lawsofux.com/choice-overload/): unbounded filters overwhelm; AND logic, per-field clear, Clear all, and optional chips keep the active set small and reversible. Debounce vs explicit Search follows backend speed, not a third philosophy of filtering.
 
 **Control types:**
 
@@ -642,9 +657,9 @@ their complete behaviour in both contexts.
 
 ---
 
-### P10: Sticky disclosure while scrolling
+### P10: Sticky disclosure while scrolling — Fitts’s Law / Selective Attention
 
-When a **disclosure** reveals a **large vertical amount of content** (expanded table row, accordion panel, nested blocks), scrolling must not hide the controls and context the operator needs to **collapse**, **act on the row**, or **see which entity** is open.
+When disclosure reveals a large vertical body, scrolling must not hide collapse, row identity, or actions. [Fitts’s Law](https://lawsofux.com/fittss-law/): the sticky parent row/header stays a large, near target for collapse while the body moves. Selective Attention: keep identity and Actions in view so the operator is not hunting which entity is open. Sticky target is that header/row—not a duplicate strip inside the detail.
 
 **When to use**
 

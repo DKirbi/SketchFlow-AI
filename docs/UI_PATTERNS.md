@@ -18,6 +18,18 @@ This file does three things:
 
 Read in order: **internal-tool UX baseline** → **core semantic vocabulary** → **UI Patterns 1.x–5.x**.
 
+Section headings name the [Laws of UX](https://lawsofux.com/) that explain *why* the visual rule exists. The same law may apply to more than one section.
+
+- [Cognitive Load](https://lawsofux.com/cognitive-load/) → baseline, §2, §4
+- [Occam’s Razor](https://lawsofux.com/occams-razor/) → baseline
+- [Von Restorff Effect](https://lawsofux.com/von-restorff-effect/) → §1, §5
+- [Fitts’s Law](https://lawsofux.com/fittss-law/) → §1
+- [Law of Similarity](https://lawsofux.com/law-of-similarity/) → §2
+- [Law of Proximity](https://lawsofux.com/law-of-proximity/) → §3
+- [Postel’s Law](https://lawsofux.com/postels-law/) → §3
+- [Law of Common Region](https://lawsofux.com/law-of-common-region/) → §4
+- [Chunking](https://lawsofux.com/chunking/) → §5
+
 ---
 
 ## Prefer Mantine-backed High Fidelity Design System components (high-fidelity prompts)
@@ -30,9 +42,9 @@ This is **not** an additional numbered UI Pattern (it does not change P1–P10 b
 
 ---
 
-## Internal-tool UX baseline
+## Internal-tool UX baseline — Cognitive Load / Occam’s Razor
 
-High Fidelity Design System components ship with an intentionally **minimalistic, "invisible" base appearance**. That is not an accident — it is a UX practice for **heavy data interfaces** that operators visit daily. Three principles drive every rule below:
+High Fidelity Design System components ship a minimalistic, “invisible” base for heavy data interfaces operators visit daily. Cognitive Load: meaning lives in structure, typography, and semantic state—not chroma. [Occam’s Razor](https://lawsofux.com/occams-razor/): prefer the fewest visual assumptions—neutral or action, md, outline or subtle, on-light—unless a status or commit justifies more. Color is reserved for intent; brand colour is rare. Three principles drive every rule below:
 
 1. **Lower cognitive load.** Meaning is carried by **structure, typography, and semantic state** — not by chroma. The interface should fade into the background so the data and operator's task stay foreground.
 2. **Color is reserved for semantic intent**, not decoration. If a colour does not communicate **status** (`success`, `warning`, `attention`) or **action** (`action`), it should be `neutral`.
@@ -123,9 +135,9 @@ Each rule cross-references **UX flow patterns** (P1–P10) where the semantics r
 
 ---
 
-### 1. Buttons + feedback
+### 1. Buttons + feedback — Von Restorff Effect / Fitts’s Law
 
-Foundational — every other surface composes buttons and status feedback.
+Foundational—every other surface composes buttons and status feedback. [Von Restorff Effect](https://lawsofux.com/von-restorff-effect/): one `fill` per cluster isolates the commit; extra fills make nothing memorable. Fitts’s Law: rank and size (fill vs subtle vs ghost, md vs sm vs xs) make the intended target faster to acquire—and keep destructive `fill warning` off the row, on the P7 confirm only.
 
 #### 1.1 — Action color hierarchy
 
@@ -218,9 +230,9 @@ A **togglable** control is a **button** (`aria-pressed`, or the equivalent selec
 
 ---
 
-### 2. Typography
+### 2. Typography — Law of Similarity / Cognitive Load
 
-A pure visual primitive with no interaction contract — but the readability baseline for every data-heavy screen.
+A pure visual primitive with no interaction contract—the readability baseline for every data-heavy screen. [Law of Similarity](https://lawsofux.com/law-of-similarity/): shared role and size (body, interface, table, eyebrow, monospace) make like text read as one system. Cognitive Load: a 700 body baseline and a 500–900 working range keep operators reading data, not decoding decoration.
 
 #### 2.1 — Default body size
 
@@ -255,9 +267,9 @@ A pure visual primitive with no interaction contract — but the readability bas
 
 ---
 
-### 3. Forms + inputs
+### 3. Forms + inputs — Law of Proximity / Postel’s Law
 
-Composes typography, buttons, and status semantics into editable surfaces.
+Composes typography, buttons, and status semantics into editable surfaces. [Law of Proximity](https://lawsofux.com/law-of-proximity/): label, field, and adjacent validation sit as one group—not a distant banner or tinted field backgrounds. Postel’s Law: default neutral outline accepts everyday input; focus `action` marks the live field; hard errors are `warning` next to the control; commit stays conservative until P6/P5 rules pass.
 
 #### 3.1 — Default field state
 
@@ -297,9 +309,9 @@ Composes typography, buttons, and status semantics into editable surfaces.
 
 ---
 
-### 4. Overlays + navigation
+### 4. Overlays + navigation — Law of Common Region / Cognitive Load
 
-Adds the surface dimension. Overlays are where `PdsSurface` matters.
+Adds the surface dimension; overlays are where `PdsSurface` matters. Law of Common Region: a modal, drawer, or P7 dialog is one bounded card—commit rightmost, cancel beside it, no mixed on-light/on-dark inside. Cognitive Load: drawers stay structural; popovers do not hold primary commits; escalate those to P5.
 
 #### 4.1 — Surface defaults
 
@@ -345,9 +357,9 @@ Adds the surface dimension. Overlays are where `PdsSurface` matters.
 
 ---
 
-### 5. Tables, filters, row actions
+### 5. Tables, filters, row actions — Chunking / Von Restorff Effect
 
-Highest-complexity composition. Tables consume every previous rule and add scanning + density constraints.
+Highest-complexity composition. Chunking: status+label, sm/xs controls, and filter chips group a dense grid into scannable units. Von Restorff Effect: isolate what must stand out—semantic status, one invert-selected chip, ghost/subtle warning for row Remove—not a column of fills (that emphasis lives on P7).
 
 #### 5.1 — Status cells
 

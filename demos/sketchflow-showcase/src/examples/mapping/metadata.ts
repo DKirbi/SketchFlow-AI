@@ -11,17 +11,17 @@ export const mappingExampleConfig: ShowcaseExampleConfig = {
     {
       id: 'P2.2',
       title: 'P2.2 — Row actions',
-      body: 'The Actions column hosts Map and Unmap. Map uses a compact stateful control; Unmap is a separate dismiss action with inline confirmation before remove.',
+      body: 'Actions hosts Map and Unmap. Map is the row commit; Unmap is the separate reverse with a confirm.',
     },
     {
       id: 'P3',
       title: 'P3 — Stateful Button',
-      body: 'Async row Map runs idle → loading → success on one control. No confirmation dialog before Map — the button state is the feedback mechanism.',
+      body: 'Zeigarnik Effect / Peak-End Rule — Map runs idle → loading → success on one control. No confirmation before Map.',
     },
     {
       id: 'P9',
       title: 'P9 — Filters',
-      body: 'Genre and title search filters sit above the table. Operators commit criteria with Search; Clear all resets dependent table content.',
+      body: 'Hick’s Law / Choice Overload — genre + title search above the table; Search applies, Clear all resets.',
     },
   ],
   controls: [

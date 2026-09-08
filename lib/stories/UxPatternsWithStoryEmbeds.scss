@@ -6,6 +6,44 @@
   margin: $space-4 0 $space-8;
 }
 
+.pattern-section-page {
+  margin: $space-4 0 $space-8;
+
+  :global(blockquote) {
+    margin: $space-4 0 0;
+    padding-left: $space-5;
+    border-left: $border-width-strong solid $color-ink-muted;
+    color: $color-ink;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    :global(p) {
+      margin: 0;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      line-height: 1.55;
+    }
+
+    & + blockquote {
+      margin-top: $space-4;
+      padding-left: $space-4;
+      border-left-width: $border-width;
+      border-left-style: dashed;
+      border-left-color: $color-border;
+
+      :global(p) {
+        font-size: $font-size-base;
+        font-weight: $font-weight-normal;
+        font-style: italic;
+        color: $color-ink-secondary;
+        line-height: $line-height-base;
+      }
+    }
+  }
+}
+
 // ─── Individual collapsible pattern section ─────────────────────────────────
 
 .pattern-accordion {

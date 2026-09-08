@@ -9,7 +9,13 @@ import {
   getProject,
   listProjectsForCompany,
 } from '../hub/catalog';
-import { DEFAULT_STORYBOOK_PATH, ancestorIds, canvasPath, docsPath } from '../hub/storybookNav';
+import {
+  DEFAULT_STORYBOOK_PATH,
+  ancestorIds,
+  canvasPath,
+  docsPath,
+  uxPatternDocsPath,
+} from '../hub/storybookNav';
 import { STORYBOOK_NAV } from '../hub/storybookNav';
 
 function renderApp(path = '/') {
@@ -116,7 +122,7 @@ describe('App routes', () => {
     expect(within(showcaseNav()).getByRole('button', { name: 'Mapping' })).toHaveClass(
       'btn--primary',
     );
-    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Maps messy or legacy internal names/i);
+    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Map messy internal names onto crawled canonical names/i);
   });
 
   it('resets an embedded Work iframe to About on load', async () => {
@@ -142,7 +148,7 @@ describe('App routes', () => {
     expect(within(showcaseNav()).getByRole('button', { name: 'About' })).not.toHaveClass(
       'btn--primary',
     );
-    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Maps messy or legacy internal names/i);
+    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Map messy internal names onto crawled canonical names/i);
   });
 
   it('opens SketchFlowAI Patterns with a breadcrumb and hides sibling examples', async () => {
@@ -162,7 +168,9 @@ describe('App routes', () => {
     expect(screen.queryByLabelText('Project brief')).not.toBeInTheDocument();
     expect(within(nav).getByRole('button', { name: 'UX Patterns' })).toBeInTheDocument();
     expect(within(nav).getByRole('button', { name: 'P1 Workspace' })).toBeInTheDocument();
-    expect(within(nav).queryByRole('button', { name: 'P1.2.1 Filter row' })).not.toBeInTheDocument();
+    expect(within(nav).getByRole('button', { name: 'P10 Sticky disclosure' })).toBeInTheDocument();
+    expect(within(nav).queryByRole('button', { name: 'P1.2.1: Filter Row' })).not.toBeInTheDocument();
+    expect(within(nav).queryByRole('button', { name: 'Story 1 — Team Management' })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: 'Button' })).not.toBeInTheDocument();
   });
 
@@ -181,20 +189,24 @@ describe('App routes', () => {
     expect(screen.getByRole('heading', { name: 'What is SketchFlowAI' })).toBeInTheDocument();
   });
 
-  it('nests sub-patterns under accordions and keeps LOW FI Design system collapsed', async () => {
+  it('opens P1 Workspace docs and keeps LOW FI Design system collapsed', async () => {
     const user = userEvent.setup();
     renderApp('/');
 
     await user.click(within(showcaseNav()).getByRole('button', { name: 'SketchFlowAI Patterns' }));
 
     const nav = showcaseNav();
-    await user.click(within(nav).getByRole('button', { name: 'Expand P1 Workspace' }));
-    await user.click(within(nav).getByRole('button', { name: 'Expand P1.2 Filter / sidebar / main' }));
-    await user.click(within(nav).getByRole('button', { name: 'P1.2.1 Filter row' }));
+    await user.click(within(nav).getByRole('button', { name: 'P1 Workspace' }));
 
     expect(screen.getByTitle('SketchFlowAI Patterns')).toHaveAttribute(
       'src',
-      expect.stringContaining(canvasPath('PATTERNS/UX Patterns', 'P1_2_1_FilterRow')),
+      expect.stringContaining(docsPath('PATTERNS/UX Patterns/P1 Workspace')),
+    );
+
+    await user.click(within(nav).getByRole('button', { name: 'P1.2.1: Filter Row' }));
+    expect(screen.getByTitle('SketchFlowAI Patterns')).toHaveAttribute(
+      'src',
+      expect.stringContaining(docsPath('PATTERNS/UX Patterns/P1 Workspace/P1.2.1: Filter Row')),
     );
 
     await user.click(within(nav).getByRole('button', { name: 'Expand LOW FI Design system' }));
@@ -250,13 +262,13 @@ describe('App routes', () => {
     const brief = screen.getByLabelText('Project brief');
     expect(brief).toHaveClass('hub-brief--collapsed');
     expect(brief).toHaveTextContent('Merge Tool');
-    expect(brief).toHaveTextContent(/Reconciles two records/i);
+    expect(brief).toHaveTextContent(/Pick a mock catalog, choose one database row/i);
     expect(brief).toHaveTextContent(/P2 \/ P2\.3/);
-    expect(brief).not.toHaveTextContent(/Mock catalogues protect real business sports data/i);
+    expect(brief).not.toHaveTextContent(/Merge stays disabled until you override/i);
 
     await user.click(screen.getByRole('button', { name: 'Show more' }));
     expect(screen.getByLabelText('Project brief')).toHaveTextContent(
-      /Mock catalogues protect real business sports data/i,
+      /Merge stays disabled until you override/i,
     );
   });
 
@@ -272,10 +284,13 @@ describe('App routes', () => {
     expect(
       screen.getByRole('button', { name: 'P7: Confirmation dialog' }).closest('.hub-brief__pattern'),
     ).toHaveClass('hub-brief__pattern--expanded');
-    expect(screen.getByText(/confirmation-only overlay/i)).toBeInTheDocument();
+    expect(screen.getByText(/two-answer confirmation stacks on the review modal/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Open pattern docs' }));
-    expect(screen.getByTitle('SketchFlowAI Patterns')).toBeInTheDocument();
+    expect(screen.getByTitle('SketchFlowAI Patterns')).toHaveAttribute(
+      'src',
+      expect.stringContaining(docsPath('PATTERNS/UX Patterns/P7 Confirmation dialog')),
+    );
     expect(screen.getByRole('button', { name: 'Get back to Merge Tool' })).toBeInTheDocument();
     expect(screen.getByLabelText('AI Showcase breadcrumb')).toBeInTheDocument();
 
@@ -340,7 +355,7 @@ describe('App routes', () => {
 
     await user.click(within(nav).getByRole('button', { name: 'Merge Tool' }));
     expect(screen.getByRole('button', { name: 'Weniger anzeigen' })).toBeInTheDocument();
-    expect(screen.getByLabelText('Projektkurzinfo')).toHaveTextContent(/Gleicht zwei Datensätze/i);
+    expect(screen.getByLabelText('Projektkurzinfo')).toHaveTextContent(/Wählen Sie einen Mock-Katalog/i);
   });
 
   it('passes appearance into the Storybook iframe and localizes hub nav groups', async () => {
@@ -364,15 +379,18 @@ describe('App routes', () => {
 });
 
 describe('storybook nav catalog', () => {
-  it('nests P1.2.1 under P1.2 and does not expand LOW FI by default', () => {
-    expect(ancestorIds(STORYBOOK_NAV, 'ux-p1-2-1')).toEqual(['ux-patterns', 'ux-p1', 'ux-p1-2']);
+  it('lists P1–P10 as docs leaves under UX Patterns', () => {
+    expect(ancestorIds(STORYBOOK_NAV, 'ux-p1')).toEqual(['ux-patterns']);
+    expect(ancestorIds(STORYBOOK_NAV, 'ux-p1-2-1')).toEqual(['ux-patterns', 'ux-p1']);
     expect(docsPath('Introduction')).toBe('/docs/introduction--docs');
-    expect(canvasPath('PATTERNS/UX Patterns', 'P1_2_1_FilterRow')).toBe(
-      '/story/patterns-ux-patterns--p-1-2-1-filter-row',
+    expect(docsPath('PATTERNS/UX Patterns/P1 Workspace')).toBe(
+      '/docs/patterns-ux-patterns-p1-workspace--docs',
     );
-    expect(canvasPath('PATTERNS/UX Patterns', 'P1_1_UPLShell')).toBe(
-      '/story/patterns-ux-patterns--p-1-1-upl-shell',
+    expect(docsPath('PATTERNS/UX Patterns/P1 Workspace/P1.2.1: Filter Row')).toBe(
+      '/docs/patterns-ux-patterns-p1-workspace-p1-2-1-filter-row--docs',
     );
+    expect(uxPatternDocsPath('P2 / P2.3')).toBe(docsPath('PATTERNS/UX Patterns/P2 Data Table'));
+    expect(uxPatternDocsPath('Role gating')).toBe(docsPath('PATTERNS/UX Patterns'));
     expect(canvasPath('PATTERNS/UI Patterns', 'UI_ModalCommitAndP7')).toBe(
       '/story/patterns-ui-patterns--ui-modal-commit-and-p-7',
     );

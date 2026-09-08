@@ -17,7 +17,7 @@ import {
   projectPath,
   resolveEmbedSrc,
 } from './catalog';
-import { DEFAULT_STORYBOOK_PATH, withStorybookPath } from './storybookNav';
+import { DEFAULT_STORYBOOK_PATH, uxPatternDocsPath, withStorybookPath } from './storybookNav';
 import './ShowcaseLayout.scss';
 
 const DESKTOP_OK_KEY = 'sketchflow-hub-desktop-ok';
@@ -72,7 +72,7 @@ export function ShowcaseLayout() {
   }, [projectSlug, returnTo]);
 
   useEffect(() => {
-    if (projectSlug === STORYBOOK_SLUG) {
+    if (projectSlug !== STORYBOOK_SLUG) {
       setStorybookPath(DEFAULT_STORYBOOK_PATH);
     }
   }, [projectSlug]);
@@ -107,9 +107,10 @@ export function ShowcaseLayout() {
     navigate('/');
   }
 
-  function showMorePatterns() {
+  function showMorePatterns(patternId: string) {
     if (!project) return;
     setReturnTo({ companyId: activeCompany.id, slug: project.slug, title: project.title });
+    setStorybookPath(uxPatternDocsPath(patternId));
     navigate(projectPath(activeCompany.id, STORYBOOK_SLUG));
   }
 

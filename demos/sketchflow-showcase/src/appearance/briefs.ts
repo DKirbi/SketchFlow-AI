@@ -12,22 +12,22 @@ const MERGE_PATTERNS_DE: PatternSummary[] = [
   {
     id: 'P2 / P2.3',
     title: 'P2 / P2.3 — Datentabelle + Einzelauswahl',
-    body: 'Die Datenbank- und Crawler-Tabellen nutzen jeweils eine Radio-Spalte, damit vor dem Merge genau eine Zeile pro Tabelle gewählt ist.',
+    body: 'Zwei Tabellen, je eine Radio-Spalte (Chunking / Miller’s Law), damit Sie eine Datenbankzeile und einen Crawler-Treffer vor Merge halten.',
   },
   {
     id: 'P2.5 / P8',
     title: 'P2.5 / P8 — Aufklappbare Zeilen + Tabs',
-    body: 'Zeilen klappen (Chevron oder „…" neben Top Cast) in eine Tab-Ansicht Cast / Staff / Filming Locations auf, unabhängig von der Zeilenauswahl.',
+    body: 'Klappen Sie eine Zeile in Cast / Staff / Locations-Tabs auf (Chunking / Zeigarnik Effect), ohne die Merge-Auswahl zu verlieren.',
   },
   {
     id: 'P5 / P6',
     title: 'P5 / P6 — Modal + Commit-Sperre',
-    body: 'Merge öffnet ein Prüfmodal, das den behaltenen Datensatz mit dem Crawler-Treffer vergleicht; Merge bleibt gesperrt, bis mindestens ein Feld überschrieben ist.',
+    body: 'Merge öffnet ein Prüfmodal (Cognitive Load). Commit bleibt aus, bis ein Feld überschrieben ist (Postel’s Law).',
   },
   {
     id: 'P7',
     title: 'P7 — Bestätigungsdialog',
-    body: 'Vor dem Commit liegt ein reines Bestätigungs-Overlay auf dem Prüfmodal — die einzige erlaubte Modal-Stapelung.',
+    body: 'Tesler’s Law / Hick’s Law — eine Zwei-Antwort-Bestätigung liegt auf dem Prüfmodal vor dem Commit, die einzige erlaubte Stapelung.',
   },
 ];
 
@@ -35,22 +35,22 @@ const MERGE_PATTERNS_SL: PatternSummary[] = [
   {
     id: 'P2 / P2.3',
     title: 'P2 / P2.3 — Podatkovna tabela + enojni izbor',
-    body: 'Tabeli baze in crawlerja uporabljata stolpec z radio gumbi, da je pred združitvijo izbrana natanko ena vrstica na tabelo.',
+    body: 'Dve tabeli, po en radio (Chunking / Miller’s Law), da pred Merge držite vrstico baze in crawlerjev zadetek.',
   },
   {
     id: 'P2.5 / P8',
     title: 'P2.5 / P8 — Razširljive vrstice + zavihki',
-    body: 'Vrstice se razširijo (chevron ali »…« ob Top Cast) v zavihe Cast / Staff / Filming Locations, neodvisno od izbora vrstice.',
+    body: 'Razširite vrstico v zavihke Cast / Staff / Locations (Chunking / Zeigarnik Effect) brez izgube izbranih vrstic za Merge.',
   },
   {
     id: 'P5 / P6',
     title: 'P5 / P6 — Modal + zaklep potrditve',
-    body: 'Merge odpre pregledni modal, ki primerja ohranjeni zapis s crawlerjevim zadetkom; dejanje Merge ostane onemogočeno, dokler ni preglaseno vsaj eno polje.',
+    body: 'Merge odpre en pregledni modal (Cognitive Load). Potrditev ostane izklopljena, dokler ni preglasitev (Postel’s Law).',
   },
   {
     id: 'P7',
     title: 'P7 — Potrditveno okno',
-    body: 'Pred zapisom se nad preglednim modalom odpre samo potrditveni sloj — edina dovoljena zložitev modalov.',
+    body: 'Tesler’s Law / Hick’s Law — dvoodgovorna potrditev se zloži na pregledni modal pred zapisom, edina dovoljena zložitev.',
   },
 ];
 
@@ -58,17 +58,17 @@ const MAPPING_PATTERNS_DE: PatternSummary[] = [
   {
     id: 'P2.2',
     title: 'P2.2 — Zeilenaktionen',
-    body: 'Die Spalte Actions enthält Map und Unmap. Map ist eine kompakte zustandsbehaftete Steuerung; Unmap ist eine separate Dismiss-Aktion mit Inline-Bestätigung vor dem Entfernen.',
+    body: 'Actions enthält Map und Unmap. Map ist der Zeilen-Commit; Unmap ist der getrennte Rückweg mit Bestätigung.',
   },
   {
     id: 'P3',
     title: 'P3 — Stateful Button',
-    body: 'Asynchrones Map in der Zeile läuft idle → loading → success auf einem Control. Kein Bestätigungsdialog vor Map — der Button-Zustand ist das Feedback.',
+    body: 'Zeigarnik Effect / Peak-End Rule — Map läuft idle → loading → success auf einem Control. Keine Bestätigung vor Map.',
   },
   {
     id: 'P9',
     title: 'P9 — Filter',
-    body: 'Genre- und Titelsuche sitzen über der Tabelle. Search übernimmt die Kriterien; Clear all setzt den abhängigen Tabelleninhalt zurück.',
+    body: 'Hick’s Law / Choice Overload — Genre- und Titelsuche über der Tabelle; Search wendet an, Clear all setzt zurück.',
   },
 ];
 
@@ -76,17 +76,17 @@ const MAPPING_PATTERNS_SL: PatternSummary[] = [
   {
     id: 'P2.2',
     title: 'P2.2 — Dejanja v vrstici',
-    body: 'Stolpec Actions vsebuje Map in Unmap. Map je strnjen gumb s stanjem; Unmap je ločeno dismiss dejanje z inline potrditvijo pred odstranitvijo.',
+    body: 'Actions vsebuje Map in Unmap. Map je potrditev vrstice; Unmap je ločen obrat s potrditvijo.',
   },
   {
     id: 'P3',
     title: 'P3 — Gumb s stanjem',
-    body: 'Asinhroni Map v vrstici teče idle → loading → success na enem kontrolniku. Pred Map ni potrditvenega okna — stanje gumba je povratna informacija.',
+    body: 'Zeigarnik Effect / Peak-End Rule — Map teče idle → loading → success na enem kontrolniku. Pred Map ni potrditve.',
   },
   {
     id: 'P9',
     title: 'P9 — Filtri',
-    body: 'Filtra žanra in naslova sta nad tabelo. Search uveljavi merila; Clear all ponastavi odvisno vsebino tabele.',
+    body: 'Hick’s Law / Choice Overload — iskanje žanra in naslova nad tabelo; Search uveljavi, Clear all ponastavi.',
   },
 ];
 
@@ -115,64 +115,59 @@ const BRIEFS: Record<ShowcaseLocale, Record<string, BriefCopy>> = {
     },
     'merge-tool': {
       summary:
-        'Gleicht zwei Datensätze derselben Entität ab, lässt Felder überschreiben und schreibt das Ergebnis in die Datenbank.',
+        'Wählen Sie einen Mock-Katalog, eine Datenbankzeile und einen Crawler-Treffer, dann Merge.',
       brief: [
-        'Gleicht zwei Datensätze derselben Entität ab, lässt Felder überschreiben und schreibt das Ergebnis in die Datenbank.',
-        'Wählen Sie in der Toolbar einen Mock-Katalog (Filmkatalog oder Wizarding World). Mock-Kataloge schützen echte Sportdaten.',
-        'Wählen Sie eine Datenbankzeile und einen Crawler-Treffer, dann Merge. Das Prüfmodal bleibt gesperrt, bis mindestens ein Feld überschrieben ist.',
+        'Wählen Sie einen Mock-Katalog, eine Datenbankzeile und einen Crawler-Treffer, dann Merge.',
+        'Prüfen Sie Feldüberschreibungen im Modal. Merge bleibt gesperrt, bis mindestens ein Feld überschrieben ist; dann bestätigen.',
       ],
       patternSummaries: MERGE_PATTERNS_DE,
     },
     mapping: {
       summary:
-        'Ordnet unsaubere oder veraltete interne Namen zeilenweise neu gecrawlten kanonischen Namen zu. Das ist die Operator-Arbeit, Katalogwerte abzugleichen.',
+        'Wählen Sie einen Mock-Katalog. Ordnen Sie unsaubere interne Namen zeilenweise gecrawlten kanonischen Namen zu.',
       brief: [
-        'Ordnet unsaubere oder veraltete interne Namen zeilenweise neu gecrawlten kanonischen Namen zu. Das ist die Operator-Arbeit, Katalogwerte abzugleichen.',
-        'Wählen Sie in der Toolbar einen Mock-Katalog (Filmkatalog oder Wizarding World). Mock-Kataloge schützen echte Sportdaten.',
-        'Wählen Sie Zeilen für Bulk-Map. Mit Map / Unmap pflegen Sie einzelne Einträge.',
-        'Klappen Sie eine Zeile auf, um KI-Vorschläge zu bewerten. Pro Entität wird ein Vorschlag gemappt.',
+        'Wählen Sie einen Mock-Katalog. Ordnen Sie unsaubere interne Namen zeilenweise gecrawlten kanonischen Namen zu.',
+        'Suchen oder filtern, dann Map oder Unmap. Klappen Sie eine Zeile auf, um KI-Vorschläge zu bewerten; ein Vorschlag pro Entität.',
       ],
       patternSummaries: MAPPING_PATTERNS_DE,
     },
     'bracket-demo': {
-      summary:
-        'Ein Bracket-Builder dafür, wie Matches über Pairing, Byes und Verbindungsregeln verbunden sind und fortschreiten.',
+      summary: 'Richten Sie ein Turnier-Bracket ein, dann bearbeiten Sie Matches auf der Canvas.',
       brief: [
-        'Ein Bracket-Builder dafür, wie Matches verbunden sind und fortschreiten.',
-        'Er soll robuste, komplexe Fälle belasten: Pairing, Byes, Progression-Kanten und die unterschiedlichen Verbindungsregeln der Bracket-Systeme.',
-        'Wechseln Sie den Prototyp-Benutzer in der Toolbar (Team Management), um zu sehen, wie Rollen das Bearbeiten sensibler Teamdaten einschränken.',
+        'Richten Sie ein Turnier-Bracket ein, dann bearbeiten Sie Matches auf der Canvas.',
+        'Öffnen Sie Setup und Match-Editoren in Modals. Bestätigen Sie vor zerstörenden oder Commit-Aktionen. Wechseln Sie den Prototyp-Benutzer in der Toolbar für rollen-gesteuerte Team-Edits.',
       ],
       patternSummaries: [
         {
           id: 'P5',
           title: 'P5 — Modal',
-          body: 'Bracket-Setup und Match-Bearbeitung öffnen in einem Modal, damit die Canvas die bleibende Hauptansicht bleibt.',
+          body: 'Cognitive Load / Law of Common Region — Setup und Match-Bearbeitung öffnen in einem Modal, damit die Canvas die Hauptansicht bleibt.',
         },
         {
           id: 'P7',
           title: 'P7 — Bestätigungsdialog',
-          body: 'Zerstörende oder Commit-Aktionen am Bracket fragen vor dem Anwenden nach einem reinen Bestätigungs-Overlay.',
+          body: 'Tesler’s Law / Hick’s Law — bestätigen Sie zerstörende oder Commit-Aktionen, bevor sie gelten.',
         },
         ROLE_DE,
       ],
     },
     'tournament-management': {
       summary:
-        'Große verschachtelte Hierarchien in einem UPL-Workspace zum Navigieren und Pflegen von Sport- und Turnier-Entitäten.',
+        'Filtern Sie die Sidebar, wählen Sie ein Turnier-Blatt und bearbeiten Sie es in der Hauptansicht.',
       brief: [
-        'Management-Test für große verschachtelte Hierarchien (Sportarten, Turniere und verwandte Entitäten) in einem UPL-Workspace, um zu sehen, wie Operatoren diese Skala navigieren und pflegen könnten.',
-        'Wechseln Sie den Prototyp-Benutzer in der Toolbar, um zu sehen, wie Rollen die Nutzung beeinflussen. Operator darf Move oder Remove bei sensiblen Datensätzen nicht; Rollenwechsel schaltet die Aktionen frei.',
+        'Filtern Sie die Sidebar, wählen Sie ein Turnier-Blatt und bearbeiten Sie es in der Hauptansicht.',
+        'Clear all setzt den Baum zurück. Wechseln Sie den Prototyp-Benutzer in der Toolbar, um Move und Remove freizuschalten.',
       ],
       patternSummaries: [
         {
           id: 'P1',
           title: 'P1 — Workspace',
-          body: 'Ein UPL-Workspace mit minifizierter Tool-Identity-Leiste, Filterzeile, einklappbarem Sidebar-Baum und persistenter Hauptansicht auf einer eigenen Karte.',
+          body: 'Jakob’s Law / Law of Common Region — Identitätsleiste, Filterzeile, Sidebar-Baum, Hauptkarte.',
         },
         {
           id: 'P9',
           title: 'P9 — Filter',
-          body: 'Suche und Filter steuern den Sidebar-Baum. Filter löschen setzt abhängigen Auswahlzustand zurück.',
+          body: 'Hick’s Law / Choice Overload — Filter steuern den Baum; Löschen setzt die Auswahl zurück.',
         },
         ROLE_DE,
       ],
@@ -199,64 +194,59 @@ const BRIEFS: Record<ShowcaseLocale, Record<string, BriefCopy>> = {
     },
     'merge-tool': {
       summary:
-        'Uskladi dva zapisa iste entitete, omogoči preglasitev polj in rezultat zapiše v bazo.',
+        'Izberite mock katalog, eno vrstico baze in crawlerjev zadetek, nato Merge.',
       brief: [
-        'Uskladi dva zapisa iste entitete, omogoči preglasitev polj in rezultat zapiše v bazo.',
-        'V orodni vrstici izberite mock katalog (filmski katalog ali Wizarding World). Mock katalogi ščitijo prave športne podatke.',
-        'Izberite vrstico baze in crawlerjev zadetek, nato Merge. Pregledni modal ostane zaklenjen, dokler ni preglaseno vsaj eno polje.',
+        'Izberite mock katalog, eno vrstico baze in crawlerjev zadetek, nato Merge.',
+        'Preglejte preglasitve polj v modalu. Merge ostane onemogočen, dokler ni preglaseno vsaj eno polje; nato potrdite.',
       ],
       patternSummaries: MERGE_PATTERNS_SL,
     },
     mapping: {
       summary:
-        'Vrstico za vrstico preslika neurejena ali zastarela interna imena na sveže crawled kanonična imena. To je operatorsko usklajevanje vrednosti kataloga.',
+        'Izberite mock katalog. Vrstico za vrstico preslikajte neurejena interna imena na crawled kanonična imena.',
       brief: [
-        'Vrstico za vrstico preslika neurejena ali zastarela interna imena na sveže crawled kanonična imena. To je operatorsko usklajevanje vrednosti kataloga.',
-        'V orodni vrstici izberite mock katalog (filmski katalog ali Wizarding World). Mock katalogi ščitijo prave športne podatke.',
-        'Izberite vrstice za skupinski Map. Z Map / Unmap upravljate posamezne vnose.',
-        'Razširite vrstico za rangiranje predlogov UI. Na entiteto se preslika en predlog.',
+        'Izberite mock katalog. Vrstico za vrstico preslikajte neurejena interna imena na crawled kanonična imena.',
+        'Iščite ali filtrirajte, nato Map ali Unmap. Razširite vrstico za rangiranje predlogov UI; en predlog na entiteto.',
       ],
       patternSummaries: MAPPING_PATTERNS_SL,
     },
     'bracket-demo': {
-      summary:
-        'Graditelj ključev za to, kako so tekme povezane in napredujejo prek pairinga, byejev in pravil povezav.',
+      summary: 'Nastavite turnirski ključ, nato urejajte tekme na platnu.',
       brief: [
-        'Graditelj ključev za to, kako so tekme povezane in napredujejo.',
-        'Namenjen je obremenitvi robustnih, kompleksnih primerov: pairing, byeji, povezave napredovanja in različna pravila povezav med sistemi ključev.',
-        'V orodni vrstici (Team Management) zamenjajte prototipnega uporabnika, da vidite, kako vloge omejijo urejanje občutljivih podatkov ekipe.',
+        'Nastavite turnirski ključ, nato urejajte tekme na platnu.',
+        'Odprite nastavitev in urejevalnike tekem v modalu. Potrdite pred uničevalnimi ali potrditvenimi dejanji. V orodni vrstici zamenjajte prototipnega uporabnika za urejanje po vlogah.',
       ],
       patternSummaries: [
         {
           id: 'P5',
           title: 'P5 — Modal',
-          body: 'Nastavitev ključa in urejanje tekem se odpreta v modalu, da platno ostane stalni glavni pogled.',
+          body: 'Cognitive Load / Law of Common Region — nastavitev in urejanje tekem se odpreta v modalu, da platno ostane glavni pogled.',
         },
         {
           id: 'P7',
           title: 'P7 — Potrditveno okno',
-          body: 'Uničevalna ali potrditvena dejanja na ključu pred uveljavitvijo zahtevajo samo potrditveni sloj.',
+          body: 'Tesler’s Law / Hick’s Law — pred uveljavitvijo potrdite uničevalna ali potrditvena dejanja.',
         },
         ROLE_SL,
       ],
     },
     'tournament-management': {
       summary:
-        'Velike vgnezdene hierarhije v UPL delovnem prostoru za navigacijo in vzdrževanje športnih in turnirskih entitet.',
+        'Filtrirajte stransko vrstico, izberite list turnirja in ga uredite v glavnem podoknu.',
       brief: [
-        'Preizkus upravljanja velikih vgnezdenih hierarhij (športi, turnirji in povezane entitete) v UPL delovnem prostoru, da vidimo, kako bi operatorji to skalo navigirali in vzdrževali.',
-        'V orodni vrstici zamenjajte prototipnega uporabnika, da vidite, kako vloge vplivajo na rabo. Operator ne more Move ali Remove občutljivih zapisov; zamenjava vloge dejanja odklene.',
+        'Filtrirajte stransko vrstico, izberite list turnirja in ga uredite v glavnem podoknu.',
+        'Clear all ponastavi drevo. V orodni vrstici zamenjajte prototipnega uporabnika, da odklenete Move in Remove.',
       ],
       patternSummaries: [
         {
           id: 'P1',
           title: 'P1 — Delovni prostor',
-          body: 'UPL delovni prostor z zmanjšano identitetno vrstico orodja, vrstico filtrov, zložljivim drevesom v stranski vrstici in trajnim glavnim pogledom na lastni kartici.',
+          body: 'Jakob’s Law / Law of Common Region — identitetna vrstica, vrstica filtrov, drevo v stranski vrstici, glavna kartica.',
         },
         {
           id: 'P9',
           title: 'P9 — Filtri',
-          body: 'Iskanje in filtri krmilijo drevo v stranski vrstici. Brisanje filtrov ponastavi odvisno stanje izbora.',
+          body: 'Hick’s Law / Choice Overload — filtri krmilijo drevo; brisanje ponastavi izbor.',
         },
         ROLE_SL,
       ],

@@ -11,22 +11,22 @@ export const mergeToolExampleConfig: ShowcaseExampleConfig = {
     {
       id: 'P2 / P2.3',
       title: 'P2 / P2.3 — Data table + single-select',
-      body: 'Both the database and crawler-match tables use a single radio column so exactly one row per table can be chosen before merging.',
+      body: 'Two tables, one radio each (Chunking / Miller’s Law) so you hold one database row and one crawled match before Merge.',
     },
     {
       id: 'P2.5 / P8',
       title: 'P2.5 / P8 — Expandable rows + tabs',
-      body: 'Rows expand (chevron, or the "…" next to Top Cast) into a tabbed Cast / Staff / Filming Locations detail view, independent of row selection.',
+      body: 'Expand a row into Cast / Staff / Locations tabs (Chunking / Zeigarnik Effect) without losing the selected merge rows.',
     },
     {
       id: 'P5 / P6',
       title: 'P5 / P6 — Modal + commit gating',
-      body: 'Merge opens a review modal comparing the kept record against the crawled match; its Merge action stays disabled until at least one field is overridden.',
+      body: 'Merge opens one review modal (Cognitive Load). Commit stays off until an override (Postel’s Law).',
     },
     {
       id: 'P7',
       title: 'P7 — Confirmation dialog',
-      body: 'A confirmation-only overlay stacks on the review modal before the merge commits — the one permitted modal-stacking exception.',
+      body: 'Tesler’s Law / Hick’s Law — a two-answer confirmation stacks on the review modal before commit, the only allowed stack.',
     },
   ],
   controls: [

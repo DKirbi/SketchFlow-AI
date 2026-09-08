@@ -1,6 +1,7 @@
 /**
- * UX Flow pattern demos for Storybook and for embedding in `UXFlows.mdx` via
+ * UX Flow pattern demos for embedding in per-pattern docs pages via
  * `<!-- storybook:embed ExportName -->` markers in `docs/UX_PATTERNS.md`.
+ * CSF stories stay hidden (`!dev`); they are not sidebar items.
  *
  * To add an example: export a new `StoryObj` named `P#_…` (see existing exports),
  * then add a matching HTML comment in `docs/UX_PATTERNS.md` where the canvas should appear.
@@ -2577,7 +2578,8 @@ export function Story2TournamentAdminMergedDemo() {
 // ---------------------------------------------------------------------------
 
 const meta: Meta = {
-  title: 'PATTERNS/UX Patterns',
+  title: 'PATTERNS/UX Patterns/_embeds',
+  tags: ['!dev'],
   parameters: {
     layout: 'padded',
     controls: { disable: true },

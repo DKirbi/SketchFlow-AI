@@ -4,7 +4,7 @@ import { useDocLocale } from './docLocale';
 import { docMarkdown } from './docMarkdown';
 import { PatternStoriesDoc } from './PatternStoriesDoc';
 import { UiPatternsWithStoryEmbeds } from './UiPatternsWithStoryEmbeds';
-import { UxPatternsWithStoryEmbeds } from './UxPatternsWithStoryEmbeds';
+import { UxPatternSection, UxPatternSubsection, UxPatternsIndex } from './UxPatternsWithStoryEmbeds';
 
 const INTRO: Record<string, string> = {
   en: `# SketchFlowAI Patterns
@@ -76,10 +76,45 @@ export function LocalizedIntroduction() {
   return <Markdown>{INTRO[locale] ?? INTRO.en}</Markdown>;
 }
 
-export function LocalizedUxPatterns({ storiesModule }: { storiesModule: ModuleExports }) {
+export function LocalizedUxPatterns() {
+  const locale = useDocLocale();
+  return <UxPatternsIndex markdown={docMarkdown(locale, 'UX_PATTERNS')} />;
+}
+
+export function LocalizedUxPatternSection({
+  patternId,
+  storiesModule,
+}: {
+  patternId: string;
+  storiesModule: ModuleExports;
+}) {
   const locale = useDocLocale();
   return (
-    <UxPatternsWithStoryEmbeds markdown={docMarkdown(locale, 'UX_PATTERNS')} storiesModule={storiesModule} />
+    <UxPatternSection
+      markdown={docMarkdown(locale, 'UX_PATTERNS')}
+      storiesModule={storiesModule}
+      patternId={patternId}
+    />
+  );
+}
+
+export function LocalizedUxPatternSubsection({
+  patternId,
+  subsection,
+  storiesModule,
+}: {
+  patternId: string;
+  subsection: string;
+  storiesModule: ModuleExports;
+}) {
+  const locale = useDocLocale();
+  return (
+    <UxPatternSubsection
+      markdown={docMarkdown(locale, 'UX_PATTERNS')}
+      storiesModule={storiesModule}
+      patternId={patternId}
+      subsection={subsection}
+    />
   );
 }
 
@@ -90,9 +125,14 @@ export function LocalizedUiPatterns({ storiesModule }: { storiesModule: ModuleEx
   );
 }
 
-export function LocalizedPatternStories() {
+export function LocalizedPatternStories({ storiesModule }: { storiesModule: ModuleExports }) {
   const locale = useDocLocale();
-  return <PatternStoriesDoc markdown={docMarkdown(locale, 'UX_PATTERN_STORIES')} />;
+  return (
+    <PatternStoriesDoc
+      markdown={docMarkdown(locale, 'UX_PATTERN_STORIES')}
+      storiesModule={storiesModule}
+    />
+  );
 }
 
 export function LocalizedLofiKit() {

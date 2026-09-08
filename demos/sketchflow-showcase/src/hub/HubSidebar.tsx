@@ -9,6 +9,7 @@ import {
 } from 'lofi-kit';
 import { HubStorybookNav } from './HubStorybookNav';
 import { STORYBOOK_SLUG, projectPath, type HubProject } from './catalog';
+import { DEFAULT_STORYBOOK_PATH } from './storybookNav';
 
 interface HubSidebarProps {
   companyId: string;
@@ -54,6 +55,9 @@ export function HubSidebar({
   }
 
   function goToProject(slug: string) {
+    if (slug === STORYBOOK_SLUG) {
+      onStorybookPathChange(DEFAULT_STORYBOOK_PATH);
+    }
     navigate(projectPath(companyId, slug));
   }
 

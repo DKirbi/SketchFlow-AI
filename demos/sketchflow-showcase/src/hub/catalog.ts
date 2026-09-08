@@ -1,7 +1,6 @@
 import type { PatternSummary } from '../runtime/types';
 import { mappingExampleConfig } from '../examples/mapping/metadata';
 import { mergeToolExampleConfig } from '../examples/merge-tool/metadata';
-import { MAPPING_EXPAND_HINT } from 'shared-catalogs';
 
 export type HubProjectKind = 'spa' | 'embed' | 'page';
 
@@ -49,12 +48,12 @@ const BRACKET_PATTERNS: PatternSummary[] = [
   {
     id: 'P5',
     title: 'P5 — Modal',
-    body: 'Bracket setup and match editing open in a modal so the canvas stays the persistent main view.',
+    body: 'Cognitive Load / Law of Common Region — setup and match editing open in a modal so the canvas stays the main view.',
   },
   {
     id: 'P7',
     title: 'P7 — Confirmation dialog',
-    body: 'Destructive or commit actions on the bracket ask for a confirmation-only overlay before they apply.',
+    body: 'Tesler’s Law / Hick’s Law — confirm destructive or commit actions before they apply.',
   },
   ROLE_GATING_PATTERN,
 ];
@@ -63,12 +62,12 @@ const TOURNAMENT_PATTERNS: PatternSummary[] = [
   {
     id: 'P1',
     title: 'P1 — Workspace',
-    body: 'A UPL workspace with a minified tool identity bar, filter row, collapsible sidebar tree, and a persistent main interface view on its own card.',
+    body: 'Jakob’s Law / Law of Common Region — identity bar, filter row, sidebar tree, main card.',
   },
   {
     id: 'P9',
     title: 'P9 — Filters',
-    body: 'Search and filter controls gate the sidebar tree. Clearing filters resets dependent selection state.',
+    body: 'Hick’s Law / Choice Overload — filters gate the tree; clearing resets selection.',
   },
   ROLE_GATING_PATTERN,
 ];
@@ -92,12 +91,10 @@ export const PROJECTS: HubProject[] = [
     companyId: 'Sportradar',
     title: 'Merge Tool',
     railAbbrev: 'MG',
-    summary:
-      'Reconciles two records of the same entity, lets the operator choose field overrides, and writes the result to the database.',
+    summary: 'Pick a mock catalog, choose one database row and one crawled match, then Merge.',
     brief: [
-      'Reconciles two records of the same entity, lets the operator choose field overrides, and writes the result to the database.',
-      'Choose a mock database (film catalogue or wizarding world) from the toolbar. Mock catalogues protect real business sports data.',
-      'Select one database row and one crawled match, then Merge. The review modal stays gated until at least one field is overridden.',
+      'Pick a mock catalog, choose one database row and one crawled match, then Merge.',
+      'Review field overrides in the modal. Merge stays disabled until you override at least one field, then confirm.',
     ],
     patternSummaries: mergeToolExampleConfig.patternSummaries,
     kind: 'spa',
@@ -108,12 +105,10 @@ export const PROJECTS: HubProject[] = [
     title: 'Mapping',
     railAbbrev: 'MP',
     summary:
-      'Maps messy or legacy internal names onto newly crawled canonical names, row by row. The flow is the operator job of reconciling catalogue values.',
+      'Pick a mock catalog. Map messy internal names onto crawled canonical names, row by row.',
     brief: [
-      'Maps messy or legacy internal names onto newly crawled canonical names, row by row. The flow is the operator job of reconciling catalogue values.',
-      'Choose a mock database (film catalogue or wizarding world) from the toolbar. Mock catalogues protect real business sports data.',
-      'Select rows to bulk-map. Use Map / Unmap to manage individual entries.',
-      MAPPING_EXPAND_HINT,
+      'Pick a mock catalog. Map messy internal names onto crawled canonical names, row by row.',
+      'Search or filter, then Map or Unmap a row. Expand a row to rank AI suggestions; map one suggestion per entity.',
     ],
     patternSummaries: mappingExampleConfig.patternSummaries,
     kind: 'spa',
@@ -123,11 +118,10 @@ export const PROJECTS: HubProject[] = [
     companyId: 'Sportradar',
     title: 'Tournament Bracket',
     railAbbrev: 'BR',
-    summary: 'A bracket builder for how matches connect and progress across pairing, byes, and connection rules.',
+    summary: 'Set up a tournament bracket, then edit matches on the canvas.',
     brief: [
-      'A bracket builder for how matches connect and progress.',
-      'It is meant to stress robust, complex cases: pairing, byes, progression edges, and the different connection rules across bracket systems.',
-      'Change the prototype user in the toolbar (Team Management) to see how roles restrict editing of sensitive team data.',
+      'Set up a tournament bracket, then edit matches on the canvas.',
+      'Open setup and match editors in modals. Confirm before destructive or commit actions. Switch the prototype user in the toolbar to see role-gated team edits.',
     ],
     patternSummaries: BRACKET_PATTERNS,
     kind: 'embed',
@@ -138,11 +132,10 @@ export const PROJECTS: HubProject[] = [
     companyId: 'Sportradar',
     title: 'Tournament Management',
     railAbbrev: 'TM',
-    summary:
-      'Large nested hierarchies in a UPL workspace, for navigating and maintaining sports and tournament entities.',
+    summary: 'Filter the sidebar, select a tournament leaf, and edit it in the main pane.',
     brief: [
-      'Management testing for large nested hierarchies (sports, tournaments, and related entities) in a UPL workspace, to see how operators could navigate and maintain that scale.',
-      'Change the prototype user in the toolbar to see how different roles influence usage. Operator cannot Move or Remove sensitive records; switch role to unlock those actions.',
+      'Filter the sidebar, select a tournament leaf, and edit it in the main pane.',
+      'Clear all filters to reset the tree. Switch the prototype user in the toolbar to unlock Move and Remove.',
     ],
     patternSummaries: TOURNAMENT_PATTERNS,
     kind: 'embed',

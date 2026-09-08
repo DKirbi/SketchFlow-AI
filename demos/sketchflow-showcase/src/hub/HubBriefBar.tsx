@@ -26,7 +26,7 @@ interface HubBriefBarProps {
   collapsed: boolean;
   onToggle: () => void;
   returnTo: HubReturnTo | null;
-  onShowMore: () => void;
+  onShowMore: (patternId: string) => void;
   onReturnToInterface: () => void;
   onDismissReturn: () => void;
 }
@@ -153,7 +153,11 @@ export function HubBriefBar({
                       {expanded ? (
                         <div className="hub-brief__pattern-body">
                           <LOFIText variant="description">{pattern.body}</LOFIText>
-                          <LOFIButton variant="dismiss" size="compact" onClick={onShowMore}>
+                          <LOFIButton
+                            variant="dismiss"
+                            size="compact"
+                            onClick={() => onShowMore(pattern.id)}
+                          >
                             {chrome.openPatternDocs}
                           </LOFIButton>
                         </div>

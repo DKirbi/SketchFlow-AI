@@ -62,8 +62,65 @@ function branch(
   return { id, label, path, children };
 }
 
-function uxStory(id: string, label: string, exportName: string): StorybookNavNode {
-  return leaf(id, label, canvasPath(UX_TITLE, exportName));
+export const UX_PATTERN_PAGES = [
+  {
+    id: 'P1',
+    navId: 'ux-p1',
+    slug: 'P1 Workspace',
+    subsections: [
+      { navId: 'ux-p1-1', slug: 'P1.1: UPL Shell' },
+      { navId: 'ux-p1-2', slug: 'P1.2: Internal Workspace' },
+      { navId: 'ux-p1-2-1', slug: 'P1.2.1: Filter Row' },
+      { navId: 'ux-p1-2-2', slug: 'P1.2.2: Sidebar' },
+      { navId: 'ux-p1-2-3', slug: 'P1.2.3: Main Interface View' },
+      { navId: 'ux-p1-2-3-1', slug: 'P1.2.3.1: Heading Bar' },
+      { navId: 'ux-p1-2-3-2', slug: 'P1.2.3.2: Footer' },
+      { navId: 'ux-p1-2-3-3', slug: 'P1.2.3.3: Main Content' },
+    ],
+  },
+  {
+    id: 'P2',
+    navId: 'ux-p2',
+    slug: 'P2 Data Table',
+    subsections: [
+      { navId: 'ux-p2-1', slug: 'P2.1: Table Structure' },
+      { navId: 'ux-p2-2', slug: 'P2.2: Row Actions' },
+      { navId: 'ux-p2-3', slug: 'P2.3: Table Column Controls' },
+      { navId: 'ux-p2-4', slug: 'P2.4: Bulk Operations' },
+      { navId: 'ux-p2-5', slug: 'P2.5: Expandable rows' },
+    ],
+  },
+  { id: 'P3', navId: 'ux-p3', slug: 'P3 Stateful Button' },
+  { id: 'P4', navId: 'ux-p4', slug: 'P4 Toast notification' },
+  { id: 'P5', navId: 'ux-p5', slug: 'P5 Modal' },
+  { id: 'P6', navId: 'ux-p6', slug: 'P6 Inline Validation' },
+  { id: 'P7', navId: 'ux-p7', slug: 'P7 Confirmation dialog' },
+  { id: 'P8', navId: 'ux-p8', slug: 'P8 Tab navigation' },
+  { id: 'P9', navId: 'ux-p9', slug: 'P9 Filters' },
+  { id: 'P10', navId: 'ux-p10', slug: 'P10 Sticky disclosure' },
+] as const;
+
+export function uxPatternDocsPath(patternId?: string): string {
+  if (!patternId) return docsPath(UX_TITLE);
+  const match = /^P(\d+)/.exec(patternId);
+  if (!match) return docsPath(UX_TITLE);
+  const page = UX_PATTERN_PAGES.find((entry) => entry.id === `P${match[1]}`);
+  return page ? docsPath(`${UX_TITLE}/${page.slug}`) : docsPath(UX_TITLE);
+}
+
+function uxPatternNode(page: (typeof UX_PATTERN_PAGES)[number]): StorybookNavNode {
+  const title = `${UX_TITLE}/${page.slug}`;
+  const path = docsPath(title);
+  const subsections = 'subsections' in page ? page.subsections : undefined;
+  if (!subsections?.length) {
+    return leaf(page.navId, page.slug, path);
+  }
+  return branch(
+    page.navId,
+    page.slug,
+    subsections.map((sub) => leaf(sub.navId, sub.slug, docsPath(`${title}/${sub.slug}`))),
+    path,
+  );
 }
 
 function uiStory(id: string, label: string, exportName: string): StorybookNavNode {
@@ -150,45 +207,7 @@ export const STORYBOOK_NAV: StorybookNavNode[] = [
   branch(
     'ux-patterns',
     'UX Patterns',
-    [
-      branch('ux-p1', 'P1 Workspace', [
-        uxStory('ux-p1-1', 'P1.1 Workspace shell', 'P1_1_UPLShell'),
-        branch('ux-p1-2', 'P1.2 Filter / sidebar / main', [
-          uxStory('ux-p1-2-1', 'P1.2.1 Filter row', 'P1_2_1_FilterRow'),
-          uxStory('ux-p1-2-2', 'P1.2.2 Sidebar', 'P1_2_2_Sidebar'),
-          branch('ux-p1-2-3', 'P1.2.3 Main interface', [
-            uxStory('ux-p1-2-3-view', 'P1.2.3 Main interface view', 'P1_2_3_MainInterface'),
-            uxStory('ux-p1-2-3-1', 'P1.2.3.1 Heading bar', 'P1_2_3_1_HeadingBar'),
-            uxStory('ux-p1-2-3-2', 'P1.2.3.2 Footer', 'P1_2_3_2_Footer'),
-            uxStory('ux-p1-2-3-3', 'P1.2.3.3 Main content', 'P1_2_3_3_MainContent'),
-          ]),
-        ]),
-      ]),
-      branch('ux-p2', 'P2 Data table', [
-        uxStory('ux-p2-1', 'P2.1 Table structure', 'P2_1_TableStructure'),
-        uxStory('ux-p2-empty', 'P2.1 First-use empty state', 'P2_EmptyState'),
-        uxStory('ux-p2-loading', 'P2.1 Loading and feedback', 'P2_LoadingState'),
-        uxStory('ux-p2-2', 'P2.2 Row actions', 'P2_2_RowActions'),
-        uxStory('ux-p2-3', 'P2.3 Sort affordance', 'P2_3_SortAffordance'),
-        uxStory('ux-p2-4', 'P2.4 Bulk hide', 'P2_4_BulkHide'),
-        uxStory('ux-p2-4-import', 'P2.4 Bulk import overlay', 'P2_4_BulkImport'),
-        uxStory('ux-p2-5', 'P2.5 Expandable rows', 'P2_5_ExpandableRows'),
-      ]),
-      uxStory('ux-p3', 'P3 Stateful Button', 'P3_StatefulButton'),
-      uxStory('ux-p4', 'P4 Toast notification', 'P4_ToastNotificationMessages'),
-      branch('ux-p5', 'P5 Modal', [
-        uxStory('ux-p5-edit', 'P5 Edit modal', 'P5_EditModal'),
-        uxStory('ux-p5-create', 'P5 Create modal', 'P5_CreateModal'),
-        uxStory('ux-p5-stack', 'P5 Modal stacking', 'P5_ModalStacking'),
-      ]),
-      uxStory('ux-p6', 'P6 Inline validation', 'P6_InlineValidation'),
-      uxStory('ux-p7', 'P7 Confirmation dialog', 'P7_Confirmation'),
-      uxStory('ux-p8', 'P8 Tab navigation', 'P8_TabNavigation'),
-      uxStory('ux-p9', 'P9 Filters', 'P9_Filters'),
-      uxStory('ux-p10', 'P10 Sticky disclosure', 'P10_StickyDisclosure'),
-      uxStory('ux-story-1', 'Story 1 — Team Management', 'Story1_TeamManagement'),
-      uxStory('ux-story-2', 'Story 2 — Workspace — Tournament admin', 'Story2_TournamentAdmin'),
-    ],
+    UX_PATTERN_PAGES.map((page) => uxPatternNode(page)),
     docsPath(UX_TITLE),
   ),
   branch(

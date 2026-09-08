@@ -102,8 +102,7 @@ export function PatternSubAccordion({
   );
 }
 
-/** Top-level accordion (e.g. P1–P10 or UI §1–§5). */
-export function PatternAccordion({
+function patternSectionBody({
   header,
   body,
   storiesModule,
@@ -115,9 +114,7 @@ export function PatternAccordion({
   storiesModule: ModuleExports;
   idx: number;
   missingStoriesFileHint?: string;
-}) {
-  const [open, setOpen] = useState(false);
-
+}): React.ReactNode {
   const h4Parts = body.split(H4_SPLIT_RE);
   const hasSubsections = h4Parts.length > 1;
   const introBeforeH4 = hasSubsections ? (h4Parts[0] ?? '') : '';
@@ -131,8 +128,8 @@ export function PatternAccordion({
     }
   }
 
-  const bodyContent =
-    hasSubsections && subsections.length > 0 ? (
+  if (hasSubsections && subsections.length > 0) {
+    return (
       <>
         {introBeforeH4.trim() ? (
           <div className="pattern-accordion__intro">
@@ -157,9 +154,52 @@ export function PatternAccordion({
           ))}
         </div>
       </>
-    ) : (
-      renderMarkdownWithEmbeds(body, storiesModule, `p-${idx}`, missingStoriesFileHint)
     );
+  }
+
+  return renderMarkdownWithEmbeds(body, storiesModule, `p-${idx}`, missingStoriesFileHint);
+}
+
+/** Flat pattern page: heading + body, with #### still in sub-accordions. */
+export function PatternSectionPage({
+  header,
+  body,
+  storiesModule,
+  idx,
+  headingLevel = 3,
+  missingStoriesFileHint,
+}: {
+  header: string;
+  body: string;
+  storiesModule: ModuleExports;
+  idx: number;
+  headingLevel?: 3 | 4;
+  missingStoriesFileHint?: string;
+}) {
+  const hashes = headingLevel === 4 ? '####' : '###';
+  return (
+    <div className="pattern-section-page">
+      <Markdown>{`${hashes} ${header}`}</Markdown>
+      {patternSectionBody({ header, body, storiesModule, idx, missingStoriesFileHint })}
+    </div>
+  );
+}
+
+/** Top-level accordion (e.g. UI §1–§5). */
+export function PatternAccordion({
+  header,
+  body,
+  storiesModule,
+  idx,
+  missingStoriesFileHint,
+}: {
+  header: string;
+  body: string;
+  storiesModule: ModuleExports;
+  idx: number;
+  missingStoriesFileHint?: string;
+}) {
+  const [open, setOpen] = useState(false);
 
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen} className="pattern-accordion">
@@ -169,24 +209,38 @@ export function PatternAccordion({
           ▼
         </span>
       </Collapsible.Trigger>
-      <Collapsible.Content className="pattern-accordion__content">{bodyContent}</Collapsible.Content>
+      <Collapsible.Content className="pattern-accordion__content">
+        {patternSectionBody({ header, body, storiesModule, idx, missingStoriesFileHint })}
+      </Collapsible.Content>
     </Collapsible.Root>
   );
 }
 
-export function splitMarkdownByH3(body: string): {
+function splitMarkdownByHeading(
+  body: string,
+  marker: '###' | '####',
+): {
   intro: string;
   sections: Array<{ header: string; body: string }>;
 } {
-  const H3_SPLIT_RE = /^(### .+)$/m;
-  const parts = body.split(H3_SPLIT_RE);
+  const re = marker === '####' ? /^(#### .+)$/m : /^(### .+)$/m;
+  const prefix = `${marker} `;
+  const parts = body.split(re);
   const intro = parts[0] ?? '';
   const sections: Array<{ header: string; body: string }> = [];
   for (let i = 1; i < parts.length; i += 2) {
     sections.push({
-      header: (parts[i] ?? '').replace(/^### /, ''),
+      header: (parts[i] ?? '').replace(prefix, ''),
       body: parts[i + 1] ?? '',
     });
   }
   return { intro, sections };
+}
+
+export function splitMarkdownByH3(body: string) {
+  return splitMarkdownByHeading(body, '###');
+}
+
+export function splitMarkdownByH4(body: string) {
+  return splitMarkdownByHeading(body, '####');
 }
