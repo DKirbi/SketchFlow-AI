@@ -5,12 +5,29 @@ $hub-sidebar-width: $space-16 * 7;
 $hub-brief-band: $space-16 * 4 + $space-8 + $space-2;
 $hub-gap: $space-12;
 
+html {
+  --hub-host-bar-height: 0px;
+  --hub-shell-height: 100%;
+}
+
+// Pin the hub to the measured iframe box (`--hub-shell-height` = visual
+// viewport minus `--hub-host-bar-height`). 100vh is the top-level window and
+// overflows Work's 54px host bar.
+html,
+body,
+#root {
+  height: var(--hub-shell-height);
+  max-height: var(--hub-shell-height);
+  overflow: hidden;
+}
+
 .hub-shell {
   --hub-sidebar-width: #{$hub-sidebar-width};
   display: grid;
   grid-template-columns: var(--hub-sidebar-width) $hub-gap 1fr;
   grid-template-rows: minmax(0, 1fr);
-  height: 100vh;
+  height: 100%;
+  max-height: 100%;
   overflow: hidden;
   background: $color-paper;
   font-family: $text-font-family;
@@ -93,7 +110,14 @@ $hub-gap: $space-12;
     display: flex;
     flex-direction: column;
     border-radius: $radius-none;
-    box-shadow: 4px 0 0 $color-border;
+    border-color: $color-border-faint;
+    box-shadow: 4px 0 0 $color-border-faint;
+
+    html[data-theme='dark'] &,
+    html.dark & {
+      border-color: $color-border;
+      box-shadow: 4px 0 0 $color-border;
+    }
 
     .card__body {
       padding: $space-4;

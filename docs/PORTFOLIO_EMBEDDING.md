@@ -30,7 +30,11 @@ https://<sketchflow-origin>/Sportradar/merge-tool
 https://<sketchflow-origin>/?theme=dark&locale=de
 ```
 
-`/` redirects to `/Sportradar/merge-tool` and **preserves** `theme` and `locale` query params. Legacy `?slug=mapping` redirects to `/Sportradar/mapping`.
+`/` redirects to `/Sportradar/about` and **preserves** `theme` and `locale` query params. Legacy `?slug=mapping` redirects to `/Sportradar/mapping`.
+
+When this app is iframed on Work, it sizes the shell with `calc(100vh - var(--hub-host-bar-height))`. The variable is `54px` inside an iframe (the host top bar) and `0px` standalone. Pass `?hostBar=54` to set it explicitly.
+
+It also resets to About on each iframe load (so reopening Work does not restore the last prototype). Do not point the iframe `src` at a specific example unless you intend a deep link. Preferred Work `src` is the SketchFlow origin (or `/Sportradar/about`) plus `theme` / `locale`.
 
 ## Host route
 

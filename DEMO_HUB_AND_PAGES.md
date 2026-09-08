@@ -10,7 +10,7 @@
 
 Routes:
 
-- `/` and `/Sportradar` — redirect to `/Sportradar/merge-tool`
+- `/` and `/Sportradar` — redirect to `/Sportradar/about`
 - `/Sportradar/<project>` — sidebar hub + prototype (SPA or iframe)
 - `/?slug=<project>` — legacy redirect onto `/Sportradar/<project>`
 - `/embeds/bracket-demo/`, `/embeds/tournament-management/`, `/embeds/low-fi-ux-ui-patterns/` — iframe targets

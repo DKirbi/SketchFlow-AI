@@ -18,6 +18,21 @@
           if (l === 'en' || l === 'de' || l === 'sl') {
             document.documentElement.lang = l;
           }
+          // Keep in sync with HOST_TOP_BAR_PX — Work top bar is 54px.
+          var hostBar = p.get('hostBar');
+          var barPx =
+            hostBar && /^\d+$/.test(hostBar)
+              ? hostBar
+              : window.parent !== window
+                ? '54'
+                : '0';
+          document.documentElement.style.setProperty('--hub-host-bar-height', barPx + 'px');
+          var vis =
+            (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+          document.documentElement.style.setProperty(
+            '--hub-shell-height',
+            Math.max(0, Math.round(vis - Number(barPx))) + 'px',
+          );
         } catch (e) {}
       })();
     </script>
