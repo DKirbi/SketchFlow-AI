@@ -79,4 +79,29 @@ describe('Button', () => {
     render(<Button form="my-form" type="submit">Submit</Button>);
     expect(screen.getByRole('button')).toHaveAttribute('form', 'my-form');
   });
+
+  it('inverts default (outline) hover to ink fill and paper label', () => {
+    render(<Button variant="default">Secondary</Button>);
+
+    const hoverRule = [...document.styleSheets]
+      .flatMap((sheet) => {
+        try {
+          return [...sheet.cssRules];
+        } catch {
+          return [];
+        }
+      })
+      .find(
+        (rule): rule is CSSStyleRule =>
+          rule instanceof CSSStyleRule &&
+          rule.selectorText.includes('btn--default') &&
+          rule.selectorText.includes(':hover'),
+      );
+
+    expect(hoverRule).toBeDefined();
+    const bg = hoverRule!.style.background || hoverRule!.style.backgroundColor;
+    const color = hoverRule!.style.color;
+    expect(bg.replace(/\s/g, '')).toMatch(/#111|rgb\(17,17,17\)/i);
+    expect(color.replace(/\s/g, '')).toMatch(/#fff|#ffffff|rgb\(255,255,255\)/i);
+  });
 });

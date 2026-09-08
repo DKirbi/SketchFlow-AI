@@ -106,4 +106,18 @@ describe('Pagination', () => {
     );
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
   });
+
+  it('uses a custom landmark name when ariaLabel is set', () => {
+    render(
+      <Pagination
+        page={1}
+        pageCount={3}
+        total={30}
+        pageSize={5}
+        onPageChange={() => {}}
+        ariaLabel="Our Database pagination"
+      />,
+    );
+    expect(screen.getByRole('navigation', { name: 'Our Database pagination' })).toBeInTheDocument();
+  });
 });

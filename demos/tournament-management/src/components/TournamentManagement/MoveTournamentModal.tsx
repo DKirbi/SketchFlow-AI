@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { LOFIButton, LOFIField, LOFIModal, LOFISelect, LOFIText } from 'lofi-kit';
+import { LOFIButton, LOFIField, LOFIModal, LOFISelect, LOFITooltip, LOFITooltipMarker } from 'lofi-kit';
 
 import { CATEGORIES, uniqueTournamentById, uniqueTournamentsForCategory } from '../../data/catalog';
 import { noneUtBranchIdForCategory } from '../../lib/sidebarTree';
@@ -93,9 +93,9 @@ export function MoveTournamentModal({
           </>
         }
       >
-        <LOFIText variant="description">
-          Reparent mock data; monitoring category aligns with the catalogue defaults after move.
-        </LOFIText>
+        <LOFITooltip content="Reparent mock data; monitoring category aligns with the catalogue defaults after move.">
+          <LOFITooltipMarker label="move tournament" />
+        </LOFITooltip>
         <div className="tmgmt__move-grid">
           <LOFIField label="Target category" htmlFor="mv-cat">
             <LOFISelect

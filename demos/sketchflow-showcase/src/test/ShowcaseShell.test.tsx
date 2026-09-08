@@ -6,12 +6,13 @@ import { ShowcaseShell } from '../runtime/ShowcaseShell';
 describe('ShowcaseShell', () => {
   const mappingExample = getExampleBySlug('mapping')!;
 
-  it('shows automated preview notification before interactive takeover', () => {
+  it('renders the mapping prototype without automate chrome', () => {
     render(<ShowcaseShell example={mappingExample} />);
 
-    expect(screen.getByText('Automated preview')).toBeInTheDocument();
-    expect(
-      screen.getByText(/Click Interact with prototype to take control/i),
-    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Automate/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Interact with prototype/i })).not.toBeInTheDocument();
+    expect(screen.queryByText('Automated preview')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Mapping' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Bulk Map/i })).toBeInTheDocument();
   });
 });

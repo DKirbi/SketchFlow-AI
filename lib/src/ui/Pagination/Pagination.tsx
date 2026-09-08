@@ -22,6 +22,8 @@ export interface PaginationProps {
   disabled?:          boolean;
   /** Extra CSS class on the root `nav`. */
   className?:         string;
+  /** Accessible name for the pagination landmark. Defaults to "Table pagination". */
+  ariaLabel?:         string;
 }
 
 export function Pagination({
@@ -34,6 +36,7 @@ export function Pagination({
   onPageSizeChange,
   disabled,
   className,
+  ariaLabel = 'Table pagination',
 }: PaginationProps) {
   const pagesForLabel = pageCount > 0 ? pageCount : 1;
   const prevDisabled = disabled || page <= 1;
@@ -55,7 +58,7 @@ export function Pagination({
   const classes = ['pagination', className ?? ''].filter(Boolean).join(' ');
 
   return (
-    <nav className={classes} aria-label="Table pagination">
+    <nav className={classes} aria-label={ariaLabel}>
       <div className="pagination__left">
         <Text variant="muted" as="span">
           {total} {total === 1 ? 'record' : 'records'}

@@ -7,6 +7,14 @@
   min-height: 100%;
   font-family: $text-font-family;
 
+  .table-wrap {
+    width: 100%;
+  }
+
+  .table {
+    width: 100%;
+  }
+
   &__identity {
     display: flex;
     align-items: center;
@@ -18,17 +26,18 @@
     padding: $space-8;
   }
 
-  &__columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  &__stack {
+    display: flex;
+    flex-direction: column;
     gap: $space-12;
-    align-items: start;
+    width: 100%;
   }
 
   &__column {
     display: flex;
     flex-direction: column;
     gap: $space-6;
+    width: 100%;
     min-width: 0;
   }
 

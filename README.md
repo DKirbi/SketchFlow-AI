@@ -110,6 +110,8 @@ Then open the URL that `serve` prints. Use this when you want to share a snapsho
 
 ```bash
 npm run dev          # Hub on :5172 + all demo Vite servers + Storybook — open http://127.0.0.1:5172/
+npm run dev:free     # Stop leftover listeners on :5172–5185 and :6007
+npm run dev:fresh    # Free those ports, then start the hub
 npm run storybook    # Storybook only (http://localhost:6007)
 ```
 

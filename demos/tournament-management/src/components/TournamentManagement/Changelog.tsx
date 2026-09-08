@@ -1,5 +1,5 @@
 import type { ColumnDef, TableColumnMeta } from 'lofi-kit';
-import { LOFIBadge, LOFITable, LOFIText } from 'lofi-kit';
+import { LOFIBadge, LOFITable, LOFIText, LOFITooltip, LOFITooltipMarker } from 'lofi-kit';
 
 import type { ChangelogEntry } from '../../types';
 
@@ -55,9 +55,15 @@ export function Changelog({ entries, entityIdFilter }: ChangelogProps) {
 
   return (
     <div className="tmgmt__changelog">
-      <LOFIText variant="sm" className="tmgmt__changelog-lead">
-        {entityIdFilter ? 'Entries for this tournament (newest first).' : 'Workspace log (newest first).'}
-      </LOFIText>
+      <LOFITooltip
+        content={
+          entityIdFilter
+            ? 'Entries for this tournament (newest first).'
+            : 'Workspace log (newest first).'
+        }
+      >
+        <LOFITooltipMarker label="changelog" />
+      </LOFITooltip>
       <LOFITable<ChangelogEntry>
         columns={columns}
         rows={filtered}

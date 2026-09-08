@@ -10,50 +10,17 @@
 
   &__upl-toolbar {
     border-bottom: $border-width solid $color-border;
-    padding: $space-3 $space-4;
   }
 
-  &__upl-left {
-    display: flex;
-    align-items: center;
-    gap: $space-3;
-  }
-
-  &__logo-placeholder {
-    width: 2.5rem;
-    height: 2.5rem;
-    border: $border-width solid $color-border;
-    flex-shrink: 0;
-  }
-
-  &__upl-titles {
-    display: flex;
-    flex-direction: column;
-    gap: $space-1;
-  }
-
-  &__upl-right {
+  &__identity {
     display: flex;
     align-items: center;
     gap: $space-4;
   }
 
-  &__module-tabs {
-    display: flex;
-    align-items: center;
-    gap: $space-3;
-    padding: $space-2 $space-4;
-    border-bottom: $border-width dashed $color-border;
-  }
-
-  &__module-tabs-label {
-    flex-shrink: 0;
-  }
-
   &__filters {
-    padding: $space-3 $space-4;
-    border-bottom: $border-width solid $color-border;
-    background: $color-surface-inset;
+    padding: $space-8 $space-8 $space-4;
+    background: transparent;
   }
 
   &__filters-legend {
@@ -74,11 +41,21 @@
     justify-content: flex-end;
   }
 
+  &__switch-field {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    min-height: $control-height-default;
+  }
+
   &__workspace {
     display: grid;
     grid-template-columns: minmax(12rem, 18rem) 1fr;
+    gap: $space-8;
     flex: 1;
     min-height: 0;
+    padding: 0 $space-8 $space-8;
+    background: $color-surface;
   }
 
   &__workspace--sidebar-collapsed {
@@ -86,11 +63,11 @@
   }
 
   &__sidebar {
-    border-right: $border-width solid $color-border;
+    border: $border-width solid $color-border-subtle;
     display: flex;
     flex-direction: column;
     min-height: 0;
-    background: $color-surface-raised;
+    background: $color-paper;
 
     &--collapsed {
       padding: $space-2;
@@ -126,7 +103,22 @@
     min-height: 0;
     display: flex;
     flex-direction: column;
-    background: $color-paper;
+    background: transparent;
+  }
+
+  &__main-card {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+
+    .card__body {
+      padding: 0;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &__empty-main {
@@ -199,10 +191,6 @@
     align-items: center;
   }
 
-  &__list-hint {
-    max-width: 48rem;
-  }
-
   &__row-actions {
     display: flex;
     flex-wrap: nowrap;
@@ -243,10 +231,10 @@
     margin-top: $space-2;
   }
 
-  &__callout {
-    border-left: $border-width solid $color-border;
-    padding-left: $space-2;
-    margin-bottom: $space-2;
+  &__form-hint {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
   }
 
   &__form-row {
@@ -304,10 +292,6 @@
     display: flex;
     flex-direction: column;
     gap: $space-2;
-  }
-
-  &__changelog-lead {
-    max-width: 40rem;
   }
 
   &__id-inline {

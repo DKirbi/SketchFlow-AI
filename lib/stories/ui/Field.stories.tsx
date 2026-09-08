@@ -34,7 +34,7 @@ export const Default: Story = {
 function FieldHintDemo() {
   const [value, setValue] = useState('ABC-00');
   return (
-    <LOFIField label="Short field" htmlFor="field-code" hint="Prototype constraint — format and length are up to the product.">
+    <LOFIField label="Short field" htmlFor="field-code" tooltip="Prototype constraint — format and length are up to the product.">
       <LOFIInput id="field-code" value={value} onChange={setValue} />
     </LOFIField>
   );
@@ -42,7 +42,7 @@ function FieldHintDemo() {
 
 export const WithHint: Story = {
   render: () => <FieldHintDemo />,
-  parameters: { docs: { description: { story: 'Helper text below the control explains a constraint or format.' } } },
+  parameters: { docs: { description: { story: 'Info marker beside the label. Hover or focus for extra information about the input.' } } },
 };
 
 function FieldRequiredDemo() {

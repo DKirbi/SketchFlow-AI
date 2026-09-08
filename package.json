@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "dev": "node scripts/dev-gateway.mjs",
+    "dev:free": "node scripts/dev-free.mjs",
+    "dev:fresh": "npm run dev:free && npm run dev",
     "dev:bracket-demo": "npm run dev -w bracket-demo",
     "dev:notifications-overview": "npm run dev -w notifications-overview",
     "dev:notifications-overview-hifi": "npm run dev -w notifications-overview-hifi",

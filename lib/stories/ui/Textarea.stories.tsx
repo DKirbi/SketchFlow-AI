@@ -34,7 +34,7 @@ export const Default: Story = {
 function TextareaInFieldDemo() {
   const [value, setValue] = useState('Pre-filled content.');
   return (
-    <LOFIField label="Notes" htmlFor="notes-field" hint="Optional context for stakeholders.">
+    <LOFIField label="Notes" htmlFor="notes-field" tooltip="Optional context for stakeholders.">
       <LOFITextarea id="notes-field" value={value} onChange={setValue} rows={4} />
     </LOFIField>
   );

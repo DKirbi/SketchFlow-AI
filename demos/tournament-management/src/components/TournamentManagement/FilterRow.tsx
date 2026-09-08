@@ -1,4 +1,12 @@
-import { LOFIButton, LOFIField, LOFIInput, LOFISelect, LOFISwitch, LOFIText } from 'lofi-kit';
+import {
+  LOFIButton,
+  LOFIField,
+  LOFIInput,
+  LOFISelect,
+  LOFISwitch,
+  LOFITooltip,
+  LOFITooltipMarker,
+} from 'lofi-kit';
 
 import { FILTER_OPTION_ALL } from '../../constants';
 import type { TournamentFilters } from '../../types';
@@ -57,12 +65,8 @@ export function FilterRow({
 
   return (
     <div className="tmgmt__filters" role="search">
-      <LOFIText variant="micro" className="tmgmt__filters-legend">
-        Filters combine with AND logic. Clear each field with ✕ or reset everything with Clear
-        all. Changes apply after Search.
-      </LOFIText>
       <div className="tmgmt__filters-grid">
-        <LOFIField label="Simple tournament name or ID" htmlFor="tm-q">
+        <LOFIField label="Tournament name or ID" htmlFor="tm-q">
           <LOFIInput
             id="tm-q"
             allowClear
@@ -77,7 +81,6 @@ export function FilterRow({
             allowClear
             placeholder="All sports"
             id="tm-sp"
-            size="compact"
             value={selectStored(draft.sportId)}
             onChange={(v) =>
               onPatchDraft({
@@ -97,7 +100,6 @@ export function FilterRow({
             allowClear
             placeholder="All categories"
             id="tm-cat"
-            size="compact"
             disabled={sportSel === FILTER_OPTION_ALL}
             value={selectStored(draft.categoryId)}
             onChange={(v) =>
@@ -117,7 +119,6 @@ export function FilterRow({
             allowClear
             placeholder="All tournaments"
             id="tm-ut"
-            size="compact"
             disabled={draft.categoryId === FILTER_OPTION_ALL}
             value={selectStored(draft.uniqueTournamentId)}
             onChange={(v) => onPatchDraft({ uniqueTournamentId: coerce(v) })}
@@ -145,25 +146,33 @@ export function FilterRow({
             onChange={(v) => onPatchDraft({ dateTo: v })}
           />
         </LOFIField>
-        <LOFIField label="Only running" hint="Mocked “running” flag on each simple tournament">
+        <div className="tmgmt__switch-field">
           <LOFISwitch
             label="Only running"
             checked={draft.onlyRunning}
             onChange={(v) => onPatchDraft({ onlyRunning: v })}
           />
-        </LOFIField>
-        <LOFIField
-          label="Demo"
-          hint="Forces the next save / move / remove attempt to fail once (resets after Search commits draft)"
-        >
+          <LOFITooltip content="Mocked “running” flag on each tournament">
+            <LOFITooltipMarker label="Only running" />
+          </LOFITooltip>
+        </div>
+        <div className="tmgmt__switch-field">
           <LOFISwitch
             label="Fail next mutation (demo)"
             checked={draft.demoFailNextMutation}
             onChange={() => onToggleDemoFailNext()}
           />
-        </LOFIField>
+          <LOFITooltip content="Forces the next save / move / remove attempt to fail once (resets after Search commits draft)">
+            <LOFITooltipMarker label="Fail next mutation (demo)" />
+          </LOFITooltip>
+        </div>
         <div className="tmgmt__filters-actions">
-          <LOFIButton type="button" variant="primary" onClick={onCommitSearch} disabled={countsMatch}>
+          <LOFIButton
+            type="button"
+            variant="primary"
+            onClick={onCommitSearch}
+            disabled={countsMatch}
+          >
             Search
           </LOFIButton>
           <LOFIButton type="button" variant="dismiss" onClick={onClearAll}>

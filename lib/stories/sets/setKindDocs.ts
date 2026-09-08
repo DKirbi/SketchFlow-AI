@@ -24,7 +24,7 @@ const DOCS: Record<ComponentSet['kind'], Omit<SetKindDoc, 'kind' | 'nav'>> = {
     primitives: ['LOFIToolbar', 'LOFIText', 'LOFIButton', 'LOFIBadge'],
     exampleIds: ['upl-upper-bar', 'tool-upper-bar'],
     intro:
-      'P1.1 chrome: the product identity strip. `variant: "upl"` is the Unified Production Landscape bar (title, subtitle, Applications / Configuration / role). `variant: "tool"` is a standalone tool identity bar (title, handle, mapped/pending counts). Right-slot controls are `ActionDescriptor`s on host `toolbar-right` — compact dismiss / ghost at hi-fi.',
+      'P1.1 chrome: the product identity strip. `variant: "upl"` is the full Unified Production Landscape bar. Showcase prototypes use `variant: "tool"` — a single-line identity bar (handle, role, title) without logo, Applications, or Configuration. Right-slot controls are `ActionDescriptor`s on host `toolbar-right`.',
   },
   'filter-query-row': {
     primitives: ['LOFIField', 'LOFIInput', 'LOFISelect', 'LOFISwitch', 'LOFIButton', 'LOFIText'],

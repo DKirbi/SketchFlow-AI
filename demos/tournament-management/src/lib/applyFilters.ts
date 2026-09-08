@@ -34,9 +34,9 @@ export interface ListLevelFilter {
 }
 
 /**
- * Per-table filter applied inside `ListView` / `SportManagementView`.
- * Combines the local search query with the Unique/Simple class checkboxes.
- * Class is derived from `uniqueTournamentId`: empty string → Simple, otherwise → Unique.
+ * Per-table filter applied inside `ListView`.
+ * Combines the local search query with the Unique/Tournament class checkboxes.
+ * Class is derived from `uniqueTournamentId`: empty string → Tournament, otherwise → Unique.
  */
 export function applyListLevelFilter(
   rows: SimpleTournament[],

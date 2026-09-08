@@ -35,7 +35,7 @@ export function OverviewPanel({
           {breadcrumb}
         </LOFIText>
         <div className="tmgmt__overview-flags">
-          <LOFIBadge variant="tag" label="simple tournament" />
+          <LOFIBadge variant="tag" label="tournament" />
           {st.running && <LOFIBadge variant="tag" label="running" />}
           <LOFIBadge variant="status" active={!st.disabled} label={st.disabled ? 'disabled' : 'active'} />
         </div>

@@ -222,7 +222,7 @@ describe('App routes', () => {
     const user = userEvent.setup();
     renderApp('/');
 
-    await user.click(screen.getByRole('button', { name: 'Collapse project brief' }));
+    await user.click(screen.getByRole('button', { name: 'Show less' }));
 
     const brief = screen.getByLabelText('Project brief');
     expect(brief).toHaveClass('hub-brief--collapsed');
@@ -231,13 +231,13 @@ describe('App routes', () => {
     expect(brief).toHaveTextContent(/P2 \/ P2\.3/);
     expect(brief).not.toHaveTextContent(/Mock catalogues protect real business sports data/i);
 
-    await user.click(screen.getByRole('button', { name: 'Expand project brief' }));
+    await user.click(screen.getByRole('button', { name: 'Show more' }));
     expect(screen.getByLabelText('Project brief')).toHaveTextContent(
       /Mock catalogues protect real business sports data/i,
     );
   });
 
-  it('expands a pattern accordion and Show more returns via Get back to the interface', async () => {
+  it('expands a pattern accordion and Open pattern docs returns via Get back to the interface', async () => {
     const user = userEvent.setup();
     renderApp('/');
 
@@ -248,7 +248,7 @@ describe('App routes', () => {
     );
     expect(screen.getByText(/confirmation-only overlay/i)).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'Show more' }));
+    await user.click(screen.getByRole('button', { name: 'Open pattern docs' }));
     expect(screen.getByTitle('SketchFlowAI Patterns')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Get back to Merge Tool' })).toBeInTheDocument();
     expect(screen.getByLabelText('AI Showcase breadcrumb')).toBeInTheDocument();
@@ -265,7 +265,7 @@ describe('App routes', () => {
     renderApp('/');
 
     await user.click(screen.getByRole('button', { name: 'P7: Confirmation dialog' }));
-    await user.click(screen.getByRole('button', { name: 'Show more' }));
+    await user.click(screen.getByRole('button', { name: 'Open pattern docs' }));
     await user.click(screen.getByRole('button', { name: 'Dismiss' }));
 
     expect(screen.getByTitle('SketchFlowAI Patterns')).toBeInTheDocument();

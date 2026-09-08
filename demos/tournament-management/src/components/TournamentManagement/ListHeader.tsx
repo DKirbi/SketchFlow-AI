@@ -22,7 +22,7 @@ export interface ListHeaderProps {
 /**
  * Per-table management bar used at every selectable level (sport, category,
  * unique tournament). Search input filters by name/id; checkboxes filter the
- * Unique vs. Simple class derived from `uniqueTournamentId`.
+ * Unique vs. standalone tournament class derived from `uniqueTournamentId`.
  */
 export function ListHeader({
   onCreate,
@@ -58,7 +58,7 @@ export function ListHeader({
         <LOFICheckbox
           checked={showSimple}
           onChange={onToggleSimple}
-          label="Simple"
+          label="Tournament"
           id="list-filter-simple"
         />
       </div>

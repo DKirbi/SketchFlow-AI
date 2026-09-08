@@ -14,6 +14,8 @@ import {
   LOFIText,
   LOFIToggle,
   LOFIToolbar,
+  LOFITooltip,
+  LOFITooltipMarker,
 } from '../ui/index';
 import { ActionCluster } from './ActionCluster';
 import { FieldFromDescriptor } from './FieldFromDescriptor';
@@ -280,9 +282,11 @@ function FilterRowFromConfig({
   return (
     <div className="component-set__filter" role="search">
       {config.legend ? (
-        <LOFIText variant="micro" className="component-set__filter-legend">
-          {config.legend}
-        </LOFIText>
+        <span className="component-set__filter-legend">
+          <LOFITooltip content={config.legend}>
+            <LOFITooltipMarker label="filters" />
+          </LOFITooltip>
+        </span>
       ) : null}
       <div className="component-set__filter-grid">
         {config.fields.map((field) => (
@@ -629,7 +633,11 @@ function UplShellFromConfig({
         }
       >
         <SidebarFromConfig config={config.sidebar} handlers={handlers} />
-        <WorkspaceFromConfig config={config.workspace} handlers={handlers} />
+        <div className="component-set__upl-main">
+          <LOFICard className="component-set__upl-main-card">
+            <WorkspaceFromConfig config={config.workspace} handlers={handlers} />
+          </LOFICard>
+        </div>
       </div>
     </div>
   );

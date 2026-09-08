@@ -6,6 +6,8 @@ import {
   LOFISelect,
   LOFISwitch,
   LOFIText,
+  LOFITooltip,
+  LOFITooltipMarker,
 } from 'lofi-kit';
 
 import { SPORTS, categoriesForSport, monitoringForCategory, uniqueTournamentsForCategory } from '../../data/catalog';
@@ -86,15 +88,16 @@ export function TournamentForm({
 
   return (
     <div className="tmgmt__modal-form">
-      <LOFIText variant="description">
-        Modal fields follow Sections 1–3 (always); Section 4 cricket; Section 6 tennis. Brief Section 5 intentionally absent.
-      </LOFIText>
-
-      {!showClassification && (
-        <LOFIInlineFieldNote>
-          Sport and real category stay in the sidebar for existing tournaments — they cannot be edited here per brief.
-        </LOFIInlineFieldNote>
-      )}
+      <div className="tmgmt__form-hint">
+        <LOFITooltip content="Modal fields follow Sections 1–3 (always); Section 4 cricket; Section 6 tennis. Brief Section 5 intentionally absent. Classification prefills mirror sidebar Browse selection.">
+          <LOFITooltipMarker label="tournament form" />
+        </LOFITooltip>
+        {!showClassification ? (
+          <LOFITooltip content="Sport and real category stay in the sidebar for existing tournaments — they cannot be edited here per brief.">
+            <LOFITooltipMarker label="classification" />
+          </LOFITooltip>
+        ) : null}
+      </div>
 
       <LOFIFieldset legend="Section 1 — Sport & classification">
         {showClassification && (
@@ -135,7 +138,7 @@ export function TournamentForm({
                 onChange={(v) => patch({ monitoringCategoryId: v })}
               />
             </LOFIField>
-            <LOFIField label="Unique tournament" hint="Optional — cross-season grouping.">
+            <LOFIField label="Unique tournament" tooltip="Optional — cross-season grouping.">
               <LOFISelect
                 allowClear
                 placeholder="None"
@@ -148,7 +151,7 @@ export function TournamentForm({
           </>
         )}
         {!showClassification && (
-          <LOFIField label="Monitoring category" hint="Shown read-only while editing." htmlFor="f-mon-ro">
+          <LOFIField label="Monitoring category" tooltip="Shown read-only while editing." htmlFor="f-mon-ro">
             <LOFISelect
               disabled
               id="f-mon-ro"
@@ -388,14 +391,6 @@ export function TournamentForm({
           </LOFIField>
         </LOFIFieldset>
       )}
-    </div>
-  );
-}
-
-function LOFIInlineFieldNote({ children }: { children: string }) {
-  return (
-    <div className="tmgmt__callout">
-      <LOFIText variant="sm">{children}</LOFIText>
     </div>
   );
 }

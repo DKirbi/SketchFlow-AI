@@ -29,7 +29,7 @@ export function MainEmptyState({ variant, onClearAll }: MainEmptyStateProps) {
         <LOFIText variant="body">Pick a Sport, Unique Tournament, or Tournament from the sidebar to start.</LOFIText>
         <LOFIText variant="description">
           Sport and Unique Tournament parents are selectable management views. Expand the tree to drill down
-          into categories and open simple tournament details.
+          into categories and open tournament details.
         </LOFIText>
         {onClearAll ? (
           <LOFIButton type="button" variant="dismiss" onClick={onClearAll}>
@@ -44,8 +44,8 @@ export function MainEmptyState({ variant, onClearAll }: MainEmptyStateProps) {
     <div className="tmgmt__empty-main">
       <LOFIText variant="body">Choose a selectable sidebar node.</LOFIText>
       <LOFIText variant="description">
-        Categories organize navigation only. Pick a sport for grouped management, a unique tournament for child
-        row management, or a simple tournament leaf for detail view.
+        Categories organize navigation only. Pick a sport for tournament list management, a unique tournament
+        for child row management, or a tournament leaf for detail view.
       </LOFIText>
     </div>
   );
