@@ -111,13 +111,29 @@
       </div>
 
       <section class="project-panel" id="project-panel">
+        <p>
+          <button type="button" id="theme-toggle">Toggle theme</button>
+        </p>
         <iframe
           id="showcase-frame"
-          title="Value Mapping interaction example"
-          src="http://127.0.0.1:5172/Sportradar/mapping"
-          loading="lazy"
+          title="SketchFlow Showcase"
+          src="http://127.0.0.1:5172/?theme=dark&locale=de"
+          loading="eager"
         ></iframe>
       </section>
     </article>
+    <script>
+      const iframe = document.getElementById('showcase-frame');
+      const origin = 'http://127.0.0.1:5172';
+      let theme = 'dark';
+      const locale = 'de';
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        iframe.contentWindow.postMessage(
+          { type: 'showcase:set-appearance', version: 1, theme, locale },
+          origin,
+        );
+      });
+    </script>
   </body>
 </html>

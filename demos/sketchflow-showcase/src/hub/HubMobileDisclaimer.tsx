@@ -1,4 +1,5 @@
 import { LOFIButton, LOFIModal, LOFIText } from 'lofi-kit';
+import { useAppearance } from '../appearance/AppearanceProvider';
 
 interface HubMobileDisclaimerProps {
   open: boolean;
@@ -7,26 +8,26 @@ interface HubMobileDisclaimerProps {
 }
 
 export function HubMobileDisclaimer({ open, onProceed, onGoHome }: HubMobileDisclaimerProps) {
+  const { chrome } = useAppearance();
   return (
     <LOFIModal
       open={open}
       onClose={onProceed}
       className="hub-disclaimer"
-      title="Showcase of AI Examples works best on Desktop"
+      title={chrome.disclaimerTitle}
       footer={
         <>
           <LOFIButton variant="primary" onClick={onProceed}>
-            Proceed in Desktop view
+            {chrome.disclaimerProceed}
           </LOFIButton>
           <LOFIButton variant="dismiss" onClick={onGoHome}>
-            Go back home
+            {chrome.disclaimerHome}
           </LOFIButton>
         </>
       }
     >
       <LOFIText as="p" variant="body">
-        Showcase contains a lot of AI Examples featuring corporate desktop applications, which were
-        originally meant for desktop interfaces. There are no current mobile showcases available yet.
+        {chrome.disclaimerBody}
       </LOFIText>
     </LOFIModal>
   );

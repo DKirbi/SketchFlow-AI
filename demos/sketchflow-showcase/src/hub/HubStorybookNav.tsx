@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { LOFIButton, LOFINavTree, LOFIText } from 'lofi-kit';
+import { useAppearance } from '../appearance/AppearanceProvider';
 import {
   DEFAULT_EXPANDED_IDS,
   DEFAULT_STORYBOOK_SELECTED_ID,
@@ -7,6 +8,7 @@ import {
   ancestorIds,
   findNodeById,
   findNodeByPath,
+  localizeStorybookNav,
   toNavTreeItems,
 } from './storybookNav';
 
@@ -21,9 +23,13 @@ export function HubStorybookNav({
   onStorybookPathChange,
   onLeaveStorybook,
 }: HubStorybookNavProps) {
+  const { chrome } = useAppearance();
   const selectedFromPath = findNodeByPath(STORYBOOK_NAV, storybookPath);
   const selectedId = selectedFromPath?.id ?? DEFAULT_STORYBOOK_SELECTED_ID;
-  const items = useMemo(() => toNavTreeItems(STORYBOOK_NAV), []);
+  const items = useMemo(
+    () => toNavTreeItems(localizeStorybookNav(STORYBOOK_NAV, chrome.navGroups)),
+    [chrome.navGroups],
+  );
   const [expandedIds, setExpandedIds] = useState(() =>
     uniqueIds([...DEFAULT_EXPANDED_IDS, ...ancestorIds(STORYBOOK_NAV, selectedId)]),
   );
@@ -39,14 +45,14 @@ export function HubStorybookNav({
 
   return (
     <div className="hub-sidebar__storybook">
-      <nav className="hub-sidebar__breadcrumb" aria-label="AI Showcase breadcrumb">
+      <nav className="hub-sidebar__breadcrumb" aria-label={chrome.storybookCrumbLabel}>
         <LOFIButton
           variant="dismiss"
           size="compact"
           className="hub-sidebar__crumb"
           onClick={onLeaveStorybook}
         >
-          AI Showcase
+          {chrome.storybookCrumb}
         </LOFIButton>
         <LOFIText as="span" variant="muted" className="hub-sidebar__crumb-sep">
           /

@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Navigate, Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { LOFICard } from 'lofi-kit';
+import { localizedProject } from '../appearance/briefs';
+import { useAppearance } from '../appearance/AppearanceProvider';
+import { AppearanceNavigate, useHubNavigate } from '../appearance/navigation';
 import { HubBriefBar, type HubReturnTo } from './HubBriefBar';
 import { HubMobileDisclaimer } from './HubMobileDisclaimer';
 import { HubSidebar } from './HubSidebar';
@@ -44,9 +47,11 @@ function useMobileViewport() {
 
 export function ShowcaseLayout() {
   const { companyId = '', projectSlug = '' } = useParams();
-  const navigate = useNavigate();
+  const navigate = useHubNavigate();
+  const { locale } = useAppearance();
   const company = getCompany(companyId);
-  const project = getProject(companyId, projectSlug);
+  const catalogProject = getProject(companyId, projectSlug);
+  const project = catalogProject ? localizedProject(catalogProject, locale) : catalogProject;
   const isMobile = useMobileViewport();
   const isStorybook = projectSlug === STORYBOOK_SLUG;
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -71,7 +76,7 @@ export function ShowcaseLayout() {
   }, [projectSlug]);
 
   if (!company?.enabled) {
-    return <Navigate to={defaultProjectPath()} replace />;
+    return <AppearanceNavigate to={defaultProjectPath()} />;
   }
 
   const activeCompany = company;

@@ -12,6 +12,11 @@ import '../lib/src/styles/index.scss';
 import '@xyflow/react/dist/style.css';
 import '../lib/stories/shadcn/globals.css';
 import React from 'react';
+import { bootEmbeddedLofiTheme } from 'lofi-kit';
+import { bootDocLocale } from '../lib/stories/docLocale';
+
+bootEmbeddedLofiTheme();
+bootDocLocale();
 
 const preview: Preview = {
   parameters: {
@@ -80,7 +85,7 @@ const preview: Preview = {
         ],
       },
     },
-    backgrounds: { default: 'paper', values: [{ name: 'paper', value: '#fff' }] },
+    backgrounds: { default: 'paper', values: [{ name: 'paper', value: 'var(--lofi-paper)' }] },
     layout: 'centered',
     docs: {
       toc: true,

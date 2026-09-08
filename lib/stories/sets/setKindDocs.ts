@@ -4,6 +4,8 @@ import {
   type ComponentSet,
   type SetExample,
 } from 'lofi-kit';
+import type { DocLocale } from '../docLocale';
+import { SET_KIND_INTROS } from './setKindIntros';
 
 export interface SetKindDoc {
   kind: ComponentSet['kind'];
@@ -233,15 +235,16 @@ const example = exampleById('${exampleId}');
 />`;
 }
 
-export function setKindMarkdown(kind: ComponentSet['kind']): string {
+export function setKindMarkdown(kind: ComponentSet['kind'], locale: DocLocale = 'en'): string {
   const doc = SET_KIND_DOCS[kind];
+  const intro = SET_KIND_INTROS[locale][kind] ?? doc.intro;
   const examples = examplesFor(kind);
   const primary = examples[0];
   const sources = examples
     .map((example) => `- **${example.title}** — \`${example.source}\` (UX ${example.ux.join(', ')}; UI ${example.ui.join(', ')})`)
     .join('\n');
 
-  return `${doc.intro}
+  return `${intro}
 
 **Kind:** \`${kind}\`
 

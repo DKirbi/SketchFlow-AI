@@ -262,6 +262,17 @@ export function toNavTreeItems(nodes: StorybookNavNode[]): NavTreeItem[] {
   }));
 }
 
+export function localizeStorybookNav(
+  nodes: StorybookNavNode[],
+  labels: Record<string, string>,
+): StorybookNavNode[] {
+  return nodes.map((node) => ({
+    ...node,
+    label: labels[node.id] ?? node.label,
+    children: node.children ? localizeStorybookNav(node.children, labels) : undefined,
+  }));
+}
+
 export function findNodeById(
   nodes: StorybookNavNode[],
   id: string,

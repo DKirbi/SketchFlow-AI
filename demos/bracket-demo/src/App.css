@@ -1,11 +1,12 @@
+@reference "./lofi-theme.css";
+
 /* ─── Reset & Base ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Courier New', Courier, monospace;
   font-size: 13px;
-  background: #f5f5f5;
-  color: #111;
+  @apply bg-surface-raised text-ink;
   min-height: 100vh;
 }
 
@@ -21,7 +22,7 @@ body:has(.canvas-wrapper) {
 
 button { cursor: pointer; font-family: inherit; font-size: inherit; }
 input, select, textarea { font-family: inherit; font-size: inherit; }
-fieldset { border: 1px solid #bbb; padding: 10px 12px; margin-bottom: 12px; }
+fieldset { border: 1px solid var(--lofi-border); padding: 10px 12px; margin-bottom: 12px; }
 legend { padding: 0 4px; font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* ─── Canvas Layout ─────────────────────────────────────────────── */
@@ -29,26 +30,26 @@ legend { padding: 0 4px; font-weight: bold; font-size: 11px; text-transform: upp
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #fff;
+  @apply bg-paper;
 }
 
 /* ─── Canvas header (two-row: identity+actions / tabs) ──────────── */
 .canvas-header {
   display: flex;
   flex-direction: column;
-  border-bottom: 2px solid #111;
-  background: #fff;
+  border-bottom: 2px solid var(--lofi-ink);
+  background: var(--lofi-paper);
   flex-shrink: 0;
 }
 
 .canvas-nav-tabs {
   padding: 0 16px;
-  background: #fff;
+  background: var(--lofi-paper);
 }
 
 /* LOFIToolbar inside canvas-header — remove standalone bottom border */
 .canvas-header .canvas-toolbar {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--lofi-border-faint);
 }
 
 .canvas-toolbar {
@@ -57,7 +58,7 @@ legend { padding: 0 4px; font-weight: bold; font-size: 11px; text-transform: upp
   gap: 12px;
   flex-wrap: wrap;
   padding: 10px 16px;
-  background: #fff;
+  background: var(--lofi-paper);
   flex-shrink: 0;
 }
 
@@ -71,8 +72,8 @@ legend { padding: 0 4px; font-weight: bold; font-size: 11px; text-transform: upp
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #666;
-  border: 1px solid #bbb;
+  color: var(--lofi-ink-muted);
+  border: 1px solid var(--lofi-border);
   padding: 2px 6px;
 }
 
@@ -84,7 +85,7 @@ legend { padding: 0 4px; font-weight: bold; font-size: 11px; text-transform: upp
 
 .tournament-season {
   font-size: 11px;
-  color: #888;
+  color: var(--lofi-ink-subtle);
   letter-spacing: 0.04em;
 }
 
@@ -100,15 +101,15 @@ legend { padding: 0 4px; font-weight: bold; font-size: 11px; text-transform: upp
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 4px 8px;
-  border: 1px solid #ddd;
-  background: #fafafa;
-  color: #888;
+  border: 1px solid var(--lofi-border-subtle);
+  background: var(--lofi-surface);
+  color: var(--lofi-ink-subtle);
 }
 
 .toolbar-step--active {
-  border-color: #111;
-  background: #111;
-  color: #fff;
+  border-color: var(--lofi-ink);
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
   font-weight: bold;
 }
 
@@ -118,15 +119,15 @@ legend { padding: 0 4px; font-weight: bold; font-size: 11px; text-transform: upp
 
 button.toolbar-step--link {
   cursor: pointer;
-  border-color: #bbb;
-  background: #fff;
-  color: #333;
+  border-color: var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-secondary);
 }
 
 button.toolbar-step--link:hover {
-  background: #111;
-  color: #fff;
-  border-color: #111;
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
+  border-color: var(--lofi-ink);
 }
 
 .toolbar-right {
@@ -139,28 +140,28 @@ button.toolbar-step--link:hover {
 
 .btn-add-progression {
   padding: 6px 14px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--lofi-ink);
+  background: var(--lofi-paper);
   font-weight: bold;
   letter-spacing: 0.04em;
   transition: background 0.1s, color 0.1s;
 }
 
 .btn-add-progression:hover {
-  background: #111;
-  color: #fff;
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
 }
 
 /* ─── Scenario A/B Toggle ────────────────────────────────────────── */
 .scenario-toggle {
   display: flex;
-  border: 2px solid #111;
+  border: 2px solid var(--lofi-ink);
 }
 
 .scenario-toggle__btn {
   padding: 4px 12px;
   border: none;
-  background: #fff;
+  background: var(--lofi-paper);
   font-weight: bold;
   letter-spacing: 0.04em;
   font-size: 11px;
@@ -169,16 +170,16 @@ button.toolbar-step--link:hover {
 }
 
 .scenario-toggle__btn + .scenario-toggle__btn {
-  border-left: 2px solid #111;
+  border-left: 2px solid var(--lofi-ink);
 }
 
 .scenario-toggle__btn--active {
-  background: #111;
-  color: #fff;
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
 }
 
 .scenario-toggle__btn:not(.scenario-toggle__btn--active):hover {
-  background: #f0f0f0;
+  background: var(--lofi-surface-hover);
 }
 
 /* .canvas-help removed — round names now appear in the sticky RoundHeaderBelt */
@@ -194,10 +195,10 @@ button.toolbar-step--link:hover {
   box-shadow: 0 0 0 2px #1a6bcb;
 }
 .react-flow__handle { opacity: 0; pointer-events: none; }
-.react-flow__controls { border: 1px solid #bbb; background: #fff; }
-.react-flow__controls button { border-bottom: 1px solid #ccc; color: #333; background: #fff; }
-.react-flow__minimap { border: 1px solid #bbb; }
-.react-flow__background { background: #f8f8f8; }
+.react-flow__controls { @apply border-border bg-paper; border-style: solid; border-width: 1px; }
+.react-flow__controls button { @apply border-border text-ink-secondary bg-paper; border-bottom-width: 1px; border-bottom-style: solid; }
+.react-flow__minimap { @apply border-border; border-style: solid; border-width: 1px; }
+.react-flow__background { @apply bg-surface-inset; }
 
 .progression-edge-path-group .react-flow__edge-path {
   transition: stroke-dasharray 0.12s ease;
@@ -213,8 +214,8 @@ button.toolbar-step--link:hover {
   right: 0 !important;
   top: 0 !important;
   height: 40px;
-  background: #fff;
-  border-bottom: 1px solid #e0e0e0;
+  background: var(--lofi-paper);
+  border-bottom: 1px solid var(--lofi-border-subtle);
   pointer-events: none;
   overflow: hidden;
 }
@@ -229,12 +230,12 @@ button.toolbar-step--link:hover {
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #666;
+  color: var(--lofi-ink-muted);
   font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
   pointer-events: none;
-  border-right: 1px solid #e8e8e8;
+  border-right: 1px solid var(--lofi-border-subtle);
 }
 
 .round-divider {
@@ -242,27 +243,27 @@ button.toolbar-step--link:hover {
   top: 0;
   bottom: 0;
   width: 0;
-  border-left: 2px dashed #ddd;
+  border-left: 2px dashed var(--lofi-border-subtle);
   pointer-events: none;
 }
 
 /* ─── Bracket Node ──────────────────────────────────────────────── */
 .bracket-node {
-  background: #fff;
+  background: var(--lofi-paper);
   min-width: 310px;
   max-width: 350px;
   position: relative;
-  border: 2px dashed #aaa;
+  border: 2px dashed var(--lofi-ink-ghost);
 }
 
 .bracket-node--complete {
   border-style: solid;
-  border-color: #111;
+  border-color: var(--lofi-ink);
 }
 
 .bracket-node--incomplete {
   border-style: dashed;
-  border-color: #aaa;
+  border-color: var(--lofi-ink-ghost);
 }
 
 .bracket-drag-belt {
@@ -270,25 +271,25 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 6px;
   padding: 4px 12px;
-  background: #f0f0f0;
-  border-bottom: 1px solid #ddd;
+  background: var(--lofi-surface-hover);
+  border-bottom: 1px solid var(--lofi-border-subtle);
   cursor: grab;
   user-select: none;
 }
 
 .bracket-node--incomplete .bracket-drag-belt {
-  background: #f7f7f7;
-  border-bottom-color: #e0e0e0;
+  background: var(--lofi-surface);
+  border-bottom-color: var(--lofi-border-subtle);
 }
 
 .bracket-drag-belt:active {
   cursor: grabbing;
-  background: #e8e8e8;
+  background: var(--lofi-border-subtle);
 }
 
 .bracket-drag-belt__icon {
   font-size: 14px;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   line-height: 1;
 }
 
@@ -297,18 +298,18 @@ button.toolbar-step--link:hover {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #bbb;
+  color: var(--lofi-border);
 }
 
 .bracket-header {
   padding: 8px 12px;
-  border-bottom: 2px solid #111;
-  background: #fff;
+  border-bottom: 2px solid var(--lofi-ink);
+  background: var(--lofi-paper);
   position: relative;
 }
 
 .bracket-node--incomplete .bracket-header {
-  border-bottom-color: #aaa;
+  border-bottom-color: var(--lofi-ink-ghost);
   border-bottom-style: dashed;
 }
 
@@ -317,7 +318,7 @@ button.toolbar-step--link:hover {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #888;
+  color: var(--lofi-ink-subtle);
   margin-bottom: 2px;
 }
 
@@ -346,27 +347,27 @@ button.toolbar-step--link:hover {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 3px 7px;
-  border: 1px solid #bbb;
-  background: #fff;
-  color: #888;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-subtle);
   cursor: pointer;
   transition: background 0.12s, color 0.12s, border-color 0.12s;
   line-height: 1.4;
 }
 
 .bracket-edit-btn:hover {
-  background: #111;
-  color: #fff;
-  border-color: #111;
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
+  border-color: var(--lofi-ink);
 }
 
 .bracket-status-badge {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  border: 1px solid #111;
+  border: 1px solid var(--lofi-ink);
   padding: 2px 6px;
-  color: #333;
+  color: var(--lofi-ink-secondary);
   flex-shrink: 0;
 }
 
@@ -374,7 +375,7 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   padding: 0 8px 6px;
 }
 
@@ -384,7 +385,7 @@ button.toolbar-step--link:hover {
 
 /* ─── Participants List ──────────────────────────────────────────── */
 .bracket-participants {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--lofi-border-faint);
   padding: 8px 12px;
 }
 
@@ -392,7 +393,7 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   margin-bottom: 6px;
 }
 
@@ -410,12 +411,12 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: #333;
+  color: var(--lofi-ink-secondary);
   padding: 1px 0;
 }
 
 .participant-seed {
-  color: #bbb;
+  color: var(--lofi-border);
   font-size: 10px;
   width: 14px;
   flex-shrink: 0;
@@ -429,8 +430,8 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #888;
-  border: 1px solid #ccc;
+  color: var(--lofi-ink-subtle);
+  border: 1px solid var(--lofi-border);
   padding: 1px 4px;
 }
 
@@ -443,13 +444,13 @@ button.toolbar-step--link:hover {
 
 .match-divider {
   height: 1px;
-  background: #f0f0f0;
+  background: var(--lofi-surface-hover);
   margin: 4px 0;
 }
 
 .bracket-empty {
   padding: 8px;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   font-style: italic;
   text-align: center;
   font-size: 11px;
@@ -459,10 +460,10 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #bbb;
+  color: var(--lofi-border);
   text-align: center;
   padding: 6px 12px 10px;
-  border-top: 1px dashed #e0e0e0;
+  border-top: 1px dashed var(--lofi-border-subtle);
 }
 
 .bracket-handle {
@@ -472,15 +473,15 @@ button.toolbar-step--link:hover {
 
 /* ─── Match Card ────────────────────────────────────────────────── */
 .match-card {
-  border: 1px solid #bbb;
+  border: 1px solid var(--lofi-border);
   padding: 8px 10px;
-  background: #fff;
+  background: var(--lofi-paper);
 }
 
 .match-card--bye {
-  background: #fafafa;
+  background: var(--lofi-surface);
   border-style: dashed;
-  border-color: #ddd;
+  border-color: var(--lofi-border-subtle);
 }
 
 .bye-badge {
@@ -488,7 +489,7 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   margin-bottom: 4px;
 }
 
@@ -512,7 +513,7 @@ button.toolbar-step--link:hover {
 
 .team-name.tbd {
   font-weight: normal;
-  color: #888;
+  color: var(--lofi-ink-subtle);
   font-style: italic;
   font-size: 11px;
 }
@@ -523,7 +524,7 @@ button.toolbar-step--link:hover {
 
 .match-vs {
   font-size: 10px;
-  color: #999;
+  color: var(--lofi-ink-subtle);
   flex-shrink: 0;
 }
 
@@ -540,24 +541,24 @@ button.toolbar-step--link:hover {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 2px 6px;
-  border: 1px solid #bbb;
-  background: #fff;
-  color: #555;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-muted);
   cursor: pointer;
   transition: background 0.1s;
 }
 
-.status-badge:hover { background: #f0f0f0; }
+.status-badge:hover { background: var(--lofi-surface-hover); }
 
 .status-badge.status-live {
-  border-color: #333;
-  color: #000;
+  border-color: var(--lofi-ink-secondary);
+  color: var(--lofi-ink);
   font-weight: bold;
 }
 
 .status-badge.status-finished {
   border-style: dashed;
-  color: #888;
+  color: var(--lofi-ink-subtle);
 }
 
 .set-winner {
@@ -569,22 +570,22 @@ button.toolbar-step--link:hover {
 
 .set-winner-label {
   font-size: 10px;
-  color: #888;
+  color: var(--lofi-ink-subtle);
 }
 
 .winner-btn {
   font-size: 10px;
   padding: 2px 6px;
-  border: 1px solid #555;
-  background: #fff;
+  border: 1px solid var(--lofi-ink-muted);
+  background: var(--lofi-paper);
   text-decoration: none;
 }
 
-.winner-btn:hover { background: #111; color: #fff; }
+.winner-btn:hover { background: var(--lofi-ink); color: var(--lofi-paper); }
 
 .winner-label {
   font-size: 10px;
-  color: #444;
+  color: var(--lofi-ink-secondary);
   font-style: italic;
 }
 
@@ -595,8 +596,8 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 2px;
   padding: 4px 8px;
-  border: 1px solid #555;
-  background-color: #fff;
+  border: 1px solid var(--lofi-ink-muted);
+  background-color: var(--lofi-paper);
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.1s;
@@ -605,7 +606,7 @@ button.toolbar-step--link:hover {
 }
 
 .progression-edge-label:hover {
-  background: #f0f0f0;
+  background: var(--lofi-surface-hover);
 }
 
 .edge-condition {
@@ -613,14 +614,14 @@ button.toolbar-step--link:hover {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #111;
+  color: var(--lofi-ink);
 }
 
 .edge-trigger {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #888;
+  color: var(--lofi-ink-subtle);
 }
 
 /* ─── Edge Action Bar ───────────────────────────────────────────── */
@@ -629,10 +630,10 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 4px;
   padding: 4px 6px;
-  border: 1.5px solid #111;
-  background: #fff;
+  border: 1.5px solid var(--lofi-ink);
+  background: var(--lofi-paper);
   white-space: nowrap;
-  box-shadow: 2px 2px 0 #ccc;
+  box-shadow: 2px 2px 0 var(--lofi-border);
 }
 
 .edge-action-summary {
@@ -640,43 +641,43 @@ button.toolbar-step--link:hover {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #444;
+  color: var(--lofi-ink-secondary);
   padding-right: 6px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid var(--lofi-border-subtle);
   margin-right: 2px;
 }
 
 .edge-action-btn {
   font-size: 11px;
   padding: 3px 8px;
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.1s, color 0.1s;
 }
 
-.edge-action-btn:hover { background: #f0f0f0; }
+.edge-action-btn:hover { background: var(--lofi-surface-hover); }
 
 .edge-action-btn--danger {
-  border-color: #888;
-  color: #333;
+  border-color: var(--lofi-ink-subtle);
+  color: var(--lofi-ink-secondary);
 }
 
 .edge-action-btn--danger:hover {
-  background: #111;
-  color: #fff;
-  border-color: #111;
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
+  border-color: var(--lofi-ink);
 }
 
 .edge-action-btn--muted {
-  color: #aaa;
-  border-color: #ddd;
+  color: var(--lofi-ink-ghost);
+  border-color: var(--lofi-border-subtle);
   font-size: 10px;
   padding: 3px 6px;
 }
 
-.edge-action-btn--muted:hover { color: #000; border-color: #bbb; }
+.edge-action-btn--muted:hover { color: var(--lofi-ink); border-color: var(--lofi-border); }
 
 /* ─── Edge Delete Confirm ───────────────────────────────────────── */
 .edge-confirm {
@@ -684,40 +685,40 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
-  border: 1.5px dashed #555;
-  background: #fff;
+  border: 1.5px dashed var(--lofi-ink-muted);
+  background: var(--lofi-paper);
   white-space: nowrap;
-  box-shadow: 2px 2px 0 #ccc;
+  box-shadow: 2px 2px 0 var(--lofi-border);
 }
 
 .edge-confirm-text {
   font-size: 11px;
-  color: #333;
+  color: var(--lofi-ink-secondary);
   margin-right: 4px;
 }
 
 .edge-confirm-yes {
   font-size: 11px;
   padding: 3px 10px;
-  border: 1.5px solid #111;
-  background: #111;
-  color: #fff;
+  border: 1.5px solid var(--lofi-ink);
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
   cursor: pointer;
   font-family: inherit;
 }
 
-.edge-confirm-yes:hover { background: #333; }
+.edge-confirm-yes:hover { background: var(--lofi-ink-secondary); }
 
 .edge-confirm-no {
   font-size: 11px;
   padding: 3px 10px;
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
   cursor: pointer;
   font-family: inherit;
 }
 
-.edge-confirm-no:hover { background: #f0f0f0; }
+.edge-confirm-no:hover { background: var(--lofi-surface-hover); }
 
 /* ─── Edge Context Menu ─────────────────────────────────────────── */
 /* Progression edit modal — size override on the shared .modal shell */
@@ -735,18 +736,18 @@ button.toolbar-step--link:hover {
   width: 100%;
   margin-top: 8px;
   padding: 6px 10px;
-  border: 1px dashed #bbb;
-  background: #fff;
-  color: #777;
+  border: 1px dashed var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-muted);
   text-align: left;
   font-size: 12px;
   cursor: pointer;
 }
 
 .progression-add-rule-btn:hover {
-  border-color: #111;
+  border-color: var(--lofi-ink);
   border-style: solid;
-  color: #111;
+  color: var(--lofi-ink);
 }
 
 .context-menu-breadcrumb {
@@ -765,26 +766,26 @@ button.toolbar-step--link:hover {
   border: none;
   padding: 0;
   font: inherit;
-  color: #000;
+  color: var(--lofi-ink);
   text-decoration: underline;
   cursor: pointer;
   text-underline-offset: 2px;
 }
 
 .context-menu-crumb-sep {
-  color: #bbb;
+  color: var(--lofi-border);
   user-select: none;
 }
 
 .context-menu-crumb--current {
-  color: #111;
+  color: var(--lofi-ink);
   font-weight: 600;
 }
 
 .rule-block {
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px dashed #ccc;
+  border-bottom: 1px dashed var(--lofi-border);
 }
 
 .rule-block-header {
@@ -799,7 +800,7 @@ button.toolbar-step--link:hover {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #888;
+  color: var(--lofi-ink-subtle);
   margin-bottom: 0;
 }
 
@@ -812,13 +813,13 @@ button.toolbar-step--link:hover {
   font: inherit;
   font-size: 11px;
   line-height: 1.2;
-  color: #000;
+  color: var(--lofi-ink);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .rule-remove-btn:disabled {
-  color: #bbb;
+  color: var(--lofi-border);
   text-decoration: none;
   cursor: default;
 }
@@ -834,14 +835,14 @@ button.toolbar-step--link:hover {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #666;
+  color: var(--lofi-ink-muted);
 }
 
 .rule-field select,
 .rule-field input[type="text"] {
   padding: 4px 6px;
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
   width: 100%;
 }
 
@@ -851,7 +852,7 @@ button.toolbar-step--link:hover {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  @apply bg-overlay;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -859,14 +860,14 @@ button.toolbar-step--link:hover {
 }
 
 .modal {
-  background: #fff;
-  border: 2px solid #111;
+  background: var(--lofi-paper);
+  border: 2px solid var(--lofi-ink);
   width: 440px;
   max-width: 95vw;
   max-height: min(90vh, 720px);
   overflow-y: auto;
   padding: 20px;
-  box-shadow: 6px 6px 0 #aaa;
+  box-shadow: 6px 6px 0 var(--lofi-ink-ghost);
 }
 
 .modal--progression {
@@ -879,14 +880,14 @@ button.toolbar-step--link:hover {
   align-items: center;
   margin-bottom: 8px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #111;
+  border-bottom: 2px solid var(--lofi-ink);
 }
 
 .modal-header h2 { font-size: 16px; }
 
 .modal-description {
   font-size: 11px;
-  color: #666;
+  color: var(--lofi-ink-muted);
   margin-bottom: 14px;
   line-height: 1.5;
 }
@@ -910,9 +911,9 @@ button.toolbar-step--link:hover {
 .modal-preview {
   margin: 8px 0 12px;
   padding: 8px 10px;
-  border: 1px dashed #bbb;
+  border: 1px dashed var(--lofi-border);
   font-size: 11px;
-  color: #444;
+  color: var(--lofi-ink-secondary);
   line-height: 1.5;
 }
 
@@ -921,7 +922,7 @@ button.toolbar-step--link:hover {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #888;
+  color: var(--lofi-ink-subtle);
   margin-bottom: 3px;
 }
 
@@ -938,60 +939,60 @@ button.toolbar-step--link:hover {
   background: none;
   border: none;
   font-size: 14px;
-  color: #666;
+  color: var(--lofi-ink-muted);
   padding: 0 4px;
   line-height: 1;
 }
 
-.close-btn:hover { color: #000; }
+.close-btn:hover { color: var(--lofi-ink); }
 
 .btn-primary {
   padding: 7px 16px;
-  border: 2px solid #111;
-  background: #111;
-  color: #fff;
+  border: 2px solid var(--lofi-ink);
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
   font-weight: bold;
   letter-spacing: 0.04em;
 }
 
-.btn-primary:hover { background: #333; border-color: #333; }
+.btn-primary:hover { background: var(--lofi-ink-secondary); border-color: var(--lofi-ink-secondary); }
 
 .btn-save {
   padding: 6px 12px;
-  border: 1px solid #333;
-  background: #fff;
+  border: 1px solid var(--lofi-ink-secondary);
+  background: var(--lofi-paper);
   font-weight: bold;
 }
 
-.btn-save:hover { background: #111; color: #fff; }
+.btn-save:hover { background: var(--lofi-ink); color: var(--lofi-paper); }
 
 .btn-delete {
   padding: 6px 12px;
-  border: 1px solid #999;
-  background: #fff;
-  color: #666;
+  border: 1px solid var(--lofi-ink-subtle);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-muted);
 }
 
-.btn-delete:hover { background: #f0f0f0; color: #000; }
+.btn-delete:hover { background: var(--lofi-surface-hover); color: var(--lofi-ink); }
 
 .btn-cancel {
   padding: 6px 12px;
-  border: 1px solid #ccc;
-  background: #fff;
-  color: #888;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-subtle);
 }
 
-.btn-cancel:hover { color: #000; border-color: #999; }
+.btn-cancel:hover { color: var(--lofi-ink); border-color: var(--lofi-ink-subtle); }
 
 .btn-danger {
   padding: 6px 12px;
-  border: 1px solid #999;
-  background: #fff;
-  color: #333;
+  border: 1px solid var(--lofi-ink-subtle);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-secondary);
   font-weight: 600;
 }
 
-.btn-danger:hover { background: #111; color: #fff; border-color: #111; }
+.btn-danger:hover { background: var(--lofi-ink); color: var(--lofi-paper); border-color: var(--lofi-ink); }
 
 .modal-actions-delete {
   margin-left: auto;
@@ -999,15 +1000,15 @@ button.toolbar-step--link:hover {
 
 .modal-actions-confirm-text {
   font-size: 13px;
-  color: #333;
+  color: var(--lofi-ink-secondary);
   margin-right: 4px;
 }
 
 .btn-secondary {
   padding: 6px 12px;
-  border: 1px solid #333;
-  background: #fff;
-  color: #111;
+  border: 1px solid var(--lofi-ink-secondary);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink);
   font-weight: 600;
 }
 
@@ -1024,10 +1025,10 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   margin-bottom: 8px;
   padding-bottom: 5px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--lofi-border-faint);
 }
 
 .edit-section-title-row {
@@ -1035,7 +1036,7 @@ button.toolbar-step--link:hover {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 5px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--lofi-border-faint);
   margin-bottom: 8px;
 }
 
@@ -1048,15 +1049,15 @@ button.toolbar-step--link:hover {
 .edit-prog-add-btn {
   font-size: 10px;
   padding: 3px 8px;
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
   letter-spacing: 0.04em;
-  color: #555;
+  color: var(--lofi-ink-muted);
 }
 
 .edit-prog-add-btn:hover {
-  border-color: #111;
-  color: #111;
+  border-color: var(--lofi-ink);
+  color: var(--lofi-ink);
 }
 
 /* ─── Progression rows in edit modal ─────────────────────────────── */
@@ -1067,12 +1068,12 @@ button.toolbar-step--link:hover {
   gap: 8px;
   padding: 7px 10px;
   margin-bottom: 4px;
-  border: 1px solid #eee;
+  border: 1px solid var(--lofi-border-faint);
   font-size: 11px;
 }
 
-.prog-row--outgoing { background: #f9fafb; }
-.prog-row--incoming { background: #fafaf9; }
+.prog-row--outgoing { background: var(--lofi-surface); }
+.prog-row--incoming { background: var(--lofi-surface); }
 
 .prog-row-summary {
   display: flex;
@@ -1086,7 +1087,7 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   font-weight: bold;
   letter-spacing: 0.06em;
-  color: #888;
+  color: var(--lofi-ink-subtle);
   flex-shrink: 0;
 }
 
@@ -1096,7 +1097,7 @@ button.toolbar-step--link:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #333;
+  color: var(--lofi-ink-secondary);
 }
 
 .prog-row-confirm {
@@ -1104,41 +1105,41 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 6px;
   font-size: 10px;
-  color: #666;
+  color: var(--lofi-ink-muted);
   flex-shrink: 0;
 }
 
 .prog-row-btn {
   font-size: 10px;
   padding: 3px 7px;
-  border: 1px solid #ccc;
-  background: #fff;
-  color: #555;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-muted);
   flex-shrink: 0;
 }
 
-.prog-row-btn:hover { border-color: #999; color: #111; }
+.prog-row-btn:hover { border-color: var(--lofi-ink-subtle); color: var(--lofi-ink); }
 
 .prog-row-btn--remove {
-  color: #888;
+  color: var(--lofi-ink-subtle);
 }
 
 .prog-row-btn--danger {
-  border-color: #c55;
-  color: #c55;
+  border-color: var(--lofi-ink);
+  color: var(--lofi-ink);
 }
 
 .prog-row-btn--danger:hover {
-  background: #c55;
-  color: #fff;
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
 }
 
 /* ─── Inline add-progression form ───────────────────────────────── */
 .prog-add-form {
-  border: 1px dashed #ccc;
+  border: 1px dashed var(--lofi-border);
   padding: 12px;
   margin-top: 6px;
-  background: #fafafa;
+  background: var(--lofi-surface);
 }
 
 .prog-add-fields {
@@ -1158,14 +1159,14 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #888;
+  color: var(--lofi-ink-subtle);
 }
 
 .prog-field select,
 .prog-field input[type="text"] {
   padding: 5px 7px;
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
   font-size: 12px;
   width: 100%;
 }
@@ -1173,14 +1174,14 @@ button.toolbar-step--link:hover {
 .prog-field select:focus,
 .prog-field input:focus {
   outline: none;
-  border-color: #111;
+  border-color: var(--lofi-ink);
 }
 
 .prog-add-preview {
   font-size: 11px;
-  color: #666;
-  background: #fff;
-  border: 1px solid #e5e5e5;
+  color: var(--lofi-ink-muted);
+  background: var(--lofi-paper);
+  border: 1px solid var(--lofi-border-subtle);
   padding: 6px 10px;
   margin-bottom: 10px;
   font-style: italic;
@@ -1204,13 +1205,13 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 6px;
   padding: 5px 0;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--lofi-surface-raised);
 }
 
 .edit-row:last-child { border-bottom: none; }
 
 .edit-row-num {
-  color: #bbb;
+  color: var(--lofi-border);
   font-size: 10px;
   width: 18px;
   flex-shrink: 0;
@@ -1224,17 +1225,17 @@ button.toolbar-step--link:hover {
 .edit-remove-btn {
   font-size: 10px;
   padding: 2px 5px;
-  border: 1px solid #ddd;
-  background: #fff;
-  color: #bbb;
+  border: 1px solid var(--lofi-border-subtle);
+  background: var(--lofi-paper);
+  color: var(--lofi-border);
   line-height: 1.2;
   flex-shrink: 0;
 }
 
 .edit-remove-btn:hover {
-  border-color: #999;
-  color: #111;
-  background: #f5f5f5;
+  border-color: var(--lofi-ink-subtle);
+  color: var(--lofi-ink);
+  background: var(--lofi-surface-raised);
 }
 
 .edit-add-row {
@@ -1245,18 +1246,18 @@ button.toolbar-step--link:hover {
 .edit-input {
   flex: 1;
   padding: 5px 8px;
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
 }
 
 .edit-input:focus {
   outline: none;
-  border-color: #111;
+  border-color: var(--lofi-ink);
 }
 
 .edit-empty {
   font-size: 11px;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   font-style: italic;
   padding: 6px 0;
   margin-bottom: 8px;
@@ -1272,9 +1273,9 @@ button.toolbar-step--link:hover {
 }
 
 .edit-match-card {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--lofi-border-subtle);
   padding: 8px 10px;
-  background: #fafafa;
+  background: var(--lofi-surface);
 }
 
 .edit-match-header {
@@ -1288,7 +1289,7 @@ button.toolbar-step--link:hover {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #888;
+  color: var(--lofi-ink-subtle);
 }
 
 .edit-match-body {
@@ -1307,20 +1308,20 @@ button.toolbar-step--link:hover {
   flex: 1;
   min-width: 120px;
   padding: 4px 6px;
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
   font-family: inherit;
   font-size: 12px;
 }
 
 .edit-select:focus {
   outline: none;
-  border-color: #111;
+  border-color: var(--lofi-ink);
 }
 
 .edit-vs {
   font-size: 10px;
-  color: #999;
+  color: var(--lofi-ink-subtle);
   flex-shrink: 0;
 }
 
@@ -1328,10 +1329,10 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #888;
-  border: 1px dashed #ccc;
+  color: var(--lofi-ink-subtle);
+  border: 1px dashed var(--lofi-border);
   padding: 3px 8px;
-  background: #fff;
+  background: var(--lofi-paper);
 }
 
 .edit-bye-toggle {
@@ -1339,7 +1340,7 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 5px;
   font-size: 10px;
-  color: #888;
+  color: var(--lofi-ink-subtle);
   cursor: pointer;
 }
 
@@ -1350,26 +1351,26 @@ button.toolbar-step--link:hover {
   width: 100%;
   font-size: 11px;
   padding: 6px 10px;
-  border: 1px dashed #bbb;
-  background: #fff;
-  color: #777;
+  border: 1px dashed var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-muted);
   text-align: left;
   letter-spacing: 0.02em;
   transition: background 0.1s, color 0.1s, border-color 0.1s;
 }
 
 .edit-add-match-btn:hover {
-  border-color: #111;
+  border-color: var(--lofi-ink);
   border-style: solid;
-  color: #111;
-  background: #f8f8f8;
+  color: var(--lofi-ink);
+  background: var(--lofi-surface-inset);
 }
 
 /* ─── Structure setup (step 1) ─────────────────────────────────── */
 .structure-setup {
   min-height: 100vh;
-  background: #fff;
-  color: #111;
+  background: var(--lofi-paper);
+  color: var(--lofi-ink);
   display: flex;
   flex-direction: column;
 }
@@ -1377,18 +1378,18 @@ button.toolbar-step--link:hover {
 .structure-header {
   display: flex;
   flex-direction: column;
-  border-bottom: 2px solid #111;
-  background: #fff;
+  border-bottom: 2px solid var(--lofi-ink);
+  background: var(--lofi-paper);
   flex-shrink: 0;
 }
 
 .structure-header .structure-toolbar {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--lofi-border-faint);
 }
 
 .structure-nav-tabs {
   padding: 0 16px;
-  background: #fff;
+  background: var(--lofi-paper);
 }
 
 .tool-identity {
@@ -1409,19 +1410,19 @@ button.toolbar-step--link:hover {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 6px 10px;
-  border: 1px solid #ddd;
-  color: #888;
+  border: 1px solid var(--lofi-border-subtle);
+  color: var(--lofi-ink-subtle);
 }
 
 .structure-step--active {
-  border-color: #111;
-  background: #111;
-  color: #fff;
+  border-color: var(--lofi-ink);
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
   font-weight: bold;
 }
 
 .structure-step--muted {
-  background: #fafafa;
+  background: var(--lofi-surface);
 }
 
 .structure-main {
@@ -1442,7 +1443,7 @@ button.toolbar-step--link:hover {
 
 .structure-intro {
   font-size: 12px;
-  color: #666;
+  color: var(--lofi-ink-muted);
   line-height: 1.5;
   margin-bottom: 20px;
   max-width: 640px;
@@ -1468,7 +1469,7 @@ button.toolbar-step--link:hover {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #666;
+  color: var(--lofi-ink-muted);
 }
 
 .structure-field--inline {
@@ -1479,8 +1480,8 @@ button.toolbar-step--link:hover {
 .structure-input,
 .structure-select {
   padding: 6px 8px;
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
 }
 
 .structure-config-row {
@@ -1491,20 +1492,20 @@ button.toolbar-step--link:hover {
 
 .structure-table-wrap {
   margin: 20px 0;
-  border: 1px solid #ccc;
-  background: #fafafa;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-surface);
 }
 
 .structure-table-hint {
   display: inline-flex;
   align-items: center;
   padding: 8px 12px;
-  background: #fff;
+  background: var(--lofi-paper);
 }
 
 .structure-table-scroll {
   overflow-x: auto;
-  background: #fff;
+  background: var(--lofi-paper);
 }
 
 .structure-table {
@@ -1515,7 +1516,7 @@ button.toolbar-step--link:hover {
 
 .structure-table th,
 .structure-table td {
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--lofi-border-subtle);
   padding: 8px;
   text-align: left;
   vertical-align: middle;
@@ -1525,8 +1526,8 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #888;
-  background: #f8f8f8;
+  color: var(--lofi-ink-subtle);
+  background: var(--lofi-surface-inset);
 }
 
 .structure-select--table {
@@ -1540,37 +1541,37 @@ button.toolbar-step--link:hover {
 }
 
 .structure-row-remove {
-  border: 1px solid #ccc;
-  background: #fff;
-  color: #888;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-subtle);
   width: 28px;
   height: 28px;
   line-height: 1;
 }
 
 .structure-row-remove:hover {
-  border-color: #111;
-  color: #111;
+  border-color: var(--lofi-ink);
+  color: var(--lofi-ink);
 }
 
 .structure-table-footer {
   padding: 10px 12px;
-  border-top: 1px solid #e0e0e0;
-  background: #fff;
+  border-top: 1px solid var(--lofi-border-subtle);
+  background: var(--lofi-paper);
 }
 
 .structure-add-round {
   font-size: 11px;
   padding: 6px 12px;
-  border: 1px dashed #999;
-  background: #fff;
-  color: #555;
+  border: 1px dashed var(--lofi-ink-subtle);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-muted);
 }
 
 .structure-add-round:hover {
   border-style: solid;
-  border-color: #111;
-  color: #111;
+  border-color: var(--lofi-ink);
+  color: var(--lofi-ink);
 }
 
 /* ─── Rounds section header ─────────────────────────────────────── */
@@ -1579,8 +1580,8 @@ button.toolbar-step--link:hover {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  border-bottom: 1px solid #e0e0e0;
-  background: #fff;
+  border-bottom: 1px solid var(--lofi-border-subtle);
+  background: var(--lofi-paper);
   padding-right: 12px;
 }
 
@@ -1588,17 +1589,17 @@ button.toolbar-step--link:hover {
   flex-shrink: 0;
   font-size: 11px;
   padding: 5px 11px;
-  border: 1px solid #bbb;
-  background: #fff;
-  color: #555;
+  border: 1px solid var(--lofi-border);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-muted);
   cursor: pointer;
   letter-spacing: 0.03em;
   transition: border-color 0.1s, color 0.1s;
 }
 
 .structure-regenerate-btn:hover:not(:disabled) {
-  border-color: #111;
-  color: #111;
+  border-color: var(--lofi-ink);
+  color: var(--lofi-ink);
 }
 
 .structure-regenerate-btn:disabled {
@@ -1609,7 +1610,7 @@ button.toolbar-step--link:hover {
 /* ─── Participants section ──────────────────────────────────────── */
 .structure-participants-wrap {
   margin-top: 32px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--lofi-border-subtle);
   padding: 20px 24px;
 }
 
@@ -1631,7 +1632,7 @@ button.toolbar-step--link:hover {
 
 .structure-participants-hint {
   font-size: 12px;
-  color: #888;
+  color: var(--lofi-ink-subtle);
   margin: 0;
 }
 
@@ -1643,12 +1644,12 @@ button.toolbar-step--link:hover {
 
 .structure-participant-btn {
   padding: 7px 14px;
-  border: 1.5px solid #bbb;
-  background: #fff;
+  border: 1.5px solid var(--lofi-border);
+  background: var(--lofi-paper);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   cursor: not-allowed;
   opacity: 0.5;
   pointer-events: none;
@@ -1656,7 +1657,7 @@ button.toolbar-step--link:hover {
 
 .structure-participants-empty {
   font-size: 12px;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   margin: 0;
   padding: 12px 0;
 }
@@ -1665,22 +1666,22 @@ button.toolbar-step--link:hover {
   max-height: 300px;
   overflow-x: auto;
   overflow-y: auto;
-  background: #fff;
-  border: 1px solid #e5e5e5;
+  background: var(--lofi-paper);
+  border: 1px solid var(--lofi-border-subtle);
 }
 
 .structure-participants-table-scroll .structure-participants-table thead th {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: #f8f8f8;
-  box-shadow: inset 0 -1px 0 #e5e5e5;
+  background: var(--lofi-surface-inset);
+  box-shadow: inset 0 -1px 0 var(--lofi-border-subtle);
 }
 
 .structure-id-cell {
   font-family: monospace;
   font-size: 11px;
-  color: #777;
+  color: var(--lofi-ink-muted);
 }
 
 /* ─── Participant drag-and-drop ─────────────────────────────────── */
@@ -1705,15 +1706,15 @@ button.toolbar-step--link:hover {
   background: none;
   padding: 0;
   cursor: grab;
-  color: #bbb;
+  color: var(--lofi-border);
   touch-action: none;
   border-radius: 3px;
   transition: color 0.1s, background 0.1s;
 }
 
 .entrant-drag-handle:hover {
-  color: #555;
-  background: #f0f0f0;
+  color: var(--lofi-ink-muted);
+  background: var(--lofi-surface-hover);
 }
 
 .entrant-drag-handle:active {
@@ -1727,7 +1728,7 @@ button.toolbar-step--link:hover {
 }
 
 .entrant-row--dragging {
-  background: #f7f7f7;
+  background: var(--lofi-surface);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -1740,63 +1741,63 @@ button.toolbar-step--link:hover {
 
 .structure-generate-btn {
   padding: 10px 20px;
-  border: 2px solid #111;
-  background: #111;
-  color: #fff;
+  border: 2px solid var(--lofi-ink);
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
 .structure-generate-btn:hover {
-  background: #333;
-  border-color: #333;
+  background: var(--lofi-ink-secondary);
+  border-color: var(--lofi-ink-secondary);
 }
 
 .structure-generate-btn--finished {
-  background: #fff;
-  color: #111;
-  border: 2px solid #111;
+  background: var(--lofi-paper);
+  color: var(--lofi-ink);
+  border: 2px solid var(--lofi-ink);
 }
 
 .structure-generate-btn--finished:hover {
-  background: #f0f0f0;
+  background: var(--lofi-surface-hover);
 }
 
 .structure-generate-btn--secondary {
-  background: #fff;
-  color: #111;
-  border: 2px dashed #999;
+  background: var(--lofi-paper);
+  color: var(--lofi-ink);
+  border: 2px dashed var(--lofi-ink-subtle);
   margin-right: auto;
 }
 
 .structure-generate-btn--secondary:hover {
-  border-color: #111;
-  background: #f0f0f0;
+  border-color: var(--lofi-ink);
+  background: var(--lofi-surface-hover);
 }
 
 /* ─── Match card variant B ─────────────────────────────────────── */
 .match-card-b {
-  border: 1px dashed #aaa;
+  border: 1px dashed var(--lofi-ink-ghost);
   border-radius: 4px;
-  background: #fff;
+  background: var(--lofi-paper);
   overflow: hidden;
 }
 
 .match-card-b--finished {
   border-style: solid;
-  border-color: #555;
+  border-color: var(--lofi-ink-muted);
 }
 
 .match-card-b--pending {
   border-style: dashed;
-  border-color: #aaa;
+  border-color: var(--lofi-ink-ghost);
 }
 
 .match-card-b--bye {
   border-style: dashed;
-  border-color: #bbb;
-  background: #fafafa;
+  border-color: var(--lofi-border);
+  background: var(--lofi-surface);
 }
 
 .match-card-b__when {
@@ -1805,7 +1806,7 @@ button.toolbar-step--link:hover {
   justify-content: flex-start;
   gap: 10px;
   padding: 6px 10px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--lofi-border-subtle);
   font-size: 12px;
 }
 
@@ -1825,7 +1826,7 @@ button.toolbar-step--link:hover {
 
 .match-card-b__when-value {
   font-weight: bold;
-  color: #111;
+  color: var(--lofi-ink);
 }
 
 .match-card-b__when-venue {
@@ -1836,7 +1837,7 @@ button.toolbar-step--link:hover {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 11px;
-  color: #333;
+  color: var(--lofi-ink-secondary);
   text-align: right;
 }
 
@@ -1845,7 +1846,7 @@ button.toolbar-step--link:hover {
   align-items: center;
   justify-content: space-between;
   padding: 8px 10px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--lofi-border-subtle);
   container-type: inline-size;
   container-name: match-header;
 }
@@ -1881,14 +1882,14 @@ button.toolbar-step--link:hover {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 2px 8px;
-  border: 1px solid #999;
-  background: #fff;
-  color: #444;
+  border: 1px solid var(--lofi-ink-subtle);
+  background: var(--lofi-paper);
+  color: var(--lofi-ink-secondary);
 }
 
 .match-card-b__badge--neutral {
   cursor: default;
-  color: #888;
+  color: var(--lofi-ink-subtle);
 }
 
 .match-card-b__badge--click {
@@ -1896,14 +1897,14 @@ button.toolbar-step--link:hover {
 }
 
 .status-b-live {
-  border-color: #111;
+  border-color: var(--lofi-ink);
   font-weight: bold;
-  color: #000;
+  color: var(--lofi-ink);
 }
 
 .status-b-finished {
   border-style: dashed;
-  color: #666;
+  color: var(--lofi-ink-muted);
 }
 
 /* ─── Match Card: Venue / Court block ───────────────────────────── */
@@ -1912,8 +1913,8 @@ button.toolbar-step--link:hover {
   align-items: baseline;
   gap: 6px;
   padding: 5px 10px;
-  border-bottom: 1px solid #e8e8e8;
-  background: #fafafa;
+  border-bottom: 1px solid var(--lofi-border-subtle);
+  background: var(--lofi-surface);
   flex-wrap: wrap;
 }
 
@@ -1921,14 +1922,14 @@ button.toolbar-step--link:hover {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   flex-shrink: 0;
 }
 
 .match-card-b__venue-court {
   font-size: 11px;
   font-weight: 600;
-  color: #444;
+  color: var(--lofi-ink-secondary);
   letter-spacing: 0.02em;
   flex: 1;
   min-width: 0;
@@ -1946,7 +1947,7 @@ button.toolbar-step--link:hover {
   flex-shrink: 0;
   width: 14px;
   height: 14px;
-  border: 1.5px solid #111;
+  border: 1.5px solid var(--lofi-ink);
   border-radius: 50%;
   cursor: default;
 }
@@ -1955,7 +1956,7 @@ button.toolbar-step--link:hover {
   content: '✓';
   font-size: 8px;
   line-height: 1;
-  color: #111;
+  color: var(--lofi-ink);
 }
 
 .match-card-b__score-icon::after {
@@ -1964,8 +1965,8 @@ button.toolbar-step--link:hover {
   bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
-  background: #111;
-  color: #fff;
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
   font-size: 10px;
   white-space: nowrap;
   padding: 3px 7px;
@@ -1984,7 +1985,7 @@ button.toolbar-step--link:hover {
   align-items: center;
   justify-content: space-between;
   padding: 6px 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--lofi-border-faint);
   gap: 12px;
 }
 
@@ -1992,7 +1993,7 @@ button.toolbar-step--link:hover {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #aaa;
+  color: var(--lofi-ink-ghost);
   flex-shrink: 0;
 }
 
@@ -2017,24 +2018,24 @@ button.toolbar-step--link:hover {
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--lofi-border-faint);
 }
 
 .match-card-b__win-label {
   font-size: 10px;
-  color: #888;
+  color: var(--lofi-ink-subtle);
 }
 
 .match-card-b__win-btn {
   font-size: 10px;
   padding: 2px 6px;
-  border: 1px solid #555;
-  background: #fff;
+  border: 1px solid var(--lofi-ink-muted);
+  background: var(--lofi-paper);
 }
 
 .match-card-b__win-btn:hover {
-  background: #111;
-  color: #fff;
+  background: var(--lofi-ink);
+  color: var(--lofi-paper);
 }
 
 .match-card-b__footer {
@@ -2042,18 +2043,18 @@ button.toolbar-step--link:hover {
   align-items: center;
   justify-content: space-between;
   padding: 6px 10px;
-  border-top: 1px dashed #ccc;
+  border-top: 1px dashed var(--lofi-border);
   margin-top: 0;
-  background: #f9f9f9;
+  background: var(--lofi-surface);
 }
 
 .match-card-b__id {
   font-size: 10px;
-  color: #999;
+  color: var(--lofi-ink-subtle);
   letter-spacing: 0.02em;
 }
 
 .match-card-b__meta {
   font-size: 10px;
-  color: #999;
+  color: var(--lofi-ink-subtle);
 }

@@ -101,7 +101,7 @@ describe('Button', () => {
     expect(hoverRule).toBeDefined();
     const bg = hoverRule!.style.background || hoverRule!.style.backgroundColor;
     const color = hoverRule!.style.color;
-    expect(bg.replace(/\s/g, '')).toMatch(/#111|rgb\(17,17,17\)/i);
-    expect(color.replace(/\s/g, '')).toMatch(/#fff|#ffffff|rgb\(255,255,255\)/i);
+    expect(bg.replace(/\s/g, '')).toMatch(/#111|rgb\(17,17,17\)|var\(--lofi-ink\)/i);
+    expect(color.replace(/\s/g, '')).toMatch(/#fff|#ffffff|rgb\(255,255,255\)|var\(--lofi-paper\)/i);
   });
 });
