@@ -42,7 +42,9 @@ Output shape:
 - `embeds/tournament-management/` — Tournament Management
 - `embeds/low-fi-ux-ui-patterns/` — Storybook
 
-Root [`vercel.json`](vercel.json) builds with `npm run build:showcase` and SPA-rewrites non-embed paths.
+Root [`vercel.json`](vercel.json) builds with `node scripts/showcase-build.mjs` and SPA-rewrites non-embed paths.
+
+In the Vercel project, **Root Directory must be the repository root** (leave it empty), not `lib`. `build:showcase` is a workspace-root script; if Root Directory is `lib`, npm looks for it on `lofi-kit` and the build fails.
 
 ## GitHub Pages
 

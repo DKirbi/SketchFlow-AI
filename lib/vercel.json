@@ -1,7 +1,7 @@
 {
-  "buildCommand": "node scripts/showcase-build.mjs",
+  "installCommand": "cd .. && npm install",
+  "buildCommand": "cd .. && node scripts/showcase-build.mjs --out lib/demos/sketchflow-showcase/dist",
   "outputDirectory": "demos/sketchflow-showcase/dist",
-  "installCommand": "npm install",
   "framework": null,
   "rewrites": [
     { "source": "/((?!embeds/).*)", "destination": "/index.html" }
@@ -18,3 +18,4 @@
     }
   ]
 }
+

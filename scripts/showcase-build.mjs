@@ -31,10 +31,17 @@ const STORYBOOK_EMBED_DIR = 'low-fi-ux-ui-patterns';
 const outFlag = process.argv.indexOf('--out');
 const outArgInline = process.argv.find((a) => a.startsWith('--out='))?.slice('--out='.length);
 const outArgPositional = outFlag !== -1 ? process.argv[outFlag + 1] : null;
-const outRel =
-  outArgInline ??
-  outArgPositional ??
-  path.join('demos', 'sketchflow-showcase', 'dist');
+// Vercel Root Directory = lib: npm runs workspace scripts with cwd/INIT_CWD
+// inside lofi-kit, and outputDirectory is resolved relative to lib/.
+const npmInitCwd = process.env.INIT_CWD
+  ? path.resolve(process.env.INIT_CWD)
+  : process.cwd();
+const vercelRootIsLib =
+  Boolean(process.env.VERCEL) && path.resolve(npmInitCwd) === path.join(root, 'lib');
+const defaultOutRel = vercelRootIsLib
+  ? path.join('lib', 'demos', 'sketchflow-showcase', 'dist')
+  : path.join('demos', 'sketchflow-showcase', 'dist');
+const outRel = outArgInline ?? outArgPositional ?? defaultOutRel;
 const outDir = path.isAbsolute(outRel) ? outRel : path.join(root, outRel);
 
 function run(cmd, args, cwd = root, env = process.env) {
@@ -54,6 +61,9 @@ function copyDir(src, dest) {
   fs.cpSync(src, dest, { recursive: true });
 }
 
+if (vercelRootIsLib) {
+  console.log('showcase-build: Vercel Root Directory is lib/; writing output under lib/demos/');
+}
 console.log(`\nshowcase-build: output → ${outDir}\n`);
 
 console.log('── step 1/4  build:lofi ──────────────────────────────────────');

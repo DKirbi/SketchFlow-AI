@@ -12,7 +12,7 @@ From the repo root:
 npm run build:showcase
 ```
 
-Deploy `demos/sketchflow-showcase/dist/` (or point Vercel at the root [`vercel.json`](../vercel.json)). Custom domain (`portfolio.davorkirbis.com`) is optional later.
+Deploy `demos/sketchflow-showcase/dist/` (or point Vercel at the root [`vercel.json`](../vercel.json), with **Root Directory empty** — not `lib`). Custom domain (`portfolio.davorkirbis.com`) is optional later.
 
 Root `vercel.json` sends:
 

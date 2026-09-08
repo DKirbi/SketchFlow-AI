@@ -24,6 +24,7 @@
   "scripts": {
     "build-ts": "tsc -p tsconfig.build.json",
     "build": "vite build && tsc -p tsconfig.build.json",
+    "build:showcase": "node ../scripts/showcase-build.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },
