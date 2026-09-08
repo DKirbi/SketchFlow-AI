@@ -1,8 +1,10 @@
+import type { ReactNode } from 'react';
 import type { ColumnDef, TableColumnMeta } from '../ui/Table/Table';
 import {
   LOFIBadge,
   LOFIButton,
   LOFICard,
+  LOFIChip,
   LOFIEmptyState,
   LOFIMainWorkspace,
   LOFIModal,
@@ -20,11 +22,13 @@ import type {
   ComponentSet,
   ComponentSetHandlers,
   EmptyDescriptor,
+  FilterChipGroupConfig,
   FilterRowConfig,
   ListHeaderConfig,
   ModalEditorConfig,
   P7ConfirmConfig,
   SidebarConfig,
+  SuggestionRowConfig,
   SummaryCardConfig,
   TableConfig,
   TableRowDescriptor,
@@ -38,6 +42,7 @@ import './ComponentSet.scss';
 export interface ComponentSetProps {
   set: ComponentSet;
   handlers?: ComponentSetHandlers;
+  children?: ReactNode;
 }
 
 function noopHandlers(): ComponentSetHandlers {
@@ -211,6 +216,46 @@ function UpperBarFromConfig({
         ) : undefined
       }
     />
+  );
+}
+
+function FilterChipGroupFromConfig({
+  config,
+  onAction,
+}: {
+  config: FilterChipGroupConfig;
+  onAction?: ComponentSetHandlers['onAction'];
+}) {
+  return (
+    <div className="component-set__chip-group" role="group" aria-label={config.ariaLabel ?? 'Status filters'}>
+      {config.chips.map((chip) => {
+        const label = chip.count == null ? chip.label : `${chip.label} (${chip.count})`;
+        return (
+          <LOFIChip
+            key={chip.id}
+            label={label}
+            selected={chip.selected}
+            onClick={() => onAction?.(chip.id)}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function SuggestionRowFromConfig({
+  config,
+  onAction,
+}: {
+  config: SuggestionRowConfig;
+  onAction?: ComponentSetHandlers['onAction'];
+}) {
+  return (
+    <div className="component-set__suggestion-row">
+      <LOFIText variant="body">{config.external}</LOFIText>
+      <LOFIBadge variant="tag" label={`${config.percent}%`} />
+      <ActionCluster host="row-actions" actions={[config.map, config.unmap]} onAction={onAction} />
+    </div>
   );
 }
 
@@ -492,20 +537,45 @@ function P7FromConfig({
 function ToolShellFromConfig({
   config,
   handlers,
+  children,
 }: {
   config: ToolShellConfig;
   handlers: ComponentSetHandlers;
+  children?: ReactNode;
 }) {
+  const framed = config.framed !== false;
+  const rootCls = [
+    'component-set',
+    framed ? 'component-set--frame' : '',
+    'component-set__tool-shell',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <div className="component-set component-set--frame component-set__tool-shell">
+    <div className={rootCls}>
       <UpperBarFromConfig config={config.toolbar} onAction={handlers.onAction} />
       <div className="component-set__tool-body">
-        {config.bulkBar ? (
-          <div className="component-set__bulk-bar">
-            <ActionCluster host="bulk-bar" actions={config.bulkBar} onAction={handlers.onAction} />
-          </div>
+        {config.filterRow ? <FilterRowFromConfig config={config.filterRow} handlers={handlers} /> : null}
+        {config.chipGroup ? (
+          <FilterChipGroupFromConfig config={config.chipGroup} onAction={handlers.onAction} />
         ) : null}
-        <TableFromConfig table={config.table} onAction={handlers.onAction} />
+        <div className="component-set__tool-interface">
+          {config.tabs ? (
+            <LOFITabs
+              ariaLabel="Mapping contexts"
+              value={config.activeTab ?? config.tabs[0]?.value ?? ''}
+              onChange={(v) => handlers.onTabChange?.(v)}
+              tabs={config.tabs}
+            />
+          ) : null}
+          {config.bulkBar ? (
+            <div className="component-set__bulk-bar">
+              <ActionCluster host="bulk-bar" actions={config.bulkBar} onAction={handlers.onAction} />
+            </div>
+          ) : null}
+          {children ?? (config.table ? <TableFromConfig table={config.table} onAction={handlers.onAction} /> : null)}
+        </div>
       </div>
       {config.pageFooter ? (
         <div className="component-set__page-footer">
@@ -550,7 +620,7 @@ function UplShellFromConfig({
   );
 }
 
-export function ComponentSetView({ set, handlers }: ComponentSetProps) {
+export function ComponentSetView({ set, handlers, children }: ComponentSetProps) {
   const h = handlers ?? noopHandlers();
 
   switch (set.kind) {
@@ -560,6 +630,8 @@ export function ComponentSetView({ set, handlers }: ComponentSetProps) {
       return <UpperBarFromConfig config={set} onAction={h.onAction} />;
     case 'filter-query-row':
       return <FilterRowFromConfig config={set} handlers={h} />;
+    case 'filter-chip-group':
+      return <FilterChipGroupFromConfig config={set} onAction={h.onAction} />;
     case 'sidebar':
       return <SidebarFromConfig config={set} handlers={h} />;
     case 'main-workspace':
@@ -574,12 +646,14 @@ export function ComponentSetView({ set, handlers }: ComponentSetProps) {
       return <ListHeaderFromConfig config={set} handlers={h} />;
     case 'table-chrome':
       return <TableFromConfig table={set} onAction={h.onAction} />;
+    case 'suggestion-row':
+      return <SuggestionRowFromConfig config={set} onAction={h.onAction} />;
     case 'modal-editor':
       return <ModalEditorFromConfig config={set} handlers={h} />;
     case 'p7-confirm':
       return <P7FromConfig config={set} handlers={h} />;
     case 'tool-shell':
-      return <ToolShellFromConfig config={set} handlers={h} />;
+      return <ToolShellFromConfig config={set} handlers={h}>{children}</ToolShellFromConfig>;
     case 'upl-shell':
       return <UplShellFromConfig config={set} handlers={h} />;
   }

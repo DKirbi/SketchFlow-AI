@@ -303,6 +303,52 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
     },
   },
   {
+    id: 'filter-chip-group-mapping',
+    title: 'Filter chip group — All / Unmapped / Mapped',
+    source: 'demos/mapping-prototype/src/components/MappingView/MappingView.tsx',
+    ux: ['P9'],
+    ui: ['U5.4', 'U6'],
+    set: {
+      kind: 'filter-chip-group',
+      ariaLabel: 'Mapping status',
+      chips: [
+        { id: 'all', label: 'All', count: 20, selected: false },
+        { id: 'unmapped', label: 'Unmapped', count: 14, selected: true },
+        { id: 'mapped', label: 'Mapped', count: 6, selected: false },
+      ],
+    },
+  },
+  {
+    id: 'suggestion-row-high',
+    title: 'Suggestion row — high confidence, Unmap disabled',
+    source: 'demos/mapping-prototype/src/components/MappingView/MappingView.tsx',
+    ux: ['P2.2', 'P2.5', 'P3'],
+    ui: ['U5.2'],
+    set: {
+      kind: 'suggestion-row',
+      id: 's-high',
+      external: 'gryffindor quidditch xi',
+      percent: 99,
+      map: { id: 'map', role: 'commit', label: 'Map', stateful: true, state: 'idle', successLabel: 'Mapped' },
+      unmap: { id: 'unmap', role: 'secondary', label: 'Unmap', disabled: true },
+    },
+  },
+  {
+    id: 'suggestion-row-mapped',
+    title: 'Suggestion row — mapped, Unmap enabled',
+    source: 'demos/mapping-prototype/src/components/MappingView/MappingView.tsx',
+    ux: ['P2.2', 'P3'],
+    ui: ['U5.2'],
+    set: {
+      kind: 'suggestion-row',
+      id: 's-mapped',
+      external: 'HARRY P0TTER',
+      percent: 88,
+      map: { id: 'map', role: 'commit', label: 'Map', stateful: true, state: 'success', successLabel: 'Mapped', disabled: true },
+      unmap: { id: 'unmap', role: 'secondary', label: 'Unmap' },
+    },
+  },
+  {
     id: 'sidebar-upl',
     title: 'UPL sidebar — tree + collapse',
     source: 'demos/tournament-management/src/components/TournamentManagement/Sidebar.tsx',
@@ -442,16 +488,15 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
     ui: ['U5.1', 'U5.2'],
     set: {
       kind: 'table-chrome',
-      hint: 'Select rows to bulk-map. Use Map / Unmap to manage individual entries.',
+      hint: 'Expand a row to rank AI suggestions. Map one suggestion per entity.',
       sortable: true,
       columns: [
-        { id: 'internal', header: 'Internal', field: 'internal' },
-        { id: 'external', header: 'External', field: 'external' },
+        { id: 'internal', header: 'Internal entity', field: 'internal' },
         { id: 'status', header: 'Status', field: 'status', shrink: true },
       ],
       rows: [
-        { id: '1', internal: 'Arsenal', external: 'Arsenal FC', status: 'mapped' },
-        { id: '2', internal: 'Chelsea', external: '', status: 'pending' },
+        { id: 'hp-player-001', internal: 'Harry Potter', status: 'mapped' },
+        { id: 'hp-player-002', internal: 'Cedric Diggory', status: 'unmapped' },
       ],
       rowActions: [
         { id: 'map', role: 'commit', label: 'Map', stateful: true, successLabel: 'Mapped' },
@@ -461,32 +506,59 @@ export const COMPONENT_SET_EXAMPLES: SetExample[] = [
   },
   {
     id: 'tool-shell-mapping',
-    title: 'Tool shell — Mapping',
+    title: 'Tool shell — Wizarding mapping',
     source: 'demos/mapping-prototype/src/components/MappingView/MappingView.tsx',
-    ux: ['P1', 'P2', 'P2.4'],
-    ui: ['U5'],
+    ux: ['P1', 'P2', 'P2.5', 'P9'],
+    ui: ['U5', 'U6'],
     set: {
       kind: 'tool-shell',
       toolbar: {
         variant: 'tool',
-        title: 'Mapping',
+        title: 'Wizarding mapping',
         identity: { handle: 'j.smith', role: 'Operator' },
-        counts: [
-          { label: '12 mapped', active: true },
-          { label: '4 pending', active: false },
-        ],
         rightActions: [],
       },
-      bulkBar: [{ id: 'bulk-map', role: 'commit', label: 'Bulk Map (0)', disabled: true }],
+      filterRow: {
+        applyMode: 'commit',
+        fields: [
+          {
+            name: 'nameOrId',
+            kind: 'search',
+            label: 'Name or ID',
+            value: '',
+            placeholder: 'Search by name or id…',
+            allowClear: true,
+          },
+        ],
+        actions: [
+          { id: 'search', role: 'commit', label: 'Search', disabled: true },
+          { id: 'clear', role: 'dismiss', label: 'Clear all' },
+        ],
+      },
+      chipGroup: {
+        ariaLabel: 'Mapping status',
+        chips: [
+          { id: 'all', label: 'All', count: 8, selected: true },
+          { id: 'unmapped', label: 'Unmapped', count: 5 },
+          { id: 'mapped', label: 'Mapped', count: 3 },
+        ],
+      },
+      tabs: [
+        { value: 'players', label: 'Players & houses' },
+        { value: 'fixtures', label: 'Fixtures & duels' },
+        { value: 'cups', label: 'Cups & tournaments' },
+        { value: 'positions', label: 'Positions & bout types' },
+      ],
+      activeTab: 'players',
       table: {
-        hint: 'Select rows to bulk-map.',
+        hint: 'Expand a row to rank AI suggestions. Map one suggestion per entity.',
         columns: [
-          { id: 'internal', header: 'Internal', field: 'internal' },
-          { id: 'external', header: 'External', field: 'external' },
+          { id: 'internal', header: 'Internal entity', field: 'internal' },
+          { id: 'status', header: 'Status', field: 'status', shrink: true },
         ],
         rows: [
-          { id: '1', internal: 'Arsenal', external: 'Arsenal FC' },
-          { id: '2', internal: 'Chelsea', external: '—' },
+          { id: 'hp-player-001', internal: 'Harry Potter', status: 'mapped' },
+          { id: 'hp-player-002', internal: 'Cedric Diggory', status: 'unmapped' },
         ],
         empty: {
           variant: 'no-results',

@@ -11,9 +11,22 @@
   font-family: $text-font-family;
   font-weight: $font-weight-semibold;
   font-size: $text-body-size;
+  color: $color-ink;
   white-space: nowrap;
 
   &--dashed {
     border-style: solid;
+  }
+
+  &--selected {
+    border-color: $color-border;
+    background: $color-surface;
+  }
+
+  &--filter {
+    margin: 0;
+    cursor: pointer;
+    appearance: none;
+    text-align: left;
   }
 }

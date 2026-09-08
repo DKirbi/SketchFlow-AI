@@ -258,7 +258,7 @@ Quick reference for common primitives. See [`docs/LOFI_BLOCKS.md`](docs/LOFI_BLO
 | Button       | `LOFIButton`      | All actions and CTAs                               |
 | Card         | `LOFICard`        | Content container with optional header/footer      |
 | Checkbox     | `LOFICheckbox`    | Boolean toggle with label                          |
-| Chip         | `LOFIChip`        | Dismissible active-filter token (P9 chip strips)   |
+| Chip         | `LOFIChip`        | P9 chip: `onClear` for ✕, or `selected` + `onClick` for filter chips |
 | Field        | `LOFIField`       | Label + hint/error wrapper for form controls       |
 | Fieldset     | `LOFIFieldset`    | Grouped fields with a legend                       |
 | Input        | `LOFIInput`       | Text input (text, number, email, search, password) |
