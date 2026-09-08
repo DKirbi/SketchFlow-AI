@@ -4,6 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SketchFlow Showcase</title>
+    <script>
+      (function () {
+        try {
+          var p = new URLSearchParams(location.search);
+          var t = p.get('theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.dataset.theme = t;
+            document.documentElement.classList.toggle('dark', t === 'dark');
+            document.documentElement.style.colorScheme = t;
+          }
+          var l = p.get('locale');
+          if (l === 'en' || l === 'de' || l === 'sl') {
+            document.documentElement.lang = l;
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

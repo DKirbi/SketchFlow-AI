@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { LOFIButton, LOFIChevronRightIcon, LOFIChevronUpIcon, LOFIFeedbackSeverityIcon, LOFIText } from 'lofi-kit';
+import { useAppearance } from '../appearance/AppearanceProvider';
 import { type HubProject } from './catalog';
 import type { PatternSummary } from '../runtime/types';
 
@@ -39,6 +40,7 @@ export function HubBriefBar({
   onReturnToInterface,
   onDismissReturn,
 }: HubBriefBarProps) {
+  const { chrome } = useAppearance();
   const [expandedPatternId, setExpandedPatternId] = useState<string | null>(null);
 
   if (!project) return null;
@@ -60,7 +62,7 @@ export function HubBriefBar({
   }
 
   return (
-    <section className={briefClass} aria-label="Project brief">
+    <section className={briefClass} aria-label={chrome.briefLabel}>
       <span className="hub-brief__icon" aria-hidden="true">
         <LOFIFeedbackSeverityIcon severity="info" />
       </span>
@@ -68,14 +70,14 @@ export function HubBriefBar({
       {returnTo ? (
         <div className="hub-brief__return">
           <LOFIText as="p" variant="body" className="hub-brief__return-copy">
-            Pattern documentation opened from {returnTo.title}.
+            {chrome.openedFrom(returnTo.title)}
           </LOFIText>
           <div className="hub-brief__return-actions">
             <LOFIButton variant="primary" onClick={onReturnToInterface}>
-              Get back to {returnTo.title}
+              {chrome.getBackTo(returnTo.title)}
             </LOFIButton>
             <LOFIButton variant="dismiss" onClick={onDismissReturn}>
-              Dismiss
+              {chrome.dismiss}
             </LOFIButton>
           </div>
         </div>
@@ -92,7 +94,7 @@ export function HubBriefBar({
                 className="hub-brief__more"
                 onClick={onToggle}
               >
-                {collapsed ? 'Show more' : 'Show less'}
+                {collapsed ? chrome.showMore : chrome.showLess}
               </LOFIButton>
             </div>
             <LOFIText as="p" variant="description" className="hub-brief__summary">
@@ -147,7 +149,7 @@ export function HubBriefBar({
                         <div className="hub-brief__pattern-body">
                           <LOFIText variant="description">{pattern.body}</LOFIText>
                           <LOFIButton variant="dismiss" size="compact" onClick={onShowMore}>
-                            Open pattern docs
+                            {chrome.openPatternDocs}
                           </LOFIButton>
                         </div>
                       ) : null}

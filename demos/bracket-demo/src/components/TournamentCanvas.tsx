@@ -13,6 +13,7 @@ import {
   type OnNodeDrag,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { useLofiCssVar } from 'lofi-kit';
 
 import { useTournamentStore } from '../store/useTournamentStore';
 import { BracketNode } from './BracketNode';
@@ -107,6 +108,9 @@ export function TournamentCanvas({ onBackToStructure }: CanvasProps) {
   const [progressionFocusBracketIds, setProgressionFocusBracketIds] = useState(
     () => new Set<string>()
   );
+  const gridColor = useLofiCssVar('--lofi-border-faint') || '#eee';
+  const miniMapNode = useLofiCssVar('--lofi-ink-muted') || '#666';
+  const miniMapMask = useLofiCssVar('--lofi-overlay') || 'rgba(255,255,255,0.7)';
 
   const handleEditBracket = useCallback((id: string) => {
     setEditingBracketId(id);
@@ -252,12 +256,12 @@ export function TournamentCanvas({ onBackToStructure }: CanvasProps) {
           {/* World-layer dashed column dividers — must be inside ReactFlow to use useViewport() */}
           <RoundGuides columns={roundColumns} />
 
-          <Background gap={20} size={1} color="#eee" />
+          <Background gap={20} size={1} color={gridColor} />
           <Controls showInteractive={false} />
           <MiniMap
             nodeStrokeWidth={2}
-            nodeColor="#666"
-            maskColor="rgba(255,255,255,0.7)"
+            nodeColor={miniMapNode}
+            maskColor={miniMapMask}
           />
         </ReactFlow>
       </div>

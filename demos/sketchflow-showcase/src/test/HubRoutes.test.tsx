@@ -43,6 +43,10 @@ beforeEach(() => {
 
 afterEach(() => {
   sessionStorage.clear();
+  document.documentElement.removeAttribute('data-theme');
+  document.documentElement.classList.remove('dark');
+  document.documentElement.removeAttribute('lang');
+  document.documentElement.style.removeProperty('color-scheme');
 });
 
 describe('hub catalog', () => {
@@ -298,6 +302,37 @@ describe('App routes', () => {
     expect(within(showcaseNav()).getByRole('button', { name: 'Merge Tool' })).toHaveClass(
       'btn--primary',
     );
+  });
+
+  it('applies locale=de to hub chrome and the brief band without translating titles', async () => {
+    renderApp('/?theme=dark&locale=de');
+
+    expect(document.documentElement.dataset.theme).toBe('dark');
+    expect(document.documentElement.lang).toBe('de');
+    const nav = await screen.findByRole('navigation', { name: 'Showcase-Navigation' });
+    expect(screen.getByRole('button', { name: 'Weniger anzeigen' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Projektkurzinfo')).toHaveTextContent(/Gleicht zwei Datensätze/i);
+    expect(within(nav).getByRole('button', { name: 'Merge Tool' })).toBeInTheDocument();
+    expect(screen.getByText('Sportradar')).toBeInTheDocument();
+  });
+
+  it('passes appearance into the Storybook iframe and localizes hub nav groups', async () => {
+    const user = userEvent.setup();
+    renderApp('/?theme=dark&locale=de');
+
+    const nav = await screen.findByRole('navigation', { name: 'Showcase-Navigation' });
+    await user.click(within(nav).getByRole('button', { name: 'SketchFlowAI Patterns' }));
+
+    expect(screen.getByTitle('SketchFlowAI Patterns')).toHaveAttribute(
+      'src',
+      expect.stringContaining('locale=de'),
+    );
+    expect(screen.getByTitle('SketchFlowAI Patterns')).toHaveAttribute(
+      'src',
+      expect.stringContaining('theme=dark'),
+    );
+    expect(screen.getByRole('button', { name: 'UX-Muster' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'UI-Muster' })).toBeInTheDocument();
   });
 });
 

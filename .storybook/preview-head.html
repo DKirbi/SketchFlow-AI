@@ -5,7 +5,74 @@
   rel="stylesheet"
 />
 
+<script>
+  (function () {
+    try {
+      function param(name) {
+        var own = new URLSearchParams(location.search).get(name);
+        if (own) return own;
+        if (parent !== window) {
+          try {
+            return new URLSearchParams(parent.location.search).get(name);
+          } catch (e) {}
+        }
+        return null;
+      }
+      var t = param('theme');
+      if (t === 'dark' || t === 'light') {
+        document.documentElement.dataset.theme = t;
+        document.documentElement.classList.toggle('dark', t === 'dark');
+        document.documentElement.style.colorScheme = t;
+      }
+      var l = param('locale');
+      if (l === 'en' || l === 'de' || l === 'sl') {
+        document.documentElement.lang = l;
+      }
+    } catch (e) {}
+  })();
+</script>
+
 <style>
+  :root {
+    --lofi-ink: #111;
+    --lofi-paper: #fff;
+    --lofi-ink-secondary: #333;
+    --lofi-ink-muted: #666;
+    --lofi-ink-subtle: #888;
+    --lofi-ink-ghost: #aaa;
+    --lofi-border-strong: #111;
+    --lofi-border: #bbb;
+    --lofi-border-subtle: #ddd;
+    --lofi-border-faint: #eee;
+    --lofi-surface: #fafafa;
+    --lofi-surface-raised: #f5f5f5;
+    --lofi-surface-hover: #f0f0f0;
+    --lofi-surface-inset: #f8f8f8;
+    --lofi-overlay: rgba(0, 0, 0, 0.35);
+    --lofi-focus-ring: rgba(17, 17, 17, 0.3);
+    color-scheme: light;
+  }
+  html[data-theme='dark'],
+  html.dark {
+    --lofi-ink: #eee;
+    --lofi-paper: #111;
+    --lofi-ink-secondary: #ccc;
+    --lofi-ink-muted: #999;
+    --lofi-ink-subtle: #777;
+    --lofi-ink-ghost: #555;
+    --lofi-border-strong: #eee;
+    --lofi-border: #444;
+    --lofi-border-subtle: #222;
+    --lofi-border-faint: #111;
+    --lofi-surface: #050505;
+    --lofi-surface-raised: #0a0a0a;
+    --lofi-surface-hover: #0f0f0f;
+    --lofi-surface-inset: #070707;
+    --lofi-overlay: rgba(255, 255, 255, 0.35);
+    --lofi-focus-ring: rgba(238, 238, 238, 0.3);
+    color-scheme: dark;
+  }
+
   /*
    * Storybook TOC + docs chrome — lo-fi monospace, 18px TOC.
    * Targets the Table of Contents nav rendered by @storybook/addon-docs.
@@ -29,21 +96,21 @@
   .sbdocs.sbdocs-wrapper,
   .sbdocs.sbdocs-content {
     font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
-    color: #111 !important;
-    background: #fff !important;
+    color: var(--lofi-ink) !important;
+    background: var(--lofi-paper) !important;
   }
 
   .sbdocs.sbdocs-content h1:not(.sb-anchor) {
     font-size: 24px !important;
     font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
-    color: #111 !important;
+    color: var(--lofi-ink) !important;
   }
 
   .sbdocs.sbdocs-content h2:not(.sb-anchor) {
     margin-top: 16px !important;
     font-size: 20px !important;
     font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
-    color: #111 !important;
+    color: var(--lofi-ink) !important;
   }
 
   .sbdocs.sbdocs-content h3:not(.sb-anchor),
@@ -51,7 +118,7 @@
     margin-top: 8px !important;
     font-size: 18px !important;
     font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
-    color: #111 !important;
+    color: var(--lofi-ink) !important;
   }
 
   .sbdocs.sbdocs-content h4:not(.sb-anchor) {

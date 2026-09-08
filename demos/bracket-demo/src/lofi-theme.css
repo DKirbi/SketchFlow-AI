@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: var(--lofi-ink);
+  --color-ink-secondary: var(--lofi-ink-secondary);
+  --color-ink-muted: var(--lofi-ink-muted);
+  --color-ink-subtle: var(--lofi-ink-subtle);
+  --color-ink-ghost: var(--lofi-ink-ghost);
+  --color-paper: var(--lofi-paper);
+  --color-border: var(--lofi-border);
+  --color-border-subtle: var(--lofi-border-subtle);
+  --color-border-faint: var(--lofi-border-faint);
+  --color-surface: var(--lofi-surface);
+  --color-surface-raised: var(--lofi-surface-raised);
+  --color-surface-hover: var(--lofi-surface-hover);
+  --color-surface-inset: var(--lofi-surface-inset);
+  --color-overlay: var(--lofi-overlay);
+}
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme='dark'], [data-theme='dark'] *));

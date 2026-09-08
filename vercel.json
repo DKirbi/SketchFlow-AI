@@ -5,5 +5,16 @@
   "framework": null,
   "rewrites": [
     { "source": "/((?!embeds/).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://davorkirbis.com https://www.davorkirbis.com http://localhost:5173 http://127.0.0.1:5173"
+        }
+      ]
+    }
   ]
 }

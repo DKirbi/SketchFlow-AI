@@ -1,6 +1,8 @@
+/* eslint-disable react-refresh/only-export-components -- CSF meta factory + docs page */
 import type { Meta, StoryObj } from '@storybook/react';
-import { Description, Primary, Stories, Title } from '@storybook/addon-docs/blocks';
+import { Markdown, Primary, Stories, Title } from '@storybook/addon-docs/blocks';
 import { COMPONENT_SET_KIND_NAV, exampleById, type ComponentSet } from 'lofi-kit';
+import { useDocLocale } from '../docLocale';
 import { fixedLayerCanvasDecorator } from '../decorators/fixedLayerCanvas';
 import { SetExampleFrame } from './SetExampleFrame';
 import { isFramedSetKind, setKindMarkdown, setKindUsageSource } from './setKindDocs';
@@ -10,11 +12,12 @@ const OVERLAY_HEIGHT: Partial<Record<ComponentSet['kind'], number>> = {
   'modal-editor': 560,
 };
 
-export function SetKindDocsPage() {
+export function SetKindDocsPage({ kind }: { kind: ComponentSet['kind'] }) {
+  const locale = useDocLocale();
   return (
     <>
       <Title />
-      <Description />
+      <Markdown>{setKindMarkdown(kind, locale)}</Markdown>
       <Primary />
       <Stories />
     </>
@@ -37,8 +40,7 @@ export function createSetKindMeta(kind: ComponentSet['kind']): Meta {
       layout: 'fullscreen',
       controls: { disable: true },
       docs: {
-        description: { component: setKindMarkdown(kind) },
-        page: SetKindDocsPage,
+        page: () => <SetKindDocsPage kind={kind} />,
         canvas: { sourceState: 'shown' },
       },
     },

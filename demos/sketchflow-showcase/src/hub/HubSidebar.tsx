@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useHubNavigate } from '../appearance/navigation';
+import { useAppearance } from '../appearance/AppearanceProvider';
 import {
   LOFIButton,
   LOFICard,
@@ -31,7 +32,8 @@ export function HubSidebar({
   storybookPath,
   onStorybookPathChange,
 }: HubSidebarProps) {
-  const navigate = useNavigate();
+  const navigate = useHubNavigate();
+  const { chrome } = useAppearance();
   const storybookMode = selectedSlug === STORYBOOK_SLUG;
   const railProjects = storybookMode
     ? projects.filter((project) => project.slug === STORYBOOK_SLUG)
@@ -57,7 +59,7 @@ export function HubSidebar({
       variant="default"
       size="compact"
       className="hub-sidebar__collapse"
-      aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+      aria-label={collapsed ? chrome.expandSidebar : chrome.collapseSidebar}
       onClick={onToggle}
     >
       {collapsed ? <LOFIChevronRightIcon size={14} /> : <LOFIChevronLeftIcon size={14} />}
@@ -65,13 +67,13 @@ export function HubSidebar({
   );
 
   return (
-    <nav className={navClass} aria-label="Showcase navigation">
+    <nav className={navClass} aria-label={chrome.navLabel}>
       <LOFICard className="hub-sidebar__card">
         {collapsed ? (
           <div className="hub-sidebar__rail">
             {collapseControl}
             <LOFIText as="span" variant="inherit" className="hub-sidebar__rail-label">
-              SketchflowAI Showcase
+              {chrome.railBrand}
             </LOFIText>
             <div className="hub-sidebar__rail-items">
               {railProjects.map((project) => {
@@ -104,10 +106,10 @@ export function HubSidebar({
               <>
                 <div className="hub-sidebar__brand">
                   <LOFIText as="span" variant="strong" className="hub-sidebar__title">
-                    SketchFlowAI
+                    {chrome.brandTitle}
                   </LOFIText>
                   <LOFIText as="span" variant="body" className="hub-sidebar__subtitle">
-                    Showcase
+                    {chrome.brandSubtitle}
                   </LOFIText>
                 </div>
 

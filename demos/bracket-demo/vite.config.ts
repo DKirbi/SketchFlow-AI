@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
@@ -11,7 +12,7 @@ const embedBase = process.env.LOFI_EMBED_BASE;
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   // Portfolio embed: /embeds/<slug>/ ; hub gateway legacy: /<slug>/ ; standalone: ./
   base: embedBase
     ? embedBase.endsWith('/')
