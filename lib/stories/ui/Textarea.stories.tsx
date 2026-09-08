@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LOFIField, LOFITextarea } from 'lofi-kit';
 
 const meta: Meta<typeof LOFITextarea> = {
-  title: 'UI / Textarea',
+  title: 'LOW FI Design system/Primitives/Textarea',
   component: LOFITextarea,
   tags: ['autodocs'],
   parameters: {

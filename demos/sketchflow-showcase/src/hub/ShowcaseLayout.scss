@@ -21,6 +21,10 @@ $hub-gap: $space-12;
     --hub-sidebar-width: #{$hub-rail-width};
   }
 
+  &--storybook:not(.hub-shell--sidebar-collapsed) {
+    --hub-sidebar-width: #{$space-16 * 9};
+  }
+
   &__sidebar {
     grid-column: 1;
     grid-row: 1 / -1;
@@ -188,6 +192,49 @@ $hub-gap: $space-12;
     gap: $space-2;
     width: 100%;
     min-width: 0;
+  }
+
+  &__storybook {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-2;
+    padding-bottom: $space-2;
+    border-bottom: $border-width-strong solid $color-border;
+  }
+
+  &__crumb.btn {
+    padding: $space-1 $space-2;
+    min-width: auto;
+    border-radius: $radius-none;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+
+    &:hover:not(:disabled) {
+      background: $color-surface-hover;
+      border-color: transparent;
+    }
+  }
+
+  &__crumb-sep,
+  &__crumb-current {
+    display: inline;
+  }
+
+  &__tree.nav-tree {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    font-size: $font-size-sm;
   }
 
   &__rail {

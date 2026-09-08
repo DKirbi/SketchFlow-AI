@@ -4,7 +4,7 @@ import { LOFIButton, LOFIField, LOFIInput, LOFIModal, LOFISelect } from 'lofi-ki
 import { fixedLayerCanvasDecorator } from '../decorators/fixedLayerCanvas';
 
 const meta: Meta<typeof LOFIModal> = {
-  title: 'UI / Modal',
+  title: 'LOW FI Design system/Primitives/Modal',
   component: LOFIModal,
   tags: ['autodocs'],
   decorators: [fixedLayerCanvasDecorator(540)],

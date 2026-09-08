@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LOFITabs, LOFIText } from 'lofi-kit';
 
 const meta: Meta<typeof LOFITabs> = {
-  title: 'UI / Tabs',
+  title: 'LOW FI Design system/Primitives/Tabs',
   component: LOFITabs,
   parameters: {
     docs: {

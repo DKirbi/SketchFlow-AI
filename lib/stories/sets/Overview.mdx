@@ -1,0 +1,52 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="LOW FI Design system/Component sets/Overview" />
+
+# Component sets
+
+A **component set** is a JSON-serialisable group of LOFI primitives with a host layout and action roles. Primitives stay unchanged. Sets encode the recipes demos used to assemble by hand from loose footer buttons and nested chrome.
+
+**UX** decides *where* the cluster lives and *when* it appears (P1 shell, P5 modal, P7 confirm, P3 save). **UI** decides *rank / color* of each action in that cluster. The set stores both: LOFI `variant` for the prototype, `uiColor` / `uiRank` for the hi-fi pass.
+
+Open each kind in the sidebar. Every Docs page has:
+
+1. What the set is and which primitives it composes
+2. **Derived from** — the demo file the config was extracted from
+3. Copy-paste **usage** — `exampleById` and an inline `kind` config with `handlers`
+
+Source of truth for configs: `lib/src/sets/examples.ts`. Renderer: `LOFIComponentSet`.
+
+## Inventory
+
+| Kind | Typical host | Composes |
+|---|---|---|
+| `action-cluster` | footer / bulk / toolbar | `LOFIButton` / `LOFIStatefulButton` |
+| `upper-bar` | P1.1 chrome | `LOFIToolbar` |
+| `filter-query-row` | P1.2.1 / P9 | fields + Search / Clear |
+| `sidebar` | P1.2.2 | `LOFINavTree` |
+| `main-workspace` | P1.2.3 | `LOFIMainWorkspace` |
+| `summary-card` | overview tab | `LOFICard` + actions |
+| `list-header` | above a table | search + Add |
+| `table-chrome` | P2 | `LOFITable` + row actions |
+| `modal-editor` | P5 | `LOFIModal` + body + footer |
+| `p7-confirm` | P7 | title, message, two buttons |
+| `tool-shell` | mapping / merge | identity bar + table |
+| `upl-shell` | full workspace | upper bar + filter + sidebar + main |
+
+## Usage pattern
+
+```tsx
+import { LOFIComponentSet, exampleById } from 'lofi-kit';
+
+const example = exampleById('upl-shell-tournament');
+
+<LOFIComponentSet
+  set={example.set}
+  handlers={{
+    onAction: (id) => { /* bind cancel | save | … */ },
+    onFieldChange: (name, value) => { /* bind FieldDescriptor.name */ },
+  }}
+/>
+```
+
+Handlers stay outside the JSON. Bind `id` / `name` values at render time.

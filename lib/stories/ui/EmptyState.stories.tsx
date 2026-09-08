@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { LOFIEmptyState, LOFIButton } from 'lofi-kit';
 
 const meta: Meta<typeof LOFIEmptyState> = {
-  title: 'UI / EmptyState',
+  title: 'LOW FI Design system/Primitives/EmptyState',
   component: LOFIEmptyState,
   tags: ['autodocs'],
   parameters: {

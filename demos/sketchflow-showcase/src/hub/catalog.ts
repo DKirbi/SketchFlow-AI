@@ -22,7 +22,7 @@ export interface HubProject {
   kind: HubProjectKind;
   /** Two-letter code shown on the collapsed sidebar rail. */
   railAbbrev: string;
-  /** Patterns used by this example. Empty for SketchFlow Patterns (Storybook). */
+  /** Patterns used by this example. Empty for SketchFlowAI Patterns (Storybook). */
   patternSummaries: PatternSummary[];
   /** iframe src for embed projects (trailing slash). */
   embedPath?: string;
@@ -123,7 +123,7 @@ export const PROJECTS: HubProject[] = [
   {
     slug: 'low-fi-ux-ui-patterns',
     companyId: 'Sportradar',
-    title: 'SketchFlow Patterns',
+    title: 'SketchFlowAI Patterns',
     railAbbrev: 'SB',
     summary:
       'Storybook documentation of the low-fidelity design system and the patterns used in these prototype projects.',

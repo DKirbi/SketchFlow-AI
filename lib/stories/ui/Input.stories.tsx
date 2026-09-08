@@ -3,7 +3,7 @@ import { LOFIInput } from 'lofi-kit';
 import { InputControlledRender } from './storyControls';
 
 const meta: Meta<typeof LOFIInput> = {
-  title: 'UI / Input',
+  title: 'LOW FI Design system/Primitives/Input',
   component: LOFIInput,
   tags: ['autodocs'],
   render: InputControlledRender,

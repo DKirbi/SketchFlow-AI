@@ -86,7 +86,7 @@ demo; full composition rules -> **[LOFI_KIT_PATTERNS.md — Unified Production L
 
 ### Surface C — Component sets
 
-Config-driven groups. Not primitives. [`COMPOSITION_PATTERNS.md` — Component sets](COMPOSITION_PATTERNS.md). Storybook: **Sets / Component sets**.
+Config-driven groups. Not primitives. [`COMPOSITION_PATTERNS.md` — Component sets](COMPOSITION_PATTERNS.md). Storybook: **LOW FI Design system / Component sets**.
 
 | Export (`lofi-kit`) | BEM root | Source file | Use when |
 |---|---|---|---|

@@ -34,7 +34,7 @@ const rows: DemoRow[] = [
 ];
 
 const meta: Meta<typeof LOFITable<DemoRow>> = {
-  title: 'UI / Table',
+  title: 'LOW FI Design system/Primitives/Table',
   component: LOFITable,
   tags: ['autodocs'],
   parameters: {

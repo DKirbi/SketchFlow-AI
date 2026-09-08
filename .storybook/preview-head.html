@@ -1,36 +1,57 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..900;1,6..12,300..900&display=swap"
+  href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap"
   rel="stylesheet"
 />
 
 <style>
   /*
-   * Storybook TOC overrides — width and font
-   *
+   * Storybook TOC + docs chrome — lo-fi monospace, 18px TOC.
    * Targets the Table of Contents nav rendered by @storybook/addon-docs.
-   * The nav element uses aria-label="Table of contents" as a stable semantic hook.
-   * Width uses !important to override the inline style applied by Storybook.
    */
   nav[aria-label='Table of contents'] {
     width: 150px !important;
     min-width: 150px !important;
     max-width: 150px !important;
-    font-family: 'Nunito Sans', sans-serif !important;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
+    font-size: 18px !important;
+    line-height: 1.4 !important;
   }
 
   nav[aria-label='Table of contents'] * {
-    font-family: 'Nunito Sans', sans-serif !important;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
+    font-size: 18px !important;
+    line-height: 1.4 !important;
   }
 
-  /*
-   * Docs prose (Markdown / MDX) uses a shared heading margin (20px top) for h1–h6.
-   * Match project typography: h2 = 16px top, h4 = 8px top; keep Storybook’s
-   * first-heading flush to the content block.
-   */
+  .sbdocs,
+  .sbdocs.sbdocs-wrapper,
+  .sbdocs.sbdocs-content {
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
+    color: #111 !important;
+    background: #fff !important;
+  }
+
+  .sbdocs.sbdocs-content h1:not(.sb-anchor) {
+    font-size: 24px !important;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
+    color: #111 !important;
+  }
+
   .sbdocs.sbdocs-content h2:not(.sb-anchor) {
     margin-top: 16px !important;
+    font-size: 20px !important;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
+    color: #111 !important;
+  }
+
+  .sbdocs.sbdocs-content h3:not(.sb-anchor),
+  .sbdocs.sbdocs-content h4:not(.sb-anchor) {
+    margin-top: 8px !important;
+    font-size: 18px !important;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace !important;
+    color: #111 !important;
   }
 
   .sbdocs.sbdocs-content h4:not(.sb-anchor) {

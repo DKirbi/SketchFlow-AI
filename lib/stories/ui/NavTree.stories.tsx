@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { LOFINavTree, type NavTreeItem } from 'lofi-kit';
 
 const meta: Meta<typeof LOFINavTree> = {
-  title: 'UI / NavTree',
+  title: 'LOW FI Design system/Primitives/NavTree',
   component: LOFINavTree,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Hierarchical sidebar navigation for UPL interfaces. Branch nodes expand and collapse (Radix Collapsible, bundled). Single-leaf selection. Uncontrolled by default; pass `expandedIds` + `onExpandChange` for controlled expansion.',
+          'Hierarchical sidebar navigation for workspace interfaces. Branch nodes expand and collapse (Radix Collapsible, bundled). Single-leaf selection. Uncontrolled by default; pass `expandedIds` + `onExpandChange` for controlled expansion.',
       },
     },
   },

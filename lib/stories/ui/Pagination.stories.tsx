@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LOFIPagination } from 'lofi-kit';
 
 const meta: Meta<typeof LOFIPagination> = {
-  title: 'UI / Pagination',
+  title: 'LOW FI Design system/Primitives/Pagination',
   component: LOFIPagination,
   tags: ['autodocs'],
   parameters: {

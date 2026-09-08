@@ -5,7 +5,7 @@ import { LOFIToast } from 'lofi-kit';
 import { fixedLayerCanvasDecorator } from '../decorators/fixedLayerCanvas';
 
 const meta: Meta<typeof LOFIToast> = {
-  title: 'UI / Toast',
+  title: 'LOW FI Design system/Primitives/Toast',
   component: LOFIToast,
   tags: ['autodocs'],
   decorators: [fixedLayerCanvasDecorator(160)],
