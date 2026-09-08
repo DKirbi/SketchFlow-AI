@@ -25,7 +25,7 @@ function MultiSelectDemo(
 }
 
 const meta: Meta<typeof LOFIMultiSelect> = {
-  title: 'UI / MultiSelect',
+  title: 'LOW FI Design system/Primitives/MultiSelect',
   component: LOFIMultiSelect,
   tags: ['autodocs'],
   parameters: {

@@ -3,7 +3,7 @@ import { AnnotationNode, AnnotationNodeDoc } from 'lofi-kit';
 import { flowNodePreviewDecorator } from './flowNodeCanvasDecorator';
 
 const meta: Meta<typeof AnnotationNodeDoc> = {
-  title: 'Diagram / Flow nodes / Annotation',
+  title: 'LOW FI Design system/Diagram/Flow nodes/Annotation',
   component: AnnotationNodeDoc,
   tags: ['autodocs'],
   decorators: [flowNodePreviewDecorator('annotation', AnnotationNode)],

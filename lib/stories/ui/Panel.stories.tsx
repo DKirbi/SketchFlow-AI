@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LOFIButton, LOFIField, LOFIPanel, LOFISelect } from 'lofi-kit';
 
 const meta: Meta<typeof LOFIPanel> = {
-  title: 'UI / Panel',
+  title: 'LOW FI Design system/Primitives/Panel',
   component: LOFIPanel,
   tags: ['autodocs'],
   parameters: {

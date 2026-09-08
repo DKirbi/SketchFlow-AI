@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LOFISwitch } from 'lofi-kit';
 
 const meta: Meta<typeof LOFISwitch> = {
-  title: 'UI / Switch',
+  title: 'LOW FI Design system/Primitives/Switch',
   component: LOFISwitch,
   tags: ['autodocs'],
   parameters: {

@@ -22,3 +22,5 @@ export { ComponentSetView as LOFIComponentSet } from './ComponentSet';
 export { FieldFromDescriptor as LOFIFieldFromDescriptor } from './FieldFromDescriptor';
 export { clusterLayout, resolveActionPresentation } from './actionRole';
 export { COMPONENT_SET_EXAMPLES, exampleById } from './examples';
+export { COMPONENT_SET_KIND_NAV } from './kindNav';
+export type { ComponentSetKindNav } from './kindNav';

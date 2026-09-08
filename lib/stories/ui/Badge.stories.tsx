@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { LOFIBadge } from 'lofi-kit';
 
 const meta: Meta<typeof LOFIBadge> = {
-  title: 'UI / Badge',
+  title: 'LOW FI Design system/Primitives/Badge',
   component: LOFIBadge,
   tags: ['autodocs'],
   parameters: {

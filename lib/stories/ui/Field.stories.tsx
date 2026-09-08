@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LOFIField, LOFIInput, LOFISelect } from 'lofi-kit';
 
 const meta: Meta<typeof LOFIField> = {
-  title: 'UI / Field',
+  title: 'LOW FI Design system/Primitives/Field',
   component: LOFIField,
   tags: ['autodocs'],
   parameters: {

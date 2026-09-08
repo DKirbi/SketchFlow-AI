@@ -150,7 +150,7 @@ regions or sections.
 
 ### Component sets (config-driven compositions)
 
-Not primitives. JSON configs that group primitives. Storybook: **Sets / Component sets**. Rules: [`COMPOSITION_PATTERNS.md` — Component sets](COMPOSITION_PATTERNS.md).
+Not primitives. JSON configs that group primitives. Storybook: **LOW FI Design system / Component sets**. Rules: [`COMPOSITION_PATTERNS.md` — Component sets](COMPOSITION_PATTERNS.md).
 
 | Export | BEM root | When to use |
 |-----------|----------|-------------|

@@ -13,7 +13,7 @@ import {
 import type { ColumnDef } from 'lofi-kit';
 
 const meta: Meta<typeof LOFIMainWorkspace> = {
-  title: 'UI / MainWorkspace',
+  title: 'LOW FI Design system/Primitives/MainWorkspace',
   component: LOFIMainWorkspace,
   tags: ['autodocs'],
   parameters: {
@@ -21,7 +21,7 @@ const meta: Meta<typeof LOFIMainWorkspace> = {
     docs: {
       description: {
         component:
-          'Stable main-pane frame for Unified Production Landscape (UPL) interfaces. Fixed zones: breadcrumb → title + badges → optional tab strip → scrollable body → optional sticky footer. Zone structure never moves when data changes — only slot content updates.',
+          'Stable main-pane frame for workspace interfaces. Fixed zones: breadcrumb → title + badges → optional tab strip → scrollable body → optional sticky footer. Zone structure never moves when data changes — only slot content updates.',
       },
     },
   },
@@ -157,7 +157,7 @@ export const WithTabs: Story = {
     docs: {
       description: {
         story:
-          'Full UPL main pane: breadcrumb, title + badge, LOFITabs, scrollable body, sticky footer with Save/Reset actions.',
+          'Full workspace main pane: breadcrumb, title + badge, LOFITabs, scrollable body, sticky footer with Save/Reset actions.',
       },
     },
   },

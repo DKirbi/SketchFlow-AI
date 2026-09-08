@@ -3,7 +3,7 @@ import { StartNode, StartNodeDoc } from 'lofi-kit';
 import { flowNodePreviewDecorator } from './flowNodeCanvasDecorator';
 
 const meta: Meta<typeof StartNodeDoc> = {
-  title: 'Diagram / Flow nodes / Start',
+  title: 'LOW FI Design system/Diagram/Flow nodes/Start',
   component: StartNodeDoc,
   tags: ['autodocs'],
   decorators: [flowNodePreviewDecorator('start', StartNode)],

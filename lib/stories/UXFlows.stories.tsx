@@ -2558,7 +2558,7 @@ export function Story2TournamentAdminMergedDemo() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 960 }}>
       <LOFIText variant="strong">
-        Story 2 — Unified Production Landscape — Tournament admin
+        Story 2 — Workspace — Tournament admin
       </LOFIText>
       <LOFIText variant="muted">
         Upper shell and filter row (P1.1, P1.2.1 / P9), then one workspace row: collapsible sidebar
@@ -2765,7 +2765,7 @@ function P9StickyDisclosureDemo() {
 // P1: Workspace
 /** P1.1 — Persistent upper bar (LOFIToolbar) with logo, interface name, global actions, username. Optional module tab strip below. */
 export const P1_1_UPLShell: Story = {
-  name: 'P1.1 UPL Shell — upper bar + module strip',
+  name: 'P1.1 Workspace shell — upper bar + module strip',
   render: () => storyStage(<UPLShellDemo />),
 };
 
@@ -3103,6 +3103,6 @@ export const Story1_TeamManagement: Story = {
 
 /** Full Story 2 slice — shell, filters, linked sidebar + main interface view. */
 export const Story2_TournamentAdmin: Story = {
-  name: 'Story 2 — Unified Production Landscape — Tournament admin',
+  name: 'Story 2 — Workspace — Tournament admin',
   render: () => storyStage(<Story2TournamentAdminMergedDemo />),
 };

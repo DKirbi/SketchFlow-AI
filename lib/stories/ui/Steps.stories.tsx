@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LOFISteps } from 'lofi-kit';
 
 const meta: Meta<typeof LOFISteps> = {
-  title: 'UI / Steps',
+  title: 'LOW FI Design system/Primitives/Steps',
   component: LOFISteps,
   tags: ['autodocs'],
   parameters: {

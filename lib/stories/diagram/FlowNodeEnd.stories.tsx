@@ -3,7 +3,7 @@ import { EndNode, EndNodeDoc } from 'lofi-kit';
 import { flowNodePreviewDecorator } from './flowNodeCanvasDecorator';
 
 const meta: Meta<typeof EndNodeDoc> = {
-  title: 'Diagram / Flow nodes / End',
+  title: 'LOW FI Design system/Diagram/Flow nodes/End',
   component: EndNodeDoc,
   tags: ['autodocs'],
   decorators: [flowNodePreviewDecorator('end', EndNode)],
