@@ -19,7 +19,9 @@
   ],
   "sideEffects": [
     "**/*.css",
-    "**/*.scss"
+    "**/*.scss",
+    "./src/index.ts",
+    "./src/styles/index.scss"
   ],
   "scripts": {
     "build-ts": "tsc -p tsconfig.build.json",

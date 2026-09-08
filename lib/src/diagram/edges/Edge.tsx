@@ -24,7 +24,7 @@ export function Edge({
   const [edgePath, labelX, labelY] = getBezierPath({ sourceX, sourceY, targetX, targetY });
 
   const strokeStyle = {
-    stroke: mode !== 'idle' ? 'var(--lofi-ink)' : 'var(--lofi-ink-muted)',
+    stroke: mode !== 'idle' ? 'var(--lofi-ink, #111)' : 'var(--lofi-ink-muted, #666)',
     strokeWidth: mode !== 'idle' ? 2 : 1.5,
   };
 
