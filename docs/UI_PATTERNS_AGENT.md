@@ -110,7 +110,7 @@
 66. **Reversible** row toggles (**Hide**, **Map**) → **`neutral`** + **P3** semantics — **no** hue swap across states.
 67. Table **header** controls → **`sm`**; **body** controls → **`sm`**; **inline icon-only** → **`xs`**.
 68. Body **cell text** → **`table`** role at **`600`–`700`** per density rules.
-69. **Filter chips**: inactive **`outline` + `neutral`**; active **`subtle`**; apply **`action`** **only** when the chip encodes an **active mutation filter** — generic “selected” ≠ automatic **`action`** colour.
+69. **Filter chips**: inactive **`outline` + `neutral`**; selected uses the **sticky-pressed invert** (**`fill` + `neutral`**; lo-fi ink/paper) and **stays pressed** until another chip in the group is chosen; apply **`action`** **only** when the chip encodes an **active mutation filter** — generic “selected” ≠ automatic **`action`** colour.
 70. **Clear-all** chip → **`ghost` + `neutral`** at the **end** of the active strip.
 71. **Bulk destructive** → **`warning`** + **`outline` or `subtle`**, **disabled** until a selection exists.
 72. **Bulk import** CTA → **`action` + `outline`** — **do not `fill`** beside another competing primary.
@@ -124,3 +124,7 @@
 
 76. When installed Podium types or **MCP** disagree with these rules, **update the source** in [`UI_PATTERNS.md`](UI_PATTERNS.md) first, then mirror here in the same change-set.
 77. **`Subtle` in a modal footer** is almost always **Cancel** beside **`fill` commit**; **`subtle` in a ghost-heavy toolbar** may instead mean **primary among equals** (same semantic colour as peer **ghosts**) — see [`UI_PATTERNS.md`](UI_PATTERNS.md) §1.2. [`UI_PATTERNS.md`](UI_PATTERNS.md), [`UX_PATTERNS_AGENT.md`](UX_PATTERNS_AGENT.md), [`NL_COMPONENT_MAPPING_HI_FI.md`](NL_COMPONENT_MAPPING_HI_FI.md)._
+78. Present **togglable** actions as **buttons** (`aria-pressed` or equivalent) — **not** one-shot commits. Idle = outline/paper; **active inverts** (`fill` + `neutral`; lo-fi ink fill / paper label) and **sticks** until another interaction **on that component** takes selection away. See [`UI_PATTERNS.md`](UI_PATTERNS.md) §1.8.
+79. In **exclusive groups** (filter chips, segmented toggles), pressing a **sibling** returns the previous option to idle; pressing the **already-active** option is a **no-op** (does not toggle off).
+80. **Binary switches** may turn off on a second press; **navigation tabs** keep underline chrome ([U4](#u4--overlays--navigation) rule 59) and are not inverted filter buttons.
+81. Do **not** use **`action` colour** to mean “selected” on a togglable — invert / `fill` + `neutral` carries selection; **`action`** stays for commits and mutation filters.

@@ -34,6 +34,16 @@ describe('Chip', () => {
     expect(onClick).toHaveBeenCalledOnce();
   });
 
+  it('inverts the selected filter chip and ignores a repeat press', async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+    render(<Chip label="All (20)" selected onClick={onClick} />);
+    const chip = screen.getByRole('button', { name: 'All (20)' });
+    expect(chip).toHaveClass('chip--selected');
+    await user.click(chip);
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
   it('does not fire onClick when ✕ is used', async () => {
     const user = userEvent.setup();
     const onClick = vi.fn();

@@ -115,6 +115,9 @@ describe('COMPONENT_SET_EXAMPLES', () => {
     expect(screen.getByRole('button', { name: 'Unmapped (14)' })).toHaveAttribute('aria-pressed', 'true');
     await user.click(screen.getByRole('button', { name: 'All (20)' }));
     expect(onAction).toHaveBeenCalledWith('all');
+    onAction.mockClear();
+    await user.click(screen.getByRole('button', { name: 'Unmapped (14)' }));
+    expect(onAction).not.toHaveBeenCalled();
   });
 
   it('keeps Unmap disabled on an unmapped suggestion row', () => {

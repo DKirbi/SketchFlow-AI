@@ -10,7 +10,7 @@ const meta: Meta<typeof LOFIChip> = {
     docs: {
       description: {
         component:
-          'P9 chip. Pass `onClear` (or deprecated `onDismiss`) to show ✕ — an active-filter token. Omit `onClear` and pass `selected` + `onClick` for an exclusive filter chip (no ✕). Do not fake chips with `LOFIButton`.',
+          'P9 chip. Pass `onClear` (or deprecated `onDismiss`) to show ✕ — an active-filter token. Omit `onClear` and pass `selected` + `onClick` for an exclusive filter chip (no ✕). Selected filter chips invert like `LOFIToggle` and stay pressed until another chip in the group is chosen. Do not fake chips with `LOFIButton`.',
       },
     },
   },
@@ -58,7 +58,7 @@ export const FilterSelected: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Filter-chip mode: no `onClear`, `selected` on the active option, `onClick` to change scope. Counts belong in the label.',
+        story: 'Filter-chip mode: no `onClear`, `selected` on the active option, `onClick` to change scope. The pressed chip inverts until another option is chosen. Counts belong in the label.',
       },
     },
   },

@@ -18,7 +18,7 @@ export interface ChipProps {
    * Active option in a filter-chip group. Pair with `onClick` and omit `onClear`.
    */
   selected?: boolean;
-  /** Select this chip (filter group). Not fired from the ✕ control. */
+  /** Select this chip (filter group). Not fired from the ✕ control, or when already selected. */
   onClick?: () => void;
   /** Native hover tooltip for the chip surface. */
   title?: string;
@@ -52,7 +52,7 @@ export function Chip({
     .join(' ');
 
   const labelNode = (
-    <Text as="span" variant="body">
+    <Text as="span" variant="inherit">
       {label}
     </Text>
   );
@@ -64,7 +64,9 @@ export function Chip({
         className={classes}
         title={title}
         aria-pressed={selected}
-        onClick={onClick}
+        onClick={() => {
+          if (!selected) onClick?.();
+        }}
       >
         {labelNode}
       </button>

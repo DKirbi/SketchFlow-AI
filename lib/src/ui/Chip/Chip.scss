@@ -18,15 +18,26 @@
     border-style: solid;
   }
 
-  &--selected {
-    border-color: $color-border;
-    background: $color-surface;
-  }
-
   &--filter {
     margin: 0;
     cursor: pointer;
     appearance: none;
     text-align: left;
+
+    &:hover:not(.chip--selected) {
+      background: $color-surface-hover;
+    }
+
+    &:focus-visible {
+      outline: $focus-ring-width solid $focus-ring-color;
+      outline-offset: $focus-ring-offset;
+    }
+  }
+
+  &--selected {
+    border-color: $color-ink;
+    background: $color-ink;
+    color: $color-paper;
+    cursor: default;
   }
 }

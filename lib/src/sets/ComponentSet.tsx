@@ -244,7 +244,9 @@ function FilterChipGroupFromConfig({
             key={chip.id}
             label={label}
             selected={chip.selected}
-            onClick={() => onAction?.(chip.id)}
+            onClick={() => {
+              if (!chip.selected) onAction?.(chip.id);
+            }}
           />
         );
       })}

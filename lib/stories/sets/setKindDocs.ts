@@ -36,7 +36,7 @@ const DOCS: Record<ComponentSet['kind'], Omit<SetKindDoc, 'kind' | 'nav'>> = {
     primitives: ['LOFIChip'],
     exampleIds: ['filter-chip-group-mapping'],
     intro:
-      'Exclusive status filters built from `LOFIChip` — not `LOFIButton`, not `LOFIFilterBar`. Each chip has `selected` on the active option and **no** `onClear` (no ✕). Counts belong in the label (`Unmapped (14)`). Gap between chips is `$space-8` (16px). Bind `onAction` to the chip `id`.',
+      'Exclusive status filters built from `LOFIChip` — not `LOFIButton`, not `LOFIFilterBar`. Each chip has `selected` on the active option and **no** `onClear` (no ✕). The selected chip inverts (ink fill) and stays pressed until another chip is chosen; a repeat press is a no-op. Counts belong in the label (`Unmapped (14)`). Gap between chips is `$space-8` (16px). Bind `onAction` to the chip `id`.',
   },
   sidebar: {
     primitives: ['LOFINavTree', 'LOFIToggle', 'LOFIButton', 'LOFIText'],

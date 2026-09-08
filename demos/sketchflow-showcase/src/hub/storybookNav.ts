@@ -20,12 +20,28 @@ function sanitize(value: string): string {
     .replace(/-+$/, '');
 }
 
+/** Matches Storybook CSF `storyNameFromExport` / `toStartCaseStr`. */
+function storyNameFromExport(key: string): string {
+  return key
+    .replace(/_/g, ' ')
+    .replace(/-/g, ' ')
+    .replace(/\./g, ' ')
+    .replace(/([^\n])([A-Z])([a-z])/g, (_m, a: string, b: string, c: string) => `${a} ${b}${c}`)
+    .replace(/([a-z])([A-Z])/g, (_m, a: string, b: string) => `${a} ${b}`)
+    .replace(/([a-z])([0-9])/gi, (_m, a: string, b: string) => `${a} ${b}`)
+    .replace(/([0-9])([a-z])/gi, (_m, a: string, b: string) => `${a} ${b}`)
+    .replace(/(\s|^)(\w)/g, (_m, a: string, b: string) => `${a}${b.toUpperCase()}`)
+    .replace(/ +/g, ' ')
+    .trim();
+}
+
 export function docsPath(title: string): string {
   return `/docs/${sanitize(title)}--docs`;
 }
 
+/** Storybook 10 ids are `toId(title, storyNameFromExport(exportName))`. */
 export function canvasPath(title: string, exportName: string): string {
-  return `/story/${sanitize(title)}--${sanitize(exportName)}`;
+  return `/story/${sanitize(title)}--${sanitize(storyNameFromExport(exportName))}`;
 }
 
 export function withStorybookPath(base: string, path: string): string {
@@ -94,11 +110,30 @@ function primitive(name: string): StorybookNavNode {
   );
 }
 
+const SET_FIRST_STORY: Record<string, string> = {
+  'action-cluster': 'WorkspaceFooter',
+  'upper-bar': 'UplUpperBar',
+  'filter-query-row': 'FilterCommit',
+  'filter-chip-group': 'MappingStatus',
+  sidebar: 'SidebarUpl',
+  'main-workspace': 'MainWorkspaceDetail',
+  'summary-card': 'SummaryCard',
+  'list-header': 'ListHeader',
+  'table-chrome': 'TableMapping',
+  'suggestion-row': 'HighConfidence',
+  'modal-editor': 'ModalCreateTournament',
+  'p7-confirm': 'P7Save',
+  'tool-shell': 'ToolShellMapping',
+  'upl-shell': 'UplShellTournament',
+};
+
 function componentSet(nav: string, kind: string): StorybookNavNode {
+  const firstExport = SET_FIRST_STORY[kind];
+  if (!firstExport) throw new Error(`Missing first Storybook export for set kind: ${kind}`);
   return leaf(
     `lofi-set-${kind}`,
     nav,
-    docsPath(`LOW FI Design system/Component sets/${nav}`),
+    canvasPath(`LOW FI Design system/Component sets/${nav}`, firstExport),
   );
 }
 

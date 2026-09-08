@@ -865,7 +865,7 @@ Live views: Storybook **LOW FI Design system / Component sets**. Source configs:
 | `modal-editor` | `LOFIModal` + body + cluster | `TournamentModal.tsx`, `TeamModal.tsx`, merge review |
 | `upper-bar` | `LOFIToolbar` | `UPLToolbar.tsx`; mapping / merge identity bars |
 | `filter-query-row` | fields + cluster | `FilterRow.tsx` (commit); `NotificationsFilters.tsx` (immediate) |
-| `filter-chip-group` | `LOFIChip` row (no `onClear`, `selected` on the active scope) | mapping All / Unmapped / Mapped — still ≠ `LOFIFilterBar` |
+| `filter-chip-group` | `LOFIChip` row (no `onClear`, inverted `selected` on the active scope; stays pressed until another chip is chosen) | mapping All / Unmapped / Mapped — still ≠ `LOFIFilterBar` |
 | `sidebar` | `LOFINavTree` + collapse | tournament `Sidebar.tsx`; notifications sidebar |
 | `main-workspace` | `LOFIMainWorkspace` | `DetailView.tsx` |
 | `summary-card` | `LOFICard` + cluster | `OverviewPanel.tsx` |

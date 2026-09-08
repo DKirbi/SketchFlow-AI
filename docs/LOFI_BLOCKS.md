@@ -73,7 +73,7 @@ demo; full composition rules -> **[LOFI_KIT_PATTERNS.md — Unified Production L
 | `LOFINavTree` | `nav-tree` | `ui/NavTree` | Hierarchical sidebar navigation. Expand/collapse branch nodes (Radix Collapsible, bundled); single-leaf selection; optional controlled expand state. Replaces ad-hoc `<nav>/<ul>/<li>` markup (compliance debt). |
 | `LOFITable` | `table` / `table-wrap` | `ui/Table` | Dense data list powered by TanStack Table. `expandable` for detail rows. `sortable` for column sorting. Set `size: N` for fixed-width columns, `meta: { shrink: true }` for action/badge columns, no size for the primary name/entity column (fluid). |
 | `LOFIBadge` | `badge` | `ui/Badge` | Inline label chip. Variants: `status` (solid=active, dashed=inactive), `id` (record ref), `tag` (category). Optional `title` for native hover tooltip. |
-| `LOFIChip` | `chip` | `ui/Chip` | P9 chip. `onClear` shows ✕ (active-filter token). Omit `onClear` and pass `selected` + `onClick` for exclusive filter chips (no ✕). Optional `title`. |
+| `LOFIChip` | `chip` | `ui/Chip` | P9 chip. `onClear` shows ✕ (active-filter token). Omit `onClear` and pass `selected` + `onClick` for exclusive filter chips (no ✕). Selected chips invert and stay pressed until another chip in the group is chosen. Optional `title`. |
 | `LOFISteps` | `steps` | `ui/Steps` | Step navigation strip. States: `active`, `default`, `muted`. |
 | `LOFITabs` | `tabs` | `ui/Tabs` | Underline tab strip when tab affordance matters (`icon`, `badge`, `disabled`). Prefer `LOFIToggle` for simple in-modal section switches. |
 | `LOFICard` | `card` | `ui/Card` | Bordered content block with optional `title`, `footer`, and `empty` state. |
