@@ -5,7 +5,6 @@ import {
   LOFICard,
   LOFIChevronLeftIcon,
   LOFIChevronRightIcon,
-  LOFIChevronUpIcon,
   LOFIText,
 } from 'lofi-kit';
 import { HubStorybookNav } from './HubStorybookNav';
@@ -13,7 +12,6 @@ import { STORYBOOK_SLUG, projectPath, type HubProject } from './catalog';
 
 interface HubSidebarProps {
   companyId: string;
-  sectionLabel: string;
   projects: HubProject[];
   selectedSlug: string;
   collapsed: boolean;
@@ -24,7 +22,6 @@ interface HubSidebarProps {
 
 export function HubSidebar({
   companyId,
-  sectionLabel,
   projects,
   selectedSlug,
   collapsed,
@@ -35,6 +32,8 @@ export function HubSidebar({
   const navigate = useHubNavigate();
   const { chrome } = useAppearance();
   const storybookMode = selectedSlug === STORYBOOK_SLUG;
+  const exampleProjects = projects.filter((project) => project.slug !== STORYBOOK_SLUG);
+  const docsProject = projects.find((project) => project.slug === STORYBOOK_SLUG);
   const railProjects = storybookMode
     ? projects.filter((project) => project.slug === STORYBOOK_SLUG)
     : projects;
@@ -52,6 +51,10 @@ export function HubSidebar({
     const first = projects[0];
     if (!first) return;
     navigate(projectPath(companyId, first.slug));
+  }
+
+  function goToProject(slug: string) {
+    navigate(projectPath(companyId, slug));
   }
 
   const collapseControl = (
@@ -78,17 +81,20 @@ export function HubSidebar({
             <div className="hub-sidebar__rail-items">
               {railProjects.map((project) => {
                 const selected = project.slug === selectedSlug;
+                const docsRule = project.slug === STORYBOOK_SLUG && !storybookMode;
                 return (
-                  <LOFIButton
-                    key={project.slug}
-                    variant={selected ? 'primary' : 'default'}
-                    size="compact"
-                    className="hub-sidebar__item hub-sidebar__item--rail"
-                    aria-label={project.railAbbrev}
-                    onClick={() => navigate(projectPath(companyId, project.slug))}
-                  >
-                    {project.railAbbrev}
-                  </LOFIButton>
+                  <div key={project.slug} className="hub-sidebar__rail-slot">
+                    {docsRule ? <div className="hub-sidebar__docs-rule" aria-hidden="true" /> : null}
+                    <LOFIButton
+                      variant={selected ? 'primary' : 'default'}
+                      size="compact"
+                      className="hub-sidebar__item hub-sidebar__item--rail"
+                      aria-label={project.railAbbrev}
+                      onClick={() => goToProject(project.slug)}
+                    >
+                      {project.railAbbrev}
+                    </LOFIButton>
+                  </div>
                 );
               })}
             </div>
@@ -113,34 +119,25 @@ export function HubSidebar({
                   </LOFIText>
                 </div>
 
-                <div className="hub-sidebar__section">
-                  <div className="hub-sidebar__section-heading">
-                    <LOFIChevronUpIcon size={12} />
-                    <LOFIText as="span" variant="strong" className="hub-sidebar__section-label">
-                      {sectionLabel}
-                    </LOFIText>
-                  </div>
-                </div>
-
                 <div className="hub-sidebar__items">
-                  {projects.map((project) => {
-                    const selected = project.slug === selectedSlug;
-                    return (
-                      <LOFIButton
-                        key={project.slug}
-                        variant={selected ? 'primary' : 'default'}
-                        className="hub-sidebar__item"
-                        onClick={() => navigate(projectPath(companyId, project.slug))}
-                      >
-                        <span className="hub-sidebar__item-inner">
-                          <LOFIText as="span" variant="inherit">
-                            {project.title}
-                          </LOFIText>
-                          <LOFIChevronRightIcon size={12} />
-                        </span>
-                      </LOFIButton>
-                    );
-                  })}
+                  {exampleProjects.map((project) => (
+                    <ProjectNavButton
+                      key={project.slug}
+                      project={project}
+                      selected={project.slug === selectedSlug}
+                      onSelect={goToProject}
+                    />
+                  ))}
+                  {docsProject ? (
+                    <>
+                      <div className="hub-sidebar__docs-rule" aria-hidden="true" />
+                      <ProjectNavButton
+                        project={docsProject}
+                        selected={docsProject.slug === selectedSlug}
+                        onSelect={goToProject}
+                      />
+                    </>
+                  ) : null}
                 </div>
               </>
             )}
@@ -148,5 +145,30 @@ export function HubSidebar({
         )}
       </LOFICard>
     </nav>
+  );
+}
+
+function ProjectNavButton({
+  project,
+  selected,
+  onSelect,
+}: {
+  project: HubProject;
+  selected: boolean;
+  onSelect: (slug: string) => void;
+}) {
+  return (
+    <LOFIButton
+      variant={selected ? 'primary' : 'default'}
+      className="hub-sidebar__item"
+      onClick={() => onSelect(project.slug)}
+    >
+      <span className="hub-sidebar__item-inner">
+        <LOFIText as="span" variant="inherit">
+          {project.title}
+        </LOFIText>
+        <LOFIChevronRightIcon size={12} />
+      </span>
+    </LOFIButton>
   );
 }

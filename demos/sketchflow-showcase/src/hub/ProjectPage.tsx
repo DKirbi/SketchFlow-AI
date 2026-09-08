@@ -6,6 +6,7 @@ import { AppearanceNavigate } from '../appearance/navigation';
 import { appendAppearanceParams } from '../appearance/params';
 import { getExampleBySlug } from '../examples/registry';
 import { ShowcaseShell } from '../runtime/ShowcaseShell';
+import { AboutPage } from './AboutPage';
 import {
   defaultProjectPath,
   getCompany,
@@ -25,6 +26,10 @@ export function ProjectPage() {
 
   if (!company?.enabled || !project) {
     return <AppearanceNavigate to={defaultProjectPath()} />;
+  }
+
+  if (project.kind === 'page') {
+    return <AboutPage />;
   }
 
   if (project.kind === 'spa') {

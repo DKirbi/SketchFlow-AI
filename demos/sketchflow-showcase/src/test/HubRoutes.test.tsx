@@ -47,16 +47,18 @@ afterEach(() => {
   document.documentElement.classList.remove('dark');
   document.documentElement.removeAttribute('lang');
   document.documentElement.style.removeProperty('color-scheme');
+  vi.restoreAllMocks();
 });
 
 describe('hub catalog', () => {
-  it('lists five Sportradar projects with Merge Tool first, SketchFlowAI Patterns last, and rail abbrevs', () => {
+  it('lists six projects with About first, SketchFlowAI Patterns last, and rail abbrevs', () => {
     expect(getCompany('Sportradar')?.enabled).toBe(true);
     expect(getCompany('OTHER')?.enabled).toBe(false);
-    expect(DEFAULT_PROJECT_SLUG).toBe('merge-tool');
+    expect(DEFAULT_PROJECT_SLUG).toBe('about');
 
     const projects = listProjectsForCompany('Sportradar');
     expect(projects.map((project) => project.slug)).toEqual([
+      'about',
       'merge-tool',
       'mapping',
       'bracket-demo',
@@ -64,12 +66,14 @@ describe('hub catalog', () => {
       'low-fi-ux-ui-patterns',
     ]);
     expect(projects.map((project) => project.railAbbrev)).toEqual([
+      'AB',
       'MG',
       'MP',
       'BR',
       'TM',
       'SB',
     ]);
+    expect(getProject('Sportradar', 'about')?.kind).toBe('page');
     expect(getProject('Sportradar', 'low-fi-ux-ui-patterns')?.title).toBe('SketchFlowAI Patterns');
     expect(getProject('Sportradar', 'low-fi-ux-ui-patterns')?.patternSummaries).toEqual([]);
     expect(getProject('Sportradar', 'merge-tool')?.patternSummaries.length).toBeGreaterThan(0);
@@ -79,28 +83,31 @@ describe('hub catalog', () => {
 });
 
 describe('App routes', () => {
-  it('redirects / to Merge Tool selected with its brief in the hub shell', () => {
+  it('redirects / to About without a company accordion or project brief', () => {
     renderApp('/');
 
     const nav = showcaseNav();
-    expect(within(nav).getByRole('button', { name: 'Merge Tool' })).toHaveClass(
+    expect(within(nav).getByRole('button', { name: 'About' })).toHaveClass(
       'btn--primary',
     );
-    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Reconciles two records/i);
-    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/P2/);
+    expect(screen.queryByRole('heading', { name: 'About' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'What is SketchFlowAI' })).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'P2 / P2.3: Data table + single-select' }),
+      screen.getByText(/collection of UX and UI patterns that were used in real production/i),
     ).toBeInTheDocument();
+    expect(screen.getByText(/notification-style band under the interface/i)).toBeInTheDocument();
+    expect(nav.querySelector('.hub-sidebar__docs-rule')).toBeTruthy();
+    expect(screen.queryByLabelText('Project brief')).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Collapse sidebar' })).toBeInTheDocument();
     expect(screen.getByText('SketchFlowAI')).toBeInTheDocument();
     expect(screen.getByText('Showcase')).toBeInTheDocument();
-    expect(screen.getByText('Sportradar')).toBeInTheDocument();
+    expect(screen.queryByText('Sportradar')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('AI Showcase breadcrumb')).not.toBeInTheDocument();
   });
 
   it('redirects /Sportradar and legacy ?slug= onto nested project paths', () => {
     const { unmount } = renderApp('/Sportradar');
-    expect(within(showcaseNav()).getByRole('button', { name: 'Merge Tool' })).toHaveClass(
+    expect(within(showcaseNav()).getByRole('button', { name: 'About' })).toHaveClass(
       'btn--primary',
     );
     unmount();
@@ -112,6 +119,17 @@ describe('App routes', () => {
     expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Maps messy or legacy internal names/i);
   });
 
+  it('resets an embedded Work iframe to About on load', async () => {
+    const parent = {} as Window;
+    vi.spyOn(window, 'parent', 'get').mockReturnValue(parent);
+    renderApp('/Sportradar/merge-tool');
+
+    expect(await screen.findByRole('heading', { name: 'What is SketchFlowAI' })).toBeInTheDocument();
+    expect(within(showcaseNav()).getByRole('button', { name: 'About' })).toHaveClass(
+      'btn--primary',
+    );
+  });
+
   it('navigates in-app items through the URL and updates the brief', async () => {
     const user = userEvent.setup();
     renderApp('/');
@@ -121,7 +139,7 @@ describe('App routes', () => {
     expect(within(showcaseNav()).getByRole('button', { name: 'Mapping' })).toHaveClass(
       'btn--primary',
     );
-    expect(within(showcaseNav()).getByRole('button', { name: 'Merge Tool' })).not.toHaveClass(
+    expect(within(showcaseNav()).getByRole('button', { name: 'About' })).not.toHaveClass(
       'btn--primary',
     );
     expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Maps messy or legacy internal names/i);
@@ -148,18 +166,19 @@ describe('App routes', () => {
     expect(within(nav).queryByRole('button', { name: 'Button' })).not.toBeInTheDocument();
   });
 
-  it('returns to the first example when AI Showcase is clicked', async () => {
+  it('returns to About when AI Showcase is clicked', async () => {
     const user = userEvent.setup();
     renderApp('/');
 
     await user.click(within(showcaseNav()).getByRole('button', { name: 'SketchFlowAI Patterns' }));
     await user.click(screen.getByRole('button', { name: 'AI Showcase' }));
 
-    expect(within(showcaseNav()).getByRole('button', { name: 'Merge Tool' })).toHaveClass(
+    expect(within(showcaseNav()).getByRole('button', { name: 'About' })).toHaveClass(
       'btn--primary',
     );
     expect(screen.queryByLabelText('AI Showcase breadcrumb')).not.toBeInTheDocument();
-    expect(screen.getByLabelText('Project brief')).toHaveTextContent(/Reconciles two records/i);
+    expect(screen.queryByLabelText('Project brief')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'What is SketchFlowAI' })).toBeInTheDocument();
   });
 
   it('nests sub-patterns under accordions and keeps LOW FI Design system collapsed', async () => {
@@ -224,7 +243,7 @@ describe('App routes', () => {
 
   it('collapses the brief to the heading, short description, and comma-separated patterns', async () => {
     const user = userEvent.setup();
-    renderApp('/');
+    renderApp('/Sportradar/merge-tool');
 
     await user.click(screen.getByRole('button', { name: 'Show less' }));
 
@@ -243,7 +262,7 @@ describe('App routes', () => {
 
   it('expands a pattern accordion and Open pattern docs returns via Get back to the interface', async () => {
     const user = userEvent.setup();
-    renderApp('/');
+    renderApp('/Sportradar/merge-tool');
 
     await user.click(screen.getByRole('button', { name: 'P7: Confirmation dialog' }));
     expect(screen.getByRole('button', { name: 'P7: Confirmation dialog' })).toHaveAttribute(
@@ -266,7 +285,7 @@ describe('App routes', () => {
 
   it('dismisses the return-to section and hides the Storybook brief', async () => {
     const user = userEvent.setup();
-    renderApp('/');
+    renderApp('/Sportradar/merge-tool');
 
     await user.click(screen.getByRole('button', { name: 'P7: Confirmation dialog' }));
     await user.click(screen.getByRole('button', { name: 'Open pattern docs' }));
@@ -299,21 +318,26 @@ describe('App routes', () => {
     renderApp('/Sportradar/mapping');
 
     await user.click(screen.getByRole('button', { name: 'Go back home' }));
-    expect(within(showcaseNav()).getByRole('button', { name: 'Merge Tool' })).toHaveClass(
+    expect(within(showcaseNav()).getByRole('button', { name: 'About' })).toHaveClass(
       'btn--primary',
     );
   });
 
-  it('applies locale=de to hub chrome and the brief band without translating titles', async () => {
+  it('applies locale=de to hub chrome and About headings without translating titles', async () => {
+    const user = userEvent.setup();
     renderApp('/?theme=dark&locale=de');
 
     expect(document.documentElement.dataset.theme).toBe('dark');
     expect(document.documentElement.lang).toBe('de');
     const nav = await screen.findByRole('navigation', { name: 'Showcase-Navigation' });
+    expect(screen.getByRole('heading', { name: 'Was ist SketchFlowAI' })).toBeInTheDocument();
+    expect(screen.queryByLabelText('Projektkurzinfo')).not.toBeInTheDocument();
+    expect(within(nav).getByRole('button', { name: 'Merge Tool' })).toBeInTheDocument();
+    expect(screen.queryByText('Sportradar')).not.toBeInTheDocument();
+
+    await user.click(within(nav).getByRole('button', { name: 'Merge Tool' }));
     expect(screen.getByRole('button', { name: 'Weniger anzeigen' })).toBeInTheDocument();
     expect(screen.getByLabelText('Projektkurzinfo')).toHaveTextContent(/Gleicht zwei Datensätze/i);
-    expect(within(nav).getByRole('button', { name: 'Merge Tool' })).toBeInTheDocument();
-    expect(screen.getByText('Sportradar')).toBeInTheDocument();
   });
 
   it('passes appearance into the Storybook iframe and localizes hub nav groups', async () => {

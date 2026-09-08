@@ -105,6 +105,14 @@ const ROLE_SL: PatternSummary = {
 const BRIEFS: Record<ShowcaseLocale, Record<string, BriefCopy>> = {
   en: {},
   de: {
+    about: {
+      summary:
+        'Eine Sammlung von UX- und UI-Mustern aus echten Produktionsoberflächen, gezeigt in NDA-sicheren KI-Beispielen und dokumentiert in SketchFlowAI Patterns.',
+      brief: [
+        'Eine Sammlung von UX- und UI-Mustern aus echten Produktionsoberflächen, gezeigt in NDA-sicheren KI-Beispielen und dokumentiert in SketchFlowAI Patterns.',
+      ],
+      patternSummaries: [],
+    },
     'merge-tool': {
       summary:
         'Gleicht zwei Datensätze derselben Entität ab, lässt Felder überschreiben und schreibt das Ergebnis in die Datenbank.',
@@ -181,6 +189,14 @@ const BRIEFS: Record<ShowcaseLocale, Record<string, BriefCopy>> = {
     },
   },
   sl: {
+    about: {
+      summary:
+        'Zbirka UX in UI vzorcev iz resničnih produkcijskih vmesnikov, prikazana v NDA-varnih primerih UI in dokumentirana v SketchFlowAI Patterns.',
+      brief: [
+        'Zbirka UX in UI vzorcev iz resničnih produkcijskih vmesnikov, prikazana v NDA-varnih primerih UI in dokumentirana v SketchFlowAI Patterns.',
+      ],
+      patternSummaries: [],
+    },
     'merge-tool': {
       summary:
         'Uskladi dva zapisa iste entitete, omogoči preglasitev polj in rezultat zapiše v bazo.',

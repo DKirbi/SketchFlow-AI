@@ -1,0 +1,30 @@
+@use 'tokens' as *;
+
+.hub-about {
+  box-sizing: border-box;
+  width: 100%;
+  padding: $space-16;
+  display: flex;
+  flex-direction: column;
+  gap: $space-16;
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  &__heading {
+    display: block;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  &__paragraph {
+    display: block;
+  }
+}

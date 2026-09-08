@@ -8,6 +8,7 @@ import { HubBriefBar, type HubReturnTo } from './HubBriefBar';
 import { HubMobileDisclaimer } from './HubMobileDisclaimer';
 import { HubSidebar } from './HubSidebar';
 import {
+  ABOUT_SLUG,
   STORYBOOK_SLUG,
   defaultProjectPath,
   getCompany,
@@ -54,6 +55,7 @@ export function ShowcaseLayout() {
   const project = catalogProject ? localizedProject(catalogProject, locale) : catalogProject;
   const isMobile = useMobileViewport();
   const isStorybook = projectSlug === STORYBOOK_SLUG;
+  const isAbout = projectSlug === ABOUT_SLUG;
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [briefCollapsed, setBriefCollapsed] = useState(false);
   const [returnTo, setReturnTo] = useState<HubReturnTo | null>(null);
@@ -124,7 +126,6 @@ export function ShowcaseLayout() {
     <div className={shellClass}>
       <HubSidebar
         companyId={activeCompany.id}
-        sectionLabel={activeCompany.label}
         projects={projects}
         selectedSlug={projectSlug}
         collapsed={sidebarCollapsed}
@@ -136,7 +137,7 @@ export function ShowcaseLayout() {
         <LOFICard className="hub-shell__content">
           <Outlet context={outletContext} />
         </LOFICard>
-        {!isStorybook || returnTo ? (
+        {returnTo || (!isStorybook && !isAbout) ? (
           <HubBriefBar
             project={project}
             collapsed={briefCollapsed}

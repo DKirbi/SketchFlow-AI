@@ -3,7 +3,7 @@ import { mappingExampleConfig } from '../examples/mapping/metadata';
 import { mergeToolExampleConfig } from '../examples/merge-tool/metadata';
 import { MAPPING_EXPAND_HINT } from 'shared-catalogs';
 
-export type HubProjectKind = 'spa' | 'embed';
+export type HubProjectKind = 'spa' | 'embed' | 'page';
 
 export interface HubCompany {
   id: string;
@@ -30,7 +30,8 @@ export interface HubProject {
 }
 
 export const DEFAULT_COMPANY_ID = 'Sportradar';
-export const DEFAULT_PROJECT_SLUG = 'merge-tool';
+export const ABOUT_SLUG = 'about';
+export const DEFAULT_PROJECT_SLUG = ABOUT_SLUG;
 export const STORYBOOK_SLUG = 'low-fi-ux-ui-patterns';
 
 export const COMPANIES: HubCompany[] = [
@@ -73,6 +74,19 @@ const TOURNAMENT_PATTERNS: PatternSummary[] = [
 ];
 
 export const PROJECTS: HubProject[] = [
+  {
+    slug: ABOUT_SLUG,
+    companyId: 'Sportradar',
+    title: 'About',
+    railAbbrev: 'AB',
+    summary:
+      'A collection of UX and UI patterns from real production interfaces, shown through NDA-safe AI examples and documented in SketchFlowAI Patterns.',
+    brief: [
+      'A collection of UX and UI patterns from real production interfaces, shown through NDA-safe AI examples and documented in SketchFlowAI Patterns.',
+    ],
+    patternSummaries: [],
+    kind: 'page',
+  },
   {
     slug: 'merge-tool',
     companyId: 'Sportradar',
